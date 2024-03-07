@@ -1,4 +1,3 @@
-# Recipes for annual events
 
 # Introduction
 #### Annual Event Recipe Blog
