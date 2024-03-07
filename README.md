@@ -46,9 +46,10 @@ The AERB is aimed at people wanting to organize events such as parties for Hallo
         testing classes individually
 
 ## extra features
-    serving size
-    sorting by ratings
-    giving item prices
+    giving item prices (api)
+    item weights
+    alternatives (for allergies,dietary restrictions) - give another recipe or a substitute ingredient
+    
 
     maybe: suggestions for searches / recommended recipe list based on written recipes
 
