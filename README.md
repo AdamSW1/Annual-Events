@@ -8,6 +8,18 @@ The AERB (Annual Event Recipe Blog) is a software application which lets multipl
 
 The AERB is aimed at people wanting to organize events such as parties for Halloween or Christmas or Birthdays or gatherings.
 
+
+For this we'll implement the following features
+    - giving item prices
+        Since we're focused on events with a large number of people the total price of a recipe depending on serving could be important to users
+    - item weights
+        Often for gatherings people will meet at one place, knowing the weight of what you might be bringing is important. If something is too big / heavy somebody might not be able to bring it with them
+    - Dietary restrictions and alternatives
+        For large events, inclusivity for people who cant eat certain foods due to allergies or religious reasons is important. Due to this, we'll include a section for giving alternative recipes or substitute ingredients
+    - (TBD) recommended recipes
+        We may include a section of viewed blogs that suggests other similar recipes based on type, serving size etc.
+
+
 ## Functionalities
 
 - Account creation / deletion
@@ -49,7 +61,7 @@ The AERB is aimed at people wanting to organize events such as parties for Hallo
     giving item prices (api)
     item weights
     alternatives (for allergies,dietary restrictions) - give another recipe or a substitute ingredient
-    
+
 
     maybe: suggestions for searches / recommended recipe list based on written recipes
 
