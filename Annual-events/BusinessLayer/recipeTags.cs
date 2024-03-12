@@ -1,4 +1,5 @@
-enum recipeTags
+namespace BusinessLayer;
+enum RecipeTags
 {
     
 }
