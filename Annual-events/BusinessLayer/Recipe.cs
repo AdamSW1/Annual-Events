@@ -1,8 +1,6 @@
 using System.ComponentModel;
 
 namespace BusinessLayer;
-
-
 class Recipe
 {
     private string _name;
@@ -17,9 +15,9 @@ class Recipe
     public int Servings { get; set; }
     private int _ratings;
     public int Ratings { get; set; }
-    private string _ingredients;
-    public string Ingredients { get; set; }
-    public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, string ingredients)
+    private string[] _ingredients;
+    public string[] Ingredients { get; set; }
+    public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, string[] ingredients)
     {
         Name = name;
         Description = description;
