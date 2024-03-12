@@ -1,5 +1,4 @@
 using System.ComponentModel;
-
 namespace BusinessLayer;
 class Recipe
 {
