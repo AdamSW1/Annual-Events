@@ -1,5 +1,5 @@
 namespace BusinessLayer;
-class Search 
-{
 
+class Search {
+    
 }

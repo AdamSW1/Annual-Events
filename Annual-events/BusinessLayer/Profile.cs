@@ -9,7 +9,7 @@ class Profile // The Profile class is used to manage a User
     }
     public void UpdatePWD(string _password) // Updates the password of a user
     {
-        User.password = _password;
+        
     }
     public void UpdatePFP() // Updates the profile picture of the user
     {
@@ -17,6 +17,6 @@ class Profile // The Profile class is used to manage a User
     }
     public void UpdateDescription(string _description) // Updates the description of the user
     {
-        User.description = _description;
+        
     }
 }

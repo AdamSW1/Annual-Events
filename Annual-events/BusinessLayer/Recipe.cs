@@ -1,5 +1,5 @@
 namespace BusinessLayer;
-class Recipe 
-{
 
+class Recipe {
+    
 }
