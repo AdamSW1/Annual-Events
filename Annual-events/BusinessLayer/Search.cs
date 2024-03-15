@@ -1,47 +1,46 @@
 namespace BusinessLayer;
 
 class Search {
-    private string _keywords;
-    public string Keywords { get; set; }
+    private List<Recipe> recipes;
+    public Search(List<Recipe> recipes)
+    {
+        this.recipes = recipes;
+    }
+    // Search recipes by keyword
+    public List<Recipe> SearchRecipesByKeyword(string keyword)
+    {
+        throw new NotImplementedException();
+    }
 
-    public Search(string keywords)
+    // Search recipes by tags
+    public List<Recipe> SearchRecipesByTags(List<string> tags)
     {
-        Keywords = keywords;
+        throw new NotImplementedException();
     }
 
-    public void SortByIngredients()
+    // Search recipes by time constraint
+    public List<Recipe> SearchRecipesByTimeConstraint()
     {
-        // Sort recipes by ingredients
         throw new NotImplementedException();
     }
-    public void SortByRatings()
+    // Search recipes by rating
+    public List<Recipe> SearchRecipesByRating(int rating)
     {
-        // Sort recipes by ratings
         throw new NotImplementedException();
     }
-    public  void SortByCookingTime()
+    // Search recipes by servings constraint
+    public List<Recipe> SearchRecipesByServings(int servings)
     {
-        // Sort recipes by cooking time
         throw new NotImplementedException();
     }
-    public void SortByKeyword()
+    // Search recipes in favorites
+    public List<Recipe> SearchRecipesInFavorites()
     {
-        // Sort recipes by keyword
         throw new NotImplementedException();
     }
-    public void SortByRecipeInFavorites()
+    // Search recipes by owner username
+    public List<Recipe> SearchRecipesByOwnerUsername(string ownerUsername)
     {
-        // Sort recipes by favorites
-        throw new NotImplementedException();
-    }
-    public void SortByServings()
-    {
-        // Sort recipes by servings
-        throw new NotImplementedException();
-    }
-    public void SortByOwnership()
-    {
-        // Sort recipes by ownership
         throw new NotImplementedException();
     }
 }
