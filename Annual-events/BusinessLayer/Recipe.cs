@@ -16,7 +16,9 @@ class Recipe
     public int Ratings { get; set; }
     private string[] _ingredients;
     public string[] Ingredients { get; set; }
-    public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, string[] ingredients)
+    private int favourite;
+    public int Favourite { get; set; }
+    public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, string[] ingredients,int favourite)
     {
         Name = name;
         Description = description;
@@ -25,6 +27,7 @@ class Recipe
         Servings = servings;
         Ratings = ratings;
         Ingredients = ingredients;
+        Favourite = favourite;
     }
     public void createRecipe()
     {
