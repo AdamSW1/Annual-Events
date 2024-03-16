@@ -2,22 +2,77 @@ namespace RecipeInfo;
 class Recipe
 {
     private string _name;
-    public string Name { get; set; }
+    public string Name {
+        get{
+            return _name;
+        }
+        set{
+            _name = value;
+        }
+    }
     private string _description;
-    public string Description { get; set; }
+    public string Description {
+        get{
+            return _description;
+        }
+        set{
+            _description = value;
+        }
+    }
     private double _cookingTime;
-    public double CookingTime { get; set; }
+    public double CookingTime {
+        get{
+            return _cookingTime;
+        }
+        set{
+            _cookingTime = value;
+        }
+    }
     private string _preparation;
-    public string Preparation { get; set; }
+    public string Preparation {
+        get{
+            return _preparation;
+        }
+        set{
+            _preparation = value;
+        }
+    }
     private int _servings;
-    public int Servings { get; set; }
+    public int Servings {
+        get{
+            return _servings;
+        } 
+        set{
+            _servings = value;
+        } 
+    }
     private int _ratings;
-    public int Ratings { get; set; }
+    public int Ratings {
+        get{
+            return _ratings;
+        } 
+        set{
+            _ratings = value;
+        }
+    }
     private List<Ingredient> _ingredients;
 
-    public List<Ingredient> Ingredients {get; set;}
+    public List<Ingredient> Ingredients {
+        get{
+            return _ingredients;
+        } 
+        set{
+            _ingredients = value;
+        }
+        
+        }
     private int _favourite;
-    public int Favourite { get; set; }
+    public int Favourite { 
+        get{
+            return _favourite;
+        }
+    }
+
     public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, List<Ingredient> ingredients,int favourite)
     {
         _name = name;
