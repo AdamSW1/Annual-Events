@@ -31,4 +31,14 @@ public class Recipe_test
     {
         throw new NotImplementedException();
     }
+
+    [TestMethod]
+    public void AddFavourite_plusOne_expect2favourites(){
+        throw new NotImplementedException();
+    }
+
+    [TestMethod]
+    public void AddFavourite_removeOne_expect1favourite(){
+        throw new NotImplementedException();
+    }
 }

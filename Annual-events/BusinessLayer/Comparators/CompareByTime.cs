@@ -1,5 +1,5 @@
+using RecipeInfo;
 namespace Comparators;
-using BusinessLayer;
 
 public class CompareByTime : IComparer<Recipe>
 {
