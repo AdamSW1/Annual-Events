@@ -50,4 +50,15 @@ class Recipe
         // Rate a recipe
         throw new NotImplementedException();
     }
+
+    public void AddFavourite()
+    {
+        //adds a favourite to the favourite field
+        throw new NotImplementedException();
+    }
+    public void RemoveFavourite()
+    {
+        //removes a favourite from the favourite field
+        throw new NotImplementedException();
+    }
 }
