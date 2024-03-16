@@ -1,3 +1,4 @@
+using RecipeInfo;
 namespace BusinessLayer;
 
 class User {
