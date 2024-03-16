@@ -1,5 +1,4 @@
-using System.ComponentModel;
-namespace BusinessLayer;
+namespace RecipeInfo;
 class Recipe
 {
     private string _name;
@@ -14,37 +13,39 @@ class Recipe
     public int Servings { get; set; }
     private int _ratings;
     public int Ratings { get; set; }
-    private string[] _ingredients;
-    public string[] Ingredients { get; set; }
-    private int favourite;
+    private List<Ingredient> _ingredients;
+
+    public List<Ingredient> Ingredients {get; set;}
+    private int _favourite;
     public int Favourite { get; set; }
-    public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, string[] ingredients,int favourite)
+    public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, List<Ingredient> ingredients,int favourite)
     {
-        Name = name;
-        Description = description;
-        CookingTime = cookingTime;
-        Preparation = preparation;
-        Servings = servings;
-        Ratings = ratings;
-        Ingredients = ingredients;
-        Favourite = favourite;
+        _name = name;
+        _description = description;
+        _cookingTime = cookingTime;
+        _preparation = preparation;
+        _servings = servings;
+        _ratings = ratings;
+        _ingredients = ingredients;
+        _favourite = favourite;
     }
-    public void createRecipe()
+    
+    public void CreateRecipe()
     {
         // Create a new recipe
         throw new NotImplementedException();
     }
-    public void updateRecipe()
+    public void UpdateRecipe()
     {
         // Update an existing recipe
         throw new NotImplementedException();
     }
-    public void deleteRecipe()
+    public void DeleteRecipe()
     {
         // Delete an existing recipe
         throw new NotImplementedException();
     }
-    public void rateRecipe()
+    public void RateRecipe()
     {
         // Rate a recipe
         throw new NotImplementedException();
