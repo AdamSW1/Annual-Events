@@ -1,87 +1,56 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BusinessLayer;
+using System;
+using System.Net.Http.Headers;
+using System.Diagnostics;
 
 [TestClass]
-public class UserTests
+public class UserTest
 {
+    //Test for creating a user
     [TestMethod]
-    // Creating a user
-    public void CreateUserTest()
+    public void createUserTest()
     {
-        // Arrange
-
-        // Act
-
-        // Assert
+        throw new NotImplementedException();
     }
-    // Adding a recipe to a list
+    //Test for adding a recipe to a user's list
     [TestMethod]
-    public void AddToFavRecipeTest()
+    public void addToFavRecipeTest()
     {
-        // Arrange
-
-        // Act
-
-        // Assert
+        throw new NotImplementedException();
     }
-    // Add recipe to a regular list
+    //Test for adding a recipe to a user's list
     [TestMethod]
     public void AddRecipeTest()
     {
-        // Arrange
-
-        // Act
-
-        // Assert
+        throw new NotImplementedException();
     }
-    // Removing a recipe from a regular list
+    //Test for removing a recipe from a user's list
     [TestMethod]
     public void RemoveFromFavRecipeTest()
     {
-        // Arrange
-
-        // Act
-
-        // Assert
+        throw new NotImplementedException();
     }
-    // 2 Step Verification test, should return false if it failed, otherwise true
+    //Test for step verification
     [TestMethod]
     public void StepVerificationTest()
     {
-        // Arrange
-
-        // Act
-
-        // Assert
+        throw new NotImplementedException();
     }
-    // Testing the hash method if it hashes correctly
+    //Test for hashed password
     [TestMethod]
-    public void HashedPasswordTest()
+    public void hashedPasswordTest()
     {
-        // Arrange
-
-        // Act
-
-        // Assert
+        throw new NotImplementedException();
     }
-    // goes hand in hand with HashedPasswordTest, verifies if username is correct + password
+    //Test for authentication
     [TestMethod]
     public void AuthenticationTest()
     {
-        // Arrange
-
-        // Act
-
-        // Assert
+        throw new NotImplementedException();
     }
-    // Checks if the account is removed from either a list or database
+    //Test for deleting a user
     [TestMethod]
-    public void DeleteAccountTest()
+    public void deleteUserTest()
     {
-        // Arrange
-
-        // Act
-
-        // Assert
+        throw new NotImplementedException();
     }
 }

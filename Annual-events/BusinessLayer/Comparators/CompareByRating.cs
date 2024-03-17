@@ -1,4 +1,4 @@
-using BusinessLayer;
+using RecipeInfo;
 
 namespace Comparators;
 
