@@ -5,29 +5,29 @@ using System.Net.Http.Headers;
 using System.Diagnostics;
 
 [TestClass]
-public class Recipe_test
+public class RecipeTest
 {
     //Test for creating a recipe
     [TestMethod]
-    public void createRecipeTest()
+    public void CreateRecipeTest()
     {
         throw new NotImplementedException();
     }
     //Test for updating a recipe
     [TestMethod]
-    public void updateRecipeTest()
+    public void UpdateRecipeTest()
     {
         throw new NotImplementedException();
     }
     //Test for deleting a recipe
     [TestMethod]
-    public void deleteRecipeTest()
+    public void DeleteRecipeTest()
     {
         throw new NotImplementedException();
     }
     //Test for rating a recipe
     [TestMethod]
-    public void rateRecipeTest()
+    public void RateRecipeTest()
     {
         throw new NotImplementedException();
     }
