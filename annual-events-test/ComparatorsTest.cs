@@ -3,7 +3,7 @@ namespace annual_events_test;
 [TestClass]
 public class ComparatorsTest
 {
-    // Tests CompareByIngredient
+    // Tests CompareByIngredients
     [TestMethod]
     public void TestIngredientsComparator()
     {
@@ -17,7 +17,7 @@ public class ComparatorsTest
         throw new NotImplementedException();
     }
 
-    // Tests CompareByServing
+    // Tests CompareByServings
     [TestMethod]
     public void TestServingsComparator()
     {
