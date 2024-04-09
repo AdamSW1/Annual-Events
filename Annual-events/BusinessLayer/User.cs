@@ -25,6 +25,6 @@ class User {
 	public void RemoveFromFavRecipe() {} // removes a recipe from the [] list
 	public void StepVerification() {} // optional but asks them 2 specific infos
 	public void hashedPassword() {} // hashes their password
-	public void Authentication() {} // verifies their passwords and usernames
+	public void Authentication(string _username, string password) {} // verifies their passwords and usernames
 	public void DeleteAccount() {} // should delete their account definitely
 }
