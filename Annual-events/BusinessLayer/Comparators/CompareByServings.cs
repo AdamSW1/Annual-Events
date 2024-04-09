@@ -13,6 +13,12 @@ public class CompareByServings : IComparer<Recipe>
     /// <exception cref="NotImplementedException"></exception>
     int IComparer<Recipe>.Compare(Recipe? x, Recipe? y)
     {
-        throw new NotImplementedException();
+        if (x == null || y == null){
+            return 0;
+        }
+        if(x.Servings.CompareTo(y.Servings) != 0){
+            return x.Servings.CompareTo(y.Servings);
+        }
+        return 0;
     }
 }
