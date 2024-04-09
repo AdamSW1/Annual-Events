@@ -12,7 +12,15 @@ public class CompareByTime : IComparer<Recipe>
     /// <exception cref="NotImplementedException"></exception>
     int IComparer<Recipe>.Compare(Recipe? x, Recipe? y)
     {
-        throw new NotImplementedException();
+        if (x == null || y == null){
+            return 0;
+        }
+
+        if(x.CookingTime.CompareTo(y.CookingTime) != 0){
+            return x.CookingTime.CompareTo(y.CookingTime);
+        }
+
+        return 0;
     }
 
 }
