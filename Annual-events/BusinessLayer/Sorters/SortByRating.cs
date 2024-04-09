@@ -1,5 +1,6 @@
 using BusinessLayer;
 using Comparators;
+using RecipeInfo;
 namespace sorters;
 
 public class SortByRating : ISorter

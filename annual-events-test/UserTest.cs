@@ -1,5 +1,3 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BusinessLayer;
 using System;
 using System.Net.Http.Headers;
 using System.Diagnostics;
@@ -9,13 +7,13 @@ public class UserTest
 {
     //Test for creating a user
     [TestMethod]
-    public void createUserTest()
+    public void CreateUserTest()
     {
         throw new NotImplementedException();
     }
     //Test for adding a recipe to a user's list
     [TestMethod]
-    public void addToFavRecipeTest()
+    public void AddToFavRecipeTest()
     {
         throw new NotImplementedException();
     }
@@ -39,7 +37,7 @@ public class UserTest
     }
     //Test for hashed password
     [TestMethod]
-    public void hashedPasswordTest()
+    public void HashedPasswordTest()
     {
         throw new NotImplementedException();
     }
@@ -51,7 +49,7 @@ public class UserTest
     }
     //Test for deleting a user
     [TestMethod]
-    public void deleteUserTest()
+    public void DeleteUserTest()
     {
         throw new NotImplementedException();
     }

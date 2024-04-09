@@ -5,40 +5,42 @@ using System.Net.Http.Headers;
 using System.Diagnostics;
 
 [TestClass]
-public class RecipeTest
+
+public class SearchTest
 {
-    //Test for creating a recipe
     [TestMethod]
-    public void CreateRecipeTest()
+    public void SearchRecipesByKeywordTest()
     {
         throw new NotImplementedException();
     }
-    //Test for updating a recipe
     [TestMethod]
-    public void UpdateRecipeTest()
+    public void SearchRecipesByTagsTest()
     {
         throw new NotImplementedException();
     }
-    //Test for deleting a recipe
     [TestMethod]
-    public void DeleteRecipeTest()
+    public void SearchRecipesByTimeConstraintTest()
     {
         throw new NotImplementedException();
     }
-    //Test for rating a recipe
     [TestMethod]
-    public void RateRecipeTest()
+    public void SearchRecipesByRatingTest()
     {
         throw new NotImplementedException();
     }
-
     [TestMethod]
-    public void AddFavourite_plusOne_expect2favourites(){
+    public void SearchRecipesByServingsTest()
+    {
         throw new NotImplementedException();
     }
-
     [TestMethod]
-    public void AddFavourite_removeOne_expect1favourite(){
+    public void SearchRecipesInFavoritesTest()
+    {
+        throw new NotImplementedException();
+    }
+    [TestMethod]
+    public void SearchRecipesByOwnerUsernameTest()
+    {
         throw new NotImplementedException();
     }
 }

@@ -65,4 +65,24 @@ For this we'll implement the following features
     maybe: suggestions for searches / recommended recipe list based on written recipes
 
 
+# classes
+
+## user
+Everything related to a user including creating / deleting and user actions is in here
+
+## search
+Everything related to searching for the perfect recipe is in here. Things such as sorting by keyword, rating, tags...
+
+## Profile
+Everything related to a user profile is in here. Things such as a profile picture, a description, their favourites...
+
+### Recipe info
+A namespace which contains everything related to recipes. Things such as ingredients, recipe tags and recipe instructions are located in here
+
+### Sorters
+A namespace which contains everything related to sortings your recipes. It helps the user find a recipe based on a specific condition. We can sort based on Ingredients, ratings, serving size and time to cook. 
+
+### Comparators
+A namespace which contains everything related to comparing 2 recipes. You can compare 2 recipes based on ratings, servings, time to cook. It is used by Sorters to sort the recipe efficently.
+
 
