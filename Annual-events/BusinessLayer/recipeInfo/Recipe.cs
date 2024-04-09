@@ -1,79 +1,114 @@
+using System.Diagnostics.Tracing;
+
 namespace RecipeInfo;
 class Recipe
 {
     private string _name;
-    public string Name {
-        get{
+    public string Name
+    {
+        get
+        {
             return _name;
         }
-        set{
+        set
+        {
             _name = value;
         }
     }
     private string _description;
-    public string Description {
-        get{
+    public string Description
+    {
+        get
+        {
             return _description;
         }
-        set{
+        set
+        {
             _description = value;
         }
     }
     private double _cookingTime;
-    public double CookingTime {
-        get{
+    public double CookingTime
+    {
+        get
+        {
             return _cookingTime;
         }
-        set{
+        set
+        {
             _cookingTime = value;
         }
     }
     private string _preparation;
-    public string Preparation {
-        get{
+    public string Preparation
+    {
+        get
+        {
             return _preparation;
         }
-        set{
+        set
+        {
             _preparation = value;
         }
     }
     private int _servings;
-    public int Servings {
-        get{
+    public int Servings
+    {
+        get
+        {
             return _servings;
-        } 
-        set{
+        }
+        set
+        {
             _servings = value;
-        } 
+        }
     }
     private int _ratings;
-    public int Ratings {
-        get{
+    public int Ratings
+    {
+        get
+        {
             return _ratings;
-        } 
-        set{
+        }
+        set
+        {
             _ratings = value;
         }
     }
     private List<Ingredient> _ingredients;
 
-    public List<Ingredient> Ingredients {
-        get{
+    public List<Ingredient> Ingredients
+    {
+        get
+        {
             return _ingredients;
-        } 
-        set{
+        }
+        set
+        {
             _ingredients = value;
         }
-        
-        }
+
+    }
     private int _favourite;
-    public int Favourite { 
-        get{
+    public int Favourite
+    {
+        get
+        {
             return _favourite;
         }
     }
 
-    public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, List<Ingredient> ingredients,int favourite)
+    public RecipeTags[] _tags;
+    public RecipeTags[] Tags
+    {
+        get
+        {
+            return _tags;
+        }
+        set { _tags = value; }
+    }
+
+    public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, List<Ingredient> ingredients, int favourite, RecipeTags[] tags)
     {
         _name = name;
         _description = description;
@@ -83,8 +118,9 @@ class Recipe
         _ratings = ratings;
         _ingredients = ingredients;
         _favourite = favourite;
+        _tags = tags;
     }
-    
+
     public void CreateRecipe()
     {
         // Create a new recipe
