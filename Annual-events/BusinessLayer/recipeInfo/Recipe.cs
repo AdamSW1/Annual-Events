@@ -63,8 +63,8 @@ class Recipe
             _servings = value;
         }
     }
-    private int _ratings;
-    public int Ratings
+    private double _ratings;
+    public double Ratings
     {
         get
         {
@@ -108,7 +108,7 @@ class Recipe
         set { _tags = value; }
     }
 
-    public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, List<Ingredient> ingredients, int favourite, RecipeTags[] tags)
+    public Recipe(string name, string description, double cookingTime, string preparation, int servings, double ratings, List<Ingredient> ingredients, int favourite, RecipeTags[] tags)
     {
         _name = name;
         _description = description;
