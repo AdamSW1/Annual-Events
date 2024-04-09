@@ -7,6 +7,9 @@ class Search {
     {
         this.recipes = recipes;
     }
+    public List<Recipe> getRecipes(){ //gets the recipes from the database
+        throw new NotImplementedException();
+    }
     // Search recipes by keyword
     public List<Recipe> SearchRecipesByKeyword(string keyword)
     {
