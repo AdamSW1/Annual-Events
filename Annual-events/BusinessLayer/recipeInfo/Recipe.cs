@@ -121,7 +121,7 @@ class Recipe
         _tags = tags;
     }
 
-    public void CreateRecipe()
+    public void AddToDatabase()
     {
         // Create a new recipe
         throw new NotImplementedException();
@@ -144,12 +144,12 @@ class Recipe
 
     public void AddFavourite()
     {
-        //adds a favourite to the favourite field
-        throw new NotImplementedException();
+        _favourite += 1;
+        UpdateRecipe();
     }
     public void RemoveFavourite()
     {
-        //removes a favourite from the favourite field
-        throw new NotImplementedException();
+        _favourite -= 1;
+        UpdateRecipe();
     }
 }
