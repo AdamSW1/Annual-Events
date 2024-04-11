@@ -48,6 +48,7 @@ class User {
         recipes.Add(recipe);
     } // lets them add a recipe to an [] list
 	public void AddRecipe(Recipe recipe) {
+        recipe.Owner = this;
         recipes.Add(recipe);
     } // just adding a recipe to a list, other than Fav
 	public void RemoveFromFavRecipe(Recipe recipe) {

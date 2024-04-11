@@ -1,6 +1,15 @@
+using BusinessLayer;
+
 namespace RecipeInfo;
 class Recipe
 {
+
+    private User _owner;
+    public User Owner {
+        get { return _owner;}
+        set { _owner = value;}
+    }
+    
     private string _name;
     public string Name {
         get{
@@ -73,7 +82,7 @@ class Recipe
         }
     }
 
-    public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, List<Ingredient> ingredients,int favourite)
+    public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, List<Ingredient> ingredients,int favourite, User owner)
     {
         _name = name;
         _description = description;
@@ -83,6 +92,7 @@ class Recipe
         _ratings = ratings;
         _ingredients = ingredients;
         _favourite = favourite;
+        _owner = owner;
     }
     
     public void CreateRecipe()
