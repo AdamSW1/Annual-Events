@@ -3,14 +3,19 @@ namespace BusinessLayer;
 
 class User {
 
-    string username;
-	string password;
-	string ?description;
-	int ?age;
-	string ?profile_picture; // (GUI)
+    private string username;
+	private string password;
+	private string description;
+	private int age;
+	private string ?profile_picture; // (GUI)
+
+    private List<Recipe> recipes = new List<Recipe>();
+
+    public string Username { get { return username; } }
+    public string Description { get { return description; } }
+    public int Age { get { return age; } }
 
     // constructor 
-    Recipe ?recipe;
     public User(string username, string password, string description, int age) {
         this.username = username;
         this.password = password;
@@ -33,19 +38,37 @@ class User {
         hashPassword(password);
     } // creates a user based off their info input 
 
+    public void DisplayUserInfo()
+    {
+        Console.WriteLine($"Username: {username}");
+        Console.WriteLine($"Description: {description}");
+        Console.WriteLine($"Age: {age}");
+    }
+	public void AddToFavRecipe(Recipe recipe) {
+        recipes.Add(recipe);
+    } // lets them add a recipe to an [] list
+	public void AddRecipe(Recipe recipe) {
+        recipes.Add(recipe);
+    } // just adding a recipe to a list, other than Fav
+	public void RemoveFromFavRecipe(Recipe recipe) {
+        recipes.Remove(recipe);
+    } // removes a recipe from the [] list
 
-	public void AddToFavRecipe() {} // lets them add a recipe to an [] list
-	public void AddRecipe() {} // just adding a recipe to a list, other than Fav
-	public void RemoveFromFavRecipe() {} // removes a recipe from the [] list
+    public void DisplayRecipes() {
+        Console.WriteLine($"Recipes for user: {username}");
+        foreach (var recipe in recipes)
+        {
+            recipe.DisplayRecipeInfo();
+        }
+    }
 	public void StepVerification() {} // optional but asks them 2 specific infos
 	public void hashPassword(string password) {
         // algo here
     } // hashes their password
-	public void Authentication() {} // verifies their passwords and usernames
+	public bool Authentication(string enteredUsername, string enteredPassword) {
+        return username == enteredUsername && password == enteredPassword;
+    } // verifies their passwords and usernames
 	public void DeleteAccount() {
-        Authentication();
-        // if(Authentication()) {
-        //     // if true then procede
-        // }
+        
     } // should delete their account definitely
 }

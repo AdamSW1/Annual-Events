@@ -116,4 +116,15 @@ class Recipe
         //removes a favourite from the favourite field
         throw new NotImplementedException();
     }
+
+    internal void DisplayRecipeInfo()
+    {
+        Console.WriteLine($"Name: {_name}");
+        Console.WriteLine($"Description: {_description}");
+        Console.WriteLine($"Cooking Time: {_cookingTime} minutes");
+        Console.WriteLine($"Preparation: {_preparation}");
+        Console.WriteLine($"Servings: {_servings}");
+        Console.WriteLine($"Ratings: {_ratings}");
+        Console.WriteLine($"Favourite: {_favourite}");
+    }
 }
