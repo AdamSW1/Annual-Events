@@ -27,9 +27,9 @@ class User {
         public void hashPassword(string password) {
         // algo here
     } // hashes their password
-	public void Authentication() {} // verifies their passwords and usernames
+	public void Authentication(string _username, string _password) {} // verifies their passwords and usernames
 	public void DeleteAccount() {
-        Authentication();
+        Authentication(username, password);
         // if(Authentication()) {
         //     // if true then procede
         // }
