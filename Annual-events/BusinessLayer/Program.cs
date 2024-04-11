@@ -65,10 +65,14 @@ class Program
 
                 Console.WriteLine("\nRecipe added successfully!");
 
-                // Ask if the user wants to add another recipe
-                Console.Write("\nDo you want to add another recipe? (yes/no): ");
+                // Ask if the user wants to add another recipe or log off
+                Console.Write("\nDo you want to add another recipe? (yes/no) ");
                 string choice = Console.ReadLine();
-                addAnotherRecipe = choice.ToLower() == "yes";
+                if (choice.ToLower() == "no")
+                {
+                    addAnotherRecipe = false;
+                    break; 
+                }
             }
 
             // Display recipes
@@ -76,8 +80,13 @@ class Program
             authManager.CurrentUser.DisplayRecipes();
 
             // Logout
-            authManager.Logout();
-            Console.WriteLine("\nLogged out.");
+            Console.Write("\nDo you want to log off (yes/no)? ");
+            string logoutChoice = Console.ReadLine();
+            if (logoutChoice.ToLower() == "yes")
+            {
+                authManager.Logout();
+                Console.WriteLine("\nLogged out.");
+            }
         }
         else
         {
