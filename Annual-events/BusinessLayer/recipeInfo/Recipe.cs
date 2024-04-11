@@ -1,8 +1,15 @@
-using System.Diagnostics.Tracing;
+using BusinessLayer;
 
 namespace RecipeInfo;
 class Recipe
 {
+
+    private User _owner;
+    public User Owner {
+        get { return _owner;}
+        set { _owner = value;}
+    }
+    
     private string _name;
     public string Name
     {
@@ -98,17 +105,7 @@ class Recipe
         }
     }
 
-    public RecipeTags[] _tags;
-    public RecipeTags[] Tags
-    {
-        get
-        {
-            return _tags;
-        }
-        set { _tags = value; }
-    }
-
-    public Recipe(string name, string description, double cookingTime, string preparation, int servings, double ratings, List<Ingredient> ingredients, int favourite, RecipeTags[] tags)
+    public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, List<Ingredient> ingredients,int favourite, User owner)
     {
         _name = name;
         _description = description;
@@ -118,7 +115,7 @@ class Recipe
         _ratings = ratings;
         _ingredients = ingredients;
         _favourite = favourite;
-        _tags = tags;
+        _owner = owner;
     }
 
     public void AddToDatabase()
@@ -151,5 +148,16 @@ class Recipe
     {
         _favourite -= 1;
         UpdateRecipe();
+    }
+
+    internal void DisplayRecipeInfo()
+    {
+        Console.WriteLine($"Name: {_name}");
+        Console.WriteLine($"Description: {_description}");
+        Console.WriteLine($"Cooking Time: {_cookingTime} minutes");
+        Console.WriteLine($"Preparation: {_preparation}");
+        Console.WriteLine($"Servings: {_servings}");
+        Console.WriteLine($"Ratings: {_ratings}");
+        Console.WriteLine($"Favourite: {_favourite}");
     }
 }
