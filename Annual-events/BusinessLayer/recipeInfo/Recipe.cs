@@ -3,7 +3,7 @@ using BusinessLayer;
 namespace RecipeInfo;
 class Recipe
 {
-
+    public Utils Utils = new Utils();
     private User _owner;
     public User Owner {
         get { return _owner;}
@@ -129,22 +129,7 @@ class Recipe
         _ingredients = ingredients;
         _favourite = favourite;
         _owner = owner;
-        _tags = ValidateTags(tags); //TODO create a method which adds and checks if the tags are valid
-    }
-
-    public List<RecipeTags> ValidateTags(List<string> tags)
-    {
-        //Make a list of all enums in recipeTags
-        var enum_tags = Enum.GetValues(typeof(RecipeTags));
-        List<string> string_enum_tags = enum_tags.Cast<string>().ToList();
-        //Check if the input tags matches any of the available tags in the enums and adds it to a list
-        List<string> available_tags = new List<string>();
-        foreach(string tag in tags){
-            if(string_enum_tags.Contains(tag)){
-                available_tags.Add(tag);
-            }
-        }
-        return available_tags.Cast<RecipeTags>().ToList();
+        _tags = Utils.ValidateTags(tags);
     }
 
     public void AddToDatabase()
