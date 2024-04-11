@@ -11,73 +11,96 @@ class Recipe
     }
     
     private string _name;
-    public string Name {
-        get{
+    public string Name
+    {
+        get
+        {
             return _name;
         }
-        set{
+        set
+        {
             _name = value;
         }
     }
     private string _description;
-    public string Description {
-        get{
+    public string Description
+    {
+        get
+        {
             return _description;
         }
-        set{
+        set
+        {
             _description = value;
         }
     }
     private double _cookingTime;
-    public double CookingTime {
-        get{
+    public double CookingTime
+    {
+        get
+        {
             return _cookingTime;
         }
-        set{
+        set
+        {
             _cookingTime = value;
         }
     }
     private string _preparation;
-    public string Preparation {
-        get{
+    public string Preparation
+    {
+        get
+        {
             return _preparation;
         }
-        set{
+        set
+        {
             _preparation = value;
         }
     }
     private int _servings;
-    public int Servings {
-        get{
+    public int Servings
+    {
+        get
+        {
             return _servings;
-        } 
-        set{
+        }
+        set
+        {
             _servings = value;
-        } 
+        }
     }
-    private int _ratings;
-    public int Ratings {
-        get{
+    private double _ratings;
+    public double Ratings
+    {
+        get
+        {
             return _ratings;
-        } 
-        set{
+        }
+        set
+        {
             _ratings = value;
         }
     }
     private List<Ingredient> _ingredients;
 
-    public List<Ingredient> Ingredients {
-        get{
+    public List<Ingredient> Ingredients
+    {
+        get
+        {
             return _ingredients;
-        } 
-        set{
+        }
+        set
+        {
             _ingredients = value;
         }
-        
-        }
+
+    }
     private int _favourite;
-    public int Favourite { 
-        get{
+    public int Favourite
+    {
+        get
+        {
             return _favourite;
         }
     }
@@ -94,8 +117,8 @@ class Recipe
         _favourite = favourite;
         _owner = owner;
     }
-    
-    public void CreateRecipe()
+
+    public void AddToDatabase()
     {
         // Create a new recipe
         throw new NotImplementedException();
@@ -118,13 +141,13 @@ class Recipe
 
     public void AddFavourite()
     {
-        //adds a favourite to the favourite field
-        throw new NotImplementedException();
+        _favourite += 1;
+        UpdateRecipe();
     }
     public void RemoveFavourite()
     {
-        //removes a favourite from the favourite field
-        throw new NotImplementedException();
+        _favourite -= 1;
+        UpdateRecipe();
     }
 
     internal void DisplayRecipeInfo()
