@@ -1,79 +1,111 @@
+using BusinessLayer;
+
 namespace RecipeInfo;
 class Recipe
 {
+
+    private User _owner;
+    public User Owner {
+        get { return _owner;}
+        set { _owner = value;}
+    }
+    
     private string _name;
-    public string Name {
-        get{
+    public string Name
+    {
+        get
+        {
             return _name;
         }
-        set{
+        set
+        {
             _name = value;
         }
     }
     private string _description;
-    public string Description {
-        get{
+    public string Description
+    {
+        get
+        {
             return _description;
         }
-        set{
+        set
+        {
             _description = value;
         }
     }
     private double _cookingTime;
-    public double CookingTime {
-        get{
+    public double CookingTime
+    {
+        get
+        {
             return _cookingTime;
         }
-        set{
+        set
+        {
             _cookingTime = value;
         }
     }
     private string _preparation;
-    public string Preparation {
-        get{
+    public string Preparation
+    {
+        get
+        {
             return _preparation;
         }
-        set{
+        set
+        {
             _preparation = value;
         }
     }
     private int _servings;
-    public int Servings {
-        get{
+    public int Servings
+    {
+        get
+        {
             return _servings;
-        } 
-        set{
+        }
+        set
+        {
             _servings = value;
-        } 
+        }
     }
-    private int _ratings;
-    public int Ratings {
-        get{
+    private double _ratings;
+    public double Ratings
+    {
+        get
+        {
             return _ratings;
-        } 
-        set{
+        }
+        set
+        {
             _ratings = value;
         }
     }
     private List<Ingredient> _ingredients;
 
-    public List<Ingredient> Ingredients {
-        get{
+    public List<Ingredient> Ingredients
+    {
+        get
+        {
             return _ingredients;
-        } 
-        set{
+        }
+        set
+        {
             _ingredients = value;
         }
-        
-        }
+
+    }
     private int _favourite;
-    public int Favourite { 
-        get{
+    public int Favourite
+    {
+        get
+        {
             return _favourite;
         }
     }
 
-    public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, List<Ingredient> ingredients,int favourite)
+    public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, List<Ingredient> ingredients,int favourite, User owner)
     {
         _name = name;
         _description = description;
@@ -83,9 +115,10 @@ class Recipe
         _ratings = ratings;
         _ingredients = ingredients;
         _favourite = favourite;
+        _owner = owner;
     }
-    
-    public void CreateRecipe()
+
+    public void AddToDatabase()
     {
         // Create a new recipe
         throw new NotImplementedException();
@@ -108,12 +141,23 @@ class Recipe
 
     public void AddFavourite()
     {
-        //adds a favourite to the favourite field
-        throw new NotImplementedException();
+        _favourite += 1;
+        UpdateRecipe();
     }
     public void RemoveFavourite()
     {
-        //removes a favourite from the favourite field
-        throw new NotImplementedException();
+        _favourite -= 1;
+        UpdateRecipe();
+    }
+
+    internal void DisplayRecipeInfo()
+    {
+        Console.WriteLine($"Name: {_name}");
+        Console.WriteLine($"Description: {_description}");
+        Console.WriteLine($"Cooking Time: {_cookingTime} minutes");
+        Console.WriteLine($"Preparation: {_preparation}");
+        Console.WriteLine($"Servings: {_servings}");
+        Console.WriteLine($"Ratings: {_ratings}");
+        Console.WriteLine($"Favourite: {_favourite}");
     }
 }
