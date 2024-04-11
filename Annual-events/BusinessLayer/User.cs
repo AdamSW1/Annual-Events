@@ -42,7 +42,7 @@ class User {
     } // removes a recipe from the [] list
 
     public void DisplayRecipes() {
-        Console.WriteLine($"Recipes for user: {username}");
+        Console.WriteLine($"Recipes for user: {username}\n");
         foreach (var recipe in recipes)
         {
             recipe.DisplayRecipeInfo();
