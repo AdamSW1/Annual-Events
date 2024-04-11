@@ -155,7 +155,11 @@ class Recipe
         Console.WriteLine($"Name: {_name}");
         Console.WriteLine($"Description: {_description}");
         Console.WriteLine($"Cooking Time: {_cookingTime} minutes");
-        Console.WriteLine($"Preparation: {_preparation}");
+        Console.WriteLine("Ingredients:");
+        foreach (var ingredient in Ingredients){
+            Console.WriteLine($"{ingredient}");
+        }
+        Console.WriteLine($"\nPreparation: {_preparation}");
         Console.WriteLine($"Servings: {_servings}");
         Console.WriteLine($"Ratings: {_ratings}");
         Console.WriteLine($"Favourite: {_favourite}");
