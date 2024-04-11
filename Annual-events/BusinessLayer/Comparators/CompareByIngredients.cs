@@ -13,7 +13,14 @@ public class CompareByIngredients : IComparer<Recipe>
     /// <exception cref="NotImplementedException"></exception>
     int IComparer<Recipe>.Compare(Recipe? x, Recipe? y)
     {
-        throw new NotImplementedException();
+        if(x == null || y == null){
+            return 0;
+        }
+        if(x.Ingredients.Count.CompareTo(y.Ingredients.Count) != 0){
+            return x.Ingredients.Count.CompareTo(y.Ingredients.Count);
+        }
+
+        return 0;
     }
 
 }
