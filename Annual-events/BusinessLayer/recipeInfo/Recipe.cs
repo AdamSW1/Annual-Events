@@ -46,16 +46,16 @@ class Recipe
             _cookingTime = value;
         }
     }
-    private string _preparation;
-    public string Preparation
+    private string _instruction;
+    public string Instruction
     {
         get
         {
-            return _preparation;
+            return _instruction;
         }
         set
         {
-            _preparation = value;
+            _instruction = value;
         }
     }
     private int _servings;
@@ -118,12 +118,12 @@ class Recipe
         }
     }
 
-    public Recipe(string name, string description, double cookingTime, string preparation, int servings, int ratings, List<Ingredient> ingredients,int favourite, User owner,List<string> tags)
+    public Recipe(string name, string description, double cookingTime, string instruction, int servings, int ratings, List<Ingredient> ingredients,int favourite, User owner,List<string> tags)
     {
         _name = name;
         _description = description;
         _cookingTime = cookingTime;
-        _preparation = preparation;
+        _instruction = instruction;
         _servings = servings;
         _ratings = ratings;
         _ingredients = ingredients;
@@ -169,7 +169,11 @@ class Recipe
         Console.WriteLine($"Name: {_name}");
         Console.WriteLine($"Description: {_description}");
         Console.WriteLine($"Cooking Time: {_cookingTime} minutes");
-        Console.WriteLine($"Preparation: {_preparation}");
+        Console.WriteLine("Ingredients:");
+        foreach (var ingredient in Ingredients){
+            Console.WriteLine($"{ingredient}");
+        }
+        Console.WriteLine($"\nPreparation: {_instruction}");
         Console.WriteLine($"Servings: {_servings}");
         Console.WriteLine($"Ratings: {_ratings}");
         Console.WriteLine($"Favourite: {_favourite}");

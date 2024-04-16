@@ -11,14 +11,14 @@ public class Ingredient{
         }
     }
 
-    private double _weight;
+    private string _quantity;
 
-    public double Weight{
+    public string Quantity{
         get{
-            return _weight;
+            return _quantity;
         }
         set{
-            _weight=value;
+            _quantity=value;
         }
     }
 
@@ -32,10 +32,15 @@ public class Ingredient{
         }
     }
 
-    public Ingredient(string name, double weight, double price){
+    public Ingredient(string name, string quantity, double price){
         _name = name;
-        _weight = weight;
+        _quantity = quantity;
         _price = price;
+    }
+
+    public override string ToString()
+    {
+        return $"{Quantity} {Name}, {Price}$";
     }
 
 }
