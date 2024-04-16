@@ -7,11 +7,12 @@ namespace BusinessLayer;
 class Search
 {
     private List<Recipe> Recipes;
-    public Utils utils { get; }
+    public Utils Utils { get; } = new Utils();
     public Search(List<Recipe> recipes)
     {
         this.Recipes = recipes;
     }
+
     public List<Recipe> getRecipes()
     { //gets the recipes from the database
         throw new NotImplementedException();
@@ -37,7 +38,7 @@ class Search
     // Search recipes by tags
     public List<Recipe> SearchRecipesByTags(List<string> tags)
     {
-        var searchedTags = utils.ValidateTags(tags);
+        var searchedTags = Utils.ValidateTags(tags);
         List<Recipe> searched = new();
         foreach (Recipe recipe in Recipes)
         {
