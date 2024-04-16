@@ -29,10 +29,19 @@ class Program
 
     }
 
-    
     public static void Init()
     {
+        //example recipe to test seeing recipes
+        List<string> exampleTags = new List<string>{"vegetarian","vegan"};
+        List<Ingredient> exampleIngredients = new List<Ingredient>();
 
+        Ingredient eggExample= new Ingredient("egg","2",15);
+        Ingredient flourExample= new Ingredient("Flour","4 cups",15);
+
+        exampleIngredients.Add(eggExample);
+        exampleIngredients.Add(flourExample);
+
+        AuthManager.CurrentUser.AddRecipe(new Recipe("ExampleRecipe","Description",120,"do stuff",1,2,new List<Ingredient>(),0,AuthManager.CurrentUser,exampleTags));
         string[] options = new string[] { "Add a recipe", "See your recipes", "LogOut\n" };
 
         string? choice = GetUserChoice("What do you want to do?", options);
