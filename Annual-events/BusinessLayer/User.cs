@@ -54,7 +54,7 @@ class User {
     } // hashes their password
 	public bool Authentication(string enteredUsername, string enteredPassword) {
         return username == enteredUsername && password == enteredPassword;
-    } // verifies their passwords and usernames
+    } // verifies their passwords and usernames with database
 	public void DeleteAccount() {
         
     } // should delete their account definitely

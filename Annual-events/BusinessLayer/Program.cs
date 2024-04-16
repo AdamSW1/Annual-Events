@@ -10,18 +10,14 @@ class Program
     {
         AuthenticationManager AuthManager = new AuthenticationManager();
         // Login
-        Console.WriteLine("Login:");
-        Console.Write("Username: ");
-        string username = Console.ReadLine();
-        Console.Write("Password: ");
-        string password = Console.ReadLine();
+        var loginCredentials = AuthManager.InitLogin();
 
-
-        if (AuthManager.Login(username, password))
+        if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2))
         {
             Console.WriteLine($"Welcome, {AuthManager.CurrentUser.Username}!");
 
-            while (true){
+            while (true)
+            {
                 Init(AuthManager);
             }
 
@@ -32,6 +28,8 @@ class Program
         }
 
     }
+
+    
     public static void Init(AuthenticationManager AuthManager)
     {
 
@@ -57,10 +55,29 @@ class Program
         {
             AuthManager.Logout();
             Console.WriteLine("\nLogged out.");
-            System.Environment.Exit(1);
+            Console.WriteLine("\nDo you wish to login? yes/no");
+            string answer = Console.ReadLine();
+            if (answer == "yes")
+            {
+                while (true)
+                {
+                    var loginCredentials = AuthManager.InitLogin();
+                    if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2))
+                    {
+                        Console.WriteLine($"Welcome, {AuthManager.CurrentUser.Username}!");
+                        break; // Exit the loop if login is successful
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid username or password. Please try again.");
+                    }
+                }
+            }
+            else
+            {
+                System.Environment.Exit(1);
+            }
         }
-
-
     }
     public static string? GetUserChoice(string prompt, string[] options)
     {
