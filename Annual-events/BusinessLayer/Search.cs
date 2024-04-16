@@ -54,28 +54,68 @@ class Search
     }
 
     // Search recipes by time constraint
-    public List<Recipe> SearchRecipesByTimeConstraint()
+    public List<Recipe> SearchRecipesByTimeConstraint(int time)
     {
-        throw new NotImplementedException();
+        List<Recipe> searched = new();
+        foreach (Recipe recipe in Recipes)
+        {
+            if (recipe.CookingTime >= time -3 || recipe.CookingTime <= time + 3)
+            {
+                searched.Add(recipe);
+            }
+        }
+        return searched;
     }
     // Search recipes by rating
     public List<Recipe> SearchRecipesByRating(int rating)
     {
-        throw new NotImplementedException();
+        List<Recipe> searched = new();
+        foreach (Recipe recipe in Recipes)
+        {
+            if (recipe.Ratings == rating)
+            {
+                searched.Add(recipe);
+            }
+        }
+        return searched;
     }
     // Search recipes by servings constraint
     public List<Recipe> SearchRecipesByServings(int servings)
     {
-        throw new NotImplementedException();
+        List<Recipe> searched = new();
+        foreach (Recipe recipe in Recipes)
+        {
+            if (recipe.Servings == servings)
+            {
+                searched.Add(recipe);
+            }
+        }
+        return searched;
     }
     // Search recipes in favorites
-    public List<Recipe> SearchRecipesInFavorites()
+    public List<Recipe> SearchRecipesInFavorites(int favourite)
     {
-        throw new NotImplementedException();
+        List<Recipe> searched = new();
+        foreach (Recipe recipe in Recipes)
+        {
+            if (recipe.Favourite == favourite)
+            {
+                searched.Add(recipe);
+            }
+        }
+        return searched;
     }
     // Search recipes by owner username
     public List<Recipe> SearchRecipesByOwnerUsername(string ownerUsername)
     {
-        throw new NotImplementedException();
+        List<Recipe> searched = new();
+        foreach (Recipe recipe in Recipes)
+        {
+            if (recipe.Owner.Username == ownerUsername)
+            {
+                searched.Add(recipe);
+            }
+        }
+        return searched;
     }
 }
