@@ -19,6 +19,9 @@ public class SearchTest
     [TestMethod]
     public void SearchRecipesByTagsTest()
     {
+        List<string> tags = new List<string>{"vegetarian","vegan"};
+        List<Recipe> recipes = new List<Recipe>{new Recipe("recipe1","description1",RecipeTags.vegetarian,RecipeTags.vegan,30,"instruction1",null)};
+
         throw new NotImplementedException();
     }
     [TestMethod]
