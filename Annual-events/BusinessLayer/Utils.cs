@@ -4,6 +4,7 @@ namespace BusinessLayer;
 
 class Utils
 {
+    //Validates the inputed string tags with the available tags and returns a list of the available tags
     public List<RecipeTags> ValidateTags(List<string> tags)
     {
         //Make a list of all enums in recipeTags
