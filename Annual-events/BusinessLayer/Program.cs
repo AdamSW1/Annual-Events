@@ -9,6 +9,7 @@ class Program
     {
         // Create an instance of the AuthenticationManager
         AuthenticationManager authManager = new AuthenticationManager();
+        Utils utils = new Utils();
 
         // Login
         Console.WriteLine("Login:");
@@ -31,7 +32,8 @@ class Program
                 Console.Write("Description: ");
                 string description = Console.ReadLine();
                 Console.Write("Cooking Time (minutes): ");
-                double cookingTime = double.Parse(Console.ReadLine());
+                //double cookingTime = double.Parse(Console.ReadLine());
+                double cookingTime = utils.CheckInput();
                 Console.Write("Preparation: ");
                 string preparation = Console.ReadLine();
                 Console.Write("Servings: ");
@@ -58,7 +60,7 @@ class Program
                 }
 
                 // Create recipe
-                Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, authManager.CurrentUser);
+                Recipe newRecipe = null;// = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, authManager.CurrentUser);
 
                 // Add the recipe to the user's list
                 authManager.CurrentUser.AddRecipe(newRecipe);
