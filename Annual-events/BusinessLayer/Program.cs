@@ -5,10 +5,10 @@ using RecipeInfo;
 
 class Program
 {
+    public static AuthenticationManager AuthManager = new AuthenticationManager();
 
     public static void Main(string[] args)
     {
-        AuthenticationManager AuthManager = new AuthenticationManager();
         // Login
         var loginCredentials = AuthManager.InitLogin();
 
@@ -18,7 +18,7 @@ class Program
 
             while (true)
             {
-                Init(AuthManager);
+                Init();
             }
 
         }
@@ -30,7 +30,7 @@ class Program
     }
 
     
-    public static void Init(AuthenticationManager AuthManager)
+    public static void Init()
     {
 
         string[] options = new string[] { "Add a recipe", "See your recipes", "LogOut\n" };
@@ -45,7 +45,7 @@ class Program
         }
         else if (choice == options[0])
         {
-            AddAnotherRecipe(AuthManager);
+            AddAnotherRecipe();
         }
         else if (choice == options[1])
         {
@@ -56,8 +56,9 @@ class Program
             AuthManager.Logout();
             Console.WriteLine("\nLogged out.");
             Console.WriteLine("\nDo you wish to login? yes/no");
-            string answer = Console.ReadLine();
-            if (answer == "yes")
+            string answer = Console.ReadLine() ?? "null";
+            answer = answer.ToLower();
+            if (answer == "yes" || answer == "y")
             {
                 while (true)
                 {
@@ -87,7 +88,7 @@ class Program
             Console.WriteLine($"{i + 1} | {options[i]}");
         }
 
-        string choice = Console.ReadLine();
+        string choice = Console.ReadLine() ?? "null";
 
         if (int.TryParse(choice, out int choice1))
         {
@@ -104,22 +105,22 @@ class Program
         return null;
     }
 
-    public static void AddAnotherRecipe(AuthenticationManager AuthManager)
+    public static void AddAnotherRecipe()
     {
         // Prompt user to add recipe
         Console.WriteLine("\nAdd a Recipe:");
         Console.Write("Recipe Name: ");
-        string recipeName = Console.ReadLine();
+        string recipeName = Console.ReadLine() ?? "null";
         Console.Write("Description: ");
-        string description = Console.ReadLine();
+        string description = Console.ReadLine() ?? "null";
         Console.Write("Cooking Time (minutes): ");
-        double cookingTime = double.Parse(Console.ReadLine());
+        double cookingTime = double.Parse(Console.ReadLine() ?? "null");
         Console.Write("Preparation: ");
-        string preparation = Console.ReadLine();
+        string preparation = Console.ReadLine() ?? "null";
         Console.Write("Servings: ");
-        int servings = int.Parse(Console.ReadLine());
+        int servings = int.Parse(Console.ReadLine() ?? "null");
         Console.Write("Ratings: ");
-        int ratings = int.Parse(Console.ReadLine());
+        int ratings = int.Parse(Console.ReadLine() ?? "null"); 
 
         // Get ingredients
         List<Ingredient> ingredients = new List<Ingredient>();
@@ -127,14 +128,14 @@ class Program
         while (true)
         {
             Console.Write("Ingredient Name (press Enter to finish): ");
-            string ingredientName = Console.ReadLine();
+            string ingredientName = Console.ReadLine() ?? "null";
             if (string.IsNullOrWhiteSpace(ingredientName))
                 break;
 
             Console.Write("Weight/Quantity: ");
-            string quantity = Console.ReadLine();
+            string quantity = Console.ReadLine() ?? "null";
             Console.Write("Price: ");
-            double price = double.Parse(Console.ReadLine());
+            double price = double.Parse(Console.ReadLine() ?? "null");
 
             ingredients.Add(new Ingredient(ingredientName, quantity, price));
         }
