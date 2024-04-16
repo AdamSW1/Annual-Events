@@ -10,7 +10,7 @@ class Program
     {
         AuthenticationManager AuthManager = new AuthenticationManager();
         // Login
-        var loginCredentials = InitLogin();
+        var loginCredentials = AuthManager.InitLogin();
 
         if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2))
         {
@@ -29,15 +29,7 @@ class Program
 
     }
 
-    public static (string, string) InitLogin()
-    {
-        Console.WriteLine("Login:");
-        Console.Write("Username: ");
-        string username = Console.ReadLine();
-        Console.Write("Password: ");
-        string password = Console.ReadLine();
-        return (username, password);
-    }
+    
     public static void Init(AuthenticationManager AuthManager)
     {
 
@@ -69,7 +61,7 @@ class Program
             {
                 while (true)
                 {
-                    var loginCredentials = InitLogin();
+                    var loginCredentials = AuthManager.InitLogin();
                     if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2))
                     {
                         Console.WriteLine($"Welcome, {AuthManager.CurrentUser.Username}!");
@@ -86,8 +78,6 @@ class Program
                 System.Environment.Exit(1);
             }
         }
-
-
     }
     public static string? GetUserChoice(string prompt, string[] options)
     {

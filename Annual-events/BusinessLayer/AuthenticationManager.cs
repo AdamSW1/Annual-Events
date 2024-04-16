@@ -13,7 +13,7 @@ namespace BusinessLayer
             // Test data for now, since we dont have a database.
             users.Add(new User("user1", "password1", "Description 1", 25));
             users.Add(new User("user2", "password2", "Description 2", 30));
-            
+
         }
 
         public User CurrentUser { get { return currentUser; } }
@@ -29,6 +29,16 @@ namespace BusinessLayer
                 }
             }
             return false;
+        }
+
+        public (string, string) InitLogin()
+        {
+            Console.WriteLine("Login:");
+            Console.Write("Username: ");
+            string username = Console.ReadLine();
+            Console.Write("Password: ");
+            string password = Console.ReadLine();
+            return (username, password);
         }
 
         public void Logout()
