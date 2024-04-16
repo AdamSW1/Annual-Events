@@ -10,14 +10,9 @@ class Program
     {
         AuthenticationManager AuthManager = new AuthenticationManager();
         // Login
-        Console.WriteLine("Login:");
-        Console.Write("Username: ");
-        string username = Console.ReadLine();
-        Console.Write("Password: ");
-        string password = Console.ReadLine();
+        var loginCredentials = InitLogin();
 
-
-        if (AuthManager.Login(username, password))
+        if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2))
         {
             Console.WriteLine($"Welcome, {AuthManager.CurrentUser.Username}!");
 
