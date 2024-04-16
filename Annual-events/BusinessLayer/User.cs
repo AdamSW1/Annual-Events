@@ -42,7 +42,7 @@ class User {
     } // removes a recipe from the [] list
 
     public void DisplayRecipes() {
-        Console.WriteLine($"Recipes for user: {username}");
+        Console.WriteLine($"Recipes for user: {username}\n");
         foreach (var recipe in recipes)
         {
             recipe.DisplayRecipeInfo();
@@ -54,7 +54,7 @@ class User {
     } // hashes their password
 	public bool Authentication(string enteredUsername, string enteredPassword) {
         return username == enteredUsername && password == enteredPassword;
-    } // verifies their passwords and usernames
+    } // verifies their passwords and usernames with database
 	public void DeleteAccount() {
         
     } // should delete their account definitely
