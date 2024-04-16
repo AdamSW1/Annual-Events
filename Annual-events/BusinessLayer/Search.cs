@@ -1,14 +1,19 @@
+using System.Net;
+using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 using RecipeInfo;
 namespace BusinessLayer;
 
-class Search {
+class Search
+{
     private List<Recipe> Recipes;
+    public Utils utils { get; }
     public Search(List<Recipe> recipes)
     {
         this.Recipes = recipes;
     }
-    public List<Recipe> getRecipes(){ //gets the recipes from the database
+    public List<Recipe> getRecipes()
+    { //gets the recipes from the database
         throw new NotImplementedException();
     }
     // Search recipes by keyword
@@ -16,9 +21,12 @@ class Search {
     {
         string reg = Regex.Escape(keyword);
         List<Recipe> searched = new();
-        foreach(Recipe recipe in Recipes){
-            foreach(Match match in Regex.Matches(recipe.Description,$"(?i){keyword}")){
-                if(match.Success){
+        foreach (Recipe recipe in Recipes)
+        {
+            foreach (Match match in Regex.Matches(recipe.Description, $"(?i){keyword}"))
+            {
+                if (match.Success)
+                {
                     searched.Add(recipe);
                 }
             }
@@ -29,7 +37,20 @@ class Search {
     // Search recipes by tags
     public List<Recipe> SearchRecipesByTags(List<string> tags)
     {
-        throw new NotImplementedException();
+        var searchedTags = utils.ValidateTags(tags);
+        List<Recipe> searched = new();
+        foreach (Recipe recipe in Recipes)
+        {
+            foreach (RecipeTags tag in searchedTags)
+            {
+                if (recipe.Tags.Contains(tag))
+                {
+                    searched.Add(recipe);
+                }
+            }
+        }
+        return searched;
+
     }
 
     // Search recipes by time constraint
