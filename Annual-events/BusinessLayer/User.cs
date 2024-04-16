@@ -7,7 +7,7 @@ class User {
 	private string password;
 	private string description;
 	private int age;
-	private string ?profile_picture; // (GUI)
+	private string? profile_picture; // (GUI)
 
     private List<Recipe> recipes = new List<Recipe>();
 
