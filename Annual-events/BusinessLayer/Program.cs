@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using BusinessLayer;
 using RecipeInfo;
 
@@ -42,7 +43,7 @@ class Program
         exampleIngredients.Add(flourExample);
 
         AuthManager.CurrentUser.AddRecipe(new Recipe("ExampleRecipe","Description",120,"do stuff",1,2,new List<Ingredient>(),0,AuthManager.CurrentUser,exampleTags));
-        string[] options = new string[] { "Add a recipe", "See your recipes", "LogOut\n" };
+        string[] options = new string[] { "Add a recipe", "See your recipes", "Search for a recipe", "LogOut\n" };
 
         string? choice = GetUserChoice("What do you want to do?", options);
 
@@ -60,7 +61,10 @@ class Program
         {
             AuthManager.CurrentUser.DisplayRecipes();
         }
-        else if (choice == options[2])
+        else if (choice == options[2]){
+            SearchRecipes();
+        }
+        else if (choice == options[3])
         {
             AuthManager.Logout();
             Console.WriteLine("\nLogged out.");
@@ -89,6 +93,7 @@ class Program
             }
         }
     }
+
     public static string? GetUserChoice(string prompt, string[] options)
     {
         Console.WriteLine(prompt);
@@ -157,6 +162,22 @@ class Program
         AuthManager.CurrentUser.AddRecipe(newRecipe);
 
         Console.WriteLine("\nRecipe added successfully!");
+
+    }
+
+    private static void SearchRecipes()
+    {
+        string[] search_options = new string[] {"By Keyword",
+                                                "By tags",
+                                                "By time",
+                                                "By rating",
+                                                "By servings",
+                                                "By favourites",
+                                                "By owner"};
+
+        string? choice = GetUserChoice("How do you want to search?",search_options);
+        
+        Console.WriteLine("Not implemented yet");
 
     }
 }
