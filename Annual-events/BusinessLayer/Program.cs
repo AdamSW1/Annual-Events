@@ -139,9 +139,10 @@ class Program
 
             ingredients.Add(new Ingredient(ingredientName, quantity, price));
         }
-
+        //TEMP artificial tags
+        List<string> tags = new List<string>{"vegetarian","vegan"};
         // Create recipe
-        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, AuthManager.CurrentUser);
+        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, AuthManager.CurrentUser,tags);
 
         // Add the recipe to the user's list
         AuthManager.CurrentUser.AddRecipe(newRecipe);
