@@ -16,7 +16,8 @@ class Program
         {
             Console.WriteLine($"Welcome, {AuthManager.CurrentUser.Username}!");
 
-            while (true){
+            while (true)
+            {
                 Init(AuthManager);
             }
 
@@ -28,7 +29,8 @@ class Program
 
     }
 
-    public static (string,string) InitLogin() {
+    public static (string, string) InitLogin()
+    {
         Console.WriteLine("Login:");
         Console.Write("Username: ");
         string username = Console.ReadLine();
@@ -63,19 +65,24 @@ class Program
             Console.WriteLine("\nLogged out.");
             Console.WriteLine("\nDo you wish to login? yes/no");
             string answer = Console.ReadLine();
-            if (answer == "yes") {
-                while(true) {
+            if (answer == "yes")
+            {
+                while (true)
+                {
                     var loginCredentials = InitLogin();
-                    if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2)) {
+                    if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2))
+                    {
                         Console.WriteLine($"Welcome, {AuthManager.CurrentUser.Username}!");
-                        break;
+                        break; // Exit the loop if login is successful
                     }
-                    else {
-                        Console.WriteLine("Invalid username or password.");
+                    else
+                    {
+                        Console.WriteLine("Invalid username or password. Please try again.");
                     }
                 }
             }
-            else {
+            else
+            {
                 System.Environment.Exit(1);
             }
         }
