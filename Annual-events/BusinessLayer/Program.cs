@@ -32,6 +32,15 @@ class Program
         }
 
     }
+
+    public static (string,string) InitLogin() {
+        Console.WriteLine("Login:");
+        Console.Write("Username: ");
+        string username = Console.ReadLine();
+        Console.Write("Password: ");
+        string password = Console.ReadLine();
+        return (username, password);
+    }
     public static void Init(AuthenticationManager AuthManager)
     {
 
@@ -57,7 +66,23 @@ class Program
         {
             AuthManager.Logout();
             Console.WriteLine("\nLogged out.");
-            System.Environment.Exit(1);
+            Console.WriteLine("\nDo you wish to login? yes/no");
+            string answer = Console.ReadLine();
+            if (answer == "yes") {
+                while(true) {
+                    var loginCredentials = InitLogin();
+                    if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2)) {
+                        Console.WriteLine($"Welcome, {AuthManager.CurrentUser.Username}!");
+                        break;
+                    }
+                    else {
+                        Console.WriteLine("Invalid username or password.");
+                    }
+                }
+            }
+            else {
+                System.Environment.Exit(1);
+            }
         }
 
 
