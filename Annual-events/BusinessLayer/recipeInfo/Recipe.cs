@@ -118,7 +118,12 @@ class Recipe
         }
     }
 
-    public Recipe(string name, string description, double cookingTime, string instruction, int servings, int ratings, List<Ingredient> ingredients,int favourite, User owner,List<string> tags)
+    public Recipe(
+        string name, string description,
+        double cookingTime, string instruction, int servings, 
+        int ratings, List<Ingredient> ingredients,
+        int favourite, User owner,List<string> tags
+    )
     {
         _name = name;
         _description = description;
