@@ -54,7 +54,11 @@ class User
     }
     private string? profile_picture; // (GUI)
 
-    private List<Recipe> recipes = new List<Recipe>();
+    private List<Recipe> _recipes = new List<Recipe>();
+    public List<Recipe> Recipes 
+    {
+        get { return _recipes; }
+    }
 
     // constructor 
     public User(string username, string password, string description, int age)
@@ -75,24 +79,24 @@ class User
 
         public void AddToFavRecipe(Recipe recipe)
         {
-            recipes.Add(recipe);
+            _recipes.Add(recipe);
         } // lets them add a recipe to an [] list
 
         public void AddRecipe(Recipe recipe)
         {
             recipe.Owner = this;
-            recipes.Add(recipe);
+            _recipes.Add(recipe);
         } // just adding a recipe to a list, other than Fav
 
         public void RemoveFromFavRecipe(Recipe recipe)
         {
-            recipes.Remove(recipe);
+            _recipes.Remove(recipe);
         } // removes a recipe from the [] list
 
         public void DisplayRecipes()
         {
             Console.WriteLine($"Recipes for user: {_username}\n");
-            foreach (var recipe in recipes)
+            foreach (var recipe in _recipes)
             {
                 recipe.DisplayRecipeInfo();
             }
