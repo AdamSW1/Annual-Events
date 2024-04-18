@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using BusinessLayer;
 using RecipeInfo;
 
@@ -10,17 +11,15 @@ class Program
     {
         AuthenticationManager AuthManager = new AuthenticationManager();
         // Login
-        var loginCredentials = AuthManager.InitLogin();
+        var loginCredentials = InitLogin();
 
         if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2))
         {
             Console.WriteLine($"Welcome, {AuthManager.CurrentUser.Username}!");
-
-            while (true)
+            while(true) 
             {
                 Init(AuthManager);
             }
-
         }
         else
         {
@@ -29,15 +28,13 @@ class Program
 
     }
 
-    
+
     public static void Init(AuthenticationManager AuthManager)
     {
 
-        string[] options = new string[] { "Add a recipe", "See your recipes", "LogOut\n" };
+        string[] options = new string[] { "Add a recipe", "See your recipes", "See all recipes", "LogOut\n" };
 
-        string? choice = GetUserChoice("What do you want to do?", options);
-
-
+        string? choice = Utils.GetUserChoice("What do you want to do?", options);
 
         if (choice == null)
         {
@@ -53,6 +50,10 @@ class Program
         }
         else if (choice == options[2])
         {
+            DisplayAllRecipes(AuthManager);
+        }
+        else if (choice == options[3])
+        {
             AuthManager.Logout();
             Console.WriteLine("\nLogged out.");
             Console.WriteLine("\nDo you wish to login? yes/no");
@@ -61,7 +62,7 @@ class Program
             {
                 while (true)
                 {
-                    var loginCredentials = AuthManager.InitLogin();
+                    var loginCredentials = InitLogin();
                     if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2))
                     {
                         Console.WriteLine($"Welcome, {AuthManager.CurrentUser.Username}!");
@@ -79,29 +80,15 @@ class Program
             }
         }
     }
-    public static string? GetUserChoice(string prompt, string[] options)
+
+    public static (string, string) InitLogin()
     {
-        Console.WriteLine(prompt);
-        for (int i = 0; i < options.Length; i++)
-        {
-            Console.WriteLine($"{i + 1} | {options[i]}");
-        }
-
-        string choice = Console.ReadLine();
-
-        if (int.TryParse(choice, out int choice1))
-        {
-            return options[choice1 - 1];
-        }
-        else if (options.Contains(choice))
-        {
-            return choice;
-        }
-        else if (string.IsNullOrWhiteSpace(choice))
-        {
-            return null;
-        }
-        return null;
+        Console.WriteLine("Login:");
+        Console.Write("Username: ");
+        string username = Console.ReadLine();
+        Console.Write("Password: ");
+        string password = Console.ReadLine();
+        return (username, password);
     }
 
     public static void AddAnotherRecipe(AuthenticationManager AuthManager)
@@ -139,14 +126,24 @@ class Program
             ingredients.Add(new Ingredient(ingredientName, quantity, price));
         }
         //TEMP artificial tags
-        List<string> tags = new List<string>{"vegetarian","vegan"};
+        List<string> tags = new List<string> { "vegetarian", "vegan" };
         // Create recipe
-        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, AuthManager.CurrentUser,tags);
+        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, AuthManager.CurrentUser, tags);
 
         // Add the recipe to the user's list
         AuthManager.CurrentUser.AddRecipe(newRecipe);
 
         Console.WriteLine("\nRecipe added successfully!");
 
+    }
+
+    public static void DisplayAllRecipes(AuthenticationManager AuthManager)
+    {
+        Console.WriteLine("All Recipes:\n");
+        List<Recipe> allRecipes = AuthManager.GetAllRecipesFromAllUsers();
+        foreach (var recipe in allRecipes)
+        {
+            recipe.DisplayRecipeInfo();
+        }
     }
 }
