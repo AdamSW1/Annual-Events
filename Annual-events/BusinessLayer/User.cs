@@ -70,11 +70,14 @@ class User
         hashPassword(password);
     }
 
-         public void DisplayUserInfo()
+         public string DisplayUserInfo()
         {
-            Console.WriteLine($"Username: {_username}");
-            Console.WriteLine($"Description: {_description}");
-            Console.WriteLine($"Age: {_age}");
+            string returnStr = "";
+            returnStr += $"Username: {_username} \n";
+            returnStr += $"Description: {_description}\n";
+            returnStr += $"Age: {_age}\n";
+
+            return returnStr;
         }
 
         public void AddToFavRecipe(Recipe recipe)
@@ -93,14 +96,18 @@ class User
             _recipes.Remove(recipe);
         } // removes a recipe from the [] list
 
-        public void DisplayRecipes()
+        public string DisplayRecipes()
         {
-            Console.WriteLine($"Recipes for user: {_username}\n");
+            string returnStr = "";
+            returnStr +=$"Recipes for user: {_username}\n";
+
             foreach (var recipe in _recipes)
             {
-                Console.WriteLine(" ");
-                recipe.DisplayRecipeInfo();
+                returnStr += "\n";
+                returnStr += recipe.DisplayRecipeInfo();
             }
+
+            return returnStr;
         }
 
         public void StepVerification()

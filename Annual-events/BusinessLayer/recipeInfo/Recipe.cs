@@ -170,20 +170,24 @@ class Recipe
         UpdateRecipe();
     }
 
-    internal void DisplayRecipeInfo()
+    internal string DisplayRecipeInfo()
     {
-        Console.WriteLine($"Written by: {_owner.Username}");
-        Console.WriteLine($"Name: {_name}");
-        Console.WriteLine($"Description: {_description}");
-        Console.WriteLine($"Cooking Time: {_cookingTime} minutes");
-        Console.WriteLine("Ingredients:");
+        string returnStr = "";
+
+        returnStr += $"Written by: {_owner.Username}\n";
+        returnStr += $"Name: {_name}\n";
+        returnStr += $"Description: {_description}\n";
+        returnStr += $"Cooking Time: {_cookingTime} minutes\n";
+        returnStr += "Ingredients:\n";
         foreach (var ingredient in Ingredients)
         {
-            Console.WriteLine($"{ingredient}");
+            returnStr += $"{ingredient}\n";
         }
-        Console.WriteLine($"Preparation: {_instruction}");
-        Console.WriteLine($"Servings: {_servings}");
-        Console.WriteLine($"Ratings: {_ratings}");
-        Console.WriteLine($"Favourites: {_favourite}");
+        returnStr += $"Preparation: {_instruction}\n";
+        returnStr += $"Servings: {_servings}\n";
+        returnStr += $"Ratings: {_ratings}\n";
+        returnStr += $"Favourites: {_favourite}\n";
+
+        return returnStr;
     }
 }
