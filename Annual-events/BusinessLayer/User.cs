@@ -1,39 +1,76 @@
-using System.Collections.Generic;
+    using System.Collections.Generic;
 using RecipeInfo;
 
-namespace BusinessLayer
+class User
 {
-    class User
+
+    private string _username;
+    public string Username
     {
-        private string username;
-        private string password;
-        private string description;
-        private int age;
-        private string? profile_picture; // (GUI)
-
-        private List<Recipe> recipes = new List<Recipe>();
-
-        public string Username { get { return username; } }
-        public string Description { get { return description; } }
-        public int Age { get { return age; } }
-
-        public List<Recipe> Recipes { get { return recipes; } } // Property to access user's recipes
-
-        // constructor 
-        public User(string username, string password, string description, int age)
+        get
         {
-            this.username = username;
-            this.password = password;
-            this.description = description;
-            this.age = age;
-            hashPassword(password);
+            return _username;
         }
-
-        public void DisplayUserInfo()
+        set
         {
-            Console.WriteLine($"Username: {username}");
-            Console.WriteLine($"Description: {description}");
-            Console.WriteLine($"Age: {age}");
+            _username = value;
+        }
+    }
+    private string _password;
+    public string Password
+    {
+        get
+        {
+            return _password;
+        }
+        set
+        {
+            _password = value;
+        }
+    }
+    private string _description;
+    public string Description
+    {
+        get
+        {
+            return _description;
+        }
+        set
+        {
+            _description = value;
+        }
+    }
+    private int _age;
+    public int Age 
+    {
+        get 
+        {
+            return _age; 
+        }
+        set 
+        {
+            _age = value; 
+        }
+    }
+    private string? profile_picture; // (GUI)
+
+    private List<Recipe> recipes = new List<Recipe>();
+
+    // constructor 
+    public User(string username, string password, string description, int age)
+    {
+        _username = username;
+        _password = password;
+        _description = description;
+        _age = age;
+        hashPassword(password);
+    }
+
+         public void DisplayUserInfo()
+        {
+            Console.WriteLine($"Username: {_username}");
+            Console.WriteLine($"Description: {_description}");
+            Console.WriteLine($"Age: {_age}");
         }
 
         public void AddToFavRecipe(Recipe recipe)
@@ -54,7 +91,7 @@ namespace BusinessLayer
 
         public void DisplayRecipes()
         {
-            Console.WriteLine($"Recipes for user: {username}\n");
+            Console.WriteLine($"Recipes for user: {_username}\n");
             foreach (var recipe in recipes)
             {
                 recipe.DisplayRecipeInfo();
@@ -72,11 +109,11 @@ namespace BusinessLayer
 
         public bool Authentication(string enteredUsername, string enteredPassword)
         {
-            return username == enteredUsername && password == enteredPassword;
+            return Username == enteredUsername && Password == enteredPassword;
         } // verifies their passwords and usernames with database
 
         public void DeleteAccount()
         {
         } // should delete their account definitely
-    }
+
 }
