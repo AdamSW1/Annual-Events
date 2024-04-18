@@ -1,60 +1,71 @@
+using System.Net;
+using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 using RecipeInfo;
 namespace BusinessLayer;
 
-class Search {
-    private List<Recipe> Recipes;
+class Search
+{
+    private List<Recipe> _recipes;
+    public List<Recipe> Recipes
+    {
+        get { return _recipes; }
+        set { _recipes = value; }
+    }
+    public Utils utils = new Utils();
     public Search(List<Recipe> recipes)
     {
-        this.Recipes = recipes;
+        _recipes = recipes;
     }
-    public List<Recipe> getRecipes(){ //gets the recipes from the database
+
+    public List<Recipe> getRecipes()
+    { //gets the recipes from the database
         throw new NotImplementedException();
     }
     // Search recipes by keyword
     public List<Recipe> SearchRecipesByKeyword(string keyword)
     {
-        string reg = Regex.Escape(keyword);
-        List<Recipe> searched = new();
-        foreach(Recipe recipe in Recipes){
-            foreach(Match match in Regex.Matches(recipe.Description,$"(?i){keyword}")){
-                if(match.Success){
-                    searched.Add(recipe);
-                }
-            }
-        }
-        return searched;
+        string escaped = Regex.Escape(keyword);
+        var reg = new Regex(escaped, RegexOptions.IgnoreCase);
+        var searched = Recipes.Where(recipe => reg.IsMatch(recipe.Name) || reg.IsMatch(recipe.Description) || reg.IsMatch(recipe.Instruction));
+        return searched.ToList();
     }
-
     // Search recipes by tags
     public List<Recipe> SearchRecipesByTags(List<string> tags)
     {
-        throw new NotImplementedException();
+        List<RecipeTags> searchedTags = utils.ValidateTags(tags);
+        var searched = Recipes.Where(recipe => recipe.Tags.Intersect(searchedTags).Any());
+        return searched.ToList();
     }
-
     // Search recipes by time constraint
-    public List<Recipe> SearchRecipesByTimeConstraint()
+    public List<Recipe> SearchRecipesByTimeConstraint(int time)
     {
-        throw new NotImplementedException();
+        var searched = Recipes.Where(recipe => recipe.CookingTime >= time -3 && recipe.CookingTime <= time + 3);
+        return searched.ToList();
     }
     // Search recipes by rating
     public List<Recipe> SearchRecipesByRating(int rating)
     {
-        throw new NotImplementedException();
+        var searched = Recipes.Where(recipe => recipe.Ratings == rating);
+        return searched.ToList();
     }
     // Search recipes by servings constraint
     public List<Recipe> SearchRecipesByServings(int servings)
     {
-        throw new NotImplementedException();
+        var searched = Recipes.Where(recipe => recipe.Servings == servings);
+        return searched.ToList();
     }
     // Search recipes in favorites
-    public List<Recipe> SearchRecipesInFavorites()
+    public List<Recipe> SearchRecipesInFavorites(int favourite)
     {
-        throw new NotImplementedException();
+        var searched = Recipes.Where(recipe => recipe.Favourite == favourite);
+        return searched.ToList();
     }
     // Search recipes by owner username
     public List<Recipe> SearchRecipesByOwnerUsername(string ownerUsername)
     {
-        throw new NotImplementedException();
+        var searched = Recipes.Where(recipe => recipe.Owner.Username == ownerUsername);
+        return searched.ToList();
     }
 }
