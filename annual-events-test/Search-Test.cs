@@ -42,7 +42,7 @@ public class SearchTest
         Search search = new Search(recipes);
         List<Recipe> expected_recipes = new List<Recipe>{recipes[0]};
         //Act
-        List<Recipe> newRecipes = search.SearchRecipesByKeyword("description1");
+        List<Recipe> newRecipes = search.SearchRecipesByKeyword("recipe1");
         //Assert
         CollectionAssert.AreEquivalent(newRecipes, expected_recipes);
     }

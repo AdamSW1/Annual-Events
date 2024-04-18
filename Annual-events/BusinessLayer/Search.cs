@@ -29,7 +29,7 @@ class Search
         List<Recipe> searched = new();
         foreach (Recipe recipe in Recipes)
         {
-            foreach (Match match in Regex.Matches(recipe.Description, $"(?i){keyword}"))
+            foreach (Match match in Regex.Matches(recipe.Name, $"(?i){keyword}"))
             {
                 if (match.Success)
                 {
