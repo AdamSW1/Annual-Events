@@ -16,7 +16,7 @@ class Search
     public Utils utils = new Utils();
     public Search(List<Recipe> recipes)
     {
-        this.Recipes = recipes;
+        _recipes = recipes;
     }
 
     public List<Recipe> getRecipes()
@@ -26,105 +26,46 @@ class Search
     // Search recipes by keyword
     public List<Recipe> SearchRecipesByKeyword(string keyword)
     {
-        string reg = Regex.Escape(keyword);
-        List<Recipe> searched = new();
-        foreach (Recipe recipe in Recipes)
-        {
-            foreach (Match match in Regex.Matches(recipe.Name, $"(?i){keyword}"))
-            {
-                if (match.Success)
-                {
-                    searched.Add(recipe);
-                    break;
-                }
-            }
-        }
-        return searched;
+        string escaped = Regex.Escape(keyword);
+        var reg = new Regex(escaped, RegexOptions.IgnoreCase);
+        var searched = Recipes.Where(recipe => reg.IsMatch(recipe.Name) || reg.IsMatch(recipe.Description) || reg.IsMatch(recipe.Instruction));
+        return searched.ToList();
     }
-
     // Search recipes by tags
     public List<Recipe> SearchRecipesByTags(List<string> tags)
     {
         List<RecipeTags> searchedTags = utils.ValidateTags(tags);
-        List<Recipe> searched = new();
-        foreach (Recipe recipe in Recipes)
-        {
-            foreach (RecipeTags tag in searchedTags)
-            {
-                if (recipe.Tags.Contains(tag))
-                {
-                    searched.Add(recipe);
-                    break;
-                }
-            }
-        }
-        return searched;
-
+        var searched = Recipes.Where(recipe => recipe.Tags.Intersect(searchedTags).Any());
+        return searched.ToList();
     }
-
     // Search recipes by time constraint
     public List<Recipe> SearchRecipesByTimeConstraint(int time)
     {
-        List<Recipe> searched = new();
-        foreach (Recipe recipe in Recipes)
-        {
-            if (recipe.CookingTime >= time -3 && recipe.CookingTime <= time + 3)
-            {
-                searched.Add(recipe);
-            }
-        }
-        return searched;
+        var searched = Recipes.Where(recipe => recipe.CookingTime >= time -3 && recipe.CookingTime <= time + 3);
+        return searched.ToList();
     }
     // Search recipes by rating
     public List<Recipe> SearchRecipesByRating(int rating)
     {
-        List<Recipe> searched = new();
-        foreach (Recipe recipe in Recipes)
-        {
-            if (recipe.Ratings == rating)
-            {
-                searched.Add(recipe);
-            }
-        }
-        return searched;
+        var searched = Recipes.Where(recipe => recipe.Ratings == rating);
+        return searched.ToList();
     }
     // Search recipes by servings constraint
     public List<Recipe> SearchRecipesByServings(int servings)
     {
-        List<Recipe> searched = new();
-        foreach (Recipe recipe in Recipes)
-        {
-            if (recipe.Servings == servings)
-            {
-                searched.Add(recipe);
-            }
-        }
-        return searched;
+        var searched = Recipes.Where(recipe => recipe.Servings == servings);
+        return searched.ToList();
     }
     // Search recipes in favorites
     public List<Recipe> SearchRecipesInFavorites(int favourite)
     {
-        List<Recipe> searched = new();
-        foreach (Recipe recipe in Recipes)
-        {
-            if (recipe.Favourite == favourite)
-            {
-                searched.Add(recipe);
-            }
-        }
-        return searched;
+        var searched = Recipes.Where(recipe => recipe.Favourite == favourite);
+        return searched.ToList();
     }
     // Search recipes by owner username
     public List<Recipe> SearchRecipesByOwnerUsername(string ownerUsername)
     {
-        List<Recipe> searched = new();
-        foreach (Recipe recipe in Recipes)
-        {
-            if (recipe.Owner.Username == ownerUsername)
-            {
-                searched.Add(recipe);
-            }
-        }
-        return searched;
+        var searched = Recipes.Where(recipe => recipe.Owner.Username == ownerUsername);
+        return searched.ToList();
     }
 }
