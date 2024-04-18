@@ -1,5 +1,5 @@
+    using System.Collections.Generic;
 using RecipeInfo;
-namespace BusinessLayer;
 
 class User
 {
@@ -66,45 +66,54 @@ class User
         hashPassword(password);
     }
 
-    public void DisplayUserInfo()
-    {
-        Console.WriteLine($"Username: {_username}");
-        Console.WriteLine($"Description: {_description}");
-        Console.WriteLine($"Age: {_age}");
-    }
-    public void AddToFavRecipe(Recipe recipe)
-    {
-        recipes.Add(recipe);
-    } // lets them add a recipe to an [] list
-    public void AddRecipe(Recipe recipe)
-    {
-        recipe.Owner = this;
-        recipes.Add(recipe);
-    } // just adding a recipe to a list, other than Fav
-    public void RemoveFromFavRecipe(Recipe recipe)
-    {
-        recipes.Remove(recipe);
-    } // removes a recipe from the [] list
-
-    public void DisplayRecipes()
-    {
-        Console.WriteLine($"Recipes for user: {_username}\n");
-        foreach (var recipe in recipes)
+         public void DisplayUserInfo()
         {
-            recipe.DisplayRecipeInfo();
+            Console.WriteLine($"Username: {_username}");
+            Console.WriteLine($"Description: {_description}");
+            Console.WriteLine($"Age: {_age}");
         }
-    }
-    public void StepVerification() { } // optional but asks them 2 specific infos
-    public void hashPassword(string password)
-    {
-        // algo here
-    } // hashes their password
-    public bool Authentication(string enteredUsername, string enteredPassword)
-    {
-        return Username == enteredUsername && Password == enteredPassword;
-    } // verifies their passwords and usernames with database
-    public void DeleteAccount()
-    {
 
-    } // should delete their account definitely
+        public void AddToFavRecipe(Recipe recipe)
+        {
+            recipes.Add(recipe);
+        } // lets them add a recipe to an [] list
+
+        public void AddRecipe(Recipe recipe)
+        {
+            recipe.Owner = this;
+            recipes.Add(recipe);
+        } // just adding a recipe to a list, other than Fav
+
+        public void RemoveFromFavRecipe(Recipe recipe)
+        {
+            recipes.Remove(recipe);
+        } // removes a recipe from the [] list
+
+        public void DisplayRecipes()
+        {
+            Console.WriteLine($"Recipes for user: {_username}\n");
+            foreach (var recipe in recipes)
+            {
+                recipe.DisplayRecipeInfo();
+            }
+        }
+
+        public void StepVerification()
+        {
+        } // optional but asks them 2 specific infos
+
+        public void hashPassword(string password)
+        {
+            // algo here
+        } // hashes their password
+
+        public bool Authentication(string enteredUsername, string enteredPassword)
+        {
+            return Username == enteredUsername && Password == enteredPassword;
+        } // verifies their passwords and usernames with database
+
+        public void DeleteAccount()
+        {
+        } // should delete their account definitely
+
 }

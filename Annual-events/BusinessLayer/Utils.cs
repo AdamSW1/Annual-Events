@@ -14,4 +14,29 @@ class Utils
         var available_tags = string_enum_tags.Where(tag => tags.Contains(tag)).ToList();
         return Array.ConvertAll(available_tags.ToArray(), item => (RecipeTags)Enum.Parse(typeof(RecipeTags), item)).ToList();
     }
+
+    public static string? GetUserChoice(string prompt, string[] options)
+    {
+        Console.WriteLine(prompt);
+        for (int i = 0; i < options.Length; i++)
+        {
+            Console.WriteLine($"{i + 1} | {options[i]}");
+        }
+
+        string choice = Console.ReadLine();
+
+        if (int.TryParse(choice, out int choice1))
+        {
+            return options[choice1 - 1];
+        }
+        else if (options.Contains(choice))
+        {
+            return choice;
+        }
+        else if (string.IsNullOrWhiteSpace(choice))
+        {
+            return null;
+        }
+        return null;
+    }
 }
