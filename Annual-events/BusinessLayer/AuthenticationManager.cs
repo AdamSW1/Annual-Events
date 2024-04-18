@@ -18,13 +18,15 @@ namespace BusinessLayer
 
         public User CurrentUser 
         { 
-            get { 
-                    if(_currentUser != null){
-                        return _currentUser; 
-                    }
-                    throw new NotImplementedException();
+            get 
+            { 
+                if(_currentUser != null)
+                {
+                    return _currentUser; 
                 }
+                throw new NotImplementedException();
             }
+        }
 
         public bool Login(string username, string password)
         {
@@ -53,6 +55,5 @@ namespace BusinessLayer
             }
             return allRecipes;
         }
-
     }
 }
