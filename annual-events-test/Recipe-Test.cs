@@ -65,6 +65,7 @@ public class RecipeTest
         user.AddRecipe(newRecipe);
 
         // Assert
+
         Assert.AreEqual(1, user.Recipes.Count); // User should have 1 recipe added
     }
 }

@@ -110,14 +110,7 @@ class Search
     // Search recipes by owner username
     public List<Recipe> SearchRecipesByOwnerUsername(string ownerUsername)
     {
-        List<Recipe> searched = new();
-        foreach (Recipe recipe in Recipes)
-        {
-            if (recipe.Owner.Username == ownerUsername)
-            {
-                searched.Add(recipe);
-            }
-        }
-        return searched;
+        var searched = Recipes.Where(recipe => recipe.Owner.Username == ownerUsername);
+        return searched.ToList();
     }
 }
