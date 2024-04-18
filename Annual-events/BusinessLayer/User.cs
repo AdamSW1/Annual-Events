@@ -98,6 +98,7 @@ class User
             Console.WriteLine($"Recipes for user: {_username}\n");
             foreach (var recipe in _recipes)
             {
+                Console.WriteLine(" ");
                 recipe.DisplayRecipeInfo();
             }
         }

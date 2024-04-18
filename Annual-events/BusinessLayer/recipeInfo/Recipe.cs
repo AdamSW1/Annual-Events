@@ -181,9 +181,9 @@ class Recipe
         {
             Console.WriteLine($"{ingredient}");
         }
-        Console.WriteLine($"\nPreparation: {_instruction}");
+        Console.WriteLine($"Preparation: {_instruction}");
         Console.WriteLine($"Servings: {_servings}");
         Console.WriteLine($"Ratings: {_ratings}");
-        Console.WriteLine($"Favourite: {_favourite}");
+        Console.WriteLine($"Favourites: {_favourite}");
     }
 }
