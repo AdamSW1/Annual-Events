@@ -172,6 +172,7 @@ class Recipe
 
     internal void DisplayRecipeInfo()
     {
+        Console.WriteLine($"Written by: {_owner.Username}");
         Console.WriteLine($"Name: {_name}");
         Console.WriteLine($"Description: {_description}");
         Console.WriteLine($"Cooking Time: {_cookingTime} minutes");
@@ -180,9 +181,9 @@ class Recipe
         {
             Console.WriteLine($"{ingredient}");
         }
-        Console.WriteLine($"\nPreparation: {_instruction}");
+        Console.WriteLine($"Preparation: {_instruction}");
         Console.WriteLine($"Servings: {_servings}");
         Console.WriteLine($"Ratings: {_ratings}");
-        Console.WriteLine($"Favourite: {_favourite}");
+        Console.WriteLine($"Favourites: {_favourite}");
     }
 }
