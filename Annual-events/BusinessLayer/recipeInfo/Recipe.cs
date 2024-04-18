@@ -172,6 +172,7 @@ class Recipe
 
     internal void DisplayRecipeInfo()
     {
+        Console.WriteLine($"Written by: {_owner.Username}");
         Console.WriteLine($"Name: {_name}");
         Console.WriteLine($"Description: {_description}");
         Console.WriteLine($"Cooking Time: {_cookingTime} minutes");
