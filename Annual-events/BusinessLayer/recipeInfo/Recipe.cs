@@ -119,6 +119,19 @@ class Recipe
         }
     }
 
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="description"></param>
+    /// <param name="cookingTime"></param>
+    /// <param name="instruction"></param>
+    /// <param name="servings"></param>
+    /// <param name="ratings"></param>
+    /// <param name="ingredients"></param>
+    /// <param name="favourite"></param>
+    /// <param name="owner"></param>
+    /// <param name="tags"></param>
     public Recipe(
         string name, string description,
         double cookingTime, string instruction, int servings, 
@@ -136,6 +149,25 @@ class Recipe
         _favourite = favourite;
         _owner = owner;
         _tags = Utils.ValidateTags(tags);
+    }
+
+    // override object.Equals
+    public override bool Equals(object obj)
+    {
+        
+        if (obj == null || GetType() != obj.GetType())
+        {
+            return false;
+        }
+        
+        Recipe other = (Recipe)obj;
+        return _name.Equals(other._name) && _description.Equals(other._description) && _owner.Equals(other._owner);
+    }
+    
+    // override object.GetHashCode
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(_name, _description, _owner);
     }
 
     public void AddToDatabase()

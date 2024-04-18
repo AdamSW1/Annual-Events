@@ -1,4 +1,4 @@
-    using System.Collections.Generic;
+using System.Collections.Generic;
 using RecipeInfo;
 
 class User
@@ -41,21 +41,21 @@ class User
         }
     }
     private int _age;
-    public int Age 
+    public int Age
     {
-        get 
+        get
         {
-            return _age; 
+            return _age;
         }
-        set 
+        set
         {
-            _age = value; 
+            _age = value;
         }
     }
     private byte[]? profile_picture; // (GUI) store images in database??
 
     private List<Recipe> _recipes = new List<Recipe>();
-    public List<Recipe> Recipes 
+    public List<Recipe> Recipes
     {
         get { return _recipes; }
     }
@@ -70,62 +70,81 @@ class User
         hashPassword(password);
     }
 
-         public string DisplayUserInfo()
+    // override object.Equals
+    public override bool Equals(object obj)
+    {
+        
+        if (obj == null || GetType() != obj.GetType())
         {
-            string returnStr = "";
-            returnStr += $"Username: {_username} \n";
-            returnStr += $"Description: {_description}\n";
-            returnStr += $"Age: {_age}\n";
+            return false;
+        }
+        
+        User user = (User)obj;
+        return _username == user._username && _description == user._description && _age == user._age;
+    }
+    
+    // override object.GetHashCode
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(_username, _description, _age);
+    }
 
-            return returnStr;
+    public string DisplayUserInfo()
+    {
+        string returnStr = "";
+        returnStr += $"Username: {_username} \n";
+        returnStr += $"Description: {_description}\n";
+        returnStr += $"Age: {_age}\n";
+
+        return returnStr;
+    }
+
+    public void AddToFavRecipe(Recipe recipe)
+    {
+        _recipes.Add(recipe);
+    } // lets them add a recipe to an [] list
+
+    public void AddRecipe(Recipe recipe)
+    {
+        recipe.Owner = this;
+        _recipes.Add(recipe);
+    } // just adding a recipe to a list, other than Fav
+
+    public void RemoveFromFavRecipe(Recipe recipe)
+    {
+        _recipes.Remove(recipe);
+    } // removes a recipe from the [] list
+
+    public string DisplayRecipes()
+    {
+        string returnStr = "";
+        returnStr += $"Recipes for user: {_username}\n";
+
+        foreach (var recipe in _recipes)
+        {
+            returnStr += "\n";
+            returnStr += recipe.DisplayRecipeInfo();
         }
 
-        public void AddToFavRecipe(Recipe recipe)
-        {
-            _recipes.Add(recipe);
-        } // lets them add a recipe to an [] list
+        return returnStr;
+    }
 
-        public void AddRecipe(Recipe recipe)
-        {
-            recipe.Owner = this;
-            _recipes.Add(recipe);
-        } // just adding a recipe to a list, other than Fav
+    public void StepVerification()
+    {
+    } // optional but asks them 2 specific infos
 
-        public void RemoveFromFavRecipe(Recipe recipe)
-        {
-            _recipes.Remove(recipe);
-        } // removes a recipe from the [] list
+    public void hashPassword(string password)
+    {
+        // algo here
+    } // hashes their password
 
-        public string DisplayRecipes()
-        {
-            string returnStr = "";
-            returnStr += $"Recipes for user: {_username}\n";
+    public bool Authentication(string enteredUsername, string enteredPassword)
+    {
+        return Username == enteredUsername && Password == enteredPassword;
+    } // verifies their passwords and usernames with database
 
-            foreach (var recipe in _recipes)
-            {
-                returnStr += "\n";
-                returnStr += recipe.DisplayRecipeInfo();
-            }
-
-            return returnStr;
-        }
-
-        public void StepVerification()
-        {
-        } // optional but asks them 2 specific infos
-
-        public void hashPassword(string password)
-        {
-            // algo here
-        } // hashes their password
-
-        public bool Authentication(string enteredUsername, string enteredPassword)
-        {
-            return Username == enteredUsername && Password == enteredPassword;
-        } // verifies their passwords and usernames with database
-
-        public void DeleteAccount()
-        {
-        } // should delete their account definitely
+    public void DeleteAccount()
+    {
+    } // should delete their account definitely
 
 }
