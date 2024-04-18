@@ -10,17 +10,17 @@ class RecipeManager
     {
         Console.WriteLine("\nAdd a Recipe:");
         Console.Write("Recipe Name: ");
-        string recipeName = Console.ReadLine();
+        string recipeName = Console.ReadLine() ?? "null";
         Console.Write("Description: ");
-        string description = Console.ReadLine();
+        string description = Console.ReadLine() ?? "null";
         Console.Write("Cooking Time (minutes): ");
-        double cookingTime = double.Parse(Console.ReadLine());
+        double cookingTime = double.Parse(Console.ReadLine() ?? "null");
         Console.Write("Preparation: ");
-        string preparation = Console.ReadLine();
+        string preparation = Console.ReadLine() ?? "null";
         Console.Write("Servings: ");
-        int servings = int.Parse(Console.ReadLine());
+        int servings = int.Parse(Console.ReadLine() ?? "null");
         Console.Write("Ratings: ");
-        int ratings = int.Parse(Console.ReadLine());
+        int ratings = int.Parse(Console.ReadLine() ?? "null");
 
         // Get ingredients
         List<Ingredient> ingredients = new List<Ingredient>();
@@ -28,14 +28,14 @@ class RecipeManager
         while (true)
         {
             Console.Write("Ingredient Name (press Enter to finish): ");
-            string ingredientName = Console.ReadLine();
+            string ingredientName = Console.ReadLine() ?? "null";
             if (string.IsNullOrWhiteSpace(ingredientName))
                 break;
 
             Console.Write("Weight/Quantity: ");
-            string quantity = Console.ReadLine();
+            string quantity = Console.ReadLine() ?? "null";
             Console.Write("Price: ");
-            double price = double.Parse(Console.ReadLine());
+            double price = double.Parse(Console.ReadLine() ?? "null");
 
             ingredients.Add(new Ingredient(ingredientName, quantity, price));
         }

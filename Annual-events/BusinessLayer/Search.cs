@@ -18,6 +18,7 @@ class Search
     {
         _recipes = recipes;
     }
+
     public List<Recipe> getRecipes()
     { //gets the recipes from the database
         throw new NotImplementedException();
