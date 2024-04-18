@@ -6,6 +6,7 @@ using RecipeInfo;
 class Program
 {
     public static AuthenticationManager AuthManager = new AuthenticationManager();
+    public static RecipeManager recipeManager = new RecipeManager();
     public static void Main(string[] args)
     {
         // Login
@@ -14,10 +15,10 @@ class Program
         if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2))
         {
             Console.WriteLine($"Welcome, {AuthManager.CurrentUser.Username}!");
-            RecipeManager recipeManager = new RecipeManager();
+            AddExampleRecipes();
             while (true)
             {
-                Init(AuthManager, recipeManager);
+                Init();
             }
         }
         else
@@ -26,10 +27,11 @@ class Program
         }
     }
 
-    public static void Init(AuthenticationManager AuthManager, RecipeManager recipeManager)
+    public static void Init()
     {
         string[] options = new string[] { "Add a recipe", "See your recipes", "See all recipes","Search recipes", "LogOut\n" };
 
+        Console.WriteLine();
         string? choice = Utils.GetUserChoice("What do you want to do?", options);
 
         if (choice == null)
@@ -104,6 +106,25 @@ class Program
                 Environment.Exit(1);
             }
         }
+    }
+
+    public static void AddExampleRecipes(){
+        Ingredient flour = new Ingredient("flour","6 cups",7);
+        Ingredient egg = new Ingredient("egg","4",3);
+        List<Ingredient> ingredients= new List<Ingredient>() { flour, egg };
+        List<string> tags = new List<string>() { "cake","chocolate" };
+        Recipe exampleRecipe = new Recipe(  "Chocolate cake",
+                                            "A simple chocolate cake",
+                                            120,
+                                            "mix, put in oven, do stuff",
+                                            8,
+                                            5,
+                                            ingredients,
+                                            0,
+                                            AuthManager.CurrentUser,
+                                            tags
+                                            );
+        AuthManager.CurrentUser.AddRecipe(exampleRecipe);
     }
 
     public static (string, string) InitLogin()
