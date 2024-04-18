@@ -7,6 +7,7 @@ class Program
 {
     public static AuthenticationManager AuthManager = new AuthenticationManager();
     public static RecipeManager recipeManager = new RecipeManager();
+    public static string seperator = "-----------------------";
     public static void Main(string[] args)
     {
         // Login
@@ -44,11 +45,12 @@ class Program
         }
         else if (choice == options[1])
         {
+            Console.WriteLine($"\n{seperator}\n");
             AuthManager.CurrentUser.DisplayRecipes();
         }
         else if (choice == options[2])
         {
-            AuthManager.GetAllRecipesFromAllUsers().ForEach(recipe => recipe.DisplayRecipeInfo());
+            AuthManager.GetAllRecipesFromAllUsers().ForEach(recipe => {Console.WriteLine($"\n{seperator}\n"); recipe.DisplayRecipeInfo();});
         }
         else if (choice == options[3])
         {
@@ -67,16 +69,18 @@ class Program
                 Console.Write("Enter a Keyword: ");
                 string keyword = Console.ReadLine() ?? " ";
 
+                Console.WriteLine(seperator);
                 List<Recipe> recipes = search.SearchRecipesByKeyword(keyword);
                 if (recipes.Count == 0)
                 {
+
                     Console.Write("No recipes found with that keyword");
                     return;
                 }
 
                 foreach (Recipe recipe in recipes)
                 {
-
+                    Console.WriteLine("");
                     recipe.DisplayRecipeInfo();
                 }
             }
@@ -112,6 +116,11 @@ class Program
         }
     }
 
+    /// <summary>
+    /// A method that adds an example recipe to the fake database
+    /// so recipes viewing can be done without creating one first
+    /// 
+    /// </summary>
     public static void AddExampleRecipes()
     {
         Ingredient flour = new Ingredient("flour", "6 cups", 7);
@@ -129,12 +138,27 @@ class Program
                                             AuthManager.CurrentUser,
                                             tags
                                             );
+        Recipe exampleRecipe2 = new Recipe("Vanilla cake",
+                                            "A simple Vanilla cake",
+                                            100,
+                                            "mix, put in oven, do stuff",
+                                            6,
+                                            4,
+                                            ingredients,
+                                            0,
+                                            AuthManager.CurrentUser,
+                                            tags
+                                            );
+        
         AuthManager.CurrentUser.AddRecipe(exampleRecipe);
+        AuthManager.CurrentUser.AddRecipe(exampleRecipe2);
     }
 
     public static (string, string) InitLogin()
     {
-        Console.WriteLine("Login:");
+        Console.WriteLine("-----Login------");
+        Console.WriteLine("(for testing: try username: user1 and password: password1)");
+        Console.WriteLine(seperator);
         Console.Write("Username: ");
         string username = Console.ReadLine() ?? "null";
         Console.Write("Password: ");
