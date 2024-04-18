@@ -5,11 +5,12 @@ class Recipe
 {
     public Utils Utils = new Utils();
     private User _owner;
-    public User Owner {
-        get { return _owner;}
-        set { _owner = value;}
+    public User Owner
+    {
+        get { return _owner; }
+        set { _owner = value; }
     }
-    
+
     private string _name;
     public string Name
     {
@@ -106,7 +107,7 @@ class Recipe
     }
 
     private List<RecipeTags> _tags;
-    public List <RecipeTags> Tags
+    public List<RecipeTags> Tags
     {
         get
         {
@@ -175,7 +176,8 @@ class Recipe
         Console.WriteLine($"Description: {_description}");
         Console.WriteLine($"Cooking Time: {_cookingTime} minutes");
         Console.WriteLine("Ingredients:");
-        foreach (var ingredient in Ingredients){
+        foreach (var ingredient in Ingredients)
+        {
             Console.WriteLine($"{ingredient}");
         }
         Console.WriteLine($"\nPreparation: {_instruction}");

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Xml.Serialization;
 using BusinessLayer;
 using RecipeInfo;
@@ -7,47 +6,32 @@ using RecipeInfo;
 class Program
 {
     public static AuthenticationManager AuthManager = new AuthenticationManager();
-
     public static void Main(string[] args)
     {
         // Login
-        var loginCredentials = AuthManager.InitLogin();
+        var loginCredentials = InitLogin();
 
         if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2))
         {
             Console.WriteLine($"Welcome, {AuthManager.CurrentUser.Username}!");
-
+            RecipeManager recipeManager = new RecipeManager();
             while (true)
             {
                 Init();
+                Init(AuthManager, recipeManager);
             }
-
         }
         else
         {
             Console.WriteLine("Invalid username or password.");
         }
-
     }
 
-    public static void Init()
+    public static void Init(AuthenticationManager AuthManager, RecipeManager recipeManager)
     {
-        //example recipe to test seeing recipes
-        List<string> exampleTags = new List<string>{"vegetarian","vegan"};
-        List<Ingredient> exampleIngredients = new List<Ingredient>();
+        string[] options = new string[] { "Add a recipe", "See your recipes", "See all recipes", "LogOut\n" };
 
-        Ingredient eggExample= new Ingredient("egg","2",15);
-        Ingredient flourExample= new Ingredient("Flour","4 cups",15);
-
-        exampleIngredients.Add(eggExample);
-        exampleIngredients.Add(flourExample);
-
-        AuthManager.CurrentUser.AddRecipe(new Recipe("ExampleRecipe","Description",120,"do stuff",1,2,new List<Ingredient>(),0,AuthManager.CurrentUser,exampleTags));
-        string[] options = new string[] { "Add a recipe", "See your recipes", "Search for a recipe", "LogOut\n" };
-
-        string? choice = GetUserChoice("What do you want to do?", options);
-
-
+        string? choice = Utils.GetUserChoice("What do you want to do?", options);
 
         if (choice == null)
         {
@@ -55,14 +39,15 @@ class Program
         }
         else if (choice == options[0])
         {
-            AddAnotherRecipe();
+            recipeManager.AddRecipe(AuthManager.CurrentUser);
         }
         else if (choice == options[1])
         {
             AuthManager.CurrentUser.DisplayRecipes();
         }
-        else if (choice == options[2]){
-            SearchRecipes();
+        else if (choice == options[2])
+        {
+            AuthManager.GetAllRecipesFromAllUsers().ForEach(recipe => recipe.DisplayRecipeInfo());
         }
         else if (choice == options[3])
         {
@@ -75,7 +60,7 @@ class Program
             {
                 while (true)
                 {
-                    var loginCredentials = AuthManager.InitLogin();
+                    var loginCredentials = InitLogin();
                     if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2))
                     {
                         Console.WriteLine($"Welcome, {AuthManager.CurrentUser.Username}!");
@@ -89,95 +74,18 @@ class Program
             }
             else
             {
-                System.Environment.Exit(1);
+                Environment.Exit(1);
             }
         }
     }
 
-    public static string? GetUserChoice(string prompt, string[] options)
+    public static (string, string) InitLogin()
     {
-        Console.WriteLine(prompt);
-        for (int i = 0; i < options.Length; i++)
-        {
-            Console.WriteLine($"{i + 1} | {options[i]}");
-        }
-
-        string choice = Console.ReadLine() ?? "null";
-
-        if (int.TryParse(choice, out int choice1))
-        {
-            return options[choice1 - 1];
-        }
-        else if (options.Contains(choice))
-        {
-            return choice;
-        }
-        else if (string.IsNullOrWhiteSpace(choice))
-        {
-            return null;
-        }
-        return null;
-    }
-
-    public static void AddAnotherRecipe()
-    {
-        // Prompt user to add recipe
-        Console.WriteLine("\nAdd a Recipe:");
-        Console.Write("Recipe Name: ");
-        string recipeName = Console.ReadLine() ?? "null";
-        Console.Write("Description: ");
-        string description = Console.ReadLine() ?? "null";
-        Console.Write("Cooking Time (minutes): ");
-        double cookingTime = double.Parse(Console.ReadLine() ?? "null");
-        Console.Write("Preparation: ");
-        string preparation = Console.ReadLine() ?? "null";
-        Console.Write("Servings: ");
-        int servings = int.Parse(Console.ReadLine() ?? "null");
-        Console.Write("Ratings: ");
-        int ratings = int.Parse(Console.ReadLine() ?? "null"); 
-
-        // Get ingredients
-        List<Ingredient> ingredients = new List<Ingredient>();
-        Console.WriteLine("\nEnter Ingredients (press Enter without typing to finish):");
-        while (true)
-        {
-            Console.Write("Ingredient Name (press Enter to finish): ");
-            string ingredientName = Console.ReadLine() ?? "null";
-            if (string.IsNullOrWhiteSpace(ingredientName))
-                break;
-
-            Console.Write("Weight/Quantity: ");
-            string quantity = Console.ReadLine() ?? "null";
-            Console.Write("Price: ");
-            double price = double.Parse(Console.ReadLine() ?? "null");
-
-            ingredients.Add(new Ingredient(ingredientName, quantity, price));
-        }
-        //TEMP artificial tags
-        List<string> tags = new List<string>{"vegetarian","vegan"};
-        // Create recipe
-        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, AuthManager.CurrentUser,tags);
-
-        // Add the recipe to the user's list
-        AuthManager.CurrentUser.AddRecipe(newRecipe);
-
-        Console.WriteLine("\nRecipe added successfully!");
-
-    }
-
-    private static void SearchRecipes()
-    {
-        string[] search_options = new string[] {"By Keyword",
-                                                "By tags",
-                                                "By time",
-                                                "By rating",
-                                                "By servings",
-                                                "By favourites",
-                                                "By owner"};
-
-        string? choice = GetUserChoice("How do you want to search?",search_options);
-        
-        Console.WriteLine("Not implemented yet");
-
+        Console.WriteLine("Login:");
+        Console.Write("Username: ");
+        string username = Console.ReadLine();
+        Console.Write("Password: ");
+        string password = Console.ReadLine();
+        return (username, password);
     }
 }
