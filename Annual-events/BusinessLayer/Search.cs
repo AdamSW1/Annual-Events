@@ -16,7 +16,7 @@ class Search
     public Utils utils = new Utils();
     public Search(List<Recipe> recipes)
     {
-        this.Recipes = recipes;
+        _recipes = recipes;
     }
     public List<Recipe> getRecipes()
     { //gets the recipes from the database
@@ -103,15 +103,8 @@ class Search
     // Search recipes in favorites
     public List<Recipe> SearchRecipesInFavorites(int favourite)
     {
-        List<Recipe> searched = new();
-        foreach (Recipe recipe in Recipes)
-        {
-            if (recipe.Favourite == favourite)
-            {
-                searched.Add(recipe);
-            }
-        }
-        return searched;
+        var searched = Recipes.Where(recipe => recipe.Favourite == favourite);
+        return searched.ToList();
     }
     // Search recipes by owner username
     public List<Recipe> SearchRecipesByOwnerUsername(string ownerUsername)
