@@ -17,7 +17,6 @@ class Program
             RecipeManager recipeManager = new RecipeManager();
             while (true)
             {
-                Init();
                 Init(AuthManager, recipeManager);
             }
         }
@@ -29,7 +28,7 @@ class Program
 
     public static void Init(AuthenticationManager AuthManager, RecipeManager recipeManager)
     {
-        string[] options = new string[] { "Add a recipe", "See your recipes", "See all recipes", "LogOut\n" };
+        string[] options = new string[] { "Add a recipe", "See your recipes", "See all recipes","Search recipes", "LogOut\n" };
 
         string? choice = Utils.GetUserChoice("What do you want to do?", options);
 
@@ -50,6 +49,34 @@ class Program
             AuthManager.GetAllRecipesFromAllUsers().ForEach(recipe => recipe.DisplayRecipeInfo());
         }
         else if (choice == options[3])
+        {
+            Search search = new Search(AuthManager.GetAllRecipesFromAllUsers());
+
+            string[] searchOptions = new string[] {"By keyword"};
+            string searchType = Utils.GetUserChoice("How do you want to search?", searchOptions) ?? "";
+
+            if (string.IsNullOrEmpty(searchType)){
+                return;
+            }
+
+            if(searchType == searchOptions[0] || searchType == "1"){
+                Console.Write("Enter a Keyword: ");
+                string keyword = Console.ReadLine() ?? " ";
+
+                List<Recipe> recipes = search.SearchRecipesByKeyword(keyword);
+                if (recipes.Count == 0){
+                    Console.Write("No recipes found with that keyword");
+                    return;
+                }
+
+                foreach (Recipe recipe in recipes){
+
+                    recipe.DisplayRecipeInfo();
+                }
+            }
+
+        }
+        else if (choice == options[4])
         {
             AuthManager.Logout();
             Console.WriteLine("\nLogged out.");
@@ -83,9 +110,9 @@ class Program
     {
         Console.WriteLine("Login:");
         Console.Write("Username: ");
-        string username = Console.ReadLine();
+        string username = Console.ReadLine() ?? "null";
         Console.Write("Password: ");
-        string password = Console.ReadLine();
+        string password = Console.ReadLine() ?? "null";
         return (username, password);
     }
 }
