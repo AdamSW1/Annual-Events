@@ -29,7 +29,7 @@ class Program
 
     public static void Init()
     {
-        string[] options = new string[] { "Add a recipe", "See your recipes", "See all recipes","Search recipes", "LogOut\n" };
+        string[] options = new string[] { "Add a recipe", "See your recipes", "See all recipes", "Search recipes", "LogOut\n" };
 
         Console.WriteLine();
         string? choice = Utils.GetUserChoice("What do you want to do?", options);
@@ -54,24 +54,28 @@ class Program
         {
             Search search = new Search(AuthManager.GetAllRecipesFromAllUsers());
 
-            string[] searchOptions = new string[] {"By keyword"};
+            string[] searchOptions = new string[] { "By keyword" };
             string searchType = Utils.GetUserChoice("How do you want to search?", searchOptions) ?? "";
 
-            if (string.IsNullOrEmpty(searchType)){
+            if (string.IsNullOrEmpty(searchType))
+            {
                 return;
             }
 
-            if(searchType == searchOptions[0] || searchType == "1"){
+            if (searchType == searchOptions[0] || searchType == "1")
+            {
                 Console.Write("Enter a Keyword: ");
                 string keyword = Console.ReadLine() ?? " ";
 
                 List<Recipe> recipes = search.SearchRecipesByKeyword(keyword);
-                if (recipes.Count == 0){
+                if (recipes.Count == 0)
+                {
                     Console.Write("No recipes found with that keyword");
                     return;
                 }
 
-                foreach (Recipe recipe in recipes){
+                foreach (Recipe recipe in recipes)
+                {
 
                     recipe.DisplayRecipeInfo();
                 }
@@ -108,12 +112,13 @@ class Program
         }
     }
 
-    public static void AddExampleRecipes(){
-        Ingredient flour = new Ingredient("flour","6 cups",7);
-        Ingredient egg = new Ingredient("egg","4",3);
-        List<Ingredient> ingredients= new List<Ingredient>() { flour, egg };
-        List<string> tags = new List<string>() { "cake","chocolate" };
-        Recipe exampleRecipe = new Recipe(  "Chocolate cake",
+    public static void AddExampleRecipes()
+    {
+        Ingredient flour = new Ingredient("flour", "6 cups", 7);
+        Ingredient egg = new Ingredient("egg", "4", 3);
+        List<Ingredient> ingredients = new List<Ingredient>() { flour, egg };
+        List<string> tags = new List<string>() { "cake", "chocolate" };
+        Recipe exampleRecipe = new Recipe("Chocolate cake",
                                             "A simple chocolate cake",
                                             120,
                                             "mix, put in oven, do stuff",
