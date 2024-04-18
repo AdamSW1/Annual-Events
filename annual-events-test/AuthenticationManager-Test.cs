@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BusinessLayer;
 using RecipeInfo;
+namespace annual_events_test;
 
 [TestClass]
 public class AuthenticationManagerTest
