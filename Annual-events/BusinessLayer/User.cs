@@ -52,7 +52,7 @@ class User
             _age = value; 
         }
     }
-    private string? profile_picture; // (GUI)
+    private byte[]? profile_picture; // (GUI) store images in database??
 
     private List<Recipe> _recipes = new List<Recipe>();
     public List<Recipe> Recipes 
@@ -99,7 +99,7 @@ class User
         public string DisplayRecipes()
         {
             string returnStr = "";
-            returnStr +=$"Recipes for user: {_username}\n";
+            returnStr += $"Recipes for user: {_username}\n";
 
             foreach (var recipe in _recipes)
             {
