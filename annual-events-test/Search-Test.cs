@@ -14,39 +14,36 @@ public class SearchTest
     [TestMethod]
     public void SearchRecipesByKeywordTest()
     {
-        throw new NotImplementedException();
-    }
-    [TestMethod]
-    public void SearchRecipesByTagsTest()
-    {
+        //Arrange
         List<string> tags = new List<string>{"vegetarian","vegan"};
-        List<Recipe> recipes = new List<Recipe>{new Recipe("recipe1","description1",RecipeTags.vegetarian,RecipeTags.vegan,30,"instruction1",null)};
-
-        throw new NotImplementedException();
-    }
-    [TestMethod]
-    public void SearchRecipesByTimeConstraintTest()
-    {
-        throw new NotImplementedException();
-    }
-    [TestMethod]
-    public void SearchRecipesByRatingTest()
-    {
-        throw new NotImplementedException();
-    }
-    [TestMethod]
-    public void SearchRecipesByServingsTest()
-    {
-        throw new NotImplementedException();
-    }
-    [TestMethod]
-    public void SearchRecipesInFavoritesTest()
-    {
-        throw new NotImplementedException();
-    }
-    [TestMethod]
-    public void SearchRecipesByOwnerUsernameTest()
-    {
-        throw new NotImplementedException();
+        List<Recipe> recipes = new List<Recipe>{    
+            new Recipe(
+            name: "recipe1",
+            description: "description1",
+            cookingTime: 3,
+            instruction: "instruction1",
+            servings: 2,
+            ratings: 2,
+            ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
+            favourite: 2,
+            owner: null,
+            tags: tags),
+            new Recipe(
+            name: "recipe2",
+            description: "description2",
+            cookingTime: 0,
+            instruction: "Instruction 2",
+            servings: 1,
+            ratings: 3,
+            ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
+            favourite: 0,
+            owner:null,
+            tags: tags)};
+        Search search = new Search(recipes);
+        List<Recipe> expected_recipes = new List<Recipe>{recipes[0]};
+        //Act
+        List<Recipe> newRecipes = search.SearchRecipesByKeyword("description1");
+        //Assert
+        CollectionAssert.AreEquivalent(newRecipes, expected_recipes);
     }
 }
