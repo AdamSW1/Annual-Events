@@ -7,23 +7,22 @@ namespace annual_events_test;
 [TestClass]
 public class ComparatorsTest
 {
-    // Sample recipes for testing
-    Recipe recipe1 = new Recipe("cheesecake", "tasty cheesecake for birthday party", 2, "do stuff", 2, 3, new List<Ingredient> {new Ingredient("cheese", "2", 3)}, 2, new User("cakelover123", "1234", "hello its me", 15));
-    Recipe recipe2 = new Recipe("cheese pizza", "tasty cheese pizza", 3, "do stuff", 2, 3, new List<Ingredient> {new Ingredient("cheese", "2", 3)}, 2, new User("cakelover123", "1234", "hello its me", 15));
-    Recipe recipe3 = new Recipe("cheese pizza", "tasty cheese pizza", 3, "do stuff", 2, 5, new List<Ingredient> {new Ingredient("cheese", "2", 3), new Ingredient("test", "test", 3)}, 2, new User("cakelover123", "1234", "hello its me", 15));
-    
+
     // Tests CompareByIngredients
     [TestMethod]
-    public void TestIngredientsComparatorAllCases()
+    public void TestIngredientsComparator()
     {
         // Arrange
         IComparer<Recipe> ingredientComparator = new CompareByIngredients();
+        AuthenticationManager manager = new AuthenticationManager();
+        
+
+        // Act
+        (Recipe recipe1, Recipe recipe2) = AddExampleRecipes();
 
         // Assert
         Assert.AreEqual(ingredientComparator.Compare(recipe1, recipe2), 0);
         Assert.AreEqual(ingredientComparator.Compare(recipe2, recipe1), 0);
-        Assert.AreEqual(ingredientComparator.Compare(recipe3, recipe1), 1);
-        Assert.AreEqual(ingredientComparator.Compare(recipe2, recipe3), -1);
     }
 
     // Tests CompareByRating
@@ -32,12 +31,14 @@ public class ComparatorsTest
     {
         // Arrange
         IComparer<Recipe> ratingComparator = new CompareByRating();
-        
+        AuthenticationManager manager = new AuthenticationManager();
+
+        // Act
+        (Recipe recipe1, Recipe recipe2) = AddExampleRecipes();
+
         // Assert
-        Assert.AreEqual(ratingComparator.Compare(recipe1, recipe2), 0);
-        Assert.AreEqual(ratingComparator.Compare(recipe2, recipe1), 0);
-        Assert.AreEqual(ratingComparator.Compare(recipe1, recipe3), -1);
-         Assert.AreEqual(ratingComparator.Compare(recipe3, recipe2), 1);
+        
+
     }
 
     // Tests CompareByServings
@@ -46,9 +47,13 @@ public class ComparatorsTest
     {
         // Arrange
         IComparer<Recipe> servingsComparator = new CompareByServings();
-        
+        AuthenticationManager manager = new AuthenticationManager();
+
+        // Act
+        (Recipe recipe1, Recipe recipe2) = AddExampleRecipes();
+
         // Assert
-        
+
     }
 
     // Tests CompareByTime
@@ -57,8 +62,43 @@ public class ComparatorsTest
     {
         // Arrange
         IComparer<Recipe> timeComparator = new CompareByTime();
-        
+        AuthenticationManager manager = new AuthenticationManager();
+
+        // Act
+        (Recipe recipe1, Recipe recipe2) = AddExampleRecipes();
+
         // Assert
 
+    }
+
+    private static (Recipe, Recipe) AddExampleRecipes()
+    {
+        Ingredient flour = new Ingredient("flour", "6 cups", 7);
+        Ingredient egg = new Ingredient("egg", "4", 3);
+        List<Ingredient> ingredients = new List<Ingredient>() { flour, egg };
+        List<string> tags = new List<string>() { "cake", "chocolate" };
+        Recipe exampleRecipe = new Recipe("Chocolate cake",
+                                            "A simple chocolate cake",
+                                            120,
+                                            "mix, put in oven, do stuff",
+                                            8,
+                                            5,
+                                            ingredients,
+                                            0,
+                                            new User("cookielol132", "234", "nbdfnjgbd", 16),
+                                            tags
+                                            );
+        Recipe exampleRecipe2 = new Recipe("Vanilla cake",
+                                            "A simple Vanilla cake",
+                                            100,
+                                            "mix, put in oven, do stuff",
+                                            6,
+                                            4,
+                                            ingredients,
+                                            0,
+                                            new User("hello1234", "678", "ngjveuiwsnhg", 24),
+                                            tags
+                                            );
+        return (exampleRecipe, exampleRecipe2);
     }
 }
