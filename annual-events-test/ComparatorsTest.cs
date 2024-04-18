@@ -14,7 +14,6 @@ public class ComparatorsTest
     {
         // Arrange
         IComparer<Recipe> ingredientComparator = new CompareByIngredients();
-        AuthenticationManager manager = new AuthenticationManager();
         
 
         // Act
@@ -31,13 +30,13 @@ public class ComparatorsTest
     {
         // Arrange
         IComparer<Recipe> ratingComparator = new CompareByRating();
-        AuthenticationManager manager = new AuthenticationManager();
 
         // Act
         (Recipe recipe1, Recipe recipe2) = AddExampleRecipes();
 
         // Assert
-        
+        Assert.AreEqual(ratingComparator.Compare(recipe1, recipe2), 1);
+        Assert.AreEqual(ratingComparator.Compare(recipe2, recipe1), -1);
 
     }
 
@@ -47,13 +46,13 @@ public class ComparatorsTest
     {
         // Arrange
         IComparer<Recipe> servingsComparator = new CompareByServings();
-        AuthenticationManager manager = new AuthenticationManager();
 
         // Act
         (Recipe recipe1, Recipe recipe2) = AddExampleRecipes();
 
         // Assert
-
+        Assert.AreEqual(servingsComparator.Compare(recipe1, recipe2), 1);
+        Assert.AreEqual(servingsComparator.Compare(recipe2, recipe1), -1);
     }
 
     // Tests CompareByTime
@@ -62,13 +61,13 @@ public class ComparatorsTest
     {
         // Arrange
         IComparer<Recipe> timeComparator = new CompareByTime();
-        AuthenticationManager manager = new AuthenticationManager();
 
         // Act
         (Recipe recipe1, Recipe recipe2) = AddExampleRecipes();
 
         // Assert
-
+        Assert.AreEqual(timeComparator.Compare(recipe1, recipe2), 1);
+        Assert.AreEqual(timeComparator.Compare(recipe2, recipe1), -1);
     }
 
     private static (Recipe, Recipe) AddExampleRecipes()
@@ -85,7 +84,7 @@ public class ComparatorsTest
                                             5,
                                             ingredients,
                                             0,
-                                            new User("cookielol132", "234", "nbdfnjgbd", 16),
+                                            new User("cookielover123", "234", "nbdfnjgbd", 16),
                                             tags
                                             );
         Recipe exampleRecipe2 = new Recipe("Vanilla cake",
