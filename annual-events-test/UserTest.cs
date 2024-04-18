@@ -21,7 +21,7 @@ public class UserTest
     }
     //Test for adding a recipe to a user's list
     [TestMethod]
-    public void AddRecipeTest()
+    public void AddRecipeTest_addingOneRecipe()
     {
         //arrange
         User user = new User("Test","TestPass","description",20);
@@ -34,7 +34,7 @@ public class UserTest
         Assert.AreEqual(test, user.Recipes[0]);
     }
 
-    
+
     //Test for removing a recipe from a user's list
     [TestMethod]
     public void RemoveFromFavRecipeTest()
