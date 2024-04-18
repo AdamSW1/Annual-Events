@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using RecipeInfo;
 namespace BusinessLayer
 {
     class AuthenticationManager
@@ -31,19 +31,20 @@ namespace BusinessLayer
             return false;
         }
 
-        public (string, string) InitLogin()
-        {
-            Console.WriteLine("Login:");
-            Console.Write("Username: ");
-            string username = Console.ReadLine();
-            Console.Write("Password: ");
-            string password = Console.ReadLine();
-            return (username, password);
-        }
-
         public void Logout()
         {
             currentUser = null;
         }
+
+        public List<Recipe> GetAllRecipesFromAllUsers()
+        {
+            List<Recipe> allRecipes = new List<Recipe>();
+            foreach (var user in users)
+            {
+                allRecipes.AddRange(user.Recipes);
+            }
+            return allRecipes;
+        }
+
     }
 }
