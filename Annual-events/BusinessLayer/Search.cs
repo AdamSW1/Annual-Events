@@ -1,13 +1,19 @@
 using System.Net;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 using RecipeInfo;
 namespace BusinessLayer;
 
 class Search
 {
-    private List<Recipe> Recipes;
-    public Utils Utils { get; } = new Utils();
+    private List<Recipe> _recipes;
+    public List<Recipe> Recipes
+    {
+        get { return _recipes; }
+        set { _recipes = value; }
+    }
+    public Utils utils = new Utils();
     public Search(List<Recipe> recipes)
     {
         this.Recipes = recipes;
@@ -24,11 +30,12 @@ class Search
         List<Recipe> searched = new();
         foreach (Recipe recipe in Recipes)
         {
-            foreach (Match match in Regex.Matches(recipe.Description, $"(?i){keyword}"))
+            foreach (Match match in Regex.Matches(recipe.Name, $"(?i){keyword}"))
             {
                 if (match.Success)
                 {
                     searched.Add(recipe);
+                    break;
                 }
             }
         }
@@ -38,7 +45,7 @@ class Search
     // Search recipes by tags
     public List<Recipe> SearchRecipesByTags(List<string> tags)
     {
-        var searchedTags = Utils.ValidateTags(tags);
+        List<RecipeTags> searchedTags = utils.ValidateTags(tags);
         List<Recipe> searched = new();
         foreach (Recipe recipe in Recipes)
         {
@@ -47,6 +54,7 @@ class Search
                 if (recipe.Tags.Contains(tag))
                 {
                     searched.Add(recipe);
+                    break;
                 }
             }
         }
@@ -60,7 +68,7 @@ class Search
         List<Recipe> searched = new();
         foreach (Recipe recipe in Recipes)
         {
-            if (recipe.CookingTime >= time -3 || recipe.CookingTime <= time + 3)
+            if (recipe.CookingTime >= time -3 && recipe.CookingTime <= time + 3)
             {
                 searched.Add(recipe);
             }
