@@ -6,7 +6,7 @@ namespace BusinessLayer
     class AuthenticationManager
     {
         private List<User> users = new List<User>();
-        private User currentUser;
+        private User? _currentUser;
 
         public AuthenticationManager()
         {
@@ -16,7 +16,15 @@ namespace BusinessLayer
 
         }
 
-        public User CurrentUser { get { return currentUser; } }
+        public User CurrentUser 
+        { 
+            get { 
+                    if(_currentUser != null){
+                        return _currentUser; 
+                    }
+                    throw new NotImplementedException();
+                }
+            }
 
         public bool Login(string username, string password)
         {
@@ -24,7 +32,7 @@ namespace BusinessLayer
             {
                 if (user.Authentication(username, password))
                 {
-                    currentUser = user;
+                    _currentUser = user;
                     return true;
                 }
             }
@@ -33,7 +41,7 @@ namespace BusinessLayer
 
         public void Logout()
         {
-            currentUser = null;
+            _currentUser = null;
         }
 
         public List<Recipe> GetAllRecipesFromAllUsers()

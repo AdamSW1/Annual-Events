@@ -18,6 +18,7 @@ class Search
     {
         this.Recipes = recipes;
     }
+
     public List<Recipe> getRecipes()
     { //gets the recipes from the database
         throw new NotImplementedException();
