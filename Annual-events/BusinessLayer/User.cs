@@ -60,6 +60,9 @@ class User
         get { return _recipes; }
     }
 
+    private List<Recipe> _favRecipes = new List<Recipe>();
+    public List<Recipe> FavRecipes = new List<Recipe>();
+
     // constructor 
     public User(string username, string password, string description, int age)
     {
@@ -101,7 +104,7 @@ class User
 
     public void AddToFavRecipe(Recipe recipe)
     {
-        _recipes.Add(recipe);
+        _favRecipes.Add(recipe);
     } // lets them add a recipe to an [] list
 
     public void AddRecipe(Recipe recipe)
@@ -112,9 +115,13 @@ class User
 
     public void RemoveFromFavRecipe(Recipe recipe)
     {
-        _recipes.Remove(recipe);
+        _favRecipes.Remove(recipe);
     } // removes a recipe from the [] list
 
+    public void DeleteRecipe(Recipe recipe) 
+    {
+        _recipes.Remove(recipe);
+    }
     public string DisplayRecipes()
     {
         string returnStr = "";
@@ -146,5 +153,14 @@ class User
     public void DeleteAccount()
     {
     } // should delete their account definitely
+
+    public void ViewFavRecipes()
+    {
+        Console.WriteLine("Favorite Recipes:");
+        foreach (var recipe in _favRecipes)
+        {
+            Console.WriteLine(recipe.Name); // Assuming Name property exists in Recipe class
+        }
+    }
 
 }
