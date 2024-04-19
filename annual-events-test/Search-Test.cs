@@ -18,27 +18,29 @@ public class SearchTest
         List<string> tags = new List<string> { "vegetarian", "vegan" };
         List<Recipe> recipes = new List<Recipe>{
             new Recipe(
-            name: "recipe1",
-            description: "description1",
-            cookingTime: 3,
-            instruction: "instruction1",
-            servings: 2,
-            ratings: 2,
-            ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
-            favourite: 2,
-            owner: null,
-            tags: tags),
+                name: "recipe1",
+                description: "description1",
+                cookingTime: 3,
+                instruction: "instruction1",
+                servings: 2,
+                ratings: 2,
+                ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
+                favourite: 2,
+                owner: null,
+                tags: tags,
+                review: new List<string> { "review1", "review2" }),
             new Recipe(
-            name: "recipe2",
-            description: "description2",
-            cookingTime: 0,
-            instruction: "Instruction 2",
-            servings: 1,
-            ratings: 3,
-            ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
-            favourite: 0,
-            owner:null,
-            tags: tags)};
+                name: "recipe2",
+                description: "description2",
+                cookingTime: 0,
+                instruction: "Instruction 2",
+                servings: 1,
+                ratings: 3,
+                ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
+                favourite: 0,
+                owner:null,
+                tags: tags,
+                review: new List<string> { "review1", "review2" })};
         Search search = new Search(recipes);
         List<Recipe> expected_recipes = new List<Recipe> { recipes[0] };
         //Act
@@ -53,27 +55,29 @@ public class SearchTest
         List<string> tags = new List<string> { "vegetarian", "vegan" };
         List<Recipe> recipes = new List<Recipe>{
             new Recipe(
-            name: "recipe1",
-            description: "description1",
-            cookingTime: 3,
-            instruction: "instruction1",
-            servings: 2,
-            ratings: 2,
-            ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
-            favourite: 2,
-            owner: null,
-            tags: tags),
+                name: "recipe1",
+                description: "description1",
+                cookingTime: 3,
+                instruction: "instruction1",
+                servings: 2,
+                ratings: 2,
+                ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
+                favourite: 2,
+                owner: null,
+                tags: tags,
+                review: new List<string> { "review1", "review2" }),
             new Recipe(
-            name: "recipe2",
-            description: "description2",
-            cookingTime: 0,
-            instruction: "Instruction 2",
-            servings: 1,
-            ratings: 3,
-            ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
-            favourite: 0,
-            owner:null,
-            tags: tags)};
+                name: "recipe2",
+                description: "description2",
+                cookingTime: 0,
+                instruction: "Instruction 2",
+                servings: 1,
+                ratings: 3,
+                ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
+                favourite: 0,
+                owner:null,
+                tags: tags,
+                review: new List<string> { "review1", "review2" })};
         Search search = new Search(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByTags(tags);
@@ -96,7 +100,8 @@ public class SearchTest
                 ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
                 favourite: 2,
                 owner: null,
-                tags: tags),
+                tags: tags,
+                review: new List<string> { "review1", "review2" }),
             new Recipe(
                 name: "recipe2",
                 description: "description2",
@@ -107,7 +112,8 @@ public class SearchTest
                 ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
                 favourite: 0,
                 owner:null,
-                tags: tags)};
+                tags: tags,
+                review: new List<string> { "review1", "review2" })};
         Search search = new Search(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByTimeConstraint(5);
@@ -130,9 +136,10 @@ public class SearchTest
                 ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
                 favourite: 2,
                 owner: null,
-                tags: tags),
+                tags: tags,
+                review: new List<string> { "review1", "review2" }),
             new Recipe(
-            name: "recipe2",
+                name: "recipe2",
                 description: "description2",
                 cookingTime: 0,
                 instruction: "Instruction 2",
@@ -141,7 +148,8 @@ public class SearchTest
                 ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
                 favourite: 0,
                 owner:null,
-                tags: tags)};
+                tags: tags,
+                review: new List<string> { "review1", "review2" })};
         Search search = new Search(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByRating(2);
@@ -163,7 +171,8 @@ public class SearchTest
                 ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
                 favourite: 2,
                 owner: null,
-                tags: tags),
+                tags: tags,
+                review: new List<string> { "review1", "review2" }),
             new Recipe(
                 name: "recipe2",
                 description: "description2",
@@ -174,7 +183,8 @@ public class SearchTest
                 ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
                 favourite: 0,
                 owner:null,
-                tags: tags)};       
+                tags: tags,
+                review: new List<string> { "review1", "review2" })};     
         Search search = new Search(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByServings(1);
@@ -188,27 +198,29 @@ public class SearchTest
         List<string> tags = new List<string> { "vegetarian", "vegan" };
         List<Recipe> recipes = new List<Recipe>{
             new Recipe(
-                    name: "recipe1",
-                    description: "description1",
-                    cookingTime: 3,
-                    instruction: "instruction1",
-                    servings: 2,
-                    ratings: 2,
-                    ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
-                    favourite: 2,
-                    owner: null,
-                    tags: tags),
+                name: "recipe1",
+                description: "description1",
+                cookingTime: 3,
+                instruction: "instruction1",
+                servings: 2,
+                ratings: 2,
+                ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
+                favourite: 2,
+                owner: null,
+                tags: tags,
+                review: new List<string> { "review1", "review2" }),
             new Recipe(
-                    name: "recipe2",
-                    description: "description2",
-                    cookingTime: 0,
-                    instruction: "Instruction 2",
-                    servings: 1,
-                    ratings: 3,
-                    ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
-                    favourite: 0,
-                    owner:null,
-                    tags: tags)};
+                name: "recipe2",
+                description: "description2",
+                cookingTime: 0,
+                instruction: "Instruction 2",
+                servings: 1,
+                ratings: 3,
+                ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
+                favourite: 0,
+                owner:null,
+                tags: tags,
+                review: new List<string> { "review1", "review2" })};
         Search search = new Search(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesInFavorites(0);
@@ -220,6 +232,7 @@ public class SearchTest
     {
         //Arrange
         List<string> tags = new List<string> { "vegetarian", "vegan" };
+        List <string> review =  new List<string> { "review1", "review2" };
         List<Recipe> recipes = new List<Recipe>{
             new Recipe(
                 name: "recipe1",
@@ -230,8 +243,9 @@ public class SearchTest
                 ratings: 2,
                 ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
                 favourite: 2,
-                owner: new User("NotJoe","password","description", 20),
-                tags: tags),
+                owner: new User("Joe", "password", "Joe", 30),
+                tags: tags,
+                review: review),
             new Recipe(
                 name: "recipe2",
                 description: "description2",
@@ -241,8 +255,9 @@ public class SearchTest
                 ratings: 3,
                 ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
                 favourite: 0,
-                owner:new User("Joe","password","description", 20),
-                tags: tags)};
+                owner:new User("Boe", "password", "Boe", 30),
+                tags: tags,
+                review: review)};
         Search search = new Search(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByOwnerUsername("Joe");

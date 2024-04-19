@@ -175,7 +175,7 @@ class Program
                                             ingredients,
                                             0,
                                             AuthManager.CurrentUser,
-                                            tags
+                                            tags,null
                                             );
         Recipe exampleRecipe2 = new Recipe("Vanilla cake",
                                             "A simple Vanilla cake",
@@ -186,7 +186,7 @@ class Program
                                             ingredients,
                                             0,
                                             AuthManager.CurrentUser,
-                                            tags
+                                            tags,null
                                             );
         
         AuthManager.CurrentUser.AddRecipe(exampleRecipe);

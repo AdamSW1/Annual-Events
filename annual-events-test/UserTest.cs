@@ -80,7 +80,7 @@ public class UserTest
                                             ingredients,
                                             0,
                                             cur,
-                                            tags
+                                            tags,null
                                             );
 
         return exampleRecipe;
