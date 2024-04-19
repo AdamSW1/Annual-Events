@@ -30,7 +30,7 @@ class Program
 
     public static void Init()
     {
-        string[] options = new string[] { "Add a recipe", "See your recipes", "See all recipes", "Search recipes", "Delete a Recipe", "Add a Recipe to Favourites", "Remove a recipe from Favourites List", "LogOut\n" };
+        string[] options = new string[] { "Add a recipe", "See your recipes", "See your Favourite Recipes",  "See all recipes", "Search recipes", "Delete a Recipe", "Add a Recipe to Favourites", "Remove a recipe from Favourites List", "LogOut\n" };
 
         Console.WriteLine();
         string? choice = Utils.GetUserChoice("What do you want to do?", options);
@@ -50,6 +50,10 @@ class Program
         }
         else if (choice == options[2])
         {
+            AuthManager.CurrentUser.ViewFavRecipes();
+        }
+        else if (choice == options[3])
+        {
             AuthManager.GetAllRecipesFromAllUsers().ForEach(
                 recipe => {
                 Console.WriteLine($"\n{seperator}\n"); 
@@ -57,7 +61,7 @@ class Program
                 }
                 );
         }
-        else if (choice == options[3])
+        else if (choice == options[4])
         {
             Search search = new Search(AuthManager.GetAllRecipesFromAllUsers());
 
@@ -91,25 +95,25 @@ class Program
             }
 
         }
-        else if (choice == options[4])
+        else if (choice == options[5])
         {
             Console.WriteLine("\nEnter the name of the recipe you want to delete:");
             string recipeName = Console.ReadLine();
             RecipeManager.DeleteRecipe(AuthManager.CurrentUser, recipeName);
         }
-        else if (choice == options[5])
+        else if (choice == options[6])
         {
             Console.WriteLine("\nEnter the name of your favourite recipe:");
             string recipeName = Console.ReadLine();
             RecipeManager.AddToFavRecipe(AuthManager.CurrentUser, recipeName);
         }
-        else if (choice == options[6])
+        else if (choice == options[7])
         {
             Console.WriteLine("\nEnter the name of the recipe (Favourites) you want to delete:");
             string recipeName = Console.ReadLine();
             RecipeManager.DeleteFavRecipe(AuthManager.CurrentUser, recipeName);
         }
-        else if (choice == options[7])
+        else if (choice == options[8])
         {
             AuthManager.Logout();
             Console.WriteLine("\nLogged out.");
