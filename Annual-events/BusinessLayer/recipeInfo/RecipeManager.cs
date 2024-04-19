@@ -52,12 +52,9 @@ class RecipeManager
         Console.WriteLine("\nRecipe added successfully!");
     }
 
-    public static void DeleteRecipe(User user)
+    public static void DeleteRecipe(User user, string recipeName)
     {
         Console.WriteLine("\nDelete a Recipe:");
-        Console.Write("Enter the name of the recipe you want to delete: ");
-        string recipeName = Console.ReadLine();
-        
         
         Recipe recipeToDelete = user.Recipes.Find(r => r.Name == recipeName);
         
@@ -72,5 +69,36 @@ class RecipeManager
             Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
         }
     }
+
+    public static void AddToFavRecipe(User user, string recipeName)
+    {
+        Recipe recipeToAdd = user.Recipes.Find(r => r.Name == recipeName);
+        
+        if (recipeToAdd != null)
+        {
+            user.AddToFavRecipe(recipeToAdd);
+            Console.WriteLine($"\nRecipe '{recipeName}' added to favorites successfully!");
+        }
+        else
+        {
+            Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
+        }
+    }
+
+    public static void DeleteFavRecipe(User user, string recipeName)
+    {
+        Recipe recipeToDelete = user.Recipes.Find(r => r.Name == recipeName);
+        
+        if (recipeToDelete != null)
+        {
+            user.RemoveFromFavRecipe(recipeToDelete);
+            Console.WriteLine($"\nRecipe '{recipeName}' removed from favorites successfully!");
+        }
+        else
+        {
+            Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
+        }
+    }
+
 
 }
