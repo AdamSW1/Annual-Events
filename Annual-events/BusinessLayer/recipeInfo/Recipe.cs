@@ -230,22 +230,11 @@ class Recipe
         {
             returnStr += $"{ingredient}\n";
         }
-<<<<<<< HEAD
-        Console.WriteLine($"Preparation: {_instruction}");
-        Console.WriteLine($"Servings: {_servings}");
-        Console.WriteLine($"Ratings: {_ratings}");
-        Console.WriteLine($"Favourites: {_favourite}");
-        foreach (var review in Review)
-        {
-            Console.WriteLine($"Review: {review}");
-        }
-=======
         returnStr += $"Preparation: {_instruction}\n";
         returnStr += $"Servings: {_servings}\n";
         returnStr += $"Ratings: {_ratings}\n";
         returnStr += $"Favourites: {_favourite}\n";
 
         return returnStr;
->>>>>>> 25ea09063c8fbbda8bcb0b6f837f2f4eb03438a0
     }
 }
