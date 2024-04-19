@@ -1,4 +1,5 @@
 using BusinessLayer;
+using Microsoft.VisualBasic;
 
 namespace RecipeInfo;
 class Recipe
@@ -119,8 +120,8 @@ class Recipe
         }
     }
 
-    private string _review;
-    public string Review
+    private List<string> _review;
+    public List<string> Review
     {
         get
         {
@@ -136,7 +137,7 @@ class Recipe
         string name, string description,
         double cookingTime, string instruction, int servings, 
         int ratings, List<Ingredient> ingredients,
-        int favourite, User owner,List<string> tags, string review
+        int favourite, User owner,List<string> tags, List<string> review
     )
     {
         _name = name;
@@ -199,6 +200,9 @@ class Recipe
         Console.WriteLine($"Servings: {_servings}");
         Console.WriteLine($"Ratings: {_ratings}");
         Console.WriteLine($"Favourites: {_favourite}");
-        Console.WriteLine($"Review: {_review}");
+        foreach (var review in Review)
+        {
+            Console.WriteLine($"Review: {review}");
+        }
     }
 }
