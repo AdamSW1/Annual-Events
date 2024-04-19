@@ -1,4 +1,5 @@
 using BusinessLayer;
+using Microsoft.VisualBasic;
 
 namespace RecipeInfo;
 class Recipe
@@ -119,6 +120,19 @@ class Recipe
         }
     }
 
+    private List<string>? _review;
+    public List<string>? Review
+    {
+        get
+        {
+            return _review;
+        }
+        set
+        {
+            _review = value;
+        }
+    }
+
     /// <summary>
     /// Constructor
     /// </summary>
@@ -136,7 +150,7 @@ class Recipe
         string name, string description,
         double cookingTime, string instruction, int servings, 
         int ratings, List<Ingredient> ingredients,
-        int favourite, User owner,List<string> tags
+        int favourite, User owner,List<string> tags, List<string> review
     )
     {
         _name = name;
@@ -149,6 +163,7 @@ class Recipe
         _favourite = favourite;
         _owner = owner;
         _tags = Utils.ValidateTags(tags);
+        _review = review;
     }
 
     // override object.Equals
@@ -215,11 +230,22 @@ class Recipe
         {
             returnStr += $"{ingredient}\n";
         }
+<<<<<<< HEAD
+        Console.WriteLine($"Preparation: {_instruction}");
+        Console.WriteLine($"Servings: {_servings}");
+        Console.WriteLine($"Ratings: {_ratings}");
+        Console.WriteLine($"Favourites: {_favourite}");
+        foreach (var review in Review)
+        {
+            Console.WriteLine($"Review: {review}");
+        }
+=======
         returnStr += $"Preparation: {_instruction}\n";
         returnStr += $"Servings: {_servings}\n";
         returnStr += $"Ratings: {_ratings}\n";
         returnStr += $"Favourites: {_favourite}\n";
 
         return returnStr;
+>>>>>>> 25ea09063c8fbbda8bcb0b6f837f2f4eb03438a0
     }
 }
