@@ -51,4 +51,26 @@ class RecipeManager
 
         Console.WriteLine("\nRecipe added successfully!");
     }
+
+    public static void DeleteRecipe(User user)
+    {
+        Console.WriteLine("\nDelete a Recipe:");
+        Console.Write("Enter the name of the recipe you want to delete: ");
+        string recipeName = Console.ReadLine();
+        
+        
+        Recipe recipeToDelete = user.Recipes.Find(r => r.Name == recipeName);
+        
+        if (recipeToDelete != null)
+        {
+            
+            user.DeleteRecipe(recipeToDelete);
+            Console.WriteLine($"\nRecipe '{recipeName}' deleted successfully!");
+        }
+        else
+        {
+            Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
+        }
+    }
+
 }

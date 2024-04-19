@@ -30,7 +30,7 @@ class Program
 
     public static void Init()
     {
-        string[] options = new string[] { "Add a recipe", "See your recipes", "See all recipes", "Search recipes", "LogOut\n" };
+        string[] options = new string[] { "Add a recipe", "See your recipes", "See all recipes", "Search recipes", "Delete a Recipe", "LogOut\n" };
 
         Console.WriteLine();
         string? choice = Utils.GetUserChoice("What do you want to do?", options);
@@ -93,6 +93,10 @@ class Program
         }
         else if (choice == options[4])
         {
+            RecipeManager.DeleteRecipe(AuthManager.CurrentUser);
+        }
+        else if (choice == options[5])
+        {
             AuthManager.Logout();
             Console.WriteLine("\nLogged out.");
             Console.WriteLine("\nDo you wish to login? yes/no");
@@ -119,6 +123,18 @@ class Program
                 Environment.Exit(1);
             }
         }
+    }
+
+    public static (string, string) InitLogin()
+    {
+        Console.WriteLine("-----Login------");
+        Console.WriteLine("(for testing: try username: user1 and password: password1)");
+        Console.WriteLine(seperator);
+        Console.Write("Username: ");
+        string username = Console.ReadLine() ?? "null";
+        Console.Write("Password: ");
+        string password = Console.ReadLine() ?? "null";
+        return (username, password);
     }
 
     /// <summary>
@@ -157,17 +173,5 @@ class Program
         
         AuthManager.CurrentUser.AddRecipe(exampleRecipe);
         AuthManager.CurrentUser.AddRecipe(exampleRecipe2);
-    }
-
-    public static (string, string) InitLogin()
-    {
-        Console.WriteLine("-----Login------");
-        Console.WriteLine("(for testing: try username: user1 and password: password1)");
-        Console.WriteLine(seperator);
-        Console.Write("Username: ");
-        string username = Console.ReadLine() ?? "null";
-        Console.Write("Password: ");
-        string password = Console.ReadLine() ?? "null";
-        return (username, password);
     }
 }

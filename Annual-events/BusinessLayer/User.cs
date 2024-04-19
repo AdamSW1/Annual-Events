@@ -115,6 +115,10 @@ class User
         _recipes.Remove(recipe);
     } // removes a recipe from the [] list
 
+    public void DeleteRecipe(Recipe recipe) 
+    {
+        _recipes.Remove(recipe);
+    }
     public string DisplayRecipes()
     {
         string returnStr = "";
