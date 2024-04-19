@@ -46,11 +46,16 @@ class Program
         else if (choice == options[1])
         {
             Console.WriteLine($"\n{seperator}\n");
-            AuthManager.CurrentUser.DisplayRecipes();
+            Console.WriteLine(AuthManager.CurrentUser.DisplayRecipes());
         }
         else if (choice == options[2])
         {
-            AuthManager.GetAllRecipesFromAllUsers().ForEach(recipe => {Console.WriteLine($"\n{seperator}\n"); recipe.DisplayRecipeInfo();});
+            AuthManager.GetAllRecipesFromAllUsers().ForEach(
+                recipe => {
+                Console.WriteLine($"\n{seperator}\n"); 
+                Console.WriteLine(recipe.DisplayRecipeInfo());
+                }
+                );
         }
         else if (choice == options[3])
         {
@@ -81,7 +86,7 @@ class Program
                 foreach (Recipe recipe in recipes)
                 {
                     Console.WriteLine("");
-                    recipe.DisplayRecipeInfo();
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
                 }
             }
 

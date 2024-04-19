@@ -1,6 +1,8 @@
 using System;
 using System.Net.Http.Headers;
 using System.Diagnostics;
+using RecipeInfo;
+namespace annual_events_test;
 
 [TestClass]
 public class UserTest
@@ -19,10 +21,20 @@ public class UserTest
     }
     //Test for adding a recipe to a user's list
     [TestMethod]
-    public void AddRecipeTest()
+    public void AddRecipeTest_addingOneRecipe()
     {
-        throw new NotImplementedException();
+        //arrange
+        User user = new User("Test","TestPass","description",20);
+        Recipe test = CreateExampleRecipe(user); 
+        
+        //act
+        user.AddRecipe(test);
+
+        //assert
+        Assert.AreEqual(test, user.Recipes[0]);
     }
+
+
     //Test for removing a recipe from a user's list
     [TestMethod]
     public void RemoveFromFavRecipeTest()
@@ -52,5 +64,25 @@ public class UserTest
     public void DeleteUserTest()
     {
         throw new NotImplementedException();
+    }
+
+    private Recipe CreateExampleRecipe(User cur){
+        Ingredient flour = new Ingredient("flour", "6 cups", 7);
+        Ingredient egg = new Ingredient("egg", "4", 3);
+        List<Ingredient> ingredients = new List<Ingredient>() { flour, egg };
+        List<string> tags = new List<string>() { "cake", "chocolate" };
+        Recipe exampleRecipe = new Recipe("Chocolate cake",
+                                            "A simple chocolate cake",
+                                            120,
+                                            "mix, put in oven, do stuff",
+                                            8,
+                                            5,
+                                            ingredients,
+                                            0,
+                                            cur,
+                                            tags,null
+                                            );
+
+        return exampleRecipe;
     }
 }

@@ -5,7 +5,7 @@ using System;
 using System.Net.Http.Headers;
 using System.Diagnostics;
 using RecipeInfo;
-namespace tests;
+namespace annual_events_test;
 
 [TestClass]
 

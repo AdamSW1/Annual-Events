@@ -133,6 +133,19 @@ class Recipe
         }
     }
 
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="description"></param>
+    /// <param name="cookingTime"></param>
+    /// <param name="instruction"></param>
+    /// <param name="servings"></param>
+    /// <param name="ratings"></param>
+    /// <param name="ingredients"></param>
+    /// <param name="favourite"></param>
+    /// <param name="owner"></param>
+    /// <param name="tags"></param>
     public Recipe(
         string name, string description,
         double cookingTime, string instruction, int servings, 
@@ -151,6 +164,25 @@ class Recipe
         _owner = owner;
         _tags = Utils.ValidateTags(tags);
         _review = review;
+    }
+
+    // override object.Equals
+    public override bool Equals(object obj)
+    {
+        
+        if (obj == null || GetType() != obj.GetType())
+        {
+            return false;
+        }
+        
+        Recipe other = (Recipe)obj;
+        return _name.Equals(other._name) && _description.Equals(other._description) && _owner.Equals(other._owner);
+    }
+    
+    // override object.GetHashCode
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(_name, _description, _owner);
     }
 
     public void AddToDatabase()
@@ -185,17 +217,20 @@ class Recipe
         UpdateRecipe();
     }
 
-    internal void DisplayRecipeInfo()
+    internal string DisplayRecipeInfo()
     {
-        Console.WriteLine($"Written by: {_owner.Username}");
-        Console.WriteLine($"Name: {_name}");
-        Console.WriteLine($"Description: {_description}");
-        Console.WriteLine($"Cooking Time: {_cookingTime} minutes");
-        Console.WriteLine("Ingredients:");
+        string returnStr = "";
+
+        returnStr += $"Written by: {_owner.Username}\n";
+        returnStr += $"Name: {_name}\n";
+        returnStr += $"Description: {_description}\n";
+        returnStr += $"Cooking Time: {_cookingTime} minutes\n";
+        returnStr += "Ingredients:\n";
         foreach (var ingredient in Ingredients)
         {
-            Console.WriteLine($"{ingredient}");
+            returnStr += $"{ingredient}\n";
         }
+<<<<<<< HEAD
         Console.WriteLine($"Preparation: {_instruction}");
         Console.WriteLine($"Servings: {_servings}");
         Console.WriteLine($"Ratings: {_ratings}");
@@ -204,5 +239,13 @@ class Recipe
         {
             Console.WriteLine($"Review: {review}");
         }
+=======
+        returnStr += $"Preparation: {_instruction}\n";
+        returnStr += $"Servings: {_servings}\n";
+        returnStr += $"Ratings: {_ratings}\n";
+        returnStr += $"Favourites: {_favourite}\n";
+
+        return returnStr;
+>>>>>>> 25ea09063c8fbbda8bcb0b6f837f2f4eb03438a0
     }
 }
