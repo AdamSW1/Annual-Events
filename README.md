@@ -86,3 +86,7 @@ A namespace which contains everything related to sortings your recipes. It helps
 A namespace which contains everything related to comparing 2 recipes. You can compare 2 recipes based on ratings, servings, time to cook. It is used by Sorters to sort the recipe efficently.
 
 
+## API
+https://github.com/yZipperer/item-api
+http://10.172.19.128:8080/
+
