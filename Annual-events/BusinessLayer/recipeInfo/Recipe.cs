@@ -119,11 +119,24 @@ class Recipe
         }
     }
 
+    private string _review;
+    public string Review
+    {
+        get
+        {
+            return _review;
+        }
+        set
+        {
+            _review = value;
+        }
+    }
+
     public Recipe(
         string name, string description,
         double cookingTime, string instruction, int servings, 
         int ratings, List<Ingredient> ingredients,
-        int favourite, User owner,List<string> tags
+        int favourite, User owner,List<string> tags, string review
     )
     {
         _name = name;
@@ -136,6 +149,7 @@ class Recipe
         _favourite = favourite;
         _owner = owner;
         _tags = Utils.ValidateTags(tags);
+        _review = review;
     }
 
     public void AddToDatabase()
@@ -185,5 +199,6 @@ class Recipe
         Console.WriteLine($"Servings: {_servings}");
         Console.WriteLine($"Ratings: {_ratings}");
         Console.WriteLine($"Favourites: {_favourite}");
+        Console.WriteLine($"Review: {_review}");
     }
 }
