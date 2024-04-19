@@ -109,7 +109,8 @@ public class RecipeTest
         int ratings = 5;
         var ingredients = new List<Ingredient> { new Ingredient("Ingredient 1", "100g", 5.99) };
         var tags = new List<string> { "vegetarian", "vegan" };
-        var newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags);
+        List<string> reviews = new List<string>{"review1", "review2"};
+        var newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, reviews);
         user.AddRecipe(newRecipe);
 
         // Act
@@ -133,7 +134,8 @@ public class RecipeTest
         int ratings = 5;
         var ingredients = new List<Ingredient> { new Ingredient("Ingredient 1", "100g", 5.99) };
         var tags = new List<string> { "vegetarian", "vegan" };
-        var newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags);
+        List<string> reviews = new List<string>{"review1", "review2"};
+        var newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, reviews);
         user.AddRecipe(newRecipe);
         var recipeToDelete = "Non-existing Recipe";
 
@@ -157,9 +159,10 @@ public class RecipeTest
         int ratings = 5;
         var ingredients = new List<Ingredient> { new Ingredient("Ingredient 1", "100g", 5.99) };
         var tags = new List<string> { "vegetarian", "vegan" };
+        List<string> reviews = new List<string>{"review1", "review2"};
 
         // Act
-        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags);
+        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, reviews);
 
         // Add the recipe to the user's list
         user.AddToFavRecipe(newRecipe);
@@ -183,9 +186,10 @@ public class RecipeTest
         int ratings = 5;
         var ingredients = new List<Ingredient> { new Ingredient("Ingredient 1", "100g", 5.99) };
         var tags = new List<string> { "vegetarian", "vegan" };
+        List<string> reviews = new List<string>{"review1", "review2"};
 
         // Act
-        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags);
+        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, reviews);
 
         // Add the recipe to the user's list
         user.AddRecipe(newRecipe);
@@ -208,7 +212,8 @@ public class RecipeTest
         int ratings = 5;
         var ingredients = new List<Ingredient> { new Ingredient("Ingredient 1", "100g", 5.99) };
         var tags = new List<string> { "vegetarian", "vegan" };
-        var newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags);
+        List<string> reviews = new List<string>{"review1", "review2"};
+        var newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, reviews);
         user.AddRecipe(newRecipe);
         var favRecipeToDelete = "Non-existing Recipe";
 
@@ -233,7 +238,8 @@ public class RecipeTest
         int ratings = 5;
         var ingredients = new List<Ingredient> { new Ingredient("Ingredient 1", "100g", 5.99) };
         var tags = new List<string> { "vegetarian", "vegan" };
-        var newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags);
+        List<string> reviews = new List<string>{"review1", "review2"};
+        var newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, reviews);
         user.AddRecipe(newRecipe);
         var recipeToDelete = "Test Recipe";
 
