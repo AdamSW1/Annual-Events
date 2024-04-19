@@ -120,8 +120,8 @@ class Recipe
         }
     }
 
-    private List<string> _review;
-    public List<string> Review
+    private List<string>? _review;
+    public List<string>? Review
     {
         get
         {

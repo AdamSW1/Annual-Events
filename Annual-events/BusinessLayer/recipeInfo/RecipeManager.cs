@@ -44,7 +44,7 @@ class RecipeManager
         List<string> tags = new List<string> { "vegetarian", "vegan" };
 
         // Create recipe
-        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags);
+        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags,null);
 
         // Add the recipe to the user's list
         user.AddRecipe(newRecipe);
