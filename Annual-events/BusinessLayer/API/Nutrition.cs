@@ -1,4 +1,7 @@
 namespace API;
+/// <summary>
+/// A class with fields for nutrition values in the api
+/// </summary>
 public class Nutrition
 {
     public string? ServingSize { get; set; }
