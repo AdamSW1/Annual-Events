@@ -2,11 +2,32 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BusinessLayer;
 using System;
 using RecipeInfo;
+using System.Reflection;
 namespace annual_events_test;
 
 [TestClass]
 public class RecipeTest
 {
+    private Recipe CreateExampleRecipe(User cur){
+        Ingredient flour = new Ingredient("flour", "6 cups", 7);
+        Ingredient egg = new Ingredient("egg", "4", 3);
+        List<Ingredient> ingredients = new List<Ingredient>() { flour, egg };
+        List<string> tags = new List<string>() { "cake", "chocolate" };
+        Recipe exampleRecipe = new Recipe("Chocolate cake",
+                                            "A simple chocolate cake",
+                                            120,
+                                            "mix, put in oven, do stuff",
+                                            8,
+                                            5,
+                                            ingredients,
+                                            0,
+                                            cur,
+                                            tags,null
+                                            );
+
+        return exampleRecipe;
+    }
+
     //Test for creating a recipe
     [TestMethod]
     public void CreateRecipeTest()
@@ -33,40 +54,17 @@ public class RecipeTest
     }
 
     [TestMethod]
-    public void AddFavourite_plusOne_expect2favourites()
-    {
-        throw new NotImplementedException();
-    }
-
-    [TestMethod]
-    public void AddFavourite_removeOne_expect1favourite()
-    {
-        throw new NotImplementedException();
-    }
-
-    [TestMethod]
     public void AddRecipe_ValidInput_Success()
     {
         // Arrange
         var user = new User("testUser", "password", "Test user", 30);
-        var recipeManager = new RecipeManager();
-        string recipeName = "Test Recipe";
-        string description = "Test Description";
-        double cookingTime = 60;
-        string preparation = "Test Preparation";
-        int servings = 4;
-        int ratings = 5;
-        var ingredients = new List<Ingredient> { new Ingredient("Ingredient 1", "100g", 5.99) };
-        var tags = new List<string> { "vegetarian", "vegan" };
+        Recipe test = CreateExampleRecipe(user);
 
         // Act
-        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags,null);
-
         // Add the recipe to the user's list
-        user.AddRecipe(newRecipe);
+        user.AddRecipe(test);
 
         // Assert
-
         Assert.AreEqual(1, user.Recipes.Count); // User should have 1 recipe added
     }
 
@@ -75,21 +73,11 @@ public class RecipeTest
     {
         // Arrange
         var user = new User("testUser2", "password2", "Test user 2", 30);
-        var recipeManager = new RecipeManager();
-        string recipeName = "Test Recipe";
-        string description = "Test Description";
-        double cookingTime = 60;
-        string preparation = "Test Preparation";
-        int servings = 4;
-        int ratings = 5;
-        var ingredients = new List<Ingredient> { new Ingredient("Ingredient 1", "100g", 5.99) };
-        var tags = new List<string> { "vegetarian", "vegan" };
+        Recipe test = CreateExampleRecipe(user);
 
         // Act
-        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags,null);
-
         // Add the recipe to the user's list
-        user.AddRecipe(newRecipe);
+        user.AddRecipe(test);
 
         // Assert
         // User should only have 1 recipe added
@@ -101,20 +89,11 @@ public class RecipeTest
     {
         // Arrange
         var user = new User("testUser", "password", "Test user", 30);
-        var recipeName = "Test Recipe";
-        var description = "Test Description";
-        double cookingTime = 60;
-        string preparation = "Test Preparation";
-        int servings = 4;
-        int ratings = 5;
-        var ingredients = new List<Ingredient> { new Ingredient("Ingredient 1", "100g", 5.99) };
-        var tags = new List<string> { "vegetarian", "vegan" };
-        List<string> reviews = new List<string>{"review1", "review2"};
-        var newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, reviews);
-        user.AddRecipe(newRecipe);
+        Recipe test = CreateExampleRecipe(user);
+        user.AddRecipe(test);
 
         // Act
-        RecipeManager.DeleteRecipe(user, recipeName);
+        RecipeManager.DeleteRecipe(user, test.Name);
 
         // Assert
         Assert.AreEqual(0, user.Recipes.Count, "Recipe should be deleted");
@@ -125,18 +104,8 @@ public class RecipeTest
     {
         // Arrange
         var user = new User("testUser", "password", "Test user", 30);
-        var recipeManager = new RecipeManager();
-        var recipeName = "Test Recipe";
-        var description = "Test Description";
-        double cookingTime = 60;
-        string preparation = "Test Preparation";
-        int servings = 4;
-        int ratings = 5;
-        var ingredients = new List<Ingredient> { new Ingredient("Ingredient 1", "100g", 5.99) };
-        var tags = new List<string> { "vegetarian", "vegan" };
-        List<string> reviews = new List<string>{"review1", "review2"};
-        var newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, reviews);
-        user.AddRecipe(newRecipe);
+        Recipe test = CreateExampleRecipe(user);
+        user.AddRecipe(test);
         var recipeToDelete = "Non-existing Recipe";
 
         // Act
@@ -150,25 +119,14 @@ public class RecipeTest
     public void AddRecipeToFav_ValidInput_Success()
     {
         // Arrange
-        var user = new User("testUser", "password", "Test user", 30);
-        string recipeName = "Test Recipe";
-        string description = "Test Description";
-        double cookingTime = 60;
-        string preparation = "Test Preparation";
-        int servings = 4;
-        int ratings = 5;
-        var ingredients = new List<Ingredient> { new Ingredient("Ingredient 1", "100g", 5.99) };
-        var tags = new List<string> { "vegetarian", "vegan" };
-        List<string> reviews = new List<string>{"review1", "review2"};
+        User user = new User("testUser", "password", "Test user", 30);
+        Recipe test = CreateExampleRecipe(user);
 
         // Act
-        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, reviews);
-
         // Add the recipe to the user's list
-        user.AddToFavRecipe(newRecipe);
+        user.AddToFavRecipe(test);
 
         // Assert
-
         Assert.AreEqual(1, user.FavRecipes.Count); // User should have 1 recipe added
     }
 
@@ -177,22 +135,11 @@ public class RecipeTest
     {
         // Arrange
         var user = new User("testUser2", "password2", "Test user 2", 30);
-        var recipeManager = new RecipeManager();
-        string recipeName = "Test Recipe";
-        string description = "Test Description";
-        double cookingTime = 60;
-        string preparation = "Test Preparation";
-        int servings = 4;
-        int ratings = 5;
-        var ingredients = new List<Ingredient> { new Ingredient("Ingredient 1", "100g", 5.99) };
-        var tags = new List<string> { "vegetarian", "vegan" };
-        List<string> reviews = new List<string>{"review1", "review2"};
+        Recipe test = CreateExampleRecipe(user);
 
         // Act
-        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, reviews);
-
         // Add the recipe to the user's list
-        user.AddRecipe(newRecipe);
+        user.AddRecipe(test);
 
         // Assert
         // User should only have 1 recipe added
@@ -204,17 +151,8 @@ public class RecipeTest
     {
         // Arrange
         var user = new User("testUser", "password", "Test user", 30);
-        var recipeName = "Test Recipe";
-        var description = "Test Description";
-        double cookingTime = 60;
-        string preparation = "Test Preparation";
-        int servings = 4;
-        int ratings = 5;
-        var ingredients = new List<Ingredient> { new Ingredient("Ingredient 1", "100g", 5.99) };
-        var tags = new List<string> { "vegetarian", "vegan" };
-        List<string> reviews = new List<string>{"review1", "review2"};
-        var newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, reviews);
-        user.AddRecipe(newRecipe);
+        Recipe test = CreateExampleRecipe(user);
+        user.AddRecipe(test);
         var favRecipeToDelete = "Non-existing Recipe";
 
         // Act
@@ -229,24 +167,65 @@ public class RecipeTest
     {
         // Arrange
         var user = new User("testUser", "password", "Test user", 30);
-        var recipeManager = new RecipeManager();
-        var recipeName = "Test Recipe";
-        var description = "Test Description";
-        double cookingTime = 60;
-        string preparation = "Test Preparation";
-        int servings = 4;
-        int ratings = 5;
-        var ingredients = new List<Ingredient> { new Ingredient("Ingredient 1", "100g", 5.99) };
-        var tags = new List<string> { "vegetarian", "vegan" };
-        List<string> reviews = new List<string>{"review1", "review2"};
-        var newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, reviews);
-        user.AddRecipe(newRecipe);
-        var recipeToDelete = "Test Recipe";
+        Recipe test = CreateExampleRecipe(user);
+        user.AddRecipe(test);
+        var recipeToDelete = "Chocolate cake";
 
         // Act
         RecipeManager.DeleteRecipe(user, recipeToDelete);
 
         // Assert
         Assert.AreEqual(0, user.FavRecipes.Count, "Fav recipe should be deleted");
+    }
+
+    [TestMethod]
+    public void UpdateRecipe_WithExistingRecipe_Success()
+    {
+        // Arrange
+        var user = new User("testUser2", "password2", "Test user 2", 30);
+        Recipe test = CreateExampleRecipe(user);
+        user.AddRecipe(test);
+        string updatedRecipeName = "Updated Test Recipe";
+        string updatedDescription = "Updated Test Description";
+        double updatedCookingTime = 75;
+        string updatedPreparation = "Updated Test Preparation";
+        int updatedServings = 6;
+        int updatedRatings = 4;
+        // Act
+        // Update the recipe
+        bool result = user.UpdateRecipe(test.Name, updatedRecipeName, updatedDescription, updatedCookingTime, updatedPreparation, updatedServings, updatedRatings);
+        
+        // Assert
+        // User should only have 1 recipe added
+        Recipe updatedRecipe = user.Recipes.FirstOrDefault(r => r.Name == updatedRecipeName);
+        Assert.IsNotNull(updatedRecipe); // Ensure that the recipe exists in the user's recipes
+        Assert.AreEqual(updatedDescription, updatedRecipe.Description);
+        Assert.AreEqual(updatedCookingTime, updatedRecipe.CookingTime);
+        Assert.AreEqual(updatedPreparation, updatedRecipe.Preparation);
+        Assert.AreEqual(updatedServings, updatedRecipe.Servings);
+        Assert.AreEqual(updatedRatings, updatedRecipe.Ratings);
+        Assert.IsTrue(result);
+    }
+
+    [TestMethod]
+    public void UpdateRecipe_WithNonExistingRecipe_Success()
+    {
+        // Arrange
+        var user = new User("testUser2", "password2", "Test user 2", 30);
+        Recipe test = CreateExampleRecipe(user);
+        user.AddRecipe(test);
+        string updatedRecipeName = "Updated Test Recipe";
+        string updatedDescription = "Updated Test Description";
+        double updatedCookingTime = 75;
+        string updatedPreparation = "Updated Test Preparation";
+        int updatedServings = 6;
+        int updatedRatings = 4;
+        // Act
+        // Update the recipe
+        bool result = user.UpdateRecipe("Testing failure", updatedRecipeName, updatedDescription, updatedCookingTime, updatedPreparation, updatedServings, updatedRatings);
+
+        // Assert
+        // User should only have 1 recipe added
+        Assert.IsFalse(result);
     }
 }

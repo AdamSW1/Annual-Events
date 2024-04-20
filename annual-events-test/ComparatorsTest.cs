@@ -85,7 +85,8 @@ public class ComparatorsTest
                                             ingredients,
                                             0,
                                             new User("cookielover123", "234", "nbdfnjgbd", 16),
-                                            tags
+                                            tags,
+                                            null
                                             );
         Recipe exampleRecipe2 = new Recipe("Vanilla cake",
                                             "A simple Vanilla cake",
@@ -96,7 +97,8 @@ public class ComparatorsTest
                                             ingredients,
                                             0,
                                             new User("hello1234", "678", "ngjveuiwsnhg", 24),
-                                            tags
+                                            tags,
+                                            null
                                             );
         return (exampleRecipe, exampleRecipe2);
     }

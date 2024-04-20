@@ -1,5 +1,5 @@
 // RecipeManager.cs
-using System;
+using System.Linq;
 using System.Collections.Generic;
 using BusinessLayer;
 using RecipeInfo;
@@ -100,5 +100,44 @@ class RecipeManager
         }
     }
 
+    public static void UpdateRecipe(User user, string recipeName)
+    {
+        Console.WriteLine("\nUpdate Recipe Information:");
+        Recipe recipeToUpdate = user.Recipes.Find(r => r.Name == recipeName);
 
+        if (recipeToUpdate != null)
+        {
+            Console.WriteLine($"Updating recipe '{recipeName}'...");
+
+            Console.Write("New Recipe Name: ");
+            string newName = Console.ReadLine();
+            recipeToUpdate.Name = newName;
+
+            Console.Write("New Description: ");
+            string newDescription = Console.ReadLine();
+            recipeToUpdate.Description = newDescription;
+
+            Console.Write("New Cooking Time (minutes): ");
+            double newCookingTime = Convert.ToDouble(Console.ReadLine());
+            recipeToUpdate.CookingTime = newCookingTime;
+
+            Console.Write("New Preparations: ");
+            string newPreparation = Console.ReadLine();
+            recipeToUpdate.Preparation = newPreparation;
+
+            Console.Write("New Servings: ");
+            int newServings = Convert.ToInt32(Console.ReadLine());
+            recipeToUpdate.Servings = newServings;
+            
+            Console.Write("New Ratings: ");
+            int newRatings = Convert.ToInt32(Console.ReadLine());
+            recipeToUpdate.Ratings = newRatings;
+            
+            Console.WriteLine($"\nRecipe '{recipeName}' updated successfully!");
+        }
+        else
+        {
+            Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
+        }
+    }
 }
