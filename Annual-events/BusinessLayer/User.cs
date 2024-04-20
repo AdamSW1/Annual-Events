@@ -61,7 +61,10 @@ class User
     }
 
     private List<Recipe> _favRecipes = new List<Recipe>();
-    public List<Recipe> FavRecipes = new List<Recipe>();
+    public List<Recipe> FavRecipes
+    {
+        get { return _favRecipes; }
+    }
 
     // constructor 
     public User(string username, string password, string description, int age)
@@ -76,16 +79,16 @@ class User
     // override object.Equals
     public override bool Equals(object obj)
     {
-        
+
         if (obj == null || GetType() != obj.GetType())
         {
             return false;
         }
-        
+
         User user = (User)obj;
         return _username == user._username && _description == user._description && _age == user._age;
     }
-    
+
     // override object.GetHashCode
     public override int GetHashCode()
     {
@@ -118,7 +121,7 @@ class User
         _favRecipes.Remove(recipe);
     } // removes a recipe from the [] list
 
-    public void DeleteRecipe(Recipe recipe) 
+    public void DeleteRecipe(Recipe recipe)
     {
         _recipes.Remove(recipe);
     }
