@@ -39,4 +39,19 @@ class Utils
         }
         return null;
     }
+
+    public double CheckInput() 
+    {   
+        double value = 0;
+        try 
+        {
+            value = double.Parse(Console.ReadLine());
+        }
+        catch(FormatException) 
+        {
+            Console.WriteLine("input needs to be a number");
+        }
+        return value;
+    }
+
 }
