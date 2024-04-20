@@ -61,7 +61,10 @@ class User
     }
 
     private List<Recipe> _favRecipes = new List<Recipe>();
-    public List<Recipe> FavRecipes = new List<Recipe>();
+    public List<Recipe> FavRecipes {
+
+        get { return _favRecipes;}
+    }
 
     // constructor 
     public User(string username, string password, string description, int age)

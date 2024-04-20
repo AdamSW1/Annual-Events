@@ -150,7 +150,7 @@ public class RecipeTest
     public void AddRecipeToFav_ValidInput_Success()
     {
         // Arrange
-        var user = new User("testUser", "password", "Test user", 30);
+        User user = new User("testUser", "password", "Test user", 30);
         string recipeName = "Test Recipe";
         string description = "Test Description";
         double cookingTime = 60;
