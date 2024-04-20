@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BusinessLayer;
 using System;
 using RecipeInfo;
+using System.Reflection;
 namespace annual_events_test;
 
 [TestClass]
@@ -175,5 +176,56 @@ public class RecipeTest
 
         // Assert
         Assert.AreEqual(0, user.FavRecipes.Count, "Fav recipe should be deleted");
+    }
+
+    [TestMethod]
+    public void UpdateRecipe_WithExistingRecipe_Success()
+    {
+        // Arrange
+        var user = new User("testUser2", "password2", "Test user 2", 30);
+        Recipe test = CreateExampleRecipe(user);
+        user.AddRecipe(test);
+        string updatedRecipeName = "Updated Test Recipe";
+        string updatedDescription = "Updated Test Description";
+        double updatedCookingTime = 75;
+        string updatedPreparation = "Updated Test Preparation";
+        int updatedServings = 6;
+        int updatedRatings = 4;
+        // Act
+        // Update the recipe
+        bool result = user.UpdateRecipe(test.Name, updatedRecipeName, updatedDescription, updatedCookingTime, updatedPreparation, updatedServings, updatedRatings);
+        
+        // Assert
+        // User should only have 1 recipe added
+        Recipe updatedRecipe = user.Recipes.FirstOrDefault(r => r.Name == updatedRecipeName);
+        Assert.IsNotNull(updatedRecipe); // Ensure that the recipe exists in the user's recipes
+        Assert.AreEqual(updatedDescription, updatedRecipe.Description);
+        Assert.AreEqual(updatedCookingTime, updatedRecipe.CookingTime);
+        Assert.AreEqual(updatedPreparation, updatedRecipe.Preparation);
+        Assert.AreEqual(updatedServings, updatedRecipe.Servings);
+        Assert.AreEqual(updatedRatings, updatedRecipe.Ratings);
+        Assert.IsTrue(result);
+    }
+
+    [TestMethod]
+    public void UpdateRecipe_WithNonExistingRecipe_Success()
+    {
+        // Arrange
+        var user = new User("testUser2", "password2", "Test user 2", 30);
+        Recipe test = CreateExampleRecipe(user);
+        user.AddRecipe(test);
+        string updatedRecipeName = "Updated Test Recipe";
+        string updatedDescription = "Updated Test Description";
+        double updatedCookingTime = 75;
+        string updatedPreparation = "Updated Test Preparation";
+        int updatedServings = 6;
+        int updatedRatings = 4;
+        // Act
+        // Update the recipe
+        bool result = user.UpdateRecipe("Testing failure", updatedRecipeName, updatedDescription, updatedCookingTime, updatedPreparation, updatedServings, updatedRatings);
+
+        // Assert
+        // User should only have 1 recipe added
+        Assert.IsFalse(result);
     }
 }
