@@ -6,7 +6,7 @@ namespace API;
 /// uncomment fields to access them from the api
 /// note: brand and category both cannot be accessed
 /// </summary>
-public class Recipe_json
+public class Ingredient_json
 {
     public string? name { get; set; }
     // public string? id { get; set; }
