@@ -7,17 +7,11 @@ namespace annual_events_test;
 [TestClass]
 public class UserTest
 {
-    //Test for creating a user
+    //Test for creating a user in the database
     [TestMethod]
     public void CreateUserTest()
     {
-        throw new NotImplementedException();
-    }
-    //Test for adding a recipe to a user's list
-    [TestMethod]
-    public void AddToFavRecipeTest()
-    {
-        throw new NotImplementedException();
+        throw new NotImplementedException("No Database to test");
     }
     //Test for adding a recipe to a user's list
     [TestMethod]
@@ -34,12 +28,40 @@ public class UserTest
         Assert.AreEqual(test, user.Recipes[0]);
     }
 
+    //Test for adding a recipe to a user's list
+    [TestMethod]
+    public void AddToFavRecipeTest()
+    {
+        //arrange
+        User user1 = new User("Test","TestPass","description",20);
+        User user2 = new User("Test","TestPass","description",20);
+        Recipe test = CreateExampleRecipe(user1);
+
+        //act
+        user1.AddRecipe(test);
+        user2.AddToFavRecipe(test);
+
+        //assert
+        Assert.AreEqual(test, user2.FavRecipes[0]);
+    }
 
     //Test for removing a recipe from a user's list
     [TestMethod]
     public void RemoveFromFavRecipeTest()
     {
-        throw new NotImplementedException();
+        //arrange
+        User user1 = new User("Test","TestPass","description",20);
+        User user2 = new User("Test","TestPass","description",20);
+        Recipe test = CreateExampleRecipe(user1);
+
+        //act
+        user2.AddToFavRecipe(test);
+        user2.RemoveFromFavRecipe(test);
+        
+
+        //assert
+        CollectionAssert.DoesNotContain(user2.FavRecipes, test);
+
     }
     //Test for step verification
     [TestMethod]
@@ -57,13 +79,21 @@ public class UserTest
     [TestMethod]
     public void AuthenticationTest()
     {
-        throw new NotImplementedException();
+        //arrange
+        User user = new("Test","TestPass","description",20);
+        string name = "Test";
+        string password = "TestPass";
+        //act
+
+        //assert
+        Assert.IsTrue(user.Authentication(name,password));
+
     }
     //Test for deleting a user
     [TestMethod]
     public void DeleteUserTest()
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException("No database to test");
     }
 
     private Recipe CreateExampleRecipe(User cur){
