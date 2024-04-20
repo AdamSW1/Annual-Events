@@ -48,16 +48,16 @@ class Recipe
             _cookingTime = value;
         }
     }
-    private string _instruction;
-    public string Instruction
+    private string _preparation;
+    public string Preparation
     {
         get
         {
-            return _instruction;
+            return _preparation;
         }
         set
         {
-            _instruction = value;
+            _preparation = value;
         }
     }
     private int _servings;
@@ -139,7 +139,7 @@ class Recipe
     /// <param name="name"></param>
     /// <param name="description"></param>
     /// <param name="cookingTime"></param>
-    /// <param name="instruction"></param>
+    /// <param name="preparation"></param>
     /// <param name="servings"></param>
     /// <param name="ratings"></param>
     /// <param name="ingredients"></param>
@@ -148,7 +148,7 @@ class Recipe
     /// <param name="tags"></param>
     public Recipe(
         string name, string description,
-        double cookingTime, string instruction, int servings, 
+        double cookingTime, string preparation, int servings, 
         int ratings, List<Ingredient> ingredients,
         int favourite, User owner,List<string> tags, List<string> review
     )
@@ -156,7 +156,7 @@ class Recipe
         _name = name;
         _description = description;
         _cookingTime = cookingTime;
-        _instruction = instruction;
+        _preparation = preparation;
         _servings = servings;
         _ratings = ratings;
         _ingredients = ingredients;
@@ -230,7 +230,7 @@ class Recipe
         {
             returnStr += $"{ingredient}\n";
         }
-        returnStr += $"Preparation: {_instruction}\n";
+        returnStr += $"Preparation: {_preparation}\n";
         returnStr += $"Servings: {_servings}\n";
         returnStr += $"Ratings: {_ratings}\n";
         returnStr += $"Favourites: {_favourite}\n";
