@@ -2,7 +2,7 @@ using BusinessLayer;
 using RecipeInfo;
 namespace BusinessLayer;
 
-class Utils
+public class Utils
 {
     //Validates the inputed string tags with the available tags and returns a list of the available tags
     public List<RecipeTags> ValidateTags(List<string> tags)
@@ -54,4 +54,5 @@ class Utils
         return value;
     }
 
+    
 }

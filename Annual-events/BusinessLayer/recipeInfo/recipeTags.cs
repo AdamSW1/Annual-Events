@@ -3,7 +3,7 @@ namespace RecipeInfo;
 /// <summary>
 /// A list of possible tags that can be added to a recipe
 /// </summary>
-enum RecipeTags
+public enum RecipeTags
 {
     vegetarian,
     vegan,
