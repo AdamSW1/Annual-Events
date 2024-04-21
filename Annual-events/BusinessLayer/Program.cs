@@ -3,7 +3,6 @@ using System.Xml.Serialization;
 using BusinessLayer;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RecipeInfo;
-
 class Program
 {
     
@@ -154,11 +153,11 @@ class Program
         }
         else if (choice == options[9])
         {
-            AuthenticationManager.Instance.CurrentUser.GiveReviewToAnotherUser(recipeManager);
+            GiveReviewToAnotherUser();
         }
         else if (choice == options[10])
         {
-            AuthenticationManager.Instance.CurrentUser.ViewReviewsFromUserRecipes();
+            ViewReviewsFromUserRecipes();
         }
         else if (choice == options[11])
         {
@@ -241,6 +240,69 @@ class Program
         AuthenticationManager.Instance.AddUser(newUser);
 
         return (username, password);
+    }
+
+    public static void ViewReviewsFromUserRecipes()
+    {
+        Console.WriteLine("Reviews from your recipes:");
+
+        foreach (var recipe in AuthenticationManager.Instance.CurrentUser.Recipes)
+        {
+            Console.WriteLine($"Reviews for recipe '{recipe.Name}':");
+
+            if (recipe.Reviews.Count == 0)
+            {
+                Console.WriteLine("No reviews yet.");
+            }
+            else
+            {
+                foreach (var review in recipe.Reviews)
+                {
+                    Console.WriteLine($"- Review by {review.ReviewerUsername}: {review.ReviewText}");
+                }
+            }
+            
+            Console.WriteLine();
+        }
+    }
+
+    public static void GiveReviewToAnotherUser()
+    {
+        Console.WriteLine("Select a recipe to review:");
+        
+        // Retrieve list of all recipes from all users using AuthenticationManager method
+        List<Recipe> recipeList = AuthenticationManager.Instance.GetAllRecipesFromAllUsers();
+
+        if (recipeList.Count == 0)
+        {
+            Console.WriteLine("No recipes found from other users.");
+            return;
+        }
+
+        foreach (Recipe recipe in recipeList)
+        {
+            Console.WriteLine($"{recipe.Name} by {recipe.Owner.Username}");
+        }
+
+        Console.Write("Enter the name of the recipe you want to review: ");
+        string recipeName = Console.ReadLine();
+
+        Recipe selectedRecipe = recipeList.Find(r => r.Name == recipeName);
+
+        if (selectedRecipe != null)
+        {
+            Console.Write("Enter your review: ");
+            string reviewText = Console.ReadLine();
+
+            // Add review to the selected recipe
+            selectedRecipe.AddReview(AuthenticationManager.Instance.CurrentUser, reviewText); 
+
+            Console.WriteLine("Review added successfully!");
+        }
+        else
+        {
+            Console.WriteLine("Recipe not found.");
+        }
     }
 
     /// <summary>
