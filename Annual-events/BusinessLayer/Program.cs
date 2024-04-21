@@ -73,7 +73,8 @@ class Program
         }
         else if (choice == options[0])
         {
-            recipeManager.AddRecipe(AuthManager.CurrentUser);
+            //Add a recipe
+            CreateAddRecipe(AuthManager.CurrentUser);
         }
         else if (choice == options[1])
         {
@@ -279,6 +280,74 @@ class Program
 
         AuthManager.CurrentUser.AddRecipe(exampleRecipe);
         AuthManager.CurrentUser.AddRecipe(exampleRecipe2);
+    }
+
+    public static void CreateAddRecipe(User user)
+    {
+        //Get recipeName, descroption, cookingTime, preparation, servings, ratings
+        Console.WriteLine("\nAdd a Recipe:");
+        Console.Write("Recipe Name: ");
+        string recipeName = Utils.CheckName() ?? "null";
+        Console.Write("Description: ");
+        string description = Utils.CheckName100Limit() ?? "null";
+        Console.Write("Cooking Time (minutes): ");
+        double cookingTime = Utils.CheckDouble();
+        Console.Write("Preparation: ");
+        string preparation = Utils.CheckName100Limit() ?? "null";
+        Console.Write("Servings: ");
+        int servings = Utils.CheckServings();
+        Console.Write("Ratings: ");
+        double ratings = Utils.CheckRatings();
+
+        // Get ingredients
+        List<Ingredient> ingredients = new List<Ingredient>();
+        Console.WriteLine("\nEnter Ingredients (press Enter without typing to finish):");
+        while (true)
+        {
+            Console.Write("Ingredient Name (press Enter to finish): ");
+            string ingredientName = Utils.CheckName() ?? "null";
+            if (string.IsNullOrWhiteSpace(ingredientName))
+                break;
+
+            Console.Write("Weight/Quantity: ");
+            string quantity = Utils.CheckName100Limit();
+            Console.Write("Price: ");
+            double price = Utils.CheckDouble();
+
+            ingredients.Add(new Ingredient(ingredientName, quantity, price));
+        }
+
+        //Get tags
+        Console.WriteLine("Enter tags for the recipe (press Enter without typing to finish):");
+        Console.WriteLine("Available tags:");
+        foreach (var tag in Enum.GetValues(typeof(RecipeTags)))
+        {
+            Console.WriteLine($"{tag?.ToString()}");
+        }
+
+        List<string> tagList = new List<string>();
+
+        while (true)
+        {
+            Console.Write("Tag: ");
+            string tag = Console.ReadLine() ?? "null";
+            if (string.IsNullOrWhiteSpace(tag))
+                break;
+            else
+            {
+                if (Enum.TryParse(tag, out RecipeTags tagEnum))
+                {
+                    tagList.Add(tagEnum.ToString());
+                }
+                else
+                {
+                    Console.WriteLine("Invalid tag. Please try again.");
+                }
+            }
+        }
+
+        recipeManager.AddRecipe(user, recipeName, description, cookingTime, preparation, servings, ratings, ingredients, tagList);
+        Console.WriteLine("\nRecipe added successfully!");
     }
     
 }
