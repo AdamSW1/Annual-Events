@@ -6,7 +6,7 @@ namespace BusinessLayer;
 public class Utils
 {
     //Validates the inputed string tags with the available tags and returns a list of the available tags
-    public List<RecipeTags> ValidateTags(List<string> tags)
+    public static List<RecipeTags> ValidateTags(List<string> tags)
     {
         //Make a list of all enums in recipeTags
         var enum_tags = Enum.GetValues(typeof(RecipeTags));
@@ -41,7 +41,7 @@ public class Utils
         return null;
     }
 
-    public double CheckDouble() 
+    public static double CheckDouble() 
     {   
         double value = 0;
         bool isDone = false;
@@ -70,7 +70,7 @@ public class Utils
         }
         return value;
     }
-    public string CheckName() 
+    public static string CheckName() 
     {
         string name = "";
         bool isDone = false;
@@ -96,7 +96,7 @@ public class Utils
         return name;
     }
 
-    public string CheckName100Limit() 
+    public static string CheckName100Limit() 
     {
         string check100Limit = "";
         bool isDone = false;
@@ -121,7 +121,7 @@ public class Utils
         return check100Limit;
     }
     
-    public int CheckServings() 
+    public static int CheckServings() 
     {   
         int servings = 0;
         bool isDone = false;
@@ -150,7 +150,7 @@ public class Utils
         }
         return servings;
     }
-    public double CheckRatings() 
+    public static double CheckRatings() 
     {   
         double ratings = 0;
         bool isDone = false;
