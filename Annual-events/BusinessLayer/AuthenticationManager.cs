@@ -30,11 +30,7 @@ public class AuthenticationManager
     {
         get
         {
-            if (_currentUser != null)
-            {
-                return _currentUser;
-            }
-            throw new NotImplementedException();
+            return _currentUser;
         }
     }
     public void AddUser(User user)
