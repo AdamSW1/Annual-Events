@@ -16,16 +16,22 @@ namespace BusinessLayer
 
         }
 
-        public User CurrentUser 
-        { 
-            get 
-            { 
-                if(_currentUser != null)
+        public User CurrentUser
+        {
+            get
+            {
+                if (_currentUser != null)
                 {
-                    return _currentUser; 
+                    return _currentUser;
                 }
                 throw new NotImplementedException();
             }
+        }
+
+
+        public void AddUser(User user)
+        {
+            users.Add(user);
         }
 
         public bool Login(string username, string password)
