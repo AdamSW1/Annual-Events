@@ -6,7 +6,7 @@ using RecipeInfo;
 
 class Program
 {
-    public static AuthenticationManager AuthManager = new AuthenticationManager();
+    
     public static RecipeManager recipeManager = new RecipeManager();
     public static string seperator = "-----------------------";
     public static void Main(string[] args)
@@ -31,9 +31,9 @@ class Program
             loginCredentials = Register();
         }
 
-        if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2))
+        if (AuthenticationManager.Login(loginCredentials.Item1, loginCredentials.Item2))
         {
-            Console.WriteLine($"Welcome, {AuthManager.CurrentUser.Username}!");
+            Console.WriteLine($"Welcome, {AuthenticationManager.CurrentUser.Username}!");
             AddExampleRecipes();
             while (true)
             {
@@ -59,20 +59,20 @@ class Program
         }
         else if (choice == options[0])
         {
-            recipeManager.AddRecipe(AuthManager.CurrentUser);
+            recipeManager.AddRecipe(AuthenticationManager.CurrentUser);
         }
         else if (choice == options[1])
         {
             Console.WriteLine($"\n{seperator}\n");
-            Console.WriteLine(AuthManager.CurrentUser.DisplayRecipes());
+            Console.WriteLine(AuthenticationManager.CurrentUser.DisplayRecipes());
         }
         else if (choice == options[2])
         {
-            AuthManager.CurrentUser.ViewFavRecipes();
+            AuthenticationManager.CurrentUser.ViewFavRecipes();
         }
         else if (choice == options[3])
         {
-            AuthManager.GetAllRecipesFromAllUsers().ForEach(
+            AuthenticationManager.GetAllRecipesFromAllUsers().ForEach(
                 recipe =>
                 {
                     Console.WriteLine($"\n{seperator}\n");
@@ -82,7 +82,7 @@ class Program
         }
         else if (choice == options[4])
         {
-            Search search = new Search(AuthManager.GetAllRecipesFromAllUsers());
+            Search search = new Search(AuthenticationManager.GetAllRecipesFromAllUsers());
 
             string[] searchOptions = new string[] { "By keyword" };
             string searchType = Utils.GetUserChoice("How do you want to search?", searchOptions) ?? "";
@@ -118,29 +118,29 @@ class Program
         {
             Console.WriteLine("\nEnter the name of the recipe you want to update/modify:");
             string recipeName = Console.ReadLine();
-            RecipeManager.UpdateRecipe(AuthManager.CurrentUser, recipeName);
+            RecipeManager.UpdateRecipe(AuthenticationManager.CurrentUser, recipeName);
         }
         else if (choice == options[6])
         {
             Console.WriteLine("\nEnter the name of the recipe you want to delete:");
             string recipeName = Console.ReadLine();
-            RecipeManager.DeleteRecipe(AuthManager.CurrentUser, recipeName);
+            RecipeManager.DeleteRecipe(AuthenticationManager.CurrentUser, recipeName);
         }
         else if (choice == options[7])
         {
             Console.WriteLine("\nEnter the name of your favourite recipe:");
             string recipeName = Console.ReadLine();
-            RecipeManager.AddToFavRecipe(AuthManager.CurrentUser, recipeName);
+            RecipeManager.AddToFavRecipe(AuthenticationManager.CurrentUser, recipeName);
         }
         else if (choice == options[8])
         {
             Console.WriteLine("\nEnter the name of the recipe (Favourites) you want to delete:");
             string recipeName = Console.ReadLine();
-            RecipeManager.DeleteFavRecipe(AuthManager.CurrentUser, recipeName);
+            RecipeManager.DeleteFavRecipe(AuthenticationManager.CurrentUser, recipeName);
         }
         else if (choice == options[9])
         {
-            AuthManager.Logout();
+            AuthenticationManager.Logout();
             Console.WriteLine("\nLogged out.");
             Console.WriteLine("\nDo you wish to login? yes/no");
             string answer = Console.ReadLine() ?? "null";
@@ -150,9 +150,9 @@ class Program
                 while (true)
                 {
                     var loginCredentials = InitLogin();
-                    if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2))
+                    if (AuthenticationManager.Login(loginCredentials.Item1, loginCredentials.Item2))
                     {
-                        Console.WriteLine($"Welcome, {AuthManager.CurrentUser.Username}!");
+                        Console.WriteLine($"Welcome, {AuthenticationManager.CurrentUser.Username}!");
                         break; // Exit the loop if login is successful
                     }
                     else
@@ -216,7 +216,7 @@ class Program
         string description = Console.ReadLine() ?? "";
 
         User newUser = new(username, password, description, age);
-        AuthManager.AddUser(newUser);
+        AuthenticationManager.AddUser(newUser);
 
         return (username, password);
     }
@@ -240,7 +240,7 @@ class Program
                                             5,
                                             ingredients,
                                             0,
-                                            AuthManager.CurrentUser,
+                                            AuthenticationManager.CurrentUser,
                                             tags, null
                                             );
         Recipe exampleRecipe2 = new Recipe("Vanilla cake",
@@ -251,12 +251,12 @@ class Program
                                             4,
                                             ingredients,
                                             0,
-                                            AuthManager.CurrentUser,
+                                            AuthenticationManager.CurrentUser,
                                             tags, null
                                             );
 
-        AuthManager.CurrentUser.AddRecipe(exampleRecipe);
-        AuthManager.CurrentUser.AddRecipe(exampleRecipe2);
+        AuthenticationManager.CurrentUser.AddRecipe(exampleRecipe);
+        AuthenticationManager.CurrentUser.AddRecipe(exampleRecipe2);
     }
 }
 

@@ -5,10 +5,17 @@ namespace BusinessLayer
 {
     class AuthenticationManager
     {
-        private List<User> users = new List<User>();
-        private User? _currentUser;
+        private static AuthenticationManager? _instance;
+        public static AuthenticationManager Instance{
+            get{
+                _instance ??= new AuthenticationManager();
+                return _instance;
+            }
+        }
+        private static List<User> users = new List<User>();
+        private static User? _currentUser;
 
-        public AuthenticationManager()
+        private AuthenticationManager()
         {
             // Test data for now, since we dont have a database.
             users.Add(new User("user1", "password1", "Description 1", 25));
@@ -16,7 +23,7 @@ namespace BusinessLayer
 
         }
 
-        public User CurrentUser
+        public static User CurrentUser
         {
             get
             {
@@ -29,12 +36,12 @@ namespace BusinessLayer
         }
 
 
-        public void AddUser(User user)
+        public static void AddUser(User user)
         {
             users.Add(user);
         }
 
-        public bool Login(string username, string password)
+        public static bool Login(string username, string password)
         {
             foreach (var user in users)
             {
@@ -47,12 +54,12 @@ namespace BusinessLayer
             return false;
         }
 
-        public void Logout()
+        public static void Logout()
         {
             _currentUser = null;
         }
 
-        public List<Recipe> GetAllRecipesFromAllUsers()
+        public static List<Recipe> GetAllRecipesFromAllUsers()
         {
             List<Recipe> allRecipes = new List<Recipe>();
             foreach (var user in users)
