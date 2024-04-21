@@ -9,13 +9,11 @@ public class AuthenticationManagerTest
     [TestMethod]
     public void Login_ValidCredentials_Success()
     {
-        // Arrange
-        var authManager = new AuthenticationManager();
         string username = "user1";
         string password = "password1";
 
         // Act
-        bool loginResult = authManager.Login(username, password);
+        bool loginResult = AuthenticationManager.Instance.Login(username, password);
 
         // Assert
         Assert.IsTrue(loginResult);
@@ -25,31 +23,29 @@ public class AuthenticationManagerTest
     public void Login_CurrentUser_Success()
     {
         // Arrange
-        var authManager = new AuthenticationManager();
         string username = "user1";
         string password = "password1";
 
         // Act
-        bool loginResult = authManager.Login(username, password);
+        bool loginResult = AuthenticationManager.Instance.Login(username, password);
 
         // Assert
-        Assert.IsNotNull(authManager.CurrentUser);
+        Assert.IsNotNull(AuthenticationManager.Instance.CurrentUser);
     }
 
     [TestMethod]
     public void Login_InvalidCredentials_Failure()
     {
         // Arrange
-        var authManager = new AuthenticationManager();
         string username = "user1 ";
         string password = "password1 ";
 
         // Act
-        bool loginResult = authManager.Login(username, password);
+        bool loginResult = AuthenticationManager.Instance.Login(username, password);
 
         // Assert
         Assert.IsFalse(loginResult);
-        Assert.IsNull(authManager.CurrentUser);
+        Assert.IsNull(AuthenticationManager.Instance.CurrentUser);
     }
 
 
@@ -57,25 +53,23 @@ public class AuthenticationManagerTest
     public void Login_InvalidCredentialsCurrentUser_Failure()
     {
         // Arrange
-        var authManager = new AuthenticationManager();
         string username = "user1 ";
         string password = "password1 ";
 
         // Act
-        bool loginResult = authManager.Login(username, password);
+        bool loginResult = AuthenticationManager.Instance.Login(username, password);
 
         // Assert
-        Assert.IsNull(authManager.CurrentUser);
+        Assert.IsNull(AuthenticationManager.Instance.CurrentUser);
     }
 
     [TestMethod]
     public void GetAllRecipesFromAllUsers_NoUsers_ReturnsEmptyList()
     {
         // Arrange
-        var authManager = new AuthenticationManager();
 
         // Act
-        List<Recipe> allRecipes = authManager.GetAllRecipesFromAllUsers();
+        List<Recipe> allRecipes = AuthenticationManager.Instance.GetAllRecipesFromAllUsers();
 
         // Assert
         Assert.AreEqual(0, allRecipes.Count);
