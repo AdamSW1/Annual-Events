@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using BusinessLayer;
 using RecipeInfo;
 namespace BusinessLayer;
@@ -40,19 +41,142 @@ public class Utils
         return null;
     }
 
-    public double CheckInput() 
+    public double CheckDouble() 
     {   
         double value = 0;
-        try 
+        bool isDone = false;
+        while (isDone != true) 
         {
-            value = double.Parse(Console.ReadLine());
-        }
-        catch(FormatException) 
-        {
-            Console.WriteLine("input needs to be a number");
+            try 
+            {
+                value = double.Parse(Console.ReadLine() ?? "null");
+
+                if (value < 0) 
+                {
+                    throw new ArgumentException();
+                }
+                isDone = true;
+            }
+            catch(FormatException) 
+            {
+                Console.WriteLine("Value needs to be a number!");
+                Console.WriteLine();
+            }
+            catch(ArgumentException) 
+            {
+                Console.WriteLine("Value cannot be negative!");
+                Console.WriteLine();
+            }
         }
         return value;
     }
+    public string CheckName() 
+    {
+        string name = "";
+        bool isDone = false;
+        string regexPatterns = @"[^a-zA-Z0-9\s]";
+        while (isDone != true) 
+        {
+            try 
+            {
+                name = Console.ReadLine();
 
+                if (name.Length > 30 || Regex.IsMatch(name, regexPatterns)) 
+                {
+                    throw new ArgumentException();
+                }
+                isDone = true;
+            }
+            catch(ArgumentException) 
+            {
+                Console.WriteLine("Invalid name. Cannot contain special characters and length of name must be 30 maximum!");
+                Console.WriteLine();
+            }
+        }
+        return name;
+    }
+
+    public string CheckName100Limit() 
+    {
+        string check100Limit = "";
+        bool isDone = false;
+        while (isDone != true) 
+        {
+            try 
+            {
+                check100Limit = Console.ReadLine();
+
+                if (check100Limit.Length > 100) 
+                {
+                    throw new ArgumentException();
+                }
+                isDone = true;
+            }
+            catch(ArgumentException) 
+            {
+                Console.WriteLine("Invalid name. 100 character maximum!");
+                Console.WriteLine();
+            }
+        }
+        return check100Limit;
+    }
     
+    public int CheckServings() 
+    {   
+        int servings = 0;
+        bool isDone = false;
+        while (isDone != true) 
+        {
+            try 
+            {
+                servings = int.Parse(Console.ReadLine() ?? "null");
+
+                if (servings < 0) 
+                {
+                    throw new ArgumentException();
+                }
+                isDone = true;
+            }
+            catch(FormatException) 
+            {
+                Console.WriteLine("Servings needs to be an integer!");
+                Console.WriteLine();
+            }
+            catch(ArgumentException) 
+            {
+                Console.WriteLine("Servings cannot be negative!");
+                Console.WriteLine();
+            }
+        }
+        return servings;
+    }
+    public double CheckRatings() 
+    {   
+        double ratings = 0;
+        bool isDone = false;
+        while (isDone != true) 
+        {
+            try 
+            {
+                ratings= double.Parse(Console.ReadLine() ?? "null");
+
+                if (ratings < 0 || ratings > 5) 
+                {
+                    throw new ArgumentException();
+                }
+                isDone = true;
+            }
+            catch(FormatException) 
+            {
+                Console.WriteLine("Ratings need to be a number!");
+                Console.WriteLine();
+            }
+            catch(ArgumentException) 
+            {
+                Console.WriteLine("Ratings has to be between 0 and 5!");
+                Console.WriteLine();
+            }
+        }
+        return ratings;
+    }
 }
