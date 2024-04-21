@@ -131,14 +131,13 @@ class Program
         }
         else if (choice == options[5])
         {
-            Console.WriteLine("\nEnter the name of the recipe you want to update/modify:");
-            string recipeName = Console.ReadLine();
-            RecipeManager.UpdateRecipe(AuthManager.CurrentUser, recipeName);
+            UpadtingRecipe(AuthManager.CurrentUser);
         }
         else if (choice == options[6])
         {
             Console.WriteLine("\nEnter the name of the recipe you want to delete:");
             string recipeName = Console.ReadLine();
+            Console.WriteLine("\nDelete a Recipe:");
             RecipeManager.DeleteRecipe(AuthManager.CurrentUser, recipeName);
         }
         else if (choice == options[7])
@@ -350,5 +349,38 @@ class Program
         Console.WriteLine("\nRecipe added successfully!");
     }
     
+    public static void UpadtingRecipe(User user)
+    {
+        Console.WriteLine("\nEnter the name of the recipe you want to update/modify:");
+        string recipeName = Console.ReadLine();
+        Recipe recipeToUpdate = user.Recipes.Find(r => r.Name == recipeName);
+        if (recipeToUpdate == null)
+        {
+            Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
+            return;
+        }
+        Console.WriteLine($"Updating recipe '{recipeName}'...");
+        Console.Write("New Recipe Name: ");
+        string newName = Utils.CheckName();
+
+        Console.Write("New Description: ");
+        string newDescription = Utils.CheckName100Limit();
+
+        Console.Write("New Cooking Time (minutes): ");
+        double newCookingTime = Utils.CheckDouble();
+
+        Console.Write("New Preparations: ");
+        string newPreparation = Utils.CheckName100Limit();
+
+        Console.Write("New Servings: ");
+        int newServings = Utils.CheckServings();  
+        
+        Console.Write("New Ratings: ");
+        double newRatings = Utils.CheckRatings();
+
+        recipeManager.UpdateRecipe(newName, newDescription, newCookingTime, newPreparation, newServings, newRatings, recipeToUpdate);
+
+        Console.WriteLine($"\nRecipe '{recipeName}' updated successfully!");              
+    }
 }
 

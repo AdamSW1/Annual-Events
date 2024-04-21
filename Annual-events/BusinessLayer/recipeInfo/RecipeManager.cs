@@ -18,10 +18,9 @@ public class RecipeManager
         user.AddRecipe(newRecipe);
     }
 
+    //Will delete from the DB in the future, maybe?
     public static void DeleteRecipe(User user, string recipeName)
     {
-        Console.WriteLine("\nDelete a Recipe:");
-        
         Recipe recipeToDelete = user.Recipes.Find(r => r.Name == recipeName);
         
         if (recipeToDelete != null)
@@ -66,47 +65,13 @@ public class RecipeManager
         }
     }
 
-    public static void UpdateRecipe(User user, string recipeName)
+    public void UpdateRecipe(string newName, string newDescription, double newCookingTime, string newPreparation, int newServings, double newRatings, Recipe recipeToUpdate)
     {
-        Utils utils = new Utils();
-        Console.WriteLine("\nUpdate Recipe Information:");
-        Recipe recipeToUpdate = user.Recipes.Find(r => r.Name == recipeName);
-
-        if (recipeToUpdate != null)
-        {
-            Console.WriteLine($"Updating recipe '{recipeName}'...");
-
-            Console.Write("New Recipe Name: ");
-            string newName = Utils.CheckName();
             recipeToUpdate.Name = newName;
-
-            Console.Write("New Description: ");
-            string newDescription = Utils.CheckName100Limit();
             recipeToUpdate.Description = newDescription;
-
-            Console.Write("New Cooking Time (minutes): ");
-            double newCookingTime = Utils.CheckDouble();
             recipeToUpdate.CookingTime = newCookingTime;
-
-            Console.Write("New Preparations: ");
-            string newPreparation = Utils.CheckName100Limit();
             recipeToUpdate.Preparation = newPreparation;
-
-            Console.Write("New Servings: ");
-            int newServings = Utils.CheckServings();
             recipeToUpdate.Servings = newServings;
-            
-            Console.Write("New Ratings: ");
-            double newRatings = Utils.CheckRatings();
             recipeToUpdate.Ratings = newRatings;
-            
-            Console.WriteLine($"\nRecipe '{recipeName}' updated successfully!");
-        }
-        else
-        {
-            Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
-        }
     }
-
-    
 }
