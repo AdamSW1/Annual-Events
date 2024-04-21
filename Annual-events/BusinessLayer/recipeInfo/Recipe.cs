@@ -180,7 +180,10 @@ public class Recipe
         }
         
         Recipe other = (Recipe)obj;
-        return _name.Equals(other._name) && _description.Equals(other._description) && _owner.Equals(other._owner);
+        bool namesEqual = _name.Equals(other._name);
+        bool descriptionsEqual = _description.Equals(other._description);
+        bool ownersEqual = (_owner == null && other._owner == null) || (_owner != null && _owner.Equals(other._owner));
+        return namesEqual && descriptionsEqual && ownersEqual;
     }
     
     // override object.GetHashCode
