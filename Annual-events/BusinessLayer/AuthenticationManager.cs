@@ -5,26 +5,32 @@ namespace BusinessLayer;
 
 public class AuthenticationManager
 {
-    private List<User> users = new List<User>();
-    private User? _currentUser;
+    private static AuthenticationManager? _instance;
+    public static AuthenticationManager Instance
+    {
+        get
+        {
+            _instance ??= new AuthenticationManager();
+            return _instance;
+        }
+    }
 
-    public AuthenticationManager()
+
+    private List<User> users = new();
+    private static User? _currentUser;
+
+    private AuthenticationManager()
     {
         // Test data for now, since we dont have a database.
         users.Add(new User("user1", "password1", "Description 1", 25));
         users.Add(new User("user2", "password2", "Description 2", 30));
-
     }
 
     public User CurrentUser
     {
         get
         {
-            if (_currentUser != null)
-            {
-                return _currentUser;
-            }
-            throw new NotImplementedException();
+            return _currentUser;
         }
     }
     public void AddUser(User user)
@@ -60,4 +66,3 @@ public class AuthenticationManager
         return allRecipes;
     }
 }
-

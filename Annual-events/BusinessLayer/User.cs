@@ -187,68 +187,7 @@ public class User
         }
     }
 
-    public void ViewReviewsFromUserRecipes()
-    {
-        Console.WriteLine("Reviews from your recipes:");
-
-        foreach (var recipe in _recipes)
-        {
-            Console.WriteLine($"Reviews for recipe '{recipe.Name}':");
-
-            if (recipe.Reviews.Count == 0)
-            {
-                Console.WriteLine("No reviews yet.");
-            }
-            else
-            {
-                foreach (var review in recipe.Reviews)
-                {
-                    Console.WriteLine($"- Review by {review.ReviewerUsername}: {review.ReviewText}");
-                }
-            }
-            
-            Console.WriteLine();
-        }
-    }
-
-    public void GiveReviewToAnotherUser(AuthenticationManager authManager, RecipeManager recipeManager)
-    {
-        Console.WriteLine("Select a recipe to review:");
-        
-        // Retrieve list of all recipes from all users using AuthenticationManager method
-        List<Recipe> recipeList = authManager.GetAllRecipesFromAllUsers();
-
-        if (recipeList.Count == 0)
-        {
-            Console.WriteLine("No recipes found from other users.");
-            return;
-        }
-
-        foreach (Recipe recipe in recipeList)
-        {
-            Console.WriteLine($"{recipe.Name} by {recipe.Owner.Username}");
-        }
-
-        Console.Write("Enter the name of the recipe you want to review: ");
-        string recipeName = Console.ReadLine();
-
-        Recipe selectedRecipe = recipeList.Find(r => r.Name == recipeName);
-
-        if (selectedRecipe != null)
-        {
-            Console.Write("Enter your review: ");
-            string reviewText = Console.ReadLine();
-
-            // Add review to the selected recipe
-            selectedRecipe.AddReview(authManager.CurrentUser, reviewText); 
-
-            Console.WriteLine("Review added successfully!");
-        }
-        else
-        {
-            Console.WriteLine("Recipe not found.");
-        }
-    }
+    
 
 
 }
