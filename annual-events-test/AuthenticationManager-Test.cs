@@ -32,6 +32,11 @@ public class AuthenticationManagerTest
         // Assert
         Assert.IsNotNull(AuthenticationManager.Instance.CurrentUser);
     }
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        AuthenticationManager.Instance.Logout();
+    }
 
     [TestMethod]
     public void Login_InvalidCredentials_Failure()
@@ -53,13 +58,14 @@ public class AuthenticationManagerTest
     public void Login_InvalidCredentialsCurrentUser_Failure()
     {
         // Arrange
-        string username = "user1 ";
-        string password = "password1 ";
+        string username = "user1";
+        string password = "dasoidjasdjasds";
 
         // Act
         bool loginResult = AuthenticationManager.Instance.Login(username, password);
 
         // Assert
+        Assert.IsFalse(loginResult);
         Assert.IsNull(AuthenticationManager.Instance.CurrentUser);
     }
 
