@@ -146,36 +146,40 @@ public class RecipeTest
         Assert.AreNotEqual(2, user.FavRecipes.Count);
     }
 
+    //Test for adding a recipe to a user's list
     [TestMethod]
-    public void DeleteFavRecipe_NonExistingRecipe_NothingDeleted()
+    public void AddToFavRecipeTest()
     {
-        // Arrange
-        var user = new User("testUser", "password", "Test user", 30);
-        Recipe test = CreateExampleRecipe(user);
-        user.AddRecipe(test);
-        var favRecipeToDelete = "Non-existing Recipe";
+        //arrange
+        User user1 = new User("Test","TestPass","description",20);
+        User user2 = new User("Test","TestPass","description",20);
+        Recipe test = CreateExampleRecipe(user1);
 
-        // Act
-        RecipeManager.DeleteFavRecipe(user, favRecipeToDelete);
+        //act
+        user1.AddRecipe(test);
+        user2.AddToFavRecipe(test);
 
-        // Assert
-        Assert.AreEqual(0, user.FavRecipes.Count, "No recipe should be deleted");
+        //assert
+        Assert.AreEqual(test, user2.FavRecipes[0]);
     }
 
+    //Test for removing a recipe from a user's list
     [TestMethod]
-    public void DeleteFavRecipe_ExistingRecipe_Successful()
+    public void RemoveFromFavRecipeTest()
     {
-        // Arrange
-        var user = new User("testUser", "password", "Test user", 30);
-        Recipe test = CreateExampleRecipe(user);
-        user.AddRecipe(test);
-        var recipeToDelete = "Chocolate cake";
+        //arrange
+        User user1 = new User("Test","TestPass","description",20);
+        User user2 = new User("Test","TestPass","description",20);
+        Recipe test = CreateExampleRecipe(user1);
 
-        // Act
-        RecipeManager.DeleteRecipe(user, recipeToDelete);
+        //act
+        user2.AddToFavRecipe(test);
+        user2.RemoveFromFavRecipe(test);
+        
 
-        // Assert
-        Assert.AreEqual(0, user.FavRecipes.Count, "Fav recipe should be deleted");
+        //assert
+        CollectionAssert.DoesNotContain(user2.FavRecipes, test);
+
     }
 
     [TestMethod]
