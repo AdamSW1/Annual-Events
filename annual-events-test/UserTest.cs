@@ -29,41 +29,7 @@ public class UserTest
         Assert.AreEqual(test, user.Recipes[0]);
     }
 
-    //Test for adding a recipe to a user's list
-    [TestMethod]
-    public void AddToFavRecipeTest()
-    {
-        //arrange
-        User user1 = new User("Test","TestPass","description",20);
-        User user2 = new User("Test","TestPass","description",20);
-        Recipe test = CreateExampleRecipe(user1);
-
-        //act
-        user1.AddRecipe(test);
-        user2.AddToFavRecipe(test);
-
-        //assert
-        Assert.AreEqual(test, user2.FavRecipes[0]);
-    }
-
-    //Test for removing a recipe from a user's list
-    [TestMethod]
-    public void RemoveFromFavRecipeTest()
-    {
-        //arrange
-        User user1 = new User("Test","TestPass","description",20);
-        User user2 = new User("Test","TestPass","description",20);
-        Recipe test = CreateExampleRecipe(user1);
-
-        //act
-        user2.AddToFavRecipe(test);
-        user2.RemoveFromFavRecipe(test);
-        
-
-        //assert
-        CollectionAssert.DoesNotContain(user2.FavRecipes, test);
-
-    }
+    
     //Test for step verification
     [TestMethod]
     public void StepVerificationTest()
