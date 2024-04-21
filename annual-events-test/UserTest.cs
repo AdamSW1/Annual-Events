@@ -110,7 +110,7 @@ public class UserTest
                                             ingredients,
                                             0,
                                             cur,
-                                            tags,null
+                                            tags,new List<string>{}
                                             );
 
         return exampleRecipe;
