@@ -135,10 +135,7 @@ class Program
         }
         else if (choice == options[6])
         {
-            Console.WriteLine("\nEnter the name of the recipe you want to delete:");
-            string recipeName = Console.ReadLine();
-            Console.WriteLine("\nDelete a Recipe:");
-            RecipeManager.DeleteRecipe(AuthManager.CurrentUser, recipeName);
+            DeletingRecipe(AuthManager.CurrentUser);
         }
         else if (choice == options[7])
         {
@@ -188,6 +185,20 @@ class Program
                 Environment.Exit(1);
             }
         }
+    }
+
+    private static void DeletingRecipe(User user)
+    {
+        Console.WriteLine("\nEnter the name of the recipe you want to delete:");
+        string recipeName = Console.ReadLine();
+        Recipe recipeToDelete = user.Recipes.Find(r => r.Name == recipeName);
+        if (recipeToDelete == null)
+        {
+            Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
+            return;
+        }
+        Console.WriteLine($"\nRecipe '{recipeName}' deleted successfully!");
+        RecipeManager.DeleteRecipe(user, recipeToDelete);
     }
 
     public static (string, string) InitLogin()

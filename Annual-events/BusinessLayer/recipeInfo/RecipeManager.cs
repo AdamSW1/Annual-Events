@@ -19,20 +19,9 @@ public class RecipeManager
     }
 
     //Will delete from the DB in the future, maybe?
-    public static void DeleteRecipe(User user, string recipeName)
+    public static void DeleteRecipe(User user, Recipe recipeToDelete)
     {
-        Recipe recipeToDelete = user.Recipes.Find(r => r.Name == recipeName);
-        
-        if (recipeToDelete != null)
-        {
-            
-            user.DeleteRecipe(recipeToDelete);
-            Console.WriteLine($"\nRecipe '{recipeName}' deleted successfully!");
-        }
-        else
-        {
-            Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
-        }
+        user.DeleteRecipe(recipeToDelete);
     }
 
     public static void AddToFavRecipe(User user, string recipeName)
