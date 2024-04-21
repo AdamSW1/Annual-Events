@@ -39,7 +39,6 @@ public class JsonParser{
         json = json.ToLower();
         _ingredientList = JsonSerializer.Deserialize<List<Ingredient_json>>(json) ?? throw new ArgumentNullException("Failed to get json data");
     }
-
     public static Ingredient_json? GetIngredient(string name){
         name = name.ToLower();
         Ingredient_json? searched = null;
