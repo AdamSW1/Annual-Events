@@ -2,7 +2,7 @@ using BusinessLayer;
 using Microsoft.VisualBasic;
 
 namespace RecipeInfo;
-class Recipe
+public class Recipe
 {
     public Utils Utils = new Utils();
     private User _owner;
@@ -81,7 +81,14 @@ class Recipe
         }
         set
         {
-            _ratings = value;
+            if (value > 5  || value < 1)
+            {
+                throw new ArgumentException("Rating should be between 1 and 5.");
+            }
+            else
+            {
+                _ratings = value;
+            }
         }
     }
     private List<Ingredient> _ingredients;
@@ -120,18 +127,15 @@ class Recipe
         }
     }
 
-    private List<string>? _review;
-    public List<string>? Review
+    private List<Review> _reviews = new(){};
+    public List<Review> Reviews
     {
-        get
-        {
-            return _review;
-        }
-        set
-        {
-            _review = value;
-        }
-    }
+        get { 
+                _reviews ??= new List<Review>();
+                return _reviews; 
+            }
+        set { _reviews = value; }
+    } 
 
     /// <summary>
     /// Constructor
@@ -149,8 +153,8 @@ class Recipe
     public Recipe(
         string name, string description,
         double cookingTime, string preparation, int servings, 
-        int ratings, List<Ingredient> ingredients,
-        int favourite, User owner,List<string> tags, List<string> review
+        double ratings, List<Ingredient> ingredients,
+        int favourite, User owner,List<string> tags, List<Review> reviews
     )
     {
         _name = name;
@@ -163,7 +167,7 @@ class Recipe
         _favourite = favourite;
         _owner = owner;
         _tags = Utils.ValidateTags(tags);
-        _review = review;
+        _reviews = reviews;
     }
 
     // override object.Equals
@@ -236,5 +240,11 @@ class Recipe
         returnStr += $"Favourites: {_favourite}\n";
 
         return returnStr;
+    }
+
+    public void AddReview(User reviewer, string reviewText)
+    {
+        Review review = new Review(reviewer.Username, reviewText);
+        Reviews.Add(review);
     }
 }

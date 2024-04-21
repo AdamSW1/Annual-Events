@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using BusinessLayer;
 using RecipeInfo;
 
-class RecipeManager
+public class RecipeManager
 {
     public void AddRecipe(User user)
     {
@@ -21,7 +21,7 @@ class RecipeManager
         Console.Write("Servings: ");
         int servings = utils.CheckServings();
         Console.Write("Ratings: ");
-        int ratings = utils.CheckRatings();
+        double ratings = utils.CheckRatings();
 
         // Get ingredients
         List<Ingredient> ingredients = new List<Ingredient>();
@@ -49,7 +49,7 @@ class RecipeManager
 
         // Add the recipe to the user's list
         user.AddRecipe(newRecipe);
-
+        
         Console.WriteLine("\nRecipe added successfully!");
     }
 
@@ -132,7 +132,7 @@ class RecipeManager
             recipeToUpdate.Servings = newServings;
             
             Console.Write("New Ratings: ");
-            int newRatings = utils.CheckRatings();
+            double newRatings = utils.CheckRatings();
             recipeToUpdate.Ratings = newRatings;
             
             Console.WriteLine($"\nRecipe '{recipeName}' updated successfully!");
@@ -142,4 +142,6 @@ class RecipeManager
             Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
         }
     }
+
+    
 }

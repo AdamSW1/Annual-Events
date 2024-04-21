@@ -3,7 +3,7 @@ using BusinessLayer;
 using RecipeInfo;
 namespace BusinessLayer;
 
-class Utils
+public class Utils
 {
     //Validates the inputed string tags with the available tags and returns a list of the available tags
     public List<RecipeTags> ValidateTags(List<string> tags)
@@ -70,7 +70,6 @@ class Utils
         }
         return value;
     }
-
     public string CheckName() 
     {
         string name = "";
@@ -151,15 +150,15 @@ class Utils
         }
         return servings;
     }
-    public int CheckRatings() 
+    public double CheckRatings() 
     {   
-        int ratings = 0;
+        double ratings = 0;
         bool isDone = false;
         while (isDone != true) 
         {
             try 
             {
-                ratings= int.Parse(Console.ReadLine() ?? "null");
+                ratings= double.Parse(Console.ReadLine() ?? "null");
 
                 if (ratings < 0 || ratings > 5) 
                 {
