@@ -135,19 +135,18 @@ class Program
         }
         else if (choice == options[6])
         {
+            Console.WriteLine("\nEnter the name of the recipe you want to delete:");
             DeletingRecipe(AuthManager.CurrentUser);
         }
         else if (choice == options[7])
         {
             Console.WriteLine("\nEnter the name of your favourite recipe:");
-            string recipeName = Console.ReadLine();
-            RecipeManager.AddToFavRecipe(AuthManager.CurrentUser, recipeName);
+            AddingToFavRecipe(AuthManager.CurrentUser);
         }
         else if (choice == options[8])
         {
             Console.WriteLine("\nEnter the name of the recipe (Favourites) you want to delete:");
-            string recipeName = Console.ReadLine();
-            RecipeManager.DeleteFavRecipe(AuthManager.CurrentUser, recipeName);
+            RemovingFromFavRecipe(AuthManager.CurrentUser);
         }
         else if (choice == options[9])
         {
@@ -189,16 +188,42 @@ class Program
 
     private static void DeletingRecipe(User user)
     {
-        Console.WriteLine("\nEnter the name of the recipe you want to delete:");
-        string recipeName = Console.ReadLine();
-        Recipe recipeToDelete = user.Recipes.Find(r => r.Name == recipeName);
+        string recipeName;
+        Recipe recipeToDelete;
+        FindRecipe(user, out recipeName, out recipeToDelete);
+        Console.WriteLine($"\nRecipe '{recipeName}' deleted successfully!");
+        RecipeManager.DeleteRecipe(user, recipeToDelete);
+    }
+
+    private static void RemovingFromFavRecipe(User user)
+    {
+        string recipeName;
+        Recipe recipeToDelete;
+        FindRecipe(user, out recipeName, out recipeToDelete);
+        Console.WriteLine($"\nRecipe '{recipeName}' removed from favorites successfully!");
+        RecipeManager.DeleteFavRecipe(user, recipeToDelete);
+    }
+
+    private static void AddingToFavRecipe(User user)
+    {
+        string recipeName;
+        Recipe recipeToAdd;
+        FindRecipe(user, out recipeName, out recipeToAdd);
+        Console.WriteLine($"\nRecipe '{recipeName}' added to favorites successfully!");
+        RecipeManager.AddToFavRecipe(user, recipeToAdd);
+    }
+
+
+    private static void FindRecipe(User user, out string recipeName, out Recipe recipeToDelete)
+    {
+        string localRecipeName = Console.ReadLine();
+        recipeToDelete = user.Recipes.Find(r => r.Name == localRecipeName);
+        recipeName = localRecipeName;
         if (recipeToDelete == null)
         {
             Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
             return;
         }
-        Console.WriteLine($"\nRecipe '{recipeName}' deleted successfully!");
-        RecipeManager.DeleteRecipe(user, recipeToDelete);
     }
 
     public static (string, string) InitLogin()
@@ -292,7 +317,7 @@ class Program
         AuthManager.CurrentUser.AddRecipe(exampleRecipe2);
     }
 
-    public static void CreateAddRecipe(User user)
+    private static void CreateAddRecipe(User user)
     {
         //Get recipeName, descroption, cookingTime, preparation, servings, ratings
         Console.WriteLine("\nAdd a Recipe:");
@@ -360,16 +385,12 @@ class Program
         Console.WriteLine("\nRecipe added successfully!");
     }
     
-    public static void UpadtingRecipe(User user)
+    private static void UpadtingRecipe(User user)
     {
         Console.WriteLine("\nEnter the name of the recipe you want to update/modify:");
-        string recipeName = Console.ReadLine();
-        Recipe recipeToUpdate = user.Recipes.Find(r => r.Name == recipeName);
-        if (recipeToUpdate == null)
-        {
-            Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
-            return;
-        }
+        string recipeName;
+        Recipe recipeToUpdate;
+        FindRecipe(user, out recipeName, out recipeToUpdate);
         Console.WriteLine($"Updating recipe '{recipeName}'...");
         Console.Write("New Recipe Name: ");
         string newName = Utils.CheckName();

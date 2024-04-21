@@ -24,34 +24,13 @@ public class RecipeManager
         user.DeleteRecipe(recipeToDelete);
     }
 
-    public static void AddToFavRecipe(User user, string recipeName)
+    public static void AddToFavRecipe(User user, Recipe recipeToAdd)
     {
-        Recipe recipeToAdd = user.Recipes.Find(r => r.Name == recipeName);
-        
-        if (recipeToAdd != null)
-        {
-            user.AddToFavRecipe(recipeToAdd);
-            Console.WriteLine($"\nRecipe '{recipeName}' added to favorites successfully!");
-        }
-        else
-        {
-            Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
-        }
+        user.AddToFavRecipe(recipeToAdd);
     }
-
-    public static void DeleteFavRecipe(User user, string recipeName)
+    public static void DeleteFavRecipe(User user, Recipe recipeToDelete)
     {
-        Recipe recipeToDelete = user.Recipes.Find(r => r.Name == recipeName);
-        
-        if (recipeToDelete != null)
-        {
-            user.RemoveFromFavRecipe(recipeToDelete);
-            Console.WriteLine($"\nRecipe '{recipeName}' removed from favorites successfully!");
-        }
-        else
-        {
-            Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
-        }
+        user.RemoveFromFavRecipe(recipeToDelete);
     }
 
     public void UpdateRecipe(string newName, string newDescription, double newCookingTime, string newPreparation, int newServings, double newRatings, Recipe recipeToUpdate)
