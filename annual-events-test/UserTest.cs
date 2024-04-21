@@ -2,6 +2,7 @@ using System;
 using System.Net.Http.Headers;
 using System.Diagnostics;
 using RecipeInfo;
+using BusinessLayer;
 namespace annual_events_test;
 
 [TestClass]
@@ -110,7 +111,7 @@ public class UserTest
                                             ingredients,
                                             0,
                                             cur,
-                                            tags,new List<string>{}
+                                            tags,null
                                             );
 
         return exampleRecipe;

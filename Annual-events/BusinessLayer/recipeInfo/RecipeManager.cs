@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using BusinessLayer;
 using RecipeInfo;
 
-class RecipeManager
+public class RecipeManager
 {
     public void AddRecipe(User user)
     {
@@ -140,4 +140,6 @@ class RecipeManager
             Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
         }
     }
+
+    
 }

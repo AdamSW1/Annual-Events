@@ -2,7 +2,7 @@ using BusinessLayer;
 using Microsoft.VisualBasic;
 
 namespace RecipeInfo;
-class Recipe
+public class Recipe
 {
     public Utils Utils = new Utils();
     private User _owner;
@@ -127,17 +127,11 @@ class Recipe
         }
     }
 
-    private List<string>? _review;
-    public List<string>? Review
+    private List<Review> _reviews = new List<Review>();
+    public List<Review> Reviews
     {
-        get
-        {
-            return _review;
-        }
-        set
-        {
-            _review = value;
-        }
+        get { return _reviews; }
+        set { _reviews = value; }
     }
 
     /// <summary>
@@ -157,7 +151,7 @@ class Recipe
         string name, string description,
         double cookingTime, string preparation, int servings, 
         double ratings, List<Ingredient> ingredients,
-        int favourite, User owner,List<string> tags, List<string> review
+        int favourite, User owner,List<string> tags, List<Review> reviews
     )
     {
         _name = name;
@@ -170,7 +164,7 @@ class Recipe
         _favourite = favourite;
         _owner = owner;
         _tags = Utils.ValidateTags(tags);
-        _review = review;
+        _reviews = reviews;
     }
 
     // override object.Equals
@@ -243,5 +237,11 @@ class Recipe
         returnStr += $"Favourites: {_favourite}\n";
 
         return returnStr;
+    }
+
+    public void AddReview(User reviewer, string reviewText)
+    {
+        Review review = new Review(reviewer.Username, reviewText);
+        Reviews.Add(review);
     }
 }
