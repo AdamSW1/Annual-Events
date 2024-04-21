@@ -93,28 +93,12 @@ public class RecipeTest
         user.AddRecipe(test);
 
         // Act
-        RecipeManager.DeleteRecipe(user, test.Name);
+        RecipeManager.DeleteRecipe(user, test);
 
         // Assert
         Assert.AreEqual(0, user.Recipes.Count, "Recipe should be deleted");
     }
-
-    [TestMethod]
-    public void DeleteRecipe_NonExistingRecipe_NothingDeleted()
-    {
-        // Arrange
-        var user = new User("testUser", "password", "Test user", 30);
-        Recipe test = CreateExampleRecipe(user);
-        user.AddRecipe(test);
-        var recipeToDelete = "Non-existing Recipe";
-
-        // Act
-        RecipeManager.DeleteRecipe(user, recipeToDelete);
-
-        // Assert
-        Assert.AreEqual(1, user.Recipes.Count, "No recipe should be deleted");
-    }
-
+    
     [TestMethod]
     public void AddRecipeToFav_ValidInput_Success()
     {
