@@ -81,7 +81,14 @@ class Recipe
         }
         set
         {
-            _ratings = value;
+            if (value > 5  || value < 1)
+            {
+                throw new ArgumentException("Rating should be between 1 and 5.");
+            }
+            else
+            {
+                _ratings = value;
+            }
         }
     }
     private List<Ingredient> _ingredients;
@@ -149,7 +156,7 @@ class Recipe
     public Recipe(
         string name, string description,
         double cookingTime, string preparation, int servings, 
-        int ratings, List<Ingredient> ingredients,
+        double ratings, List<Ingredient> ingredients,
         int favourite, User owner,List<string> tags, List<string> review
     )
     {

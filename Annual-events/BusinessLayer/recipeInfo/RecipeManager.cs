@@ -20,7 +20,7 @@ class RecipeManager
         Console.Write("Servings: ");
         int servings = int.Parse(Console.ReadLine() ?? "null");
         Console.Write("Ratings: ");
-        int ratings = int.Parse(Console.ReadLine() ?? "null");
+        double ratings = double.Parse(Console.ReadLine() ?? "null");
 
         // Get ingredients
         List<Ingredient> ingredients = new List<Ingredient>();
@@ -48,7 +48,7 @@ class RecipeManager
 
         // Add the recipe to the user's list
         user.AddRecipe(newRecipe);
-
+        
         Console.WriteLine("\nRecipe added successfully!");
     }
 
