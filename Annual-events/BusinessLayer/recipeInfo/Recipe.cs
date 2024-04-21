@@ -127,12 +127,15 @@ public class Recipe
         }
     }
 
-    private List<Review> _reviews = new List<Review>();
+    private List<Review> _reviews = new(){};
     public List<Review> Reviews
     {
-        get { return _reviews; }
+        get { 
+                _reviews ??= new List<Review>();
+                return _reviews; 
+            }
         set { _reviews = value; }
-    }
+    } 
 
     /// <summary>
     /// Constructor
