@@ -1,6 +1,7 @@
 using System;
 using System.Xml.Serialization;
 using BusinessLayer;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RecipeInfo;
 
 class Program
@@ -10,8 +11,25 @@ class Program
     public static string seperator = "-----------------------";
     public static void Main(string[] args)
     {
-        // Login
-        var loginCredentials = InitLogin();
+        (string, string) loginCredentials = new("null", "null");
+        string[] loginOptions = new string[] { "Login", "Create Account" };
+        string? choice = Utils.GetUserChoice("Login or create an account", loginOptions);
+
+        if (choice == null)
+        {
+            System.Environment.Exit(1);
+        }
+
+        else if (choice == loginOptions[0])
+        {
+            // Login
+            loginCredentials = InitLogin();
+        }
+
+        else if (choice == loginOptions[1])
+        {
+            loginCredentials = Register();
+        }
 
         if (AuthManager.Login(loginCredentials.Item1, loginCredentials.Item2))
         {
@@ -30,7 +48,7 @@ class Program
 
     public static void Init()
     {
-        string[] options = new string[] { "Add a recipe", "See your recipes", "See your Favourite Recipes",  "See all recipes", "Search recipes", "Update a recipe", "Delete a Recipe", "Add a Recipe to Favourites", "Remove a recipe from Favourites List", "LogOut\n" };
+        string[] options = new string[] { "Add a recipe", "See your recipes", "See your Favourite Recipes", "See all recipes", "Search recipes", "Update a recipe", "Delete a Recipe", "Add a Recipe to Favourites", "Remove a recipe from Favourites List", "LogOut\n" };
 
         Console.WriteLine();
         string? choice = Utils.GetUserChoice("What do you want to do?", options);
@@ -55,9 +73,10 @@ class Program
         else if (choice == options[3])
         {
             AuthManager.GetAllRecipesFromAllUsers().ForEach(
-                recipe => {
-                Console.WriteLine($"\n{seperator}\n"); 
-                Console.WriteLine(recipe.DisplayRecipeInfo());
+                recipe =>
+                {
+                    Console.WriteLine($"\n{seperator}\n");
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
                 }
                 );
         }
@@ -161,6 +180,47 @@ class Program
         return (username, password);
     }
 
+    public static (string, string) Register()
+    {
+        Console.WriteLine("---Register---");
+        Console.WriteLine(seperator);
+
+        Console.Write("enter a username: ");
+        string username = Console.ReadLine() ?? "null";
+
+        while (username == "null" || string.IsNullOrEmpty(username))
+        {
+            Console.Write("Enter a valid username: ");
+            username = Console.ReadLine() ?? "null";
+        }
+
+        Console.Write("Enter a password: ");
+        string password = Console.ReadLine() ?? "null";
+
+        while (password == "null" || string.IsNullOrEmpty(password))
+        {
+            Console.Write("Enter a valid password: ");
+            password = Console.ReadLine() ?? "null";
+        }
+
+        Console.Write("Enter your age: ");
+        string InputAge = Console.ReadLine() ?? "null";
+        int age;
+        while (InputAge == "null" || !int.TryParse(InputAge, out age))
+        {
+            Console.Write("Enter a valid age: ");
+            InputAge = Console.ReadLine() ?? "null";
+        }
+
+        Console.Write("Enter your description (or leave blank): ");
+        string description = Console.ReadLine() ?? "";
+
+        User newUser = new(username, password, description, age);
+        AuthManager.AddUser(newUser);
+
+        return (username, password);
+    }
+
     /// <summary>
     /// A method that adds an example recipe to the fake database
     /// so recipes viewing can be done without creating one first
@@ -181,7 +241,7 @@ class Program
                                             ingredients,
                                             0,
                                             AuthManager.CurrentUser,
-                                            tags,null
+                                            tags, null
                                             );
         Recipe exampleRecipe2 = new Recipe("Vanilla cake",
                                             "A simple Vanilla cake",
@@ -192,9 +252,9 @@ class Program
                                             ingredients,
                                             0,
                                             AuthManager.CurrentUser,
-                                            tags,null
+                                            tags, null
                                             );
-        
+
         AuthManager.CurrentUser.AddRecipe(exampleRecipe);
         AuthManager.CurrentUser.AddRecipe(exampleRecipe2);
     }
