@@ -19,7 +19,7 @@ public class UtilsTest
         List<string> tags = new List<string>{"vegetarian","vegan"};
         List<RecipeTags> tags_expected = new List<RecipeTags>{RecipeTags.vegetarian,RecipeTags.vegan};
         //Act
-        List<RecipeTags> tags_test = utils.ValidateTags(tags);
+        List<RecipeTags> tags_test = Utils.ValidateTags(tags);
         //Assert
         CollectionAssert.AreEquivalent(tags_test,tags_expected);
     }

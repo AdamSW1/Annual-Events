@@ -72,7 +72,8 @@ class Program
         }
         else if (choice == options[0])
         {
-            recipeManager.AddRecipe(AuthenticationManager.Instance.CurrentUser);
+            //Add a recipe
+            CreateAddRecipe(AuthenticationManager.Instance.CurrentUser);
         }
         else if (choice == options[1])
         {
@@ -129,27 +130,22 @@ class Program
         }
         else if (choice == options[5])
         {
-            Console.WriteLine("\nEnter the name of the recipe you want to update/modify:");
-            string recipeName = Console.ReadLine();
-            RecipeManager.UpdateRecipe(AuthenticationManager.Instance.CurrentUser, recipeName);
+            UpadtingRecipe(AuthenticationManager.Instance.CurrentUser);
         }
         else if (choice == options[6])
         {
             Console.WriteLine("\nEnter the name of the recipe you want to delete:");
-            string recipeName = Console.ReadLine();
-            RecipeManager.DeleteRecipe(AuthenticationManager.Instance.CurrentUser, recipeName);
+            DeletingRecipe(AuthenticationManager.Instance.CurrentUser);
         }
         else if (choice == options[7])
         {
             Console.WriteLine("\nEnter the name of your favourite recipe:");
-            string recipeName = Console.ReadLine();
-            RecipeManager.AddToFavRecipe(AuthenticationManager.Instance.CurrentUser, recipeName);
+            AddingToFavRecipe(AuthenticationManager.Instance.CurrentUser);
         }
         else if (choice == options[8])
         {
             Console.WriteLine("\nEnter the name of the recipe (Favourites) you want to delete:");
-            string recipeName = Console.ReadLine();
-            RecipeManager.DeleteFavRecipe(AuthenticationManager.Instance.CurrentUser, recipeName);
+            RemovingFromFavRecipe(AuthenticationManager.Instance.CurrentUser);
         }
         else if (choice == options[9])
         {
@@ -186,6 +182,46 @@ class Program
             {
                 Environment.Exit(1);
             }
+        }
+    }
+
+    private static void DeletingRecipe(User user)
+    {
+        string recipeName;
+        Recipe recipeToDelete;
+        FindRecipe(user, out recipeName, out recipeToDelete);
+        Console.WriteLine($"\nRecipe '{recipeName}' deleted successfully!");
+        RecipeManager.DeleteRecipe(user, recipeToDelete);
+    }
+
+    private static void RemovingFromFavRecipe(User user)
+    {
+        string recipeName;
+        Recipe recipeToDelete;
+        FindRecipe(user, out recipeName, out recipeToDelete);
+        Console.WriteLine($"\nRecipe '{recipeName}' removed from favorites successfully!");
+        RecipeManager.DeleteFavRecipe(user, recipeToDelete);
+    }
+
+    private static void AddingToFavRecipe(User user)
+    {
+        string recipeName;
+        Recipe recipeToAdd;
+        FindRecipe(user, out recipeName, out recipeToAdd);
+        Console.WriteLine($"\nRecipe '{recipeName}' added to favorites successfully!");
+        RecipeManager.AddToFavRecipe(user, recipeToAdd);
+    }
+
+
+    private static void FindRecipe(User user, out string recipeName, out Recipe recipeToDelete)
+    {
+        string localRecipeName = Console.ReadLine();
+        recipeToDelete = user.Recipes.Find(r => r.Name == localRecipeName);
+        recipeName = localRecipeName;
+        if (recipeToDelete == null)
+        {
+            Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
+            return;
         }
     }
 
@@ -342,6 +378,103 @@ class Program
         AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe);
         AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe2);
     }
+
+    private static void CreateAddRecipe(User user)
+    {
+        //Get recipeName, descroption, cookingTime, preparation, servings, ratings
+        Console.WriteLine("\nAdd a Recipe:");
+        Console.Write("Recipe Name: ");
+        string recipeName = Utils.CheckName() ?? "null";
+        Console.Write("Description: ");
+        string description = Utils.CheckName100Limit() ?? "null";
+        Console.Write("Cooking Time (minutes): ");
+        double cookingTime = Utils.CheckDouble();
+        Console.Write("Preparation: ");
+        string preparation = Utils.CheckName100Limit() ?? "null";
+        Console.Write("Servings: ");
+        int servings = Utils.CheckServings();
+        Console.Write("Ratings: ");
+        double ratings = Utils.CheckRatings();
+
+        // Get ingredients
+        List<Ingredient> ingredients = new List<Ingredient>();
+        Console.WriteLine("\nEnter Ingredients (press Enter without typing to finish):");
+        while (true)
+        {
+            Console.Write("Ingredient Name (press Enter to finish): ");
+            string ingredientName = Utils.CheckName() ?? "null";
+            if (string.IsNullOrWhiteSpace(ingredientName))
+                break;
+
+            Console.Write("Weight/Quantity: ");
+            string quantity = Utils.CheckName100Limit();
+            Console.Write("Price: ");
+            double price = Utils.CheckDouble();
+
+            ingredients.Add(new Ingredient(ingredientName, quantity, price));
+        }
+
+        //Get tags
+        Console.WriteLine("Enter tags for the recipe (press Enter without typing to finish):");
+        Console.WriteLine("Available tags:");
+        foreach (var tag in Enum.GetValues(typeof(RecipeTags)))
+        {
+            Console.WriteLine($"{tag?.ToString()}");
+        }
+
+        List<string> tagList = new List<string>();
+
+        while (true)
+        {
+            Console.Write("Tag: ");
+            string tag = Console.ReadLine() ?? "null";
+            if (string.IsNullOrWhiteSpace(tag))
+                break;
+            else
+            {
+                if (Enum.TryParse(tag, out RecipeTags tagEnum))
+                {
+                    tagList.Add(tagEnum.ToString());
+                }
+                else
+                {
+                    Console.WriteLine("Invalid tag. Please try again.");
+                }
+            }
+        }
+
+        recipeManager.AddRecipe(user, recipeName, description, cookingTime, preparation, servings, ratings, ingredients, tagList);
+        Console.WriteLine("\nRecipe added successfully!");
+    }
     
+    private static void UpadtingRecipe(User user)
+    {
+        Console.WriteLine("\nEnter the name of the recipe you want to update/modify:");
+        string recipeName;
+        Recipe recipeToUpdate;
+        FindRecipe(user, out recipeName, out recipeToUpdate);
+        Console.WriteLine($"Updating recipe '{recipeName}'...");
+        Console.Write("New Recipe Name: ");
+        string newName = Utils.CheckName();
+
+        Console.Write("New Description: ");
+        string newDescription = Utils.CheckName100Limit();
+
+        Console.Write("New Cooking Time (minutes): ");
+        double newCookingTime = Utils.CheckDouble();
+
+        Console.Write("New Preparations: ");
+        string newPreparation = Utils.CheckName100Limit();
+
+        Console.Write("New Servings: ");
+        int newServings = Utils.CheckServings();  
+        
+        Console.Write("New Ratings: ");
+        double newRatings = Utils.CheckRatings();
+
+        recipeManager.UpdateRecipe(newName, newDescription, newCookingTime, newPreparation, newServings, newRatings, recipeToUpdate);
+
+        Console.WriteLine($"\nRecipe '{recipeName}' updated successfully!");              
+    }
 }
 
