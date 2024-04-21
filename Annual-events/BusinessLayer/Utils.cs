@@ -168,7 +168,7 @@ public class Utils
             }
             catch(FormatException) 
             {
-                Console.WriteLine("Ratings need to be an integer!");
+                Console.WriteLine("Ratings need to be a number!");
                 Console.WriteLine();
             }
             catch(ArgumentException) 
