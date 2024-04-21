@@ -28,7 +28,7 @@ public class SearchTest
                 favourite: 2,
                 owner: null,
                 tags: tags,
-                review: new List<string> { "review1", "review2" }),
+                reviews: new List<Review> { new Review("reviewer1", "review1"), new Review("reviewer2", "review2") }),
             new Recipe(
                 name: "recipe2",
                 description: "description2",
@@ -40,7 +40,7 @@ public class SearchTest
                 favourite: 0,
                 owner:null,
                 tags: tags,
-                review: new List<string> { "review1", "review2" })};
+                reviews: new List<Review> { new Review("reviewer1", "review1") })};
         Search search = new Search(recipes);
         List<Recipe> expected_recipes = new List<Recipe> { recipes[0] };
         //Act
@@ -65,7 +65,7 @@ public class SearchTest
                 favourite: 2,
                 owner: null,
                 tags: tags,
-                review: new List<string> { "review1", "review2" }),
+                reviews: new List<Review> { new Review("reviewer1", "review1"), new Review("reviewer2", "review2") }),
             new Recipe(
                 name: "recipe2",
                 description: "description2",
@@ -77,7 +77,7 @@ public class SearchTest
                 favourite: 0,
                 owner:null,
                 tags: tags,
-                review: new List<string> { "review1", "review2" })};
+                reviews: new List<Review> { new Review("reviewer1", "review1") })};
         Search search = new Search(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByTags(tags);
@@ -101,7 +101,7 @@ public class SearchTest
                 favourite: 2,
                 owner: null,
                 tags: tags,
-                review: new List<string> { "review1", "review2" }),
+                reviews: new List<Review> { new Review("reviewer1", "review1"), new Review("reviewer2", "review2") }),
             new Recipe(
                 name: "recipe2",
                 description: "description2",
@@ -113,7 +113,7 @@ public class SearchTest
                 favourite: 0,
                 owner:null,
                 tags: tags,
-                review: new List<string> { "review1", "review2" })};
+                reviews: new List<Review> { new Review("reviewer1", "review1") })};
         Search search = new Search(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByTimeConstraint(5);
@@ -137,7 +137,7 @@ public class SearchTest
                 favourite: 2,
                 owner: null,
                 tags: tags,
-                review: new List<string> { "review1", "review2" }),
+                reviews: new List<Review> { new Review("reviewer1", "review1"), new Review("reviewer2", "review2") }),
             new Recipe(
                 name: "recipe2",
                 description: "description2",
@@ -149,7 +149,7 @@ public class SearchTest
                 favourite: 0,
                 owner:null,
                 tags: tags,
-                review: new List<string> { "review1", "review2" })};
+                reviews: new List<Review> { new Review("reviewer1", "review1") })};
         Search search = new Search(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByRating(2);
@@ -172,7 +172,7 @@ public class SearchTest
                 favourite: 2,
                 owner: null,
                 tags: tags,
-                review: new List<string> { "review1", "review2" }),
+                reviews: new List<Review> { new Review("reviewer1", "review1"), new Review("reviewer2", "review2") }),
             new Recipe(
                 name: "recipe2",
                 description: "description2",
@@ -184,7 +184,7 @@ public class SearchTest
                 favourite: 0,
                 owner:null,
                 tags: tags,
-                review: new List<string> { "review1", "review2" })};     
+                reviews: new List<Review> { new Review("reviewer1", "review1") })};    
         Search search = new Search(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByServings(1);
@@ -208,7 +208,7 @@ public class SearchTest
                 favourite: 2,
                 owner: null,
                 tags: tags,
-                review: new List<string> { "review1", "review2" }),
+                reviews: new List<Review> { new Review("reviewer1", "review1"), new Review("reviewer2", "review2") }),
             new Recipe(
                 name: "recipe2",
                 description: "description2",
@@ -220,7 +220,7 @@ public class SearchTest
                 favourite: 0,
                 owner:null,
                 tags: tags,
-                review: new List<string> { "review1", "review2" })};
+                reviews: new List<Review> { new Review("reviewer1", "review1") })};
         Search search = new Search(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesInFavorites(0);
@@ -245,7 +245,7 @@ public class SearchTest
                 favourite: 2,
                 owner: new User("Joe", "password", "Joe", 30),
                 tags: tags,
-                review: review),
+                reviews: new List<Review> { new Review("reviewer1", "review1"), new Review("reviewer2", "review2") }),
             new Recipe(
                 name: "recipe2",
                 description: "description2",
@@ -257,7 +257,7 @@ public class SearchTest
                 favourite: 0,
                 owner:new User("Boe", "password", "Boe", 30),
                 tags: tags,
-                review: review)};
+                reviews: new List<Review> { new Review("reviewer1", "review1") })};
         Search search = new Search(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByOwnerUsername("Joe");

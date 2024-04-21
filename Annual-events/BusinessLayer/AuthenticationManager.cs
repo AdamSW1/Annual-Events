@@ -1,72 +1,72 @@
 using System;
 using System.Collections.Generic;
 using RecipeInfo;
-namespace BusinessLayer
+namespace BusinessLayer;
+
+public class AuthenticationManager
 {
-    class AuthenticationManager
+    private static AuthenticationManager? _instance;
+    public static AuthenticationManager Instance
     {
-        private static AuthenticationManager? _instance;
-        public static AuthenticationManager Instance{
-            get{
-                _instance ??= new AuthenticationManager();
-                return _instance;
-            }
-        }
-
-        
-        private static List<User> users = new();
-        private static User? _currentUser;
-
-        private AuthenticationManager() {
-            // Test data for now, since we dont have a database.
-            users.Add(new User("user1", "password1", "Description 1", 25));
-            users.Add(new User("user2", "password2", "Description 2", 30));
-        }
-
-        public User CurrentUser
+        get
         {
-            get
+            _instance ??= new AuthenticationManager();
+            return _instance;
+        }
+    }
+
+
+    private List<User> users = new();
+    private static User? _currentUser;
+
+    private AuthenticationManager()
+    {
+        // Test data for now, since we dont have a database.
+        users.Add(new User("user1", "password1", "Description 1", 25));
+        users.Add(new User("user2", "password2", "Description 2", 30));
+    }
+
+    public User CurrentUser
+    {
+        get
+        {
+            if (_currentUser != null)
             {
-                if (_currentUser != null)
-                {
-                    return _currentUser;
-                }
-                throw new NotImplementedException();
+                return _currentUser;
             }
+            throw new NotImplementedException();
         }
+    }
+    public void AddUser(User user)
+    {
+        users.Add(user);
+    }
 
-
-        public void AddUser(User user)
+    public bool Login(string username, string password)
+    {
+        foreach (var user in users)
         {
-            users.Add(user);
-        }
-
-        public  bool Login(string username, string password)
-        {
-            foreach (var user in users)
+            if (user.Authentication(username, password))
             {
-                if (user.Authentication(username, password))
-                {
-                    _currentUser = user;
-                    return true;
-                }
+                _currentUser = user;
+                return true;
             }
-            return false;
         }
+        return false;
+    }
 
-        public void Logout()
-        {
-            _currentUser = null;
-        }
+    public void Logout()
+    {
+        _currentUser = null;
+    }
 
-        public  List<Recipe> GetAllRecipesFromAllUsers()
+    public List<Recipe> GetAllRecipesFromAllUsers()
+    {
+        List<Recipe> allRecipes = new List<Recipe>();
+        foreach (var user in users)
         {
-            List<Recipe> allRecipes = new List<Recipe>();
-            foreach (var user in users)
-            {
-                allRecipes.AddRange(user.Recipes);
-            }
-            return allRecipes;
+            allRecipes.AddRange(user.Recipes);
         }
+        return allRecipes;
     }
 }

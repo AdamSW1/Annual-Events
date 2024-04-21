@@ -48,7 +48,21 @@ class Program
 
     public static void Init()
     {
-        string[] options = new string[] { "Add a recipe", "See your recipes", "See your Favourite Recipes", "See all recipes", "Search recipes", "Update a recipe", "Delete a Recipe", "Add a Recipe to Favourites", "Remove a recipe from Favourites List", "LogOut\n" };
+        string[] options = new string[] 
+        {   
+            "Add a recipe", 
+            "See your recipes", 
+            "See your Favourite Recipes", 
+            "See all recipes", 
+            "Search recipes", 
+            "Update a recipe", 
+            "Delete a Recipe", 
+            "Add a Recipe to Favourites", 
+            "Remove a recipe from Favourites List",
+            "Add a review to another user's recipe", 
+            "View your reviews", 
+            "LogOut\n" 
+        };
 
         Console.WriteLine();
         string? choice = Utils.GetUserChoice("What do you want to do?", options);
@@ -139,6 +153,15 @@ class Program
             RecipeManager.DeleteFavRecipe(AuthenticationManager.Instance.CurrentUser, recipeName);
         }
         else if (choice == options[9])
+        {
+            AuthenticationManager.Instance.Logout();
+            AuthenticationManager.Instance.CurrentUser.GiveReviewToAnotherUser(recipeManager);
+        }
+        else if (choice == options[10])
+        {
+            AuthenticationManager.Instance.CurrentUser.ViewReviewsFromUserRecipes();
+        }
+        else if (choice == options[11])
         {
             AuthenticationManager.Instance.Logout();
             Console.WriteLine("\nLogged out.");
@@ -258,5 +281,6 @@ class Program
         AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe);
         AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe2);
     }
+    
 }
 
