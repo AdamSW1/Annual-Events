@@ -154,7 +154,6 @@ class Program
         }
         else if (choice == options[9])
         {
-            AuthenticationManager.Instance.Logout();
             AuthenticationManager.Instance.CurrentUser.GiveReviewToAnotherUser(recipeManager);
         }
         else if (choice == options[10])
