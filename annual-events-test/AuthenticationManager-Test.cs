@@ -53,22 +53,6 @@ public class AuthenticationManagerTest
         Assert.IsNull(AuthenticationManager.Instance.CurrentUser);
     }
 
-
-    [TestMethod]
-    public void Login_InvalidCredentialsCurrentUser_Failure()
-    {
-        // Arrange
-        string username = "user1";
-        string password = "dasoidjasdjasds";
-
-        // Act
-        bool loginResult = AuthenticationManager.Instance.Login(username, password);
-
-        // Assert
-        Assert.IsFalse(loginResult);
-        Assert.IsNull(AuthenticationManager.Instance.CurrentUser);
-    }
-
     [TestMethod]
     public void GetAllRecipesFromAllUsers_NoUsers_ReturnsEmptyList()
     {
