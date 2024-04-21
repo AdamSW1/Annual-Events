@@ -211,12 +211,12 @@ public class User
         }
     }
 
-    public void GiveReviewToAnotherUser(AuthenticationManager authManager, RecipeManager recipeManager)
+    public void GiveReviewToAnotherUser(RecipeManager recipeManager)
     {
         Console.WriteLine("Select a recipe to review:");
         
         // Retrieve list of all recipes from all users using AuthenticationManager method
-        List<Recipe> recipeList = authManager.GetAllRecipesFromAllUsers();
+        List<Recipe> recipeList = AuthenticationManager.Instance.GetAllRecipesFromAllUsers();
 
         if (recipeList.Count == 0)
         {
@@ -240,7 +240,7 @@ public class User
             string reviewText = Console.ReadLine();
 
             // Add review to the selected recipe
-            selectedRecipe.AddReview(authManager.CurrentUser, reviewText); 
+            selectedRecipe.AddReview(AuthenticationManager.Instance.CurrentUser, reviewText); 
 
             Console.WriteLine("Review added successfully!");
         }
