@@ -8,19 +8,20 @@ class RecipeManager
 {
     public void AddRecipe(User user)
     {
+        Utils utils = new Utils();
         Console.WriteLine("\nAdd a Recipe:");
         Console.Write("Recipe Name: ");
-        string recipeName = Console.ReadLine() ?? "null";
+        string recipeName = utils.CheckName() ?? "null";
         Console.Write("Description: ");
-        string description = Console.ReadLine() ?? "null";
+        string description = utils.CheckName100Limit() ?? "null";
         Console.Write("Cooking Time (minutes): ");
-        double cookingTime = double.Parse(Console.ReadLine() ?? "null");
+        double cookingTime = utils.CheckDouble();
         Console.Write("Preparation: ");
-        string preparation = Console.ReadLine() ?? "null";
+        string preparation = utils.CheckName100Limit() ?? "null";
         Console.Write("Servings: ");
-        int servings = int.Parse(Console.ReadLine() ?? "null");
+        int servings = utils.CheckServings();
         Console.Write("Ratings: ");
-        int ratings = int.Parse(Console.ReadLine() ?? "null");
+        int ratings = utils.CheckRatings();
 
         // Get ingredients
         List<Ingredient> ingredients = new List<Ingredient>();
@@ -28,14 +29,14 @@ class RecipeManager
         while (true)
         {
             Console.Write("Ingredient Name (press Enter to finish): ");
-            string ingredientName = Console.ReadLine() ?? "null";
+            string ingredientName = utils.CheckName() ?? "null";
             if (string.IsNullOrWhiteSpace(ingredientName))
                 break;
 
             Console.Write("Weight/Quantity: ");
-            string quantity = Console.ReadLine() ?? "null";
+            string quantity = utils.CheckName100Limit();
             Console.Write("Price: ");
-            double price = double.Parse(Console.ReadLine() ?? "null");
+            double price = utils.CheckDouble();
 
             ingredients.Add(new Ingredient(ingredientName, quantity, price));
         }
@@ -44,7 +45,7 @@ class RecipeManager
         List<string> tags = new List<string> { "vegetarian", "vegan" };
 
         // Create recipe
-        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags,null);
+        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, null);
 
         // Add the recipe to the user's list
         user.AddRecipe(newRecipe);
@@ -102,6 +103,7 @@ class RecipeManager
 
     public static void UpdateRecipe(User user, string recipeName)
     {
+        Utils utils = new Utils();
         Console.WriteLine("\nUpdate Recipe Information:");
         Recipe recipeToUpdate = user.Recipes.Find(r => r.Name == recipeName);
 
@@ -110,27 +112,27 @@ class RecipeManager
             Console.WriteLine($"Updating recipe '{recipeName}'...");
 
             Console.Write("New Recipe Name: ");
-            string newName = Console.ReadLine();
+            string newName = utils.CheckName();
             recipeToUpdate.Name = newName;
 
             Console.Write("New Description: ");
-            string newDescription = Console.ReadLine();
+            string newDescription = utils.CheckName100Limit();
             recipeToUpdate.Description = newDescription;
 
             Console.Write("New Cooking Time (minutes): ");
-            double newCookingTime = Convert.ToDouble(Console.ReadLine());
+            double newCookingTime = utils.CheckDouble();
             recipeToUpdate.CookingTime = newCookingTime;
 
             Console.Write("New Preparations: ");
-            string newPreparation = Console.ReadLine();
+            string newPreparation = utils.CheckName100Limit();
             recipeToUpdate.Preparation = newPreparation;
 
             Console.Write("New Servings: ");
-            int newServings = Convert.ToInt32(Console.ReadLine());
+            int newServings = utils.CheckServings();
             recipeToUpdate.Servings = newServings;
             
             Console.Write("New Ratings: ");
-            int newRatings = Convert.ToInt32(Console.ReadLine());
+            int newRatings = utils.CheckRatings();
             recipeToUpdate.Ratings = newRatings;
             
             Console.WriteLine($"\nRecipe '{recipeName}' updated successfully!");
