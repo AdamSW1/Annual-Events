@@ -12,18 +12,18 @@ namespace BusinessLayer
                 return _instance;
             }
         }
-        private static List<User> users = new List<User>();
+
+        
+        private static List<User> users = new();
         private static User? _currentUser;
 
-        private AuthenticationManager()
-        {
+        private AuthenticationManager() {
             // Test data for now, since we dont have a database.
             users.Add(new User("user1", "password1", "Description 1", 25));
             users.Add(new User("user2", "password2", "Description 2", 30));
-
         }
 
-        public static User CurrentUser
+        public User CurrentUser
         {
             get
             {
@@ -36,12 +36,12 @@ namespace BusinessLayer
         }
 
 
-        public static void AddUser(User user)
+        public void AddUser(User user)
         {
             users.Add(user);
         }
 
-        public static bool Login(string username, string password)
+        public  bool Login(string username, string password)
         {
             foreach (var user in users)
             {
@@ -54,12 +54,12 @@ namespace BusinessLayer
             return false;
         }
 
-        public static void Logout()
+        public void Logout()
         {
             _currentUser = null;
         }
 
-        public static List<Recipe> GetAllRecipesFromAllUsers()
+        public  List<Recipe> GetAllRecipesFromAllUsers()
         {
             List<Recipe> allRecipes = new List<Recipe>();
             foreach (var user in users)
