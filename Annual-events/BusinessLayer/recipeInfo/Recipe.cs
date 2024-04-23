@@ -48,6 +48,8 @@ public class Recipe
             _cookingTime = value;
         }
     }
+
+    // make a list of preparation objects
     private string _preparation;
     public string Preparation
     {
@@ -105,6 +107,8 @@ public class Recipe
         }
 
     }
+
+    //make many to many
     private int _favourite;
     public int Favourite
     {
