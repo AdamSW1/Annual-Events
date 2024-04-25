@@ -71,4 +71,10 @@ public class Utils
         if (rating < 0 || rating > 5){ return false; }
         return true;
     }
+
+    public static bool CheckList<T>(List<T> list){
+
+        if (list == null || list.Count == 0){ return false; }
+        return true;
+    }
 }
