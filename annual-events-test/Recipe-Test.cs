@@ -16,7 +16,7 @@ public class RecipeTest
         Recipe exampleRecipe = new Recipe("Chocolate cake",
                                             "A simple chocolate cake",
                                             120,
-                                            "mix, put in oven, do stuff",
+                                            new List<string>() { "mix", "put in oven", "do stuff" },
                                             8,
                                             5,
                                             ingredients,
