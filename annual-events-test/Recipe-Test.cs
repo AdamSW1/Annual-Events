@@ -176,7 +176,7 @@ public class RecipeTest
         string updatedRecipeName = "Updated Test Recipe";
         string updatedDescription = "Updated Test Description";
         double updatedCookingTime = 75;
-        string updatedPreparation = "Updated Test Preparation";
+        List<string> updatedPreparation = new(){"do"};
         int updatedServings = 6;
         int updatedRatings = 4;
         // Act
@@ -205,7 +205,7 @@ public class RecipeTest
         string updatedRecipeName = "Updated Test Recipe";
         string updatedDescription = "Updated Test Description";
         double updatedCookingTime = 75;
-        string updatedPreparation = "Updated Test Preparation";
+        List<string> updatedPreparation = new(){"do"};
         int updatedServings = 6;
         int updatedRatings = 4;
         // Act
