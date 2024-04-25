@@ -23,4 +23,129 @@ public class UtilsTest
         //Assert
         CollectionAssert.AreEquivalent(tags_test,tags_expected);
     }
+
+    [TestMethod]
+    public void CheckDouble_valid_returnsTrue(){
+        //arrange
+        double test = 1;
+        
+        //act
+        bool check = Utils.CheckDouble(test);
+
+        //assert
+        Assert.IsTrue(check);
+    }
+
+    [TestMethod]
+    public void CheckDouble_invalid_returnsFalse(){
+        //arrange
+        double test = -10;
+        
+        //act
+        bool check = Utils.CheckDouble(test);
+
+        //assert
+        Assert.IsFalse(check);
+    }
+
+    [TestMethod]
+    public void CheckString_validString_ReturnsTrue(){
+        //arrange
+        string test = "hello";
+
+        //act
+        bool check = Utils.CheckString(test);
+
+        //assert
+        Assert.IsTrue(check);
+    }
+
+    [TestMethod]
+    public void CheckString_whitespaceString_ReturnsFalse(){
+        //arrange
+        string test = "  ";
+
+        //act
+        bool check = Utils.CheckString(test);
+
+        //assert
+        Assert.IsFalse(check);
+    }
+
+    [TestMethod]
+    public void CheckString_emptyString_ReturnsFalse(){
+        //arrange
+        string test = "";
+
+        //act
+        bool check = Utils.CheckString(test);
+
+        //assert
+        Assert.IsFalse(check);
+    }
+
+    [TestMethod]
+    public void CheckName_validName_returnsTrue(){
+        //arrange
+        string name = "Adam";
+        //act
+        bool check = Utils.CheckName(name);
+        //assert
+        Assert.IsTrue(check);
+    }
+    [TestMethod]
+    public void CheckName_NameTooLong_returnsFalse(){
+        //arrange
+        string name = "I am more than 30 characters long";
+        //act
+        bool check = Utils.CheckName(name);
+        //assert
+        Assert.IsFalse(check);
+    }
+
+    [TestMethod]
+    public void CheckName_emptyName_returnsFalse(){
+        //arrange
+        string name = "";
+        //act
+        bool check = Utils.CheckName(name);
+        //assert
+        Assert.IsFalse(check);
+    }
+    [TestMethod]
+    public void CheckName_whitespaceName_returnsFalse(){
+        //arrange
+        string name = "      ";
+        //act
+        bool check = Utils.CheckName(name);
+        //assert
+        Assert.IsFalse(check);
+    }
+
+    [TestMethod]
+    public void CheckLongString_validString_returnsTrue(){
+        //arrange
+        string test="i am less than 2000 characters";
+        //act
+        bool check = Utils.CheckLongString(test);
+        //assert
+        Assert.IsTrue(check);
+    }
+
+    [TestMethod]
+    public void CheckLongString_TooLongString_returnsFalse(){
+        //arrange
+        string test = "";
+        for(int i = 0; i < 2001; i ++){
+            test += "a";
+        }
+        //act
+        bool check = Utils.CheckLongString(test);
+        //assert
+        Assert.IsFalse(check);
+    }
 }
+
+        //arrange
+        //act
+        //assert
