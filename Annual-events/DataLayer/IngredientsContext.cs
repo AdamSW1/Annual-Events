@@ -26,8 +26,8 @@ public class IngredientsContext
         return HashCode.Combine(IngredientId, Name, Quantity, Price);
     }
 
-      public override string ToString()
-  {
+    public override string ToString()
+    {
     var str = new StringBuilder();
 
     str.Append($"Ingredient ( IngrdientId={IngredientId}, ");
@@ -36,6 +36,6 @@ public class IngredientsContext
     str.Append($"Price={Price.ToString("0.00")} )");
 
     return str.ToString();
-  }
+    }
 
 }
