@@ -164,6 +164,36 @@ public class UtilsTest
         //assert
         Assert.IsFalse(check);
     }
+
+    [TestMethod]
+    public void CheckScore_Between0And5_returnsTrue(){
+        //arrange
+        int test = 2;
+        //act
+        bool check = Utils.CheckScore(test);
+        //assert
+        Assert.IsTrue(check);
+    }
+
+    [TestMethod]
+    public void CheckScore_LessThan0_returnsFalse(){
+        //arrange
+        int test = -1;
+        //act
+        bool check = Utils.CheckScore(test);
+        //assert
+        Assert.IsFalse(check);
+    }
+
+    [TestMethod]
+    public void CheckScore_GreaterThan5_returnsFalse(){
+        //arrange
+        int test = 6;
+        //act
+        bool check = Utils.CheckScore(test);
+        //assert
+        Assert.IsFalse(check);
+    }
 }
 
         //arrange
