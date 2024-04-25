@@ -16,19 +16,20 @@ public class UtilsTest
     {
         //Arrange
         Utils utils = new Utils();
-        List<string> tags = new List<string>{"vegetarian","vegan"};
-        List<RecipeTags> tags_expected = new List<RecipeTags>{RecipeTags.vegetarian,RecipeTags.vegan};
+        List<string> tags = new List<string> { "vegetarian", "vegan" };
+        List<RecipeTags> tags_expected = new List<RecipeTags> { RecipeTags.vegetarian, RecipeTags.vegan };
         //Act
         List<RecipeTags> tags_test = Utils.ValidateTags(tags);
         //Assert
-        CollectionAssert.AreEquivalent(tags_test,tags_expected);
+        CollectionAssert.AreEquivalent(tags_test, tags_expected);
     }
 
     [TestMethod]
-    public void CheckDouble_GreaterThan0_returnsTrue(){
+    public void CheckDouble_GreaterThan0_returnsTrue()
+    {
         //arrange
         double test = 1;
-        
+
         //act
         bool check = Utils.CheckDouble(test);
 
@@ -37,10 +38,11 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckDouble_LessThan0_returnsFalse(){
+    public void CheckDouble_LessThan0_returnsFalse()
+    {
         //arrange
         double test = -10;
-        
+
         //act
         bool check = Utils.CheckDouble(test);
 
@@ -49,7 +51,8 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckString_validString_ReturnsTrue(){
+    public void CheckString_validString_ReturnsTrue()
+    {
         //arrange
         string test = "hello";
 
@@ -61,7 +64,8 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckString_whitespaceString_ReturnsFalse(){
+    public void CheckString_whitespaceString_ReturnsFalse()
+    {
         //arrange
         string test = "  ";
 
@@ -73,7 +77,8 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckString_emptyString_ReturnsFalse(){
+    public void CheckString_emptyString_ReturnsFalse()
+    {
         //arrange
         string test = "";
 
@@ -85,7 +90,8 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckName_validName_returnsTrue(){
+    public void CheckName_validName_returnsTrue()
+    {
         //arrange
         string name = "Adam";
         //act
@@ -94,7 +100,8 @@ public class UtilsTest
         Assert.IsTrue(check);
     }
     [TestMethod]
-    public void CheckName_NameMoreThan30_returnsFalse(){
+    public void CheckName_NameMoreThan30_returnsFalse()
+    {
         //arrange
         string name = "I am more than 30 characters long";
         //act
@@ -104,7 +111,8 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckName_emptyName_returnsFalse(){
+    public void CheckName_emptyName_returnsFalse()
+    {
         //arrange
         string name = "";
         //act
@@ -113,7 +121,8 @@ public class UtilsTest
         Assert.IsFalse(check);
     }
     [TestMethod]
-    public void CheckName_whitespaceName_returnsFalse(){
+    public void CheckName_whitespaceName_returnsFalse()
+    {
         //arrange
         string name = "      ";
         //act
@@ -123,9 +132,10 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckLongString_LengthLessThan2000_returnsTrue(){
+    public void CheckLongString_LengthLessThan2000_returnsTrue()
+    {
         //arrange
-        string test="i am less than 2000 characters";
+        string test = "i am less than 2000 characters";
         //act
         bool check = Utils.CheckLongString(test);
         //assert
@@ -133,10 +143,12 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckLongString_TooLongString_returnsFalse(){
+    public void CheckLongString_TooLongString_returnsFalse()
+    {
         //arrange
         string test = "";
-        for(int i = 0; i < 2001; i ++){
+        for (int i = 0; i < 2001; i++)
+        {
             test += "a";
         }
         //act
@@ -146,7 +158,8 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckInt_GreaterThan0_returnsTrue(){
+    public void CheckInt_GreaterThan0_returnsTrue()
+    {
         //arrange
         int test = 1;
         //act
@@ -156,7 +169,8 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckInt_LessThan0_returnsFalse(){
+    public void CheckInt_LessThan0_returnsFalse()
+    {
         //arrange
         int test = -1;
         //act
@@ -166,7 +180,8 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckScore_Between0And5_returnsTrue(){
+    public void CheckScore_Between0And5_returnsTrue()
+    {
         //arrange
         int test = 2;
         //act
@@ -176,7 +191,8 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckScore_LessThan0_returnsFalse(){
+    public void CheckScore_LessThan0_returnsFalse()
+    {
         //arrange
         int test = -1;
         //act
@@ -186,7 +202,8 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckScore_GreaterThan5_returnsFalse(){
+    public void CheckScore_GreaterThan5_returnsFalse()
+    {
         //arrange
         int test = 6;
         //act
@@ -196,9 +213,10 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckList_NonEmptyListStrings_ReturnsTrue(){
+    public void CheckList_NonEmptyListStrings_ReturnsTrue()
+    {
         //arrange
-        List<string> list = new(){"hi"};
+        List<string> list = new() { "hi" };
         //act
         bool check = Utils.CheckList(list);
         //assert
@@ -206,9 +224,10 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckList_NonEmptyListIngredient_ReturnsTrue(){
+    public void CheckList_NonEmptyListIngredient_ReturnsTrue()
+    {
         //arrange
-        List<Ingredient> list = new(){new Ingredient("name","quantity",10)};
+        List<Ingredient> list = new() { new Ingredient("name", "quantity", 10) };
         //act
         bool check = Utils.CheckList(list);
         //assert
@@ -216,9 +235,10 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckList_EmptyListString_ReturnsFalse(){
+    public void CheckList_EmptyListString_ReturnsFalse()
+    {
         //arrange
-        List<string> list = new(){};
+        List<string> list = new() { };
         //act
         bool check = Utils.CheckList(list);
         //assert
@@ -226,16 +246,39 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckList_EmptyListIngredient_ReturnsFalse(){
+    public void CheckList_EmptyListIngredient_ReturnsFalse()
+    {
         //arrange
-        List<Ingredient> list = new(){};
+        List<Ingredient> list = new() { };
         //act
         bool check = Utils.CheckList(list);
+        //assert
+        Assert.IsFalse(check);
+    }
+
+    [TestMethod]
+    public void CheckMultiStringInput_hasCommas_returnsTrue()
+    {
+        //arrange
+        string test = "hello, hi,goodbye";
+        //act
+        bool check = Utils.CheckMultiStringInput(test);
+        //assert
+        Assert.IsTrue(check);
+    }
+
+    [TestMethod]
+    public void CheckMultiStringInput_noCommas_returnsFalse()
+    {
+        //arrange
+        string test = "hello hi goodbye";
+        //act
+        bool check = Utils.CheckMultiStringInput(test);
         //assert
         Assert.IsFalse(check);
     }
 }
 
-        //arrange
-        //act
-        //assert
+//arrange
+//act
+//assert
