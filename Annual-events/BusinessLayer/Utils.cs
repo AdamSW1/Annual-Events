@@ -24,7 +24,7 @@ public class Utils
             Console.WriteLine($"{i + 1} | {options[i]}");
         }
 
-        string choice = Console.ReadLine();
+        string choice = Console.ReadLine() ?? " ";
 
         if (int.TryParse(choice, out int choice1))
         {
@@ -47,16 +47,20 @@ public class Utils
         return true;
 
     }
-    public static bool CheckName(string name)
-    {
 
-        if (name.Length > 30) { return false; }
+    public static bool CheckString(string val){
+        if (string.IsNullOrEmpty(val)) { return false; }
         return true;
     }
-
-    public static bool CheckName100Limit(string name)
+    public static bool CheckName(string name)
     {
-        if (name.Length > 100) { return false; }
+        if (name.Length > 30 || string.IsNullOrWhiteSpace(name)) { return false; }
+        return name.Any(ch => char.IsLetterOrDigit(ch) );
+    }
+
+    public static bool CheckLongString(string val)
+    {
+        if (val.Length > 2000) { return false; }
         return true;
     }
 
@@ -66,7 +70,7 @@ public class Utils
 
         return true;
     }
-    public static bool CheckRatings(double rating)
+    public static bool CheckScore(double rating)
     {
         if (rating < 0 || rating > 5){ return false; }
         return true;
@@ -76,5 +80,20 @@ public class Utils
 
         if (list == null || list.Count == 0){ return false; }
         return true;
+    }
+
+    public static bool CheckMultiStringInput(string input){
+        if (input == null || !input.Contains(',')){
+            return false;
+        }
+        return true;
+    } 
+
+    public static bool CheckRecipeInList(List<Recipe> recipes, string nameToFind){
+        return recipes.Any(r =>
+        {
+            string min = r.Name.ToLower().Trim();
+            return min == nameToFind.ToLower().Trim();
+        });
     }
 }
