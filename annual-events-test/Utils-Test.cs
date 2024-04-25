@@ -25,7 +25,7 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckDouble_valid_returnsTrue(){
+    public void CheckDouble_GreaterThan0_returnsTrue(){
         //arrange
         double test = 1;
         
@@ -37,7 +37,7 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckDouble_invalid_returnsFalse(){
+    public void CheckDouble_LessThan0_returnsFalse(){
         //arrange
         double test = -10;
         
@@ -94,7 +94,7 @@ public class UtilsTest
         Assert.IsTrue(check);
     }
     [TestMethod]
-    public void CheckName_NameTooLong_returnsFalse(){
+    public void CheckName_NameMoreThan30_returnsFalse(){
         //arrange
         string name = "I am more than 30 characters long";
         //act
@@ -123,7 +123,7 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckLongString_validString_returnsTrue(){
+    public void CheckLongString_LengthLessThan2000_returnsTrue(){
         //arrange
         string test="i am less than 2000 characters";
         //act
@@ -146,7 +146,7 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckInt_validInt_returnsTrue(){
+    public void CheckInt_GreaterThan0_returnsTrue(){
         //arrange
         int test = 1;
         //act
@@ -156,7 +156,7 @@ public class UtilsTest
     }
 
     [TestMethod]
-    public void CheckInt_invalidInt_returnsFalse(){
+    public void CheckInt_LessThan0_returnsFalse(){
         //arrange
         int test = -1;
         //act
