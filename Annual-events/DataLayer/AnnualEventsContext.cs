@@ -5,6 +5,8 @@ namespace DataLayer;
 public class AnnualEventsContext : DbContext
 {
     public DbSet<Review> Review { get; set; }
+    public DbSet<User> User { get; set; }
+    public DbSet<Recipe> Recipe { get; set; }
     public string HostName { get; set; }
 
     public string Port { get; set; }
