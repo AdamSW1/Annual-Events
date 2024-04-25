@@ -2,17 +2,18 @@
 using System.Linq;
 using System.Collections.Generic;
 using BusinessLayer;
-using RecipeInfo;
+namespace RecipeInfo;
+
 
 public class RecipeManager
 {
-    public void AddRecipe(User user, string recipeName, string description,
-        double cookingTime, string preparation,
+    public static void AddRecipe(User user, string recipeName, string description,
+        double cookingTime, List<string> preparation,
         int servings, double ratings, List<Ingredient> ingredients,
         List<string> tags)
     {
         // Create recipe
-        Recipe newRecipe = new Recipe(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, null);
+        Recipe newRecipe = new(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, new List<Review>());
 
         // Add the recipe to the user's list
         user.AddRecipe(newRecipe);
@@ -33,7 +34,7 @@ public class RecipeManager
         user.RemoveFromFavRecipe(recipeToDelete);
     }
 
-    public void UpdateRecipe(string newName, string newDescription, double newCookingTime, string newPreparation, int newServings, double newRatings, Recipe recipeToUpdate)
+    public static void UpdateRecipe(string newName, string newDescription, double newCookingTime, List<string> newPreparation, int newServings, double newRatings, Recipe recipeToUpdate)
     {
             recipeToUpdate.Name = newName;
             recipeToUpdate.Description = newDescription;
