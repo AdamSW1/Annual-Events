@@ -274,9 +274,9 @@ class Program
 
             Console.Write("Weight/Quantity: ");
             string quantity = GetString();
-            if (int.TryParse(quantity, out _))
+            if (int.TryParse(quantity, out int result) && result < 0)
             {
-                quantity = GetInt().ToString();
+                quantity = GetInt(true).ToString();
             }
             Console.Write("Price: ");
             double price = GetDouble();
@@ -319,10 +319,7 @@ class Program
 
     private static void UpdatingRecipe()
     {
-        Console.WriteLine("\nEnter the name of the recipe you want to update/modify:");
-        string recipeName;
-        Recipe recipeToUpdate;
-        FindRecipe(AuthenticationManager.CurrentUser, out recipeName, out recipeToUpdate);
+        FindRecipe(AuthenticationManager.CurrentUser, out string recipeName, out Recipe recipeToUpdate);
         Console.WriteLine($"Updating recipe '{recipeName}'...");
         Console.Write("New Recipe Name: ");
         string newName = GetName();
@@ -568,24 +565,27 @@ class Program
         return preparation;
     }
 
-    public static int GetInt()
+    public static int GetInt(bool CallerGotNum = false)
     {
-        bool validInput;
+        bool validInput = false;
         int val;
-        do
-        {
-            if (!int.TryParse(Console.ReadLine(), out val) || !Utils.CheckInt(val))
+            do
             {
-                validInput = false;
-                Console.WriteLine("Input must be a whole non negative number");
-                Console.WriteLine();
-            }
-            else
-            {
-                validInput = true;
-            }
+                if(CallerGotNum){
+                    Console.WriteLine("Input must be a whole non negative number");
+                }
+                if (!int.TryParse(Console.ReadLine(), out val) || !Utils.CheckInt(val))
+                {
+                    validInput = false;
+                    Console.WriteLine("Input must be a whole non negative number");
+                    Console.WriteLine();
+                }
+                else
+                {
+                    validInput = true;
+                }
 
-        } while (validInput != true);
+            } while (validInput != true);
 
         return val;
     }
