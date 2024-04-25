@@ -157,13 +157,16 @@ public class User
     {
     } // should delete their account definitely
 
-    public void ViewFavRecipes()
+    public string ViewFavRecipes()
     {
-        Console.WriteLine("Favorite Recipes:");
+        string returnStr = "";
+        returnStr += "Favorite Recipes:\n";
         foreach (var recipe in _favRecipes)
         {
-            Console.WriteLine(recipe.Name); // Assuming Name property exists in Recipe class
+            returnStr += $"{recipe.Name}\n"; // Assuming Name property exists in Recipe class
         }
+
+        return returnStr;
     }
 
     public void UpdateRecipe(Recipe recipeToUpdate, string updatedRecipeName, string updatedDescription, double updatedCookingTime, List<string> updatedPreparation, int updatedServings)

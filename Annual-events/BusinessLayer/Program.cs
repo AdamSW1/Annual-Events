@@ -87,7 +87,7 @@ class Program
         }
         else if (choice == options[2])
         {
-            AuthenticationManager.CurrentUser.ViewFavRecipes();
+            Console.WriteLine(AuthenticationManager.CurrentUser.ViewFavRecipes());
         }
         else if (choice == options[3])
         {
@@ -154,6 +154,7 @@ class Program
         }
         else if (choice == options[8])
         {
+            Console.WriteLine(AuthenticationManager.CurrentUser.ViewFavRecipes());
             Console.WriteLine("\nEnter the name of the recipe (Favourites) you want to delete:");
             RemovingFromFavRecipe();
         }
