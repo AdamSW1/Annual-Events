@@ -1,4 +1,6 @@
 namespace RecipeInfo;
+
+using System.Text;
 using API;
 public class Ingredient{
 
@@ -60,9 +62,30 @@ public class Ingredient{
         _price = price;
     }
 
+    public override bool Equals(object? obj) 
+    {
+        return obj is Ingredient ing &&
+            IngredientId == ing.IngredientId &&
+            Name == ing.Name &&
+            Quantity == ing.Quantity &&
+            Price == ing.Price;
+    }
+
+    public override int GetHashCode() 
+    {
+        return HashCode.Combine(IngredientId, Name, Quantity, Price);
+    }
+
     public override string ToString()
     {
-        return $"{Quantity} {Name}, {FormattedPrice}$";
+        var str = new StringBuilder();
+
+        str.Append($"Ingredient ( IngrdientId={IngredientId}, ");
+        str.Append($"Name=\"{Name}\", ");
+        str.Append($"Quantity=\"{Quantity}\", ");
+        str.Append($"Price={Price.ToString()} )");
+
+        return str.ToString();
     }
 
 }
