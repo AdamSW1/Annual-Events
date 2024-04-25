@@ -19,8 +19,6 @@ public class AuthenticationManager
     private List<User> Users {get;} = new();
     private static User? _currentUser;
 
-
-
     public static User CurrentUser
     {
         get
