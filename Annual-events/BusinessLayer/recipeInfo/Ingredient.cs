@@ -1,6 +1,8 @@
 namespace RecipeInfo;
 using API;
 public class Ingredient{
+
+    public int IngredientId { get; set; }
     
     private string _name;
     public string Name {
