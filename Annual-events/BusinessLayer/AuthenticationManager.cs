@@ -23,7 +23,7 @@ public class AuthenticationManager
     {
         get
         {
-            return _currentUser ?? throw new ArgumentException("No user logged in");
+            return _currentUser!;
         }
     }
     public void AddUser(User user)
