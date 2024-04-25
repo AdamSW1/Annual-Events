@@ -37,7 +37,7 @@ public class Recipe
         }
         set
         {
-            if (value is null)
+            if (!Utils.CheckLongString(value))
             {
                 throw new ArgumentException("description cant be null");
             }
@@ -104,7 +104,7 @@ public class Recipe
         }
         set
         {
-            if (!Utils.CheckRatings(value))
+            if (!Utils.CheckScore(value))
             {
                 throw new ArgumentException("Rating should be between 1 and 5.");
             }
@@ -137,14 +137,14 @@ public class Recipe
     public int Favourite { get; set; }
 
     private List<RecipeTags> _tags;
-    public List<RecipeTags> Tags
-    {
-        get
-        {
+    public List<RecipeTags> Tags {
+        get{
             return _tags;
         }
-        set
-        {
+        set{
+            if(!Utils.CheckList(value)){
+                throw new ArgumentException("tag list empty");
+            }
             _tags = value;
         }
     }
@@ -189,12 +189,12 @@ public class Recipe
         _ingredients = ingredients;
         _favourite = favourite;
         _owner = owner;
-        _tags = Utils.ValidateTags(tags);
+        _tags = Utils.ValidateTags(tags) ?? new List<RecipeTags>();
         _reviews = reviews;
     }
 
     // override object.Equals
-    public override bool Equals(object obj)
+    public override bool Equals(Object? obj)
     {
 
         if (obj == null || GetType() != obj.GetType())
@@ -260,7 +260,11 @@ public class Recipe
         {
             returnStr += $"{ingredient}\n";
         }
-        returnStr += $"Preparation: {_preparation}\n";
+        returnStr += $"Preparation:\n";
+        foreach(string step in _preparation){
+            string prepStep = step.Replace(",","");
+            returnStr += $"\t{prepStep},\n";
+        }
         returnStr += $"Servings: {_servings}\n";
         returnStr += $"Ratings: {_ratings}\n";
         returnStr += $"Favourites: {_favourite}\n";
@@ -268,9 +272,9 @@ public class Recipe
         return returnStr;
     }
 
-    public void AddReview(User reviewer, string reviewText)
+    public void AddReview(User reviewer, string reviewText,int score)
     {
-        Review review = new Review(reviewer.Username, reviewText);
+        Review review = new(reviewer.Username, reviewText,score);
         Reviews.Add(review);
     }
 }
