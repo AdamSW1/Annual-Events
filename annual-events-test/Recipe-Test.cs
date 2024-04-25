@@ -8,7 +8,7 @@ namespace annual_events_test;
 [TestClass]
 public class RecipeTest
 {
-    private Recipe CreateExampleRecipe(User cur){
+    private Recipe CreateExampleRecipe(Annual_Events_User cur){
         Ingredient flour = new Ingredient("flour", "6 cups", 7);
         Ingredient egg = new Ingredient("egg", "4", 3);
         List<Ingredient> ingredients = new List<Ingredient>() { flour, egg };
@@ -61,7 +61,7 @@ public class RecipeTest
     public void AddRecipe_ValidInput_Success()
     {
         // Arrange
-        var user = new User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
         Recipe test = CreateExampleRecipe(user);
 
         // Act
@@ -69,14 +69,14 @@ public class RecipeTest
         user.AddRecipe(test);
 
         // Assert
-        Assert.AreEqual(1, user.Recipes.Count); // User should have 1 recipe added
+        Assert.AreEqual(1, user.Recipes.Count); // Annual_Events_User should have 1 recipe added
     }
 
     [TestMethod]
     public void AddRecipe_IncorrectRecipeAmount_Success()
     {
         // Arrange
-        var user = new User("testUser2", "password2", "Test user 2", 30);
+        var user = new Annual_Events_User("testUser2", "password2", "Test user 2", 30);
         Recipe test = CreateExampleRecipe(user);
 
         // Act
@@ -84,7 +84,7 @@ public class RecipeTest
         user.AddRecipe(test);
 
         // Assert
-        // User should only have 1 recipe added
+        // Annual_Events_User should only have 1 recipe added
         Assert.AreNotEqual(2, user.Recipes.Count);
     }
 
@@ -92,7 +92,7 @@ public class RecipeTest
     public void DeleteRecipe_ExistingRecipe_DeletesSuccessfully()
     {
         // Arrange
-        var user = new User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
         Recipe test = CreateExampleRecipe(user);
         user.AddRecipe(test);
 
@@ -107,7 +107,7 @@ public class RecipeTest
     public void AddRecipeToFav_ValidInput_Success()
     {
         // Arrange
-        User user = new User("testUser", "password", "Test user", 30);
+        Annual_Events_User user = new Annual_Events_User("testUser", "password", "Test user", 30);
         Recipe test = CreateExampleRecipe(user);
 
         // Act
@@ -115,14 +115,14 @@ public class RecipeTest
         user.AddToFavRecipe(test);
 
         // Assert
-        Assert.AreEqual(1, user.FavRecipes.Count); // User should have 1 recipe added
+        Assert.AreEqual(1, user.FavRecipes.Count); // Annual_Events_User should have 1 recipe added
     }
 
     [TestMethod]
     public void AddFavRecipe_IncorrectFavRecipeAmount_Success()
     {
         // Arrange
-        var user = new User("testUser2", "password2", "Test user 2", 30);
+        var user = new Annual_Events_User("testUser2", "password2", "Test user 2", 30);
         Recipe test = CreateExampleRecipe(user);
 
         // Act
@@ -130,7 +130,7 @@ public class RecipeTest
         user.AddRecipe(test);
 
         // Assert
-        // User should only have 1 recipe added
+        // Annual_Events_User should only have 1 recipe added
         Assert.AreNotEqual(2, user.FavRecipes.Count);
     }
 
@@ -139,8 +139,8 @@ public class RecipeTest
     public void AddToFavRecipeTest()
     {
         //arrange
-        User user1 = new User("Test","TestPass","description",20);
-        User user2 = new User("Test","TestPass","description",20);
+        Annual_Events_User user1 = new Annual_Events_User("Test","TestPass","description",20);
+        Annual_Events_User user2 = new Annual_Events_User("Test","TestPass","description",20);
         Recipe test = CreateExampleRecipe(user1);
 
         //act
@@ -156,8 +156,8 @@ public class RecipeTest
     public void RemoveFromFavRecipeTest()
     {
         //arrange
-        User user1 = new User("Test","TestPass","description",20);
-        User user2 = new User("Test","TestPass","description",20);
+        Annual_Events_User user1 = new Annual_Events_User("Test","TestPass","description",20);
+        Annual_Events_User user2 = new Annual_Events_User("Test","TestPass","description",20);
         Recipe test = CreateExampleRecipe(user1);
 
         //act
@@ -174,7 +174,7 @@ public class RecipeTest
     public void UpdateRecipe_WithExistingRecipe_Success()
     {
         // Arrange
-        var user = new User("testUser2", "password2", "Test user 2", 30);
+        var user = new Annual_Events_User("testUser2", "password2", "Test user 2", 30);
         Recipe test = CreateExampleRecipe(user);
         user.AddRecipe(test);
         string updatedRecipeName = "Updated Test Recipe";
@@ -190,7 +190,7 @@ public class RecipeTest
         bool result = user.UpdateRecipe(test.Name, updatedRecipeName, updatedDescription, updatedCookingTime, updatedPreparation, updatedServings, updatedRatings);
         
         // Assert
-        // User should only have 1 recipe added
+        // Annual_Events_User should only have 1 recipe added
         Recipe updatedRecipe = user.Recipes.FirstOrDefault(r => r.Name == updatedRecipeName);
         Assert.IsNotNull(updatedRecipe); // Ensure that the recipe exists in the user's recipes
         Assert.AreEqual(updatedDescription, updatedRecipe.Description);
@@ -205,7 +205,7 @@ public class RecipeTest
     public void UpdateRecipe_WithNonExistingRecipe_Success()
     {
         // Arrange
-        var user = new User("testUser2", "password2", "Test user 2", 30);
+        var user = new Annual_Events_User("testUser2", "password2", "Test user 2", 30);
         Recipe test = CreateExampleRecipe(user);
         user.AddRecipe(test);
         string updatedRecipeName = "Updated Test Recipe";
@@ -221,7 +221,7 @@ public class RecipeTest
         bool result = user.UpdateRecipe("Testing failure", updatedRecipeName, updatedDescription, updatedCookingTime, updatedPreparation, updatedServings, updatedRatings);
 
         // Assert
-        // User should only have 1 recipe added
+        // Annual_Events_User should only have 1 recipe added
         Assert.IsFalse(result);
     }
 }

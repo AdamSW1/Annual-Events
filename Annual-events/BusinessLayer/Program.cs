@@ -242,12 +242,12 @@ class Program
         Console.Write("Enter your description (or leave blank): ");
         string description = Console.ReadLine() ?? "";
 
-        User newUser = new(username, password, description, age);
+        Annual_Events_User newUser = new(username, password, description, age);
         AuthenticationManager.Instance.AddUser(newUser);
 
         return (username, password);
     }
-    private static void AddRecipe(User user)
+    private static void AddRecipe(Annual_Events_User user)
     {
         //Get recipeName, descroption, cookingTime, preparation, servings, ratings
         Console.WriteLine("\nAdd a Recipe:");
@@ -349,7 +349,7 @@ class Program
 
     private static void DeletingRecipe()
     {
-        User user = AuthenticationManager.Instance.CurrentUser;
+        Annual_Events_User user = AuthenticationManager.Instance.CurrentUser;
         if (!FindRecipe(user, out string recipeName, out Recipe recipeToDelete))
         {
             return;
@@ -361,7 +361,7 @@ class Program
 
     private static void RemovingFromFavRecipe()
     {
-        User user = AuthenticationManager.Instance.CurrentUser;
+        Annual_Events_User user = AuthenticationManager.Instance.CurrentUser;
         if (!FindRecipe(user, out string recipeName, out Recipe recipeToDelete))
         {
             return;
@@ -372,7 +372,7 @@ class Program
 
     private static void AddingToFavRecipe()
     {
-        User user = AuthenticationManager.Instance.CurrentUser;
+        Annual_Events_User user = AuthenticationManager.Instance.CurrentUser;
         if (!FindRecipe(user, out string recipeName, out Recipe recipeToAdd))
         {
             return;
@@ -382,7 +382,7 @@ class Program
     }
 
 
-    private static bool FindRecipe(User user, out string recipeName, out Recipe recipeToDelete)
+    private static bool FindRecipe(Annual_Events_User user, out string recipeName, out Recipe recipeToDelete)
     {
         string localRecipeName = GetName();
         recipeToDelete = GetRecipeByName(user.Recipes, localRecipeName)!;

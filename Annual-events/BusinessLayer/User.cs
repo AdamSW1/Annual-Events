@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using RecipeInfo;
 namespace BusinessLayer;
-public class User
+public class Annual_Events_User
 {
     public int UserID { get; set; }
     [InverseProperty("Owner")]
@@ -75,7 +75,7 @@ public class User
     private byte[]? profile_picture; // (GUI) store images in database??
 
     // constructor 
-    public User(string username, string password, string description, int age)
+    public Annual_Events_User(string username, string password, string description, int age)
     {
         _username = username;
         _password = password;
@@ -93,7 +93,7 @@ public class User
             return false;
         }
 
-        User user = (User)obj;
+        Annual_Events_User user = (Annual_Events_User)obj;
         return _username == user._username && _description == user._description && _age == user._age;
     }
 

@@ -16,25 +16,25 @@ public class AuthenticationManager
     }
 
 
-    private List<User> Users {get;} = new();
-    private User? _currentUser;
+    private List<Annual_Events_User> Users {get;} = new();
+    private Annual_Events_User? _currentUser;
 
-    public User CurrentUser
+    public Annual_Events_User CurrentUser
     {
         get
         {
             return _currentUser!;
         }
     }
-    public void AddUser(User user)
+    public void AddUser(Annual_Events_User user)
     {
         Users.Add(user);
     }
     private AuthenticationManager()
     {
         // Test data for now, since we dont have a database.
-        Users.Add(new User("user1", "password1", "Description 1", 25));
-        Users.Add(new User("user2", "password2", "Description 2", 30));
+        Users.Add(new Annual_Events_User("user1", "password1", "Description 1", 25));
+        Users.Add(new Annual_Events_User("user2", "password2", "Description 2", 30));
     }
     public bool Login(string username, string password)
     {

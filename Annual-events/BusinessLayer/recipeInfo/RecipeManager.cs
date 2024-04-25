@@ -7,7 +7,7 @@ namespace RecipeInfo;
 
 public class RecipeManager
 {
-    public static void AddRecipe(User user, string recipeName, string description,
+    public static void AddRecipe(Annual_Events_User user, string recipeName, string description,
         double cookingTime, List<Preparation> preparation,
         int servings, List<Ingredient> ingredients,
         List<string> tags)
@@ -20,16 +20,16 @@ public class RecipeManager
     }
 
     //Will delete from the DB in the future, maybe?
-    public static void DeleteRecipe(User user, Recipe recipeToDelete)
+    public static void DeleteRecipe(Annual_Events_User user, Recipe recipeToDelete)
     {
         user.DeleteRecipe(recipeToDelete);
     }
 
-    public static void AddToFavRecipe(User user, Recipe recipeToAdd)
+    public static void AddToFavRecipe(Annual_Events_User user, Recipe recipeToAdd)
     {
         user.AddToFavRecipe(recipeToAdd);
     }
-    public static void DeleteFavRecipe(User user, Recipe recipeToDelete)
+    public static void DeleteFavRecipe(Annual_Events_User user, Recipe recipeToDelete)
     {
         user.RemoveFromFavRecipe(recipeToDelete);
     }
