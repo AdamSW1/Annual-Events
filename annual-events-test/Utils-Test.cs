@@ -144,6 +144,26 @@ public class UtilsTest
         //assert
         Assert.IsFalse(check);
     }
+
+    [TestMethod]
+    public void CheckInt_validInt_returnsTrue(){
+        //arrange
+        int test = 1;
+        //act
+        bool check = Utils.CheckInt(test);
+        //assert
+        Assert.IsTrue(check);
+    }
+
+    [TestMethod]
+    public void CheckInt_invalidInt_returnsFalse(){
+        //arrange
+        int test = -1;
+        //act
+        bool check = Utils.CheckInt(test);
+        //assert
+        Assert.IsFalse(check);
+    }
 }
 
         //arrange
