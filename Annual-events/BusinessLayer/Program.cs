@@ -258,7 +258,7 @@ class Program
         Console.Write("Cooking Time (minutes): ");
         double cookingTime = GetDouble();
         Console.Write("Preparation: ");
-        List<string> preparation = GetRecipePreparation();
+        List<Preparation> preparation = GetRecipePreparation();
         Console.Write("Servings: ");
         int servings = GetInt();
 
@@ -320,7 +320,11 @@ class Program
 
     private static void UpdatingRecipe()
     {
-        FindRecipe(AuthenticationManager.Instance.CurrentUser, out string recipeName, out Recipe recipeToUpdate);
+        if(!FindRecipe(AuthenticationManager.Instance.CurrentUser, out string recipeName, out Recipe recipeToUpdate)){
+            return;
+        }
+       
+        
         Console.WriteLine($"Updating recipe '{recipeName}'...");
         Console.Write("New Recipe Name: ");
         string newName = GetName();
@@ -332,7 +336,7 @@ class Program
         double newCookingTime = GetDouble();
 
         Console.Write("New Preparations: ");
-        List<string> newPreparation = GetRecipePreparation();
+        List<Preparation> newPreparation = GetRecipePreparation();
 
         Console.Write("New Servings: ");
         int newServings = GetInt();
@@ -470,7 +474,12 @@ class Program
         Recipe exampleRecipe = new Recipe("Chocolate cake",
                                             "A simple chocolate cake",
                                             120,
-                                            new List<string>() { "mix", "put in oven", "do stuff" },
+                                            new List<Preparation>(){
+                                                new(1, "bake"),
+                                                new(2, "put in oven"),
+                                                new(3, "do stuff")
+
+                                            },
                                             8,
                                             ingredients,
                                             0,
@@ -480,7 +489,12 @@ class Program
         Recipe exampleRecipe2 = new Recipe("Vanilla cake",
                                             "A simple Vanilla cake",
                                             100,
-                                            new List<string>() { "mix", "put in oven", "do stuff" },
+                                            new List<Preparation>(){
+                                                new(1, "bake"),
+                                                new(2, "put in oven"),
+                                                new(3, "do stuff")
+
+                                            },
                                             6,
                                             ingredients,
                                             0,
@@ -540,10 +554,10 @@ class Program
 
         return val;
     }
-    public static List<string> GetRecipePreparation()
+    public static List<Preparation> GetRecipePreparation()
     {
         bool validInput;
-        List<string> preparation = new();
+        List<Preparation> preparation = new();
         do
         {
             string prepInput = Console.ReadLine() ?? "";
@@ -557,8 +571,15 @@ class Program
             }
             else
             {
-                preparation = prepInput.Split().ToList();
+                List<string> prepString = prepInput.Split(",").ToList();
+                int stepnum = 1;
+                prepString.ForEach(prep =>
+                {
+                    stepnum++;
+                    preparation.Add(new Preparation(stepnum, prep));
+                });
                 validInput = true;
+
             }
 
         } while (validInput != true);
@@ -570,23 +591,24 @@ class Program
     {
         bool validInput = false;
         int val;
-            do
+        do
+        {
+            if (CallerGotNum)
             {
-                if(CallerGotNum){
-                    Console.WriteLine("Input must be a whole non negative number");
-                }
-                if (!int.TryParse(Console.ReadLine(), out val) || !Utils.CheckInt(val))
-                {
-                    validInput = false;
-                    Console.WriteLine("Input must be a whole non negative number");
-                    Console.WriteLine();
-                }
-                else
-                {
-                    validInput = true;
-                }
+                Console.WriteLine("Input must be a whole non negative number");
+            }
+            if (!int.TryParse(Console.ReadLine(), out val) || !Utils.CheckInt(val))
+            {
+                validInput = false;
+                Console.WriteLine("Input must be a whole non negative number");
+                Console.WriteLine();
+            }
+            else
+            {
+                validInput = true;
+            }
 
-            } while (validInput != true);
+        } while (validInput != true);
 
         return val;
     }

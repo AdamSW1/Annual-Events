@@ -28,7 +28,7 @@ class Search
     {
         string escaped = Regex.Escape(keyword);
         var reg = new Regex(escaped, RegexOptions.IgnoreCase);
-        var searched = Recipes.Where(recipe => reg.IsMatch(recipe.Name) || reg.IsMatch(recipe.Description) || recipe.Preparation.Any( x=> reg.IsMatch(x)));
+        var searched = Recipes.Where(recipe => reg.IsMatch(recipe.Name) || reg.IsMatch(recipe.Description) || recipe.Preparation.Any( x=> reg.IsMatch(x.Step)));
         return searched.ToList();
     }
     // Search recipes by tags

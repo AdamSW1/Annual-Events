@@ -63,8 +63,8 @@ public class Recipe
     }
 
     // make a list of preparation objects
-    private List<string> _preparation;
-    public List<string> Preparation
+    private List<Preparation> _preparation;
+    public List<Preparation> Preparation
     {
         
         get
@@ -177,7 +177,7 @@ public class Recipe
     /// <param name="tags"></param>
     public Recipe(
         string name, string description,
-        double cookingTime, List<string> preparation, int servings,
+        double cookingTime, List<Preparation> preparation, int servings,
         List<Ingredient> ingredients,
         int favourite, User owner, List<string> tags, List<Review> reviews
     )
@@ -262,10 +262,7 @@ public class Recipe
             returnStr += $"{ingredient}\n";
         }
         returnStr += $"Preparation:\n";
-        foreach(string step in _preparation){
-            string prepStep = step.Replace(",","");
-            returnStr += $"\t{prepStep},\n";
-        }
+        _preparation.ForEach(prepStep => returnStr += $"\t{prepStep.StepNumber} - {prepStep.Step.Trim()}\n");
         returnStr += $"Servings: {_servings}\n";
         returnStr += $"Average Rating: {AverageScore}\n";
         returnStr += $"Favourites: {_favourite}\n";

@@ -8,7 +8,7 @@ namespace RecipeInfo;
 public class RecipeManager
 {
     public static void AddRecipe(User user, string recipeName, string description,
-        double cookingTime, List<string> preparation,
+        double cookingTime, List<Preparation> preparation,
         int servings, List<Ingredient> ingredients,
         List<string> tags)
     {
@@ -34,7 +34,7 @@ public class RecipeManager
         user.RemoveFromFavRecipe(recipeToDelete);
     }
 
-    public static void UpdateRecipe(string newName, string newDescription, double newCookingTime, List<string> newPreparation, int newServings, Recipe recipeToUpdate)
+    public static void UpdateRecipe(string newName, string newDescription, double newCookingTime, List<Preparation> newPreparation, int newServings, Recipe recipeToUpdate)
     {
             recipeToUpdate.Name = newName;
             recipeToUpdate.Description = newDescription;
