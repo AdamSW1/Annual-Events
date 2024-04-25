@@ -33,7 +33,7 @@ public class IngredientsContext
     str.Append($"Ingredient ( IngrdientId={IngredientId}, ");
     str.Append($"Name=\"{Name}\", ");
     str.Append($"Quantity=\"{Quantity}\", ");
-    str.Append($"Price={Price.ToString("0.00")} )");
+    str.Append($"Price={Price.ToString()} )");
 
     return str.ToString();
     }
