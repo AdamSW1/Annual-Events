@@ -484,7 +484,8 @@ class Program
                                             ingredients,
                                             0,
                                             AuthenticationManager.Instance.CurrentUser,
-                                            tags, new List<Review>()
+                                            new List<RecipeTag>(){new RecipeTag("vegan")}
+                                            , new List<Review>()
                                             );
         Recipe exampleRecipe2 = new Recipe("Vanilla cake",
                                             "A simple Vanilla cake",
@@ -499,7 +500,8 @@ class Program
                                             ingredients,
                                             0,
                                             AuthenticationManager.Instance.CurrentUser,
-                                            tags, new List<Review>()
+                                            new List<RecipeTag>(){new RecipeTag("vegan")}
+                                            , new List<Review>()
                                             );
         exampleRecipe.AverageScore = 3;
         exampleRecipe2.AverageScore = 5;

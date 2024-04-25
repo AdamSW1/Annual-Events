@@ -10,8 +10,10 @@ public class Recipe
     public Utils Utils = new();
     public int RecipeID {get;set;}
 
-    [ForeignKey("Owner")]
-    public int? OwnerID {get;set;}
+    //[ForeignKey("Owner")]
+    public int? OwnerID {
+        get{ return _owner.Annual_Events_UserId;}
+        }
     private Annual_Events_User _owner;
     public Annual_Events_User Owner 
     {
@@ -19,15 +21,15 @@ public class Recipe
             return _owner;
         }
         set{
-            if(value == null){
-                throw new ArgumentException("Owner cant be null");
-            }
+            // if(value == null){
+            //     throw new ArgumentException("Owner cant be null");
+            // }
             _owner = value;
         }
     }
 
-    [ForeignKey("FavouritedBy")]
-    public int? FavouritedByID {get;set;}
+    //[ForeignKey("FavouritedBy")]
+    // public int? FavouritedByID {get;set;}
     private List<Annual_Events_User>? _favouritedBy;
     public List<Annual_Events_User>? FavouritedBy
     {
@@ -175,15 +177,12 @@ public class Recipe
         }
     }
 
-    private List<RecipeTags> _tags;
-    public List<RecipeTags> Tags {
+    private List<RecipeTag> _tags;
+    public List<RecipeTag> Tags {
         get{
             return _tags;
         }
         set{
-            if(!Utils.CheckList(value)){
-                throw new ArgumentException("tag list empty");
-            }
             _tags = value;
         }
     }
@@ -217,7 +216,7 @@ public class Recipe
         string name, string description,
         double cookingTime, List<Preparation> preparation, int servings,
         List<Ingredient> ingredients,
-        int favourite, Annual_Events_User owner, List<string> tags, List<Review> reviews
+        int favourite, Annual_Events_User owner, List<RecipeTag> tags, List<Review> reviews
     )
     {
         _name = name;
@@ -228,7 +227,7 @@ public class Recipe
         _ingredients = ingredients;
         _favourite = favourite;
         _owner = owner;
-        _tags = Utils.ValidateTags(tags) ?? new List<RecipeTags>();
+        _tags = tags;
         _reviews = reviews;
     }
     public Recipe(){}

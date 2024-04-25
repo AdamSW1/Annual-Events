@@ -32,12 +32,12 @@ class Search
         return searched.ToList();
     }
     // Search recipes by tags
-    public List<Recipe> SearchRecipesByTags(List<string> tags)
-    {
-        List<RecipeTags> searchedTags = Utils.ValidateTags(tags);
-        var searched = Recipes.Where(recipe => recipe.Tags.Intersect(searchedTags).Any());
-        return searched.ToList();
-    }
+    // public List<Recipe> SearchRecipesByTags(List<string> tags)
+    // {
+    //     // List<RecipeTags> searchedTags = Utils.ValidateTags(tags);
+    //     // var searched = Recipes.Where(recipe => recipe.Tags.Intersect(searchedTags).Any());
+    //     // return searched.ToList();
+    // }
     // Search recipes by time constraint
     public List<Recipe> SearchRecipesByTimeConstraint(int time)
     {
