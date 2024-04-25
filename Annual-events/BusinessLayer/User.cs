@@ -1,8 +1,22 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using RecipeInfo;
 namespace BusinessLayer;
-public class User
+public class Annual_Events_User
 {
+    public int UserID { get; set; }
+    [InverseProperty("Owner")]
+    private List<Recipe> _recipes = new List<Recipe>();
+    public List<Recipe> Recipes
+    {
+        get { return _recipes; }
+    }
+    [InverseProperty("FavouritedBy")]
+    private List<Recipe> _favRecipes = new List<Recipe>();
+    public List<Recipe> FavRecipes
+    {
+        get { return _favRecipes; }
+    }
 
     private string _username;
     public string Username
@@ -60,20 +74,8 @@ public class User
     }
     private byte[]? profile_picture; // (GUI) store images in database??
 
-    private List<Recipe> _recipes = new List<Recipe>();
-    public List<Recipe> Recipes
-    {
-        get { return _recipes; }
-    }
-
-    private List<Recipe> _favRecipes = new List<Recipe>();
-    public List<Recipe> FavRecipes
-    {
-        get { return _favRecipes; }
-    }
-
     // constructor 
-    public User(string username, string password, string description, int age)
+    public Annual_Events_User(string username, string password, string description, int age)
     {
         _username = username;
         _password = password;
@@ -91,7 +93,7 @@ public class User
             return false;
         }
 
-        User user = (User)obj;
+        Annual_Events_User user = (Annual_Events_User)obj;
         return _username == user._username && _description == user._description && _age == user._age;
     }
 

@@ -110,7 +110,7 @@ public class SearchTest
                 servings: 2,
                 ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
                 favourite: 2,
-                owner: new User("Joe", "password", "Joe", 30),
+                owner: new Annual_Events_User("Joe", "password", "Joe", 30),
                 tags: tags,
                 reviews: new List<Review> { new("reviewer1", "review1",0), new Review("reviewer2", "review2",0) }),
             new(
@@ -121,7 +121,7 @@ public class SearchTest
                 servings: 1,
                 ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
                 favourite: 0,
-                owner:new User("Boe", "password", "Boe", 30),
+                owner:new Annual_Events_User("Boe", "password", "Boe", 30),
                 tags: tags,
                 reviews: new List<Review> { new("reviewer1", "review1",2) })};
 

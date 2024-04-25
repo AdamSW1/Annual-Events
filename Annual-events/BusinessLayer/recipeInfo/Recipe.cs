@@ -1,15 +1,42 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using BusinessLayer;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.VisualBasic;
 
 namespace RecipeInfo;
 public class Recipe
 {
+    
     public Utils Utils = new();
-    private User _owner;
-    public User Owner
+    public int RecipeID {get;set;}
+
+    [ForeignKey("Owner")]
+    public int? OwnerID {get;set;}
+    private Annual_Events_User _owner;
+    public Annual_Events_User Owner 
     {
-        get { return _owner; }
-        set { _owner = value; }
+        get{
+            return _owner;
+        }
+        set{
+            if(value == null){
+                throw new ArgumentException("Owner cant be null");
+            }
+            _owner = value;
+        }
+    }
+
+    [ForeignKey("FavouritedBy")]
+    public int? FavouritedByID {get;set;}
+    private List<Annual_Events_User>? _favouritedBy;
+    public List<Annual_Events_User>? FavouritedBy
+    {
+        get{
+            return _favouritedBy;
+        }
+        set{
+            _favouritedBy = value;
+        }
     }
 
     private string _name;
@@ -136,7 +163,17 @@ public class Recipe
     //make many to many
     // user contAINS a list of RECIPEs And recipe has a list of users 
     private int _favourite;
-    public int Favourite { get; set; }
+    public int Favourite
+    {
+        get
+        {
+            return _favourite;
+        }
+        set
+        {
+            _favourite = value;
+        }
+    }
 
     private List<RecipeTags> _tags;
     public List<RecipeTags> Tags {
@@ -151,7 +188,7 @@ public class Recipe
         }
     }
 
-    private List<Review> _reviews = new() { };
+    private List<Review> _reviews;
     public List<Review> Reviews
     {
         get
@@ -175,11 +212,12 @@ public class Recipe
     /// <param name="favourite"></param>
     /// <param name="owner"></param>
     /// <param name="tags"></param>
+    /// <param name="reviews"></param>
     public Recipe(
         string name, string description,
         double cookingTime, List<Preparation> preparation, int servings,
         List<Ingredient> ingredients,
-        int favourite, User owner, List<string> tags, List<Review> reviews
+        int favourite, Annual_Events_User owner, List<string> tags, List<Review> reviews
     )
     {
         _name = name;
@@ -193,6 +231,7 @@ public class Recipe
         _tags = Utils.ValidateTags(tags) ?? new List<RecipeTags>();
         _reviews = reviews;
     }
+    public Recipe(){}
 
     // override object.Equals
     public override bool Equals(Object? obj)
@@ -270,7 +309,7 @@ public class Recipe
         return returnStr;
     }
 
-    public void AddReview(User reviewer, string reviewText,int score)
+    public void AddReview(Annual_Events_User reviewer, string reviewText,int score)
     {
         Review review = new(reviewer.Username, reviewText,score);
         Reviews.Add(review);
