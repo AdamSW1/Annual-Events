@@ -79,7 +79,12 @@ public class ComparatorsTest
         Recipe exampleRecipe = new Recipe("Chocolate cake",
                                             "A simple chocolate cake",
                                             120,
-                                            new List<string>() { "mix", "put in oven", "do stuff" },
+                                            new List<Preparation>(){
+                                                new(1, "bake"),
+                                                new(2, "put in oven"),
+                                                new(3, "do stuff")
+
+                                            },
                                             8,
                                             ingredients,
                                             0,
@@ -91,7 +96,12 @@ public class ComparatorsTest
         Recipe exampleRecipe2 = new Recipe("Vanilla cake",
                                             "A simple Vanilla cake",
                                             100,
-                                            new List<string>() { "mix", "put in oven", "do stuff" },
+                                            new List<Preparation>(){
+                                                new(1, "bake"),
+                                                new(2, "put in oven"),
+                                                new(3, "do stuff")
+
+                                            },
                                             6,
                                             ingredients,
                                             0,

@@ -16,7 +16,12 @@ public class RecipeTest
         Recipe exampleRecipe = new Recipe("Chocolate cake",
                                             "A simple chocolate cake",
                                             120,
-                                            new List<string>() { "mix", "put in oven", "do stuff" },
+                                            new List<Preparation>(){
+                                                new(1, "bake"),
+                                                new(2, "put in oven"),
+                                                new(3, "do stuff")
+
+                                            },
                                             8,
                                             ingredients,
                                             0,
@@ -175,7 +180,9 @@ public class RecipeTest
         string updatedRecipeName = "Updated Test Recipe";
         string updatedDescription = "Updated Test Description";
         double updatedCookingTime = 75;
-        List<string> updatedPreparation = new(){"do"};
+        List<Preparation> updatedPreparation = new List<Preparation>(){
+            new Preparation(1, "do")
+        };
         int updatedServings = 6;
         int updatedRatings = 4;
         // Act
@@ -204,7 +211,9 @@ public class RecipeTest
         string updatedRecipeName = "Updated Test Recipe";
         string updatedDescription = "Updated Test Description";
         double updatedCookingTime = 75;
-        List<string> updatedPreparation = new(){"do"};
+        List<Preparation> updatedPreparation = new(){
+            new(1, "do")
+        };
         int updatedServings = 6;
         int updatedRatings = 4;
         // Act

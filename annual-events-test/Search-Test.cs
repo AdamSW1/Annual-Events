@@ -102,22 +102,22 @@ public class SearchTest
         List<string> tags = new List<string> { "vegetarian", "vegan" };
         List<string> review = new List<string> { "review1", "review2" };
         List<Recipe> recipes = new List<Recipe>{
-            new Recipe(
+            new(
                 name: "recipe1",
                 description: "description1",
                 cookingTime: 3,
-                preparation: new List<string>(){"do"},
+                preparation: new List<Preparation>(){new(1,"do")},
                 servings: 2,
                 ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
                 favourite: 2,
                 owner: new User("Joe", "password", "Joe", 30),
                 tags: tags,
                 reviews: new List<Review> { new("reviewer1", "review1",0), new Review("reviewer2", "review2",0) }),
-            new Recipe(
+            new(
                 name: "recipe2",
                 description: "description2",
                 cookingTime: 0,
-                preparation: new List<string>(){"dont do"},
+                preparation: new List<Preparation>(){new(1,"do")},
                 servings: 1,
                 ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
                 favourite: 0,
