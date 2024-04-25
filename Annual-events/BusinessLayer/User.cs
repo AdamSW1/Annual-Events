@@ -175,7 +175,7 @@ public class User
         return returnStr;
     }
 
-    internal bool UpdateRecipe(string name, string updatedRecipeName, string updatedDescription, double updatedCookingTime, List<string> updatedPreparation, int updatedServings, int updatedRatings)
+    internal bool UpdateRecipe(string name, string updatedRecipeName, string updatedDescription, double updatedCookingTime, List<Preparation> updatedPreparation, int updatedServings, int updatedRatings)
     {
         Recipe recipeToUpdate = Recipes.FirstOrDefault(r => r.Name == name)!;
         if (recipeToUpdate != null)
