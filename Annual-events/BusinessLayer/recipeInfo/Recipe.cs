@@ -1,16 +1,24 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using BusinessLayer;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.VisualBasic;
 
 namespace RecipeInfo;
 public class Recipe
 {
+    
     public Utils Utils = new();
+    public int RecipeID {get;set;}
+
+    [ForeignKey("Owner")]
+    public int? OwnerID {get;set;}
     private User _owner;
-    public User Owner
-    {
-        get { return _owner; }
-        set { _owner = value; }
-    }
+    public User Owner {get;set;}
+
+    [ForeignKey("FavouritedBy")]
+    public int? FavouritedByID {get;set;}
+    private List<User>? _favouritedBy;
+    public List<User>? FavouritedBy {get;set;}
 
     private string _name;
     public string Name
@@ -151,7 +159,7 @@ public class Recipe
         }
     }
 
-    private List<Review> _reviews = new() { };
+    private List<Review> _reviews;
     public List<Review> Reviews
     {
         get
@@ -175,6 +183,7 @@ public class Recipe
     /// <param name="favourite"></param>
     /// <param name="owner"></param>
     /// <param name="tags"></param>
+    /// <param name="reviews"></param>
     public Recipe(
         string name, string description,
         double cookingTime, List<string> preparation, int servings,
@@ -193,6 +202,7 @@ public class Recipe
         _tags = Utils.ValidateTags(tags) ?? new List<RecipeTags>();
         _reviews = reviews;
     }
+    public Recipe(){}
 
     // override object.Equals
     public override bool Equals(Object? obj)
