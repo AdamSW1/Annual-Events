@@ -125,7 +125,7 @@ public class Recipe
         set
         {
             if(!Utils.CheckList(value)){
-                
+                throw new ArgumentException("Invalid list of ingredients");
             }
             _ingredients = value;
         }
