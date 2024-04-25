@@ -49,7 +49,7 @@ public class Utils
     }
 
     public static bool CheckString(string val){
-        if (string.IsNullOrEmpty(val)) { return false; }
+        if (string.IsNullOrEmpty(val) || string.IsNullOrWhiteSpace(val)) { return false; }
         return true;
     }
     public static bool CheckName(string name)
