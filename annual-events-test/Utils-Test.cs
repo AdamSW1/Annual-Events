@@ -277,6 +277,87 @@ public class UtilsTest
         //assert
         Assert.IsFalse(check);
     }
+
+    [TestMethod]
+    public void CheckRecipeInList_RecipeExists_returnTrue()
+    {
+        //assert
+        List<Recipe> list = CreateExampleList();
+        Recipe recipe = new(
+                name: "recipe1",
+                description: "description1",
+                cookingTime: 3,
+                preparation: new List<string>(){"do"},
+                servings: 2,
+                ratings: 2,
+                ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
+                favourite: 2,
+                owner: new User("Joe", "password", "Joe", 30),
+                tags: new List<string> { "vegetarian", "vegan" },
+                reviews: new List<Review> { new("reviewer1", "review1",0), new Review("reviewer2", "review2",0) });
+        //act
+        bool check = Utils.CheckRecipeInList(list, recipe.Name);
+
+        //assert
+        Assert.IsTrue(check);
+    }
+
+        [TestMethod]
+    public void CheckRecipeInList_RecipeDoesntExists_returnFalse()
+    {
+        //assert
+        List<Recipe> list = CreateExampleList();
+        Recipe recipe = new(
+                name: "I dont exist",
+                description: "description1",
+                cookingTime: 3,
+                preparation: new List<string>(){"do"},
+                servings: 2,
+                ratings: 2,
+                ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
+                favourite: 2,
+                owner: new User("Joe", "password", "Joe", 30),
+                tags: new List<string> { "vegetarian", "vegan" },
+                reviews: new List<Review> { new("reviewer1", "review1",0), new Review("reviewer2", "review2",0) });
+        //act
+        bool check = Utils.CheckRecipeInList(list, recipe.Name);
+
+        //assert
+        Assert.IsFalse(check);
+    }
+
+    private List<Recipe> CreateExampleList()
+    {
+        List<string> tags = new List<string> { "vegetarian", "vegan" };
+        List<string> review = new List<string> { "review1", "review2" };
+        List<Recipe> recipes = new List<Recipe>{
+            new(
+                name: "recipe1",
+                description: "description1",
+                cookingTime: 3,
+                preparation: new List<string>(){"do"},
+                servings: 2,
+                ratings: 2,
+                ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
+                favourite: 2,
+                owner: new User("Joe", "password", "Joe", 30),
+                tags: tags,
+                reviews: new List<Review> { new("reviewer1", "review1",0), new Review("reviewer2", "review2",0) }),
+            new(
+                name: "recipe2",
+                description: "description2",
+                cookingTime: 0,
+                preparation: new List<string>(){"dont do"},
+                servings: 1,
+                ratings: 3,
+                ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
+                favourite: 0,
+                owner:new User("Boe", "password", "Boe", 30),
+                tags: tags,
+                reviews: new List<Review> { new("reviewer1", "review1",0) })};
+
+        return recipes;
+    }
 }
 
 //arrange
