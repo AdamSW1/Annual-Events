@@ -2,6 +2,7 @@ using BusinessLayer;
 namespace RecipeInfo;
 
 public class Preparation{
+    public int PreparationID{ get; set; }
     private readonly int _stepNumber;
 
     public int StepNumber { get { return _stepNumber;}}
