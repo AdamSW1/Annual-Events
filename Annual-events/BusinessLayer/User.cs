@@ -13,6 +13,9 @@ public class User
         }
         set
         {
+            if(!Utils.CheckName(value)){
+                throw new ArgumentException("Invalid name");
+            }
             _username = value;
         }
     }
@@ -49,6 +52,9 @@ public class User
         }
         set
         {
+            if (Utils.CheckInt(value) == false){
+                throw new ArgumentException("invalid age");
+            }
             _age = value;
         }
     }
