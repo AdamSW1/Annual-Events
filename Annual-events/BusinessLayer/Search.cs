@@ -47,7 +47,7 @@ class Search
     // Search recipes by rating
     public List<Recipe> SearchRecipesByRating(int rating)
     {
-        var searched = Recipes.Where(recipe => recipe.Ratings == rating);
+        var searched = Recipes.Where(recipe => recipe.AverageScore == rating);
         return searched.ToList();
     }
     // Search recipes by servings constraint

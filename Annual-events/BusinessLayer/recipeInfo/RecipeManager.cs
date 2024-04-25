@@ -9,11 +9,11 @@ public class RecipeManager
 {
     public static void AddRecipe(User user, string recipeName, string description,
         double cookingTime, List<string> preparation,
-        int servings, double ratings, List<Ingredient> ingredients,
+        int servings, List<Ingredient> ingredients,
         List<string> tags)
     {
         // Create recipe
-        Recipe newRecipe = new(recipeName, description, cookingTime, preparation, servings, ratings, ingredients, 0, user, tags, new List<Review>());
+        Recipe newRecipe = new(recipeName, description, cookingTime, preparation, servings, ingredients, 0, user, tags, new List<Review>());
 
         // Add the recipe to the user's list
         user.AddRecipe(newRecipe);

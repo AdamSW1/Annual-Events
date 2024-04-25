@@ -95,25 +95,25 @@ public class Recipe
             _servings = value;
         }
     }
-    private double _ratings;
-    public double Ratings
-    {
-        get
-        {
-            return _ratings;
-        }
-        set
-        {
-            if (!Utils.CheckScore(value))
-            {
-                throw new ArgumentException("Rating should be between 1 and 5.");
+
+    public double AverageScore{
+        get{
+            double total = 0;
+            double averageScore = 0;
+            _reviews
+                .ForEach(review =>{
+                    total += review.Score;
+                });
+            averageScore = total / _reviews.Count;
+            if (averageScore is double.NaN){
+                return 0;
             }
-            else
-            {
-                _ratings = value;
-            }
+            return averageScore;
         }
-    }
+        set{}
+        
+    } 
+
     private List<Ingredient> _ingredients;
 
     public List<Ingredient> Ingredients
@@ -176,7 +176,7 @@ public class Recipe
     public Recipe(
         string name, string description,
         double cookingTime, List<string> preparation, int servings,
-        double ratings, List<Ingredient> ingredients,
+        List<Ingredient> ingredients,
         int favourite, User owner, List<string> tags, List<Review> reviews
     )
     {
@@ -185,7 +185,6 @@ public class Recipe
         _cookingTime = cookingTime;
         _preparation = preparation;
         _servings = servings;
-        _ratings = ratings;
         _ingredients = ingredients;
         _favourite = favourite;
         _owner = owner;
@@ -266,7 +265,7 @@ public class Recipe
             returnStr += $"\t{prepStep},\n";
         }
         returnStr += $"Servings: {_servings}\n";
-        returnStr += $"Ratings: {_ratings}\n";
+        returnStr += $"Average Rating: {AverageScore}\n";
         returnStr += $"Favourites: {_favourite}\n";
 
         return returnStr;

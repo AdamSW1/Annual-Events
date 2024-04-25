@@ -314,7 +314,7 @@ class Program
             }
         }
 
-        RecipeManager.AddRecipe(user, recipeName, description, cookingTime, preparation, servings, 0, ingredients, tagList);
+        RecipeManager.AddRecipe(user, recipeName, description, cookingTime, preparation, servings, ingredients, tagList);
         Console.WriteLine("\nRecipe added successfully!");
     }
 
@@ -472,7 +472,6 @@ class Program
                                             120,
                                             new List<string>() { "mix", "put in oven", "do stuff" },
                                             8,
-                                            5,
                                             ingredients,
                                             0,
                                             AuthenticationManager.Instance.CurrentUser,
@@ -483,12 +482,13 @@ class Program
                                             100,
                                             new List<string>() { "mix", "put in oven", "do stuff" },
                                             6,
-                                            4,
                                             ingredients,
                                             0,
                                             AuthenticationManager.Instance.CurrentUser,
                                             tags, new List<Review>()
                                             );
+        exampleRecipe.AverageScore = 3;
+        exampleRecipe2.AverageScore = 5;
 
         AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe);
         AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe2);

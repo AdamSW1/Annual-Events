@@ -186,7 +186,7 @@ public class User
             recipeToUpdate.CookingTime = updatedCookingTime;
             recipeToUpdate.Preparation = updatedPreparation;
             recipeToUpdate.Servings = updatedServings;
-            recipeToUpdate.Ratings = updatedRatings;
+            recipeToUpdate.AverageScore = updatedRatings;
             return true;
         }
         else
