@@ -36,7 +36,7 @@ class Program
 
         if (AuthenticationManager.Instance.Login(loginCredentials.Item1, loginCredentials.Item2))
         {
-            Console.WriteLine($"Welcome, {AuthenticationManager.CurrentUser.Username}!");
+            Console.WriteLine($"Welcome, {AuthenticationManager.Instance.CurrentUser.Username}!");
             AddExampleRecipes();
             while (true)
             {
@@ -78,16 +78,16 @@ class Program
         else if (choice == options[0])
         {
             //Add a recipe
-            AddRecipe(AuthenticationManager.CurrentUser);
+            AddRecipe(AuthenticationManager.Instance.CurrentUser);
         }
         else if (choice == options[1])
         {
             Console.WriteLine($"\n{seperator}\n");
-            Console.WriteLine(AuthenticationManager.CurrentUser.DisplayRecipes());
+            Console.WriteLine(AuthenticationManager.Instance.CurrentUser.DisplayRecipes());
         }
         else if (choice == options[2])
         {
-            Console.WriteLine(AuthenticationManager.CurrentUser.ViewFavRecipes());
+            Console.WriteLine(AuthenticationManager.Instance.CurrentUser.ViewFavRecipes());
         }
         else if (choice == options[3])
         {
@@ -136,14 +136,14 @@ class Program
         else if (choice == options[5])
         {
             Console.WriteLine("Your recipes: ");
-            AuthenticationManager.CurrentUser.Recipes.ForEach(recipe => Console.WriteLine($"{recipe.Name}"));
+            AuthenticationManager.Instance.CurrentUser.Recipes.ForEach(recipe => Console.WriteLine($"{recipe.Name}"));
             Console.WriteLine("\nEnter the name of the recipe you want to update/modify:");
             UpdatingRecipe();
         }
         else if (choice == options[6])
         {
             Console.WriteLine("Your recipes: ");
-            AuthenticationManager.CurrentUser.Recipes.ForEach(recipe => Console.WriteLine($"{recipe.Name}"));
+            AuthenticationManager.Instance.CurrentUser.Recipes.ForEach(recipe => Console.WriteLine($"{recipe.Name}"));
             Console.WriteLine("\nEnter the name of the recipe you want to delete:");
             DeletingRecipe();
         }
@@ -154,7 +154,7 @@ class Program
         }
         else if (choice == options[8])
         {
-            Console.WriteLine(AuthenticationManager.CurrentUser.ViewFavRecipes());
+            Console.WriteLine(AuthenticationManager.Instance.CurrentUser.ViewFavRecipes());
             Console.WriteLine("\nEnter the name of the recipe (Favourites) you want to delete:");
             RemovingFromFavRecipe();
         }
@@ -180,7 +180,7 @@ class Program
                     var loginCredentials = InitLogin();
                     if (AuthenticationManager.Instance.Login(loginCredentials.Item1, loginCredentials.Item2))
                     {
-                        Console.WriteLine($"Welcome, {AuthenticationManager.CurrentUser.Username}!");
+                        Console.WriteLine($"Welcome, {AuthenticationManager.Instance.CurrentUser.Username}!");
                         break; // Exit the loop if login is successful
                     }
                     else
@@ -320,7 +320,7 @@ class Program
 
     private static void UpdatingRecipe()
     {
-        FindRecipe(AuthenticationManager.CurrentUser, out string recipeName, out Recipe recipeToUpdate);
+        FindRecipe(AuthenticationManager.Instance.CurrentUser, out string recipeName, out Recipe recipeToUpdate);
         Console.WriteLine($"Updating recipe '{recipeName}'...");
         Console.Write("New Recipe Name: ");
         string newName = GetName();
@@ -345,7 +345,7 @@ class Program
 
     private static void DeletingRecipe()
     {
-        User user = AuthenticationManager.CurrentUser;
+        User user = AuthenticationManager.Instance.CurrentUser;
         if (!FindRecipe(user, out string recipeName, out Recipe recipeToDelete))
         {
             return;
@@ -357,7 +357,7 @@ class Program
 
     private static void RemovingFromFavRecipe()
     {
-        User user = AuthenticationManager.CurrentUser;
+        User user = AuthenticationManager.Instance.CurrentUser;
         if (!FindRecipe(user, out string recipeName, out Recipe recipeToDelete))
         {
             return;
@@ -368,7 +368,7 @@ class Program
 
     private static void AddingToFavRecipe()
     {
-        User user = AuthenticationManager.CurrentUser;
+        User user = AuthenticationManager.Instance.CurrentUser;
         if (!FindRecipe(user, out string recipeName, out Recipe recipeToAdd))
         {
             return;
@@ -397,7 +397,7 @@ class Program
     {
         Console.WriteLine("Reviews from your recipes:");
 
-        foreach (var recipe in AuthenticationManager.CurrentUser.Recipes)
+        foreach (var recipe in AuthenticationManager.Instance.CurrentUser.Recipes)
         {
             Console.WriteLine($"Reviews for recipe '{recipe.Name}':");
 
@@ -446,7 +446,7 @@ class Program
             string reviewText = GetLongString();
 
             // Add review to the selected recipe
-            selectedRecipe.AddReview(AuthenticationManager.CurrentUser, reviewText, reviewScore);
+            selectedRecipe.AddReview(AuthenticationManager.Instance.CurrentUser, reviewText, reviewScore);
 
             Console.WriteLine("Review added successfully!");
         }
@@ -475,7 +475,7 @@ class Program
                                             5,
                                             ingredients,
                                             0,
-                                            AuthenticationManager.CurrentUser,
+                                            AuthenticationManager.Instance.CurrentUser,
                                             tags, new List<Review>()
                                             );
         Recipe exampleRecipe2 = new Recipe("Vanilla cake",
@@ -486,12 +486,12 @@ class Program
                                             4,
                                             ingredients,
                                             0,
-                                            AuthenticationManager.CurrentUser,
+                                            AuthenticationManager.Instance.CurrentUser,
                                             tags, new List<Review>()
                                             );
 
-        AuthenticationManager.CurrentUser.AddRecipe(exampleRecipe);
-        AuthenticationManager.CurrentUser.AddRecipe(exampleRecipe2);
+        AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe);
+        AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe2);
     }
 
     public static string GetName()
