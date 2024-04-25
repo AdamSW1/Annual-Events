@@ -77,7 +77,7 @@ public class User
     }
 
     // override object.Equals
-    public override bool Equals(object obj)
+    public override bool Equals(Object? obj)
     {
 
         if (obj == null || GetType() != obj.GetType())
@@ -166,29 +166,16 @@ public class User
         }
     }
 
-    internal bool UpdateRecipe(string name, string updatedRecipeName, string updatedDescription, double updatedCookingTime, string updatedPreparation, int updatedServings, int updatedRatings)
+    public void UpdateRecipe(Recipe recipeToUpdate, string updatedRecipeName, string updatedDescription, double updatedCookingTime, List<string> updatedPreparation, int updatedServings)
     {
-        Recipe recipeToUpdate = Recipes.FirstOrDefault(r => r.Name == name);
-        if (recipeToUpdate != null)
-        {
-            // Update the recipe's properties with the provided values
-            recipeToUpdate.Name = updatedRecipeName;
-            recipeToUpdate.Description = updatedDescription;
-            recipeToUpdate.CookingTime = updatedCookingTime;
-            recipeToUpdate.Preparation = updatedPreparation;
-            recipeToUpdate.Servings = updatedServings;
-            recipeToUpdate.Ratings = updatedRatings;
-            return true;
-        }
-        else
-        {
-            // Recipe with the specified name not found
-            return false;
-        }
+        recipeToUpdate = Recipes.Find(recipe => recipe.Name == recipeToUpdate.Name)!;
+
+        // Update the recipe's properties with the provided values
+        recipeToUpdate.Name = updatedRecipeName;
+        recipeToUpdate.Description = updatedDescription;
+        recipeToUpdate.CookingTime = updatedCookingTime;
+        recipeToUpdate.Preparation = updatedPreparation;
+        recipeToUpdate.Servings = updatedServings;
     }
-
-    
-
-
 }
 

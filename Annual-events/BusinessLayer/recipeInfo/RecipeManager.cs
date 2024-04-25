@@ -33,14 +33,4 @@ public class RecipeManager
     {
         user.RemoveFromFavRecipe(recipeToDelete);
     }
-
-    public static void UpdateRecipe(string newName, string newDescription, double newCookingTime, List<string> newPreparation, int newServings, double newRatings, Recipe recipeToUpdate)
-    {
-            recipeToUpdate.Name = newName;
-            recipeToUpdate.Description = newDescription;
-            recipeToUpdate.CookingTime = newCookingTime;
-            recipeToUpdate.Preparation = newPreparation;
-            recipeToUpdate.Servings = newServings;
-            recipeToUpdate.Ratings = newRatings;
-    }
 }
