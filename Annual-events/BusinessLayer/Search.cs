@@ -28,7 +28,7 @@ class Search
     {
         string escaped = Regex.Escape(keyword);
         var reg = new Regex(escaped, RegexOptions.IgnoreCase);
-        var searched = Recipes.Where(recipe => reg.IsMatch(recipe.Name) || reg.IsMatch(recipe.Description) || reg.IsMatch(recipe.Preparation));
+        var searched = Recipes.Where(recipe => reg.IsMatch(recipe.Name) || reg.IsMatch(recipe.Description) || recipe.Preparation.Any( x=> reg.IsMatch(x)));
         return searched.ToList();
     }
     // Search recipes by tags
@@ -47,7 +47,7 @@ class Search
     // Search recipes by rating
     public List<Recipe> SearchRecipesByRating(int rating)
     {
-        var searched = Recipes.Where(recipe => recipe.Ratings == rating);
+        var searched = Recipes.Where(recipe => recipe.AverageScore == rating);
         return searched.ToList();
     }
     // Search recipes by servings constraint

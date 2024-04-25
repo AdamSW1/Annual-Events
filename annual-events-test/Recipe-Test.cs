@@ -16,13 +16,12 @@ public class RecipeTest
         Recipe exampleRecipe = new Recipe("Chocolate cake",
                                             "A simple chocolate cake",
                                             120,
-                                            "mix, put in oven, do stuff",
+                                            new List<string>() { "mix", "put in oven", "do stuff" },
                                             8,
-                                            5,
                                             ingredients,
                                             0,
                                             cur,
-                                            tags,null
+                                            tags,new List<Review> { new("reviewer1", "review1",4)}
                                             );
 
         return exampleRecipe;
@@ -176,7 +175,7 @@ public class RecipeTest
         string updatedRecipeName = "Updated Test Recipe";
         string updatedDescription = "Updated Test Description";
         double updatedCookingTime = 75;
-        string updatedPreparation = "Updated Test Preparation";
+        List<string> updatedPreparation = new(){"do"};
         int updatedServings = 6;
         int updatedRatings = 4;
         // Act
@@ -191,7 +190,7 @@ public class RecipeTest
         Assert.AreEqual(updatedCookingTime, updatedRecipe.CookingTime);
         Assert.AreEqual(updatedPreparation, updatedRecipe.Preparation);
         Assert.AreEqual(updatedServings, updatedRecipe.Servings);
-        Assert.AreEqual(updatedRatings, updatedRecipe.Ratings);
+        Assert.AreEqual(updatedRatings, updatedRecipe.AverageScore);
         Assert.IsTrue(result);
     }
 
@@ -205,7 +204,7 @@ public class RecipeTest
         string updatedRecipeName = "Updated Test Recipe";
         string updatedDescription = "Updated Test Description";
         double updatedCookingTime = 75;
-        string updatedPreparation = "Updated Test Preparation";
+        List<string> updatedPreparation = new(){"do"};
         int updatedServings = 6;
         int updatedRatings = 4;
         // Act

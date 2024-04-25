@@ -13,6 +13,9 @@ public class User
         }
         set
         {
+            if(!Utils.CheckName(value)){
+                throw new ArgumentException("Invalid name");
+            }
             _username = value;
         }
     }
@@ -49,6 +52,9 @@ public class User
         }
         set
         {
+            if (Utils.CheckInt(value) == false){
+                throw new ArgumentException("invalid age");
+            }
             _age = value;
         }
     }
@@ -77,7 +83,7 @@ public class User
     }
 
     // override object.Equals
-    public override bool Equals(object obj)
+    public override bool Equals(Object? obj)
     {
 
         if (obj == null || GetType() != obj.GetType())
@@ -157,18 +163,21 @@ public class User
     {
     } // should delete their account definitely
 
-    public void ViewFavRecipes()
+    public string ViewFavRecipes()
     {
-        Console.WriteLine("Favorite Recipes:");
+        string returnStr = "";
+        returnStr += "Favorite Recipes:\n";
         foreach (var recipe in _favRecipes)
         {
-            Console.WriteLine(recipe.Name); // Assuming Name property exists in Recipe class
+            returnStr += $"{recipe.Name}\n"; // Assuming Name property exists in Recipe class
         }
+
+        return returnStr;
     }
 
-    internal bool UpdateRecipe(string name, string updatedRecipeName, string updatedDescription, double updatedCookingTime, string updatedPreparation, int updatedServings, int updatedRatings)
+    internal bool UpdateRecipe(string name, string updatedRecipeName, string updatedDescription, double updatedCookingTime, List<string> updatedPreparation, int updatedServings, int updatedRatings)
     {
-        Recipe recipeToUpdate = Recipes.FirstOrDefault(r => r.Name == name);
+        Recipe recipeToUpdate = Recipes.FirstOrDefault(r => r.Name == name)!;
         if (recipeToUpdate != null)
         {
             // Update the recipe's properties with the provided values
@@ -177,7 +186,7 @@ public class User
             recipeToUpdate.CookingTime = updatedCookingTime;
             recipeToUpdate.Preparation = updatedPreparation;
             recipeToUpdate.Servings = updatedServings;
-            recipeToUpdate.Ratings = updatedRatings;
+            recipeToUpdate.AverageScore = updatedRatings;
             return true;
         }
         else
@@ -186,9 +195,6 @@ public class User
             return false;
         }
     }
-
-    
-
 
 }
 

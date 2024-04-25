@@ -24,7 +24,7 @@ public class Utils
             Console.WriteLine($"{i + 1} | {options[i]}");
         }
 
-        string choice = Console.ReadLine();
+        string choice = Console.ReadLine() ?? " ";
 
         if (int.TryParse(choice, out int choice1))
         {
@@ -41,142 +41,59 @@ public class Utils
         return null;
     }
 
-    public static double CheckDouble() 
-    {   
-        double value = 0;
-        bool isDone = false;
-        while (isDone != true) 
-        {
-            try 
-            {
-                value = double.Parse(Console.ReadLine() ?? "null");
-
-                if (value < 0) 
-                {
-                    throw new ArgumentException();
-                }
-                isDone = true;
-            }
-            catch(FormatException) 
-            {
-                Console.WriteLine("Value needs to be a number!");
-                Console.WriteLine();
-            }
-            catch(ArgumentException) 
-            {
-                Console.WriteLine("Value cannot be negative!");
-                Console.WriteLine();
-            }
-        }
-        return value;
-    }
-    public static string CheckName() 
+    public static bool CheckDouble(double value)
     {
-        string name = "";
-        bool isDone = false;
-        string regexPatterns = @"[^a-zA-Z0-9\s]";
-        while (isDone != true) 
-        {
-            try 
-            {
-                name = Console.ReadLine();
+        if (value < 0) { return false; }
+        return true;
 
-                if (name.Length > 30 || Regex.IsMatch(name, regexPatterns)) 
-                {
-                    throw new ArgumentException();
-                }
-                isDone = true;
-            }
-            catch(ArgumentException) 
-            {
-                Console.WriteLine("Invalid name. Cannot contain special characters and length of name must be 30 maximum!");
-                Console.WriteLine();
-            }
-        }
-        return name;
     }
 
-    public static string CheckName100Limit() 
+    public static bool CheckString(string val){
+        if (string.IsNullOrEmpty(val) || string.IsNullOrWhiteSpace(val)) { return false; }
+        return true;
+    }
+    public static bool CheckName(string name)
     {
-        string check100Limit = "";
-        bool isDone = false;
-        while (isDone != true) 
-        {
-            try 
-            {
-                check100Limit = Console.ReadLine();
-
-                if (check100Limit.Length > 100) 
-                {
-                    throw new ArgumentException();
-                }
-                isDone = true;
-            }
-            catch(ArgumentException) 
-            {
-                Console.WriteLine("Invalid name. 100 character maximum!");
-                Console.WriteLine();
-            }
-        }
-        return check100Limit;
+        if (name.Length > 30 || string.IsNullOrWhiteSpace(name)) { return false; }
+        return name.Any(ch => char.IsLetterOrDigit(ch) );
     }
-    
-    public static int CheckServings() 
-    {   
-        int servings = 0;
-        bool isDone = false;
-        while (isDone != true) 
-        {
-            try 
-            {
-                servings = int.Parse(Console.ReadLine() ?? "null");
 
-                if (servings < 0) 
-                {
-                    throw new ArgumentException();
-                }
-                isDone = true;
-            }
-            catch(FormatException) 
-            {
-                Console.WriteLine("Servings needs to be an integer!");
-                Console.WriteLine();
-            }
-            catch(ArgumentException) 
-            {
-                Console.WriteLine("Servings cannot be negative!");
-                Console.WriteLine();
-            }
-        }
-        return servings;
+    public static bool CheckLongString(string val)
+    {
+        if (val.Length > 2000) { return false; }
+        return true;
     }
-    public static double CheckRatings() 
-    {   
-        double ratings = 0;
-        bool isDone = false;
-        while (isDone != true) 
-        {
-            try 
-            {
-                ratings= double.Parse(Console.ReadLine() ?? "null");
 
-                if (ratings < 0 || ratings > 5) 
-                {
-                    throw new ArgumentException();
-                }
-                isDone = true;
-            }
-            catch(FormatException) 
-            {
-                Console.WriteLine("Ratings need to be a number!");
-                Console.WriteLine();
-            }
-            catch(ArgumentException) 
-            {
-                Console.WriteLine("Ratings has to be between 0 and 5!");
-                Console.WriteLine();
-            }
+    public static bool CheckInt(int number)
+    {
+        if (number < 0) { return false; }
+
+        return true;
+    }
+    public static bool CheckScore(double rating)
+    {
+        if (rating < 0 || rating > 5){ return false; }
+        return true;
+    }
+
+    public static bool CheckList<T>(List<T> list){
+
+        if (list == null || list.Count == 0){ return false; }
+        return true;
+    }
+
+    public static bool CheckMultiStringInput(string input){
+        if (input == null || !input.Contains(',')){
+            return false;
         }
-        return ratings;
+        return true;
+    } 
+
+    public static bool CheckRecipeInList(List<Recipe> recipes, string nameToFind){
+        return recipes.Any(r =>
+        {
+            string min = r.Name.ToLower().Trim();
+            return min == nameToFind.ToLower().Trim();
+        });
     }
 }

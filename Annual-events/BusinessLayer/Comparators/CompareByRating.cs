@@ -16,8 +16,8 @@ public class CompareByRating : IComparer<Recipe>
         if(x == null || y == null){
             return 0;
         }
-        if(x.Ratings.CompareTo(y.Ratings) != 0){
-            return x.Ratings.CompareTo(y.Ratings);
+        if(x.AverageScore.CompareTo(y.AverageScore) != 0){
+            return x.AverageScore.CompareTo(y.AverageScore);
         }
         return 0;
     }

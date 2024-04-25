@@ -46,12 +46,20 @@ public class JsonParser{
             throw new ArgumentNullException("Failed to get json data",nameof(IngredientList));
         }
 
-        foreach (Ingredient_json ingredient in IngredientList){
-            if (ingredient.name is not null && ingredient.name.Contains(name)){
-                searched = ingredient;
-                break;
-            }
-        }
+        // foreach (Ingredient_json ingredient in IngredientList){
+        //     if (ingredient.name is not null && ingredient.name.Contains(name)){
+        //         searched = ingredient;
+        //         break;
+        //     }
+        // }
+        searched = IngredientList
+            .FirstOrDefault(x =>
+            { 
+                if(x.name is not null){
+                    return x.name.Contains(name);
+                }
+                return false;
+            });
 
         return searched;
     }
