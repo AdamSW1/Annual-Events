@@ -81,25 +81,25 @@ public class ComparatorsTest
                                             120,
                                             new List<string>() { "mix", "put in oven", "do stuff" },
                                             8,
-                                            5,
                                             ingredients,
                                             0,
                                             new User("cookielover123", "234", "nbdfnjgbd", 16),
                                             tags,
-                                            null
+                                            new List<Review> { new("reviewer1", "review1",5)}
                                             );
+        exampleRecipe.AverageScore=5;
         Recipe exampleRecipe2 = new Recipe("Vanilla cake",
                                             "A simple Vanilla cake",
                                             100,
                                             new List<string>() { "mix", "put in oven", "do stuff" },
                                             6,
-                                            4,
                                             ingredients,
                                             0,
                                             new User("hello1234", "678", "ngjveuiwsnhg", 24),
                                             tags,
-                                            null
+                                            new List<Review> { new("reviewer1", "review1",4)}
                                             );
+        exampleRecipe2.AverageScore=4;
         return (exampleRecipe, exampleRecipe2);
     }
 }

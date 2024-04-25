@@ -73,7 +73,6 @@ public class UserTest
                                             120,
                                             new List<string>(){"do"},
                                             8,
-                                            5,
                                             ingredients,
                                             0,
                                             cur,

@@ -108,7 +108,6 @@ public class SearchTest
                 cookingTime: 3,
                 preparation: new List<string>(){"do"},
                 servings: 2,
-                ratings: 2,
                 ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
                 favourite: 2,
                 owner: new User("Joe", "password", "Joe", 30),
@@ -120,12 +119,11 @@ public class SearchTest
                 cookingTime: 0,
                 preparation: new List<string>(){"dont do"},
                 servings: 1,
-                ratings: 3,
                 ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
                 favourite: 0,
                 owner:new User("Boe", "password", "Boe", 30),
                 tags: tags,
-                reviews: new List<Review> { new("reviewer1", "review1",0) })};
+                reviews: new List<Review> { new("reviewer1", "review1",2) })};
 
         return recipes;
     }

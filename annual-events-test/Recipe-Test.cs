@@ -18,11 +18,10 @@ public class RecipeTest
                                             120,
                                             new List<string>() { "mix", "put in oven", "do stuff" },
                                             8,
-                                            5,
                                             ingredients,
                                             0,
                                             cur,
-                                            tags,null
+                                            tags,new List<Review> { new("reviewer1", "review1",4)}
                                             );
 
         return exampleRecipe;
@@ -191,7 +190,7 @@ public class RecipeTest
         Assert.AreEqual(updatedCookingTime, updatedRecipe.CookingTime);
         Assert.AreEqual(updatedPreparation, updatedRecipe.Preparation);
         Assert.AreEqual(updatedServings, updatedRecipe.Servings);
-        Assert.AreEqual(updatedRatings, updatedRecipe.Ratings);
+        Assert.AreEqual(updatedRatings, updatedRecipe.AverageScore);
         Assert.IsTrue(result);
     }
 
