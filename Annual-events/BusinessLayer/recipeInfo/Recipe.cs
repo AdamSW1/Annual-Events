@@ -66,6 +66,7 @@ public class Recipe
     private List<string> _preparation;
     public List<string> Preparation
     {
+        
         get
         {
             return _preparation;
@@ -133,6 +134,7 @@ public class Recipe
     }
 
     //make many to many
+    // user contAINS a list of RECIPEs And recipe has a list of users 
     private int _favourite;
     public int Favourite { get; set; }
 
