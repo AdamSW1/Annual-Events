@@ -194,6 +194,46 @@ public class UtilsTest
         //assert
         Assert.IsFalse(check);
     }
+
+    [TestMethod]
+    public void CheckList_NonEmptyListStrings_ReturnsTrue(){
+        //arrange
+        List<string> list = new(){"hi"};
+        //act
+        bool check = Utils.CheckList(list);
+        //assert
+        Assert.IsTrue(check);
+    }
+
+    [TestMethod]
+    public void CheckList_NonEmptyListIngredient_ReturnsTrue(){
+        //arrange
+        List<Ingredient> list = new(){new Ingredient("name","quantity",10)};
+        //act
+        bool check = Utils.CheckList(list);
+        //assert
+        Assert.IsTrue(check);
+    }
+
+    [TestMethod]
+    public void CheckList_EmptyListString_ReturnsFalse(){
+        //arrange
+        List<string> list = new(){};
+        //act
+        bool check = Utils.CheckList(list);
+        //assert
+        Assert.IsFalse(check);
+    }
+
+    [TestMethod]
+    public void CheckList_EmptyListIngredient_ReturnsFalse(){
+        //arrange
+        List<Ingredient> list = new(){};
+        //act
+        bool check = Utils.CheckList(list);
+        //assert
+        Assert.IsFalse(check);
+    }
 }
 
         //arrange
