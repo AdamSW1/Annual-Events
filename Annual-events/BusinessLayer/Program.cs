@@ -293,7 +293,7 @@ class Program
             Console.WriteLine($"{tag?.ToString()}");
         }
 
-        List<string> tagList = new List<string>();
+        List<RecipeTag> tagList = new();
 
         while (true)
         {
@@ -305,7 +305,8 @@ class Program
             {
                 if (Enum.TryParse(tag, out RecipeTags tagEnum))
                 {
-                    tagList.Add(tagEnum.ToString());
+                    RecipeTag tagObj = new(tagEnum.ToString());
+                    tagList.Add(tagObj);
                 }
                 else
                 {
@@ -366,6 +367,7 @@ class Program
         {
             return;
         }
+        recipeToDelete.RemoveFavourite();
         Console.WriteLine($"\nRecipe '{recipeName}' removed from favorites successfully!");
         RecipeManager.DeleteFavRecipe(user, recipeToDelete);
     }
@@ -377,6 +379,7 @@ class Program
         {
             return;
         }
+        recipeToAdd.AddFavourite();
         Console.WriteLine($"\nRecipe '{recipeName}' added to favorites successfully!");
         RecipeManager.AddToFavRecipe(user, recipeToAdd);
     }
