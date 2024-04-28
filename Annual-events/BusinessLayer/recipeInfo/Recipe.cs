@@ -278,12 +278,12 @@ public class Recipe
     public void AddFavourite()
     {
         _favourite += 1;
-        UpdateRecipe();
+        //UpdateRecipe();
     }
     public void RemoveFavourite()
     {
         _favourite -= 1;
-        UpdateRecipe();
+        //UpdateRecipe();
     }
 
     internal string DisplayRecipeInfo()
