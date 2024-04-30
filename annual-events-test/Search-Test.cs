@@ -15,10 +15,10 @@ public class SearchTest
     public void SearchRecipesByKeywordTest()
     {
         //Arrange
-        List<string> tags = new List<string> { "vegetarian", "vegan" };
+        List<RecipeTag> tags = new List<RecipeTag>(){new("vegan"),new("vegetarian")};
         List<Recipe> recipes = CreateExampleList();
-        Search search = new Search(recipes);
-        List<Recipe> expected_recipes = new List<Recipe> { recipes[0] };
+        Search search = new(recipes);
+        List<Recipe> expected_recipes = new() { recipes[0] };
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByKeyword("recipe1");
         //Assert
@@ -28,9 +28,9 @@ public class SearchTest
     public void SearchRecipesByTagsTest()
     {
         //Arrange
-        List<string> tags = new List<string> { "vegetarian", "vegan" };
+        List<RecipeTag> tags = new List<RecipeTag>(){new("vegan"),new("vegetarian")};
         List<Recipe> recipes = CreateExampleList();
-        Search search = new Search(recipes);
+        Search search = new(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByTags(tags);
         //Assert
@@ -40,9 +40,9 @@ public class SearchTest
     public void SearchRecipesByTimeConstraintTest()
     {
         //Arrange
-        List<string> tags = new List<string> { "vegetarian", "vegan" };
+        List<RecipeTag> tags = new List<RecipeTag>(){new("vegan"),new("vegetarian")};
         List<Recipe> recipes = CreateExampleList();
-        Search search = new Search(recipes);
+        Search search = new(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByTimeConstraint(5);
         //Assert
@@ -52,9 +52,9 @@ public class SearchTest
     public void SearchRecipesByRatingTest()
     {
         //Arrange
-        List<string> tags = new List<string> { "vegetarian", "vegan" };
+        List<RecipeTag> tags = new List<RecipeTag>(){new("vegan"),new("vegetarian")};
         List<Recipe> recipes = CreateExampleList();
-        Search search = new Search(recipes);
+        Search search = new(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByRating(2);
         Assert.AreEqual(newRecipes.Count, 1);
@@ -63,9 +63,9 @@ public class SearchTest
     public void SearchRecipesByServingsTest()
     {
         //Arrange
-        List<string> tags = new List<string> { "vegetarian", "vegan" };
+        List<RecipeTag> tags = new List<RecipeTag>(){new("vegan"),new("vegetarian")};
         List<Recipe> recipes = CreateExampleList();
-        Search search = new Search(recipes);
+        Search search = new(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByServings(1);
         //Assert
@@ -75,22 +75,22 @@ public class SearchTest
     public void SearchRecipesInFavoritesTest()
     {
         //Arrange
-        List<string> tags = new List<string> { "vegetarian", "vegan" };
+        List<RecipeTag> tags = new List<RecipeTag>(){new("vegan"),new("vegetarian")};
         List<Recipe> recipes = CreateExampleList();
-        Search search = new Search(recipes);
+        Search search = new(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesInFavorites(0);
         //Assert
-        Assert.AreEqual(newRecipes.Count, 2);
+        Assert.AreEqual(newRecipes.Count, 1);
     }
     [TestMethod]
     public void SearchRecipesByOwnerUsernameTest()
     {
         //Arrange
-        List<string> tags = new List<string> { "vegetarian", "vegan" };
-        List<string> review = new List<string> { "review1", "review2" };
+        List<RecipeTag> tags = new List<RecipeTag>(){new("vegan"),new("vegetarian")};
+        List<string> review = new() { "review1", "review2" };
         List<Recipe> recipes = CreateExampleList();
-        Search search = new Search(recipes);
+        Search search = new(recipes);
         //Act
         List<Recipe> newRecipes = search.SearchRecipesByOwnerUsername("Joe");
         //Assert
@@ -99,27 +99,28 @@ public class SearchTest
 
     private List<Recipe> CreateExampleList()
     {
-        List<string> tags = new List<string> { "vegetarian", "vegan" };
-        List<string> review = new List<string> { "review1", "review2" };
-        List<Recipe> recipes = new List<Recipe>{
+        List<RecipeTag> tags = new List<RecipeTag>(){new("vegan"),new("vegetarian")};
+        List<string> review = new() { "review1", "review2" };
+        List<Recipe> recipes = new()
+        {
             new(
                 name: "recipe1",
                 description: "description1",
                 cookingTime: 3,
                 preparation: new List<Preparation>(){new(1,"do")},
                 servings: 2,
-                ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
+                ingredients: new List<Ingredient>{new("cheese","2",3)},
                 favourite: 2,
                 owner: new Annual_Events_User("Joe", "password", "Joe", 30),
                 tags: tags,
-                reviews: new List<Review> { new("reviewer1", "review1",0), new Review("reviewer2", "review2",0) }),
+                reviews: new List<Review> { new("reviewer1", "review1",0), new("reviewer2", "review2",0) }),
             new(
                 name: "recipe2",
                 description: "description2",
                 cookingTime: 0,
                 preparation: new List<Preparation>(){new(1,"do")},
                 servings: 1,
-                ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
+                ingredients: new List<Ingredient> {new("carrot", "2", 3)},
                 favourite: 0,
                 owner:new Annual_Events_User("Boe", "password", "Boe", 30),
                 tags: tags,

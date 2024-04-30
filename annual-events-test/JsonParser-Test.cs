@@ -17,8 +17,8 @@ public class JsonParserTest
     {
         // Arrange
         string ingredientName = "apple";
-        USDPrice usdPrice = new USDPrice { plain = "0.72", formatted = "$0.72/each" };
-        Ingredient_json expectedIngredient = new Ingredient_json { name = ingredientName, price = new Dictionary<string, USDPrice> { { "usd", usdPrice } } };
+        USDPrice usdPrice = new() { plain = "0.72", formatted = "$0.72/each" };
+        Ingredient_json expectedIngredient = new() { name = ingredientName, price = new Dictionary<string, USDPrice> { { "usd", usdPrice } } };
 
         // Act
         Ingredient_json? actualIngredient = JsonParser.GetIngredient(ingredientName);
@@ -31,8 +31,8 @@ public class JsonParserTest
     {
         // Arrange
         string ingredientName = "apple";
-        USDPrice usdPrice = new USDPrice { plain = "0.72", formatted = "$0.72/each" };
-        Ingredient_json expectedIngredient = new Ingredient_json { name = ingredientName, price = new Dictionary<string, USDPrice> { { "usd", usdPrice } } };
+        USDPrice usdPrice = new() { plain = "0.72", formatted = "$0.72/each" };
+        Ingredient_json expectedIngredient = new() { name = ingredientName, price = new Dictionary<string, USDPrice> { { "usd", usdPrice } } };
 
         // Act
         Ingredient_json? actualIngredient = JsonParser.GetIngredient(ingredientName);
@@ -45,8 +45,8 @@ public class JsonParserTest
     {
         // Arrange
         string ingredientName = "apple";
-        USDPrice usdPrice = new USDPrice { plain = "0.72", formatted = "$0.72/each" };
-        Ingredient_json expectedIngredient = new Ingredient_json { name = ingredientName, price = new Dictionary<string, USDPrice> { { "usd", usdPrice } } };
+        USDPrice usdPrice = new() { plain = "0.72", formatted = "$0.72/each" };
+        Ingredient_json expectedIngredient = new() { name = ingredientName, price = new Dictionary<string, USDPrice> { { "usd", usdPrice } } };
 
         // Act
         Ingredient_json? actualIngredient = JsonParser.GetIngredient(ingredientName);
