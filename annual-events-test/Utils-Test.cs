@@ -12,16 +12,32 @@ namespace annual_events_test;
 public class UtilsTest
 {
     [TestMethod]
-    public void ValidateTagsTest()
+    public void ValidateTags_listOfValidTags_ReturnsTrue()
     {
-        //Arrange
-        Utils utils = new Utils();
-        List<string> tags = new List<string> { "vegetarian", "vegan" };
-        List<RecipeTags> tags_expected = new List<RecipeTags> { RecipeTags.vegetarian, RecipeTags.vegan };
+        //arrange
+        List<RecipeTag> tags = new(){
+            new("vegan"),
+            new("cake")
+            };
         //Act
-        List<RecipeTags> tags_test = Utils.ValidateTags(tags);
+        bool check = Utils.ValidateTags(tags);
         //Assert
-        CollectionAssert.AreEquivalent(tags_test, tags_expected);
+        Assert.IsTrue(check);
+
+    }
+
+    [TestMethod]
+    public void ValidateTags_listOneInvalidTag_ReturnsFalse()
+    {
+        //arrange
+        List<RecipeTag> tags = new(){
+            new("vegan"),
+            new("Fake tag")
+            };
+        //Act
+        bool check = Utils.ValidateTags(tags);
+        //Assert
+        Assert.IsFalse(check);
     }
 
     [TestMethod]
@@ -287,13 +303,13 @@ public class UtilsTest
                 name: "recipe1",
                 description: "description1",
                 cookingTime: 3,
-                preparation: new List<Preparation>(){new Preparation(1,"do")},
+                preparation: new List<Preparation>() { new(1, "do") },
                 servings: 2,
-                ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
+                ingredients: new List<Ingredient> { new("cheese", "2", 3) },
                 favourite: 2,
                 owner: new Annual_Events_User("Joe", "password", "Joe", 30),
-                tags: new List<string> { "vegetarian", "vegan" },
-                reviews: new List<Review> { new("reviewer1", "review1",0), new Review("reviewer2", "review2",0) });
+                tags: new List<RecipeTag>() { new("vegan"), new("vegetarian") },
+                reviews: new List<Review> { new("reviewer1", "review1", 0), new("reviewer2", "review2", 0) });
         //act
         bool check = Utils.CheckRecipeInList(list, recipe.Name);
 
@@ -301,7 +317,7 @@ public class UtilsTest
         Assert.IsTrue(check);
     }
 
-        [TestMethod]
+    [TestMethod]
     public void CheckRecipeInList_RecipeDoesntExists_returnFalse()
     {
         //assert
@@ -310,13 +326,13 @@ public class UtilsTest
                 name: "I dont exist",
                 description: "description1",
                 cookingTime: 3,
-                preparation: new List<Preparation>(){new Preparation(1,"do")},
+                preparation: new List<Preparation>() { new(1, "do") },
                 servings: 2,
-                ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
+                ingredients: new List<Ingredient> { new("cheese", "2", 3) },
                 favourite: 2,
                 owner: new Annual_Events_User("Joe", "password", "Joe", 30),
-                tags: new List<string> { "vegetarian", "vegan" },
-                reviews: new List<Review> { new("reviewer1", "review1",0), new Review("reviewer2", "review2",0) });
+                tags: new List<RecipeTag>() { new("vegan"), new("vegetarian") },
+                reviews: new List<Review> { new("reviewer1", "review1", 0), new("reviewer2", "review2", 0) });
         //act
         bool check = Utils.CheckRecipeInList(list, recipe.Name);
 
@@ -326,27 +342,28 @@ public class UtilsTest
 
     private List<Recipe> CreateExampleList()
     {
-        List<string> tags = new List<string> { "vegetarian", "vegan" };
-        List<string> review = new List<string> { "review1", "review2" };
-        List<Recipe> recipes = new List<Recipe>{
+        List<RecipeTag> tags = new List<RecipeTag>() { new("vegan"), new("vegetarian") };
+        List<string> review = new() { "review1", "review2" };
+        List<Recipe> recipes = new()
+        {
             new(
                 name: "recipe1",
                 description: "description1",
                 cookingTime: 3,
-                preparation: new List<Preparation>(){new Preparation(1,"do")},
+                preparation: new List<Preparation>(){new(1,"do")},
                 servings: 2,
-                ingredients: new List<Ingredient>{new Ingredient("cheese","2",3)},
+                ingredients: new List<Ingredient>{new("cheese","2",3)},
                 favourite: 2,
                 owner: new Annual_Events_User("Joe", "password", "Joe", 30),
                 tags: tags,
-                reviews: new List<Review> { new("reviewer1", "review1",0), new Review("reviewer2", "review2",0) }),
+                reviews: new List<Review> { new("reviewer1", "review1",0), new("reviewer2", "review2",0) }),
             new(
                 name: "recipe2",
                 description: "description2",
                 cookingTime: 0,
-                preparation: new List<Preparation>(){new Preparation(1,"do")},
+                preparation: new List<Preparation>(){new(1,"do")},
                 servings: 1,
-                ingredients: new List<Ingredient> {new Ingredient("carrot", "2", 3)},
+                ingredients: new List<Ingredient> {new("carrot", "2", 3)},
                 favourite: 0,
                 owner:new Annual_Events_User("Boe", "password", "Boe", 30),
                 tags: tags,

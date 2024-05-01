@@ -72,11 +72,11 @@ public class ComparatorsTest
 
     private static (Recipe, Recipe) AddExampleRecipes()
     {
-        Ingredient flour = new Ingredient("flour", "6 cups", 7);
-        Ingredient egg = new Ingredient("egg", "4", 3);
-        List<Ingredient> ingredients = new List<Ingredient>() { flour, egg };
-        List<string> tags = new List<string>() { "cake", "chocolate" };
-        Recipe exampleRecipe = new Recipe("Chocolate cake",
+        Ingredient flour = new("flour", "6 cups", 7);
+        Ingredient egg = new("egg", "4", 3);
+        List<Ingredient> ingredients = new() { flour, egg };
+        List<RecipeTag> tags = new List<RecipeTag>() { new("cake"), new("chocolate") };
+        Recipe exampleRecipe = new("Chocolate cake",
                                             "A simple chocolate cake",
                                             120,
                                             new List<Preparation>(){
@@ -93,7 +93,7 @@ public class ComparatorsTest
                                             new List<Review> { new("reviewer1", "review1",5)}
                                             );
         exampleRecipe.AverageScore=5;
-        Recipe exampleRecipe2 = new Recipe("Vanilla cake",
+        Recipe exampleRecipe2 = new("Vanilla cake",
                                             "A simple Vanilla cake",
                                             100,
                                             new List<Preparation>(){

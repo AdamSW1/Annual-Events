@@ -293,7 +293,7 @@ class Program
             Console.WriteLine($"{tag?.ToString()}");
         }
 
-        List<string> tagList = new List<string>();
+        List<RecipeTag> tagList = new();
 
         while (true)
         {
@@ -305,7 +305,8 @@ class Program
             {
                 if (Enum.TryParse(tag, out RecipeTags tagEnum))
                 {
-                    tagList.Add(tagEnum.ToString());
+                    RecipeTag tagObj = new(tagEnum.ToString());
+                    tagList.Add(tagObj);
                 }
                 else
                 {
@@ -366,6 +367,7 @@ class Program
         {
             return;
         }
+        recipeToDelete.RemoveFavourite();
         Console.WriteLine($"\nRecipe '{recipeName}' removed from favorites successfully!");
         RecipeManager.DeleteFavRecipe(user, recipeToDelete);
     }
@@ -377,6 +379,7 @@ class Program
         {
             return;
         }
+        recipeToAdd.AddFavourite();
         Console.WriteLine($"\nRecipe '{recipeName}' added to favorites successfully!");
         RecipeManager.AddToFavRecipe(user, recipeToAdd);
     }
@@ -484,7 +487,8 @@ class Program
                                             ingredients,
                                             0,
                                             AuthenticationManager.Instance.CurrentUser,
-                                            tags, new List<Review>()
+                                            new List<RecipeTag>(){new RecipeTag("vegan")}
+                                            , new List<Review>()
                                             );
         Recipe exampleRecipe2 = new Recipe("Vanilla cake",
                                             "A simple Vanilla cake",
@@ -499,7 +503,8 @@ class Program
                                             ingredients,
                                             0,
                                             AuthenticationManager.Instance.CurrentUser,
-                                            tags, new List<Review>()
+                                            new List<RecipeTag>(){new RecipeTag("vegan")}
+                                            , new List<Review>()
                                             );
         exampleRecipe.AverageScore = 3;
         exampleRecipe2.AverageScore = 5;

@@ -5,6 +5,7 @@ namespace DataLayer;
 
 public class AnnualEventsContext : DbContext
 {
+    public string DbPath { get; }
     public DbSet<Review> Review { get; set; }
     public DbSet<Annual_Events_User> Annual_Events_User { get; set; }
     public DbSet<Recipe> Recipe { get; set; }
@@ -18,8 +19,23 @@ public class AnnualEventsContext : DbContext
     public string UserName { get; set; }
 
     public string Password { get; set; }
+
+    // public AnnualEventsContext()
+    // {
+    //     HostName = Environment.GetEnvironmentVariable("ORACLE_DB_HOST")!;
+
+    //     Port = Environment.GetEnvironmentVariable("ORACLE_DB_PORT") ?? "1521";
+
+    //     ServiceName = Environment.GetEnvironmentVariable("ORACLE_DB_SERVICE")!;
+
+    //     UserName = Environment.GetEnvironmentVariable("ORACLE_DB_USER")!;
+
+    //     Password = Environment.GetEnvironmentVariable("ORACLE_DB_PASSWORD")!;
+    // }
     public AnnualEventsContext()
     {
+        var path = "Annual-Events";
+        DbPath = System.IO.Path.Join(path, "Annual-Events.db");
         HostName = Environment.GetEnvironmentVariable("ORACLE_DB_HOST")!;
 
         Port = Environment.GetEnvironmentVariable("ORACLE_DB_PORT") ?? "1521";
@@ -34,8 +50,26 @@ public class AnnualEventsContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         Console.WriteLine($"Data Source={HostName}:{Port}/{ServiceName}; " +
-          $"Annual_Events_User Id={UserName}");
+          $"User Id={UserName}");
         optionsBuilder.UseOracle($"Data Source={HostName}:{Port}/{ServiceName}; " +
-          $"Annual_Events_User Id={UserName}; Password={Password}");
+          $"User Id={UserName}; Password={Password}");
+    }
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Recipe>()
+                .HasOne(recipe => recipe.Owner)
+                .WithMany(user => user.Recipes);
+
+        modelBuilder.Entity<Annual_Events_User>()
+            .HasMany(user => user.Recipes)
+            .WithOne(recipe => recipe.Owner);
+
+        modelBuilder.Entity<Recipe>()
+               .HasMany(recipe => recipe.FavouritedBy)
+               .WithMany(user => user.FavRecipes);
+
+        modelBuilder.Entity<Annual_Events_User>()
+            .HasMany(user => user.FavRecipes)
+            .WithMany(recipe => recipe.FavouritedBy);
     }
 }

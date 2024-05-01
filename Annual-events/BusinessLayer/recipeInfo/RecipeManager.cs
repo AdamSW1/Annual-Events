@@ -10,7 +10,7 @@ public class RecipeManager
     public static void AddRecipe(Annual_Events_User user, string recipeName, string description,
         double cookingTime, List<Preparation> preparation,
         int servings, List<Ingredient> ingredients,
-        List<string> tags)
+        List<RecipeTag> tags)
     {
         // Create recipe
         Recipe newRecipe = new(recipeName, description, cookingTime, preparation, servings, ingredients, 0, user, tags, new List<Review>());

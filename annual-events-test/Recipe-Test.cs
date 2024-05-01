@@ -9,11 +9,11 @@ namespace annual_events_test;
 public class RecipeTest
 {
     private Recipe CreateExampleRecipe(Annual_Events_User cur){
-        Ingredient flour = new Ingredient("flour", "6 cups", 7);
-        Ingredient egg = new Ingredient("egg", "4", 3);
-        List<Ingredient> ingredients = new List<Ingredient>() { flour, egg };
-        List<string> tags = new List<string>() { "cake", "chocolate" };
-        Recipe exampleRecipe = new Recipe("Chocolate cake",
+        Ingredient flour = new("flour", "6 cups", 7);
+        Ingredient egg = new("egg", "4", 3);
+        List<Ingredient> ingredients = new() { flour, egg };
+        List<RecipeTag> tags = new List<RecipeTag>(){new("cake"),new("chocolate")};
+        Recipe exampleRecipe = new("Chocolate cake",
                                             "A simple chocolate cake",
                                             120,
                                             new List<Preparation>(){
@@ -107,7 +107,7 @@ public class RecipeTest
     public void AddRecipeToFav_ValidInput_Success()
     {
         // Arrange
-        Annual_Events_User user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        Annual_Events_User user = new("testUser", "password", "Test user", 30);
         Recipe test = CreateExampleRecipe(user);
 
         // Act
@@ -139,8 +139,8 @@ public class RecipeTest
     public void AddToFavRecipeTest()
     {
         //arrange
-        Annual_Events_User user1 = new Annual_Events_User("Test","TestPass","description",20);
-        Annual_Events_User user2 = new Annual_Events_User("Test","TestPass","description",20);
+        Annual_Events_User user1 = new("Test","TestPass","description",20);
+        Annual_Events_User user2 = new("Test","TestPass","description",20);
         Recipe test = CreateExampleRecipe(user1);
 
         //act
@@ -156,8 +156,8 @@ public class RecipeTest
     public void RemoveFromFavRecipeTest()
     {
         //arrange
-        Annual_Events_User user1 = new Annual_Events_User("Test","TestPass","description",20);
-        Annual_Events_User user2 = new Annual_Events_User("Test","TestPass","description",20);
+        Annual_Events_User user1 = new("Test","TestPass","description",20);
+        Annual_Events_User user2 = new("Test","TestPass","description",20);
         Recipe test = CreateExampleRecipe(user1);
 
         //act
@@ -180,7 +180,7 @@ public class RecipeTest
         string updatedRecipeName = "Updated Test Recipe";
         string updatedDescription = "Updated Test Description";
         double updatedCookingTime = 75;
-        List<Preparation> updatedPreparation = new List<Preparation>(){
+        List<Preparation> updatedPreparation = new(){
             new Preparation(1, "do")
         };
         int updatedServings = 6;
