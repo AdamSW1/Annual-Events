@@ -13,7 +13,7 @@ class Search
         get { return _recipes; }
         set { _recipes = value; }
     }
-    public Utils utils = new Utils();
+    
     public Search(List<Recipe> recipes)
     {
         _recipes = recipes;
@@ -32,10 +32,12 @@ class Search
         return searched.ToList();
     }
     // Search recipes by tags
-    public List<Recipe> SearchRecipesByTags(List<string> tags)
+    public List<Recipe>? SearchRecipesByTags(List<RecipeTag> tags)
     {
-        List<RecipeTags> searchedTags = Utils.ValidateTags(tags);
-        var searched = Recipes.Where(recipe => recipe.Tags.Intersect(searchedTags).Any());
+        if(!Utils.ValidateTags(tags)){
+            return null;
+        }
+        var searched = Recipes.Where(recipe => recipe.Tags.Intersect(tags).Any());
         return searched.ToList();
     }
     // Search recipes by time constraint

@@ -4,18 +4,22 @@ using RecipeInfo;
 namespace BusinessLayer;
 public class Annual_Events_User
 {
-    public int UserID { get; set; }
-    [InverseProperty("Owner")]
+    
+    public int Annual_Events_UserId{get;set;}
+    // [InverseProperty("Owner")]
     private List<Recipe> _recipes = new List<Recipe>();
     public List<Recipe> Recipes
     {
         get { return _recipes; }
+        set { _recipes = value; }
     }
-    [InverseProperty("FavouritedBy")]
+    
+    //[InverseProperty("FavouritedBy")]
     private List<Recipe> _favRecipes = new List<Recipe>();
     public List<Recipe> FavRecipes
     {
         get { return _favRecipes; }
+        set { _favRecipes = value;}
     }
 
     private string _username;
@@ -83,6 +87,7 @@ public class Annual_Events_User
         _age = age;
         hashPassword(password);
     }
+
 
     // override object.Equals
     public override bool Equals(Object? obj)

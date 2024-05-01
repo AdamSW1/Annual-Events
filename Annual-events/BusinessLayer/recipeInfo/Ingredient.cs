@@ -79,12 +79,12 @@ public class Ingredient{
     public override string ToString()
     {
         var str = new StringBuilder();
-
-        str.Append($"Ingredient ( IngrdientId={IngredientId}, ");
-        str.Append($"Name=\"{Name}\", ");
-        str.Append($"Quantity=\"{Quantity}\", ");
-        str.Append($"Price={Price.ToString()} )");
-
+        if(int.TryParse(Quantity, out int quantNum)){
+            str.Append($"{quantNum} {Name}s, {Price}");
+        }
+        else{
+            str.Append($"{Quantity} of {Name}, {Price}");
+        }
         return str.ToString();
     }
 

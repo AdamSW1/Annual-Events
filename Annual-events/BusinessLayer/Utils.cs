@@ -6,14 +6,27 @@ namespace BusinessLayer;
 public class Utils
 {
     //Validates the inputed string tags with the available tags and returns a list of the available tags
-    public static List<RecipeTags> ValidateTags(List<string> tags)
+    public static bool ValidateTags(List<RecipeTag> tags)
     {
         //Make a list of all enums in recipeTags
-        var enum_tags = Enum.GetValues(typeof(RecipeTags));
-        List<string> string_enum_tags = Array.ConvertAll((RecipeTags[])enum_tags, item => item.ToString()).ToList();
-        //Check if the input tags matches any of the available tags in the enums and adds it to a list
-        var available_tags = string_enum_tags.Where(tag => tags.Contains(tag)).ToList();
-        return Array.ConvertAll(available_tags.ToArray(), item => (RecipeTags)Enum.Parse(typeof(RecipeTags), item)).ToList();
+        List<RecipeTags> list_all_tags = Enum.GetValues(typeof(RecipeTags)).Cast<RecipeTags>().ToList();
+        
+        //turn enums into RecipeTag object
+        List<RecipeTag> tag_objs = new();
+
+        list_all_tags.ForEach(tag => {
+            tag_objs.Add(new RecipeTag(tag.ToString()));
+        });
+
+        //check if passed tags are in the list
+        bool validTags = true;
+        tags.ForEach(tag =>{
+            if(!tag_objs.Contains(tag)){
+                validTags = false;
+            }
+        });
+
+        return validTags;
     }
 
     public static string? GetUserChoice(string prompt, string[] options)
