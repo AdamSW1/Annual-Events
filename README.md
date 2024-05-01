@@ -32,7 +32,17 @@ For this we'll implement the following features
 
 ## How to run the project
 
-- TBD
+## Dotnet dependencies for DB
+
+dotnet tool install --global dotnet-ef --version 6
+
+dotnet add package Microsoft.EntityFrameworkCore -f "net6.0"
+
+dotnet add package Microsoft.EntityFrameworkCore.Design -f
+"net6.0" -v 7
+
+dotnet add package Oracle.EntityFrameworkCore -f "net6.0" -v 7.21.9
+
 
 ## Agreements
     Procedures to ensure code functionality
