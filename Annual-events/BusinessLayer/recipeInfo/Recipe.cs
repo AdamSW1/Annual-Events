@@ -1,13 +1,16 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using BusinessLayer;
+using DataLayer;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.VisualBasic;
 
 namespace RecipeInfo;
 public class Recipe
 {
-    
+    public AnnualEventsContext AnnualEventsContext {get;}
+    public AnnualEventsService AnnualEventsService {get;}
     public Utils Utils = new();
+
     public int RecipeID {get;set;}
 
     //[ForeignKey("Owner")]
@@ -254,12 +257,11 @@ public class Recipe
         return HashCode.Combine(_name, _description, _owner);
     }
 
-    public void AddToDatabase()
+    public void AddToDatabase(Recipe recipe)
     {
-        // Create a new recipe
-        throw new NotImplementedException();
+        AnnualEventsService.AddRecipe(recipe);   
     }
-    public void UpdateRecipe()
+    public void UpdateRecipe(Recipe)
     {
         // Update an existing recipe
         throw new NotImplementedException();
