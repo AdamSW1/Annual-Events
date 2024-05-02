@@ -27,7 +27,7 @@ namespace annualevents.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Recipe",
+                name: "Annual_Events_Recipe",
                 columns: table => new
                 {
                     RecipeID = table.Column<int>(type: "NUMBER(10)", nullable: false)
@@ -71,13 +71,13 @@ namespace annualevents.Migrations
                     table.ForeignKey(
                         name: "FK_Annual_Events_UserRecipe_Recipe_FavRecipesRecipeID",
                         column: x => x.FavRecipesRecipeID,
-                        principalTable: "Recipe",
+                        principalTable: "Annual_Events_Recipe",
                         principalColumn: "RecipeID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ingredient",
+                name: "Annual_Events_Ingredient",
                 columns: table => new
                 {
                     IngredientId = table.Column<int>(type: "NUMBER(10)", nullable: false)
@@ -93,12 +93,12 @@ namespace annualevents.Migrations
                     table.ForeignKey(
                         name: "FK_Ingredient_Recipe_RecipeID",
                         column: x => x.RecipeID,
-                        principalTable: "Recipe",
+                        principalTable: "Annual_Events_Recipe",
                         principalColumn: "RecipeID");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Preparation",
+                name: "Annual_Events_Preparation",
                 columns: table => new
                 {
                     PreparationID = table.Column<int>(type: "NUMBER(10)", nullable: false)
@@ -113,12 +113,12 @@ namespace annualevents.Migrations
                     table.ForeignKey(
                         name: "FK_Preparation_Recipe_RecipeID",
                         column: x => x.RecipeID,
-                        principalTable: "Recipe",
+                        principalTable: "Annual_Events_Recipe",
                         principalColumn: "RecipeID");
                 });
 
             migrationBuilder.CreateTable(
-                name: "RecipeTag",
+                name: "Annual_Events_RecipeTag",
                 columns: table => new
                 {
                     RecipeTagId = table.Column<int>(type: "NUMBER(10)", nullable: false)
@@ -132,12 +132,12 @@ namespace annualevents.Migrations
                     table.ForeignKey(
                         name: "FK_RecipeTag_Recipe_RecipeID",
                         column: x => x.RecipeID,
-                        principalTable: "Recipe",
+                        principalTable: "Annual_Events_Recipe",
                         principalColumn: "RecipeID");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Review",
+                name: "Annual_Events_Review",
                 columns: table => new
                 {
                     ReviewId = table.Column<int>(type: "NUMBER(10)", nullable: false)
@@ -153,7 +153,7 @@ namespace annualevents.Migrations
                     table.ForeignKey(
                         name: "FK_Review_Recipe_RecipeID",
                         column: x => x.RecipeID,
-                        principalTable: "Recipe",
+                        principalTable: "Annual_Events_Recipe",
                         principalColumn: "RecipeID");
                 });
 
@@ -164,27 +164,27 @@ namespace annualevents.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ingredient_RecipeID",
-                table: "Ingredient",
+                table: "Annual_Events_Ingredient",
                 column: "RecipeID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Preparation_RecipeID",
-                table: "Preparation",
+                table: "Annual_Events_Preparation",
                 column: "RecipeID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Recipe_OwnerID",
-                table: "Recipe",
+                table: "Annual_Events_Recipe",
                 column: "OwnerID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RecipeTag_RecipeID",
-                table: "RecipeTag",
+                table: "Annual_Events_RecipeTag",
                 column: "RecipeID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Review_RecipeID",
-                table: "Review",
+                table: "Annual_Events_Review",
                 column: "RecipeID");
         }
 
@@ -195,19 +195,19 @@ namespace annualevents.Migrations
                 name: "Annual_Events_UserRecipe");
 
             migrationBuilder.DropTable(
-                name: "Ingredient");
+                name: "Annual_Events_Ingredient");
 
             migrationBuilder.DropTable(
-                name: "Preparation");
+                name: "Annual_Events_Preparation");
 
             migrationBuilder.DropTable(
-                name: "RecipeTag");
+                name: "Annual_Events_RecipeTag");
 
             migrationBuilder.DropTable(
-                name: "Review");
+                name: "Annual_Events_Review");
 
             migrationBuilder.DropTable(
-                name: "Recipe");
+                name: "Annual_Events_Recipe");
 
             migrationBuilder.DropTable(
                 name: "Annual_Events_User");
