@@ -5,7 +5,7 @@ namespace DataLayer;
 
 public class AnnualEventsService
 {
-    private static AnnualEventsService _instance;
+    private static AnnualEventsService? _instance;
 
     public static AnnualEventsService Instance{
         get { return _instance ??= _instance = new AnnualEventsService();}
