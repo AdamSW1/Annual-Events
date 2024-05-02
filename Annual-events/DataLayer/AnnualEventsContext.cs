@@ -5,6 +5,17 @@ namespace DataLayer;
 
 public class AnnualEventsContext : DbContext
 {
+
+    private static AnnualEventsContext? _instance;
+
+    public static AnnualEventsContext Instance
+    {
+        get{
+            _instance ??= new AnnualEventsContext();
+            return _instance;
+        }
+    }
+    
     public string DbPath { get; }
     public DbSet<Review> Review { get; set; }
     public DbSet<Annual_Events_User> Annual_Events_User { get; set; }
@@ -20,18 +31,6 @@ public class AnnualEventsContext : DbContext
 
     public string Password { get; set; }
 
-    // public AnnualEventsContext()
-    // {
-    //     HostName = Environment.GetEnvironmentVariable("ORACLE_DB_HOST")!;
-
-    //     Port = Environment.GetEnvironmentVariable("ORACLE_DB_PORT") ?? "1521";
-
-    //     ServiceName = Environment.GetEnvironmentVariable("ORACLE_DB_SERVICE")!;
-
-    //     UserName = Environment.GetEnvironmentVariable("ORACLE_DB_USER")!;
-
-    //     Password = Environment.GetEnvironmentVariable("ORACLE_DB_PASSWORD")!;
-    // }
     public AnnualEventsContext()
     {
         var path = "Annual-Events";

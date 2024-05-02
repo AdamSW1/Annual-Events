@@ -32,7 +32,12 @@ For this we'll implement the following features
 
 ## How to run the project
 
-- TBD
+### Globally
+- dotnet tool install --global dotnet-ef --version 6
+
+### Then
+- dotnet ef migrations add InitialLibrary
+- dotnet ef database update
 
 ## Agreements
     Procedures to ensure code functionality
