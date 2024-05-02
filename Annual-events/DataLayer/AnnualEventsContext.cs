@@ -10,16 +10,17 @@ public class AnnualEventsContext : DbContext
 
     public static AnnualEventsContext Instance
     {
-        get{
+        get
+        {
             _instance ??= new AnnualEventsContext();
             return _instance;
         }
     }
-    
+
     public string DbPath { get; }
     public DbSet<Review> Review { get; set; }
-    public DbSet<Annual_Events_User> Annual_Events_User { get; set; }
-    public DbSet<Recipe> Recipe { get; set; }
+    public static DbSet<Annual_Events_User>? Annual_Events_User { get; set; }
+    public static DbSet<Recipe>? Recipe { get; set; }
     public DbSet<Preparation> Preparation { get; set; }
     public string HostName { get; set; }
 
@@ -53,7 +54,7 @@ public class AnnualEventsContext : DbContext
         optionsBuilder.UseOracle($"Data Source={HostName}:{Port}/{ServiceName}; " +
           $"User Id={UserName}; Password={Password}");
     }
-protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Recipe>()
                 .HasOne(recipe => recipe.Owner)

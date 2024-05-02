@@ -1,17 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 using BusinessLayer;
 using RecipeInfo;
+using Microsoft.Win32;
 namespace DataLayer;
 
 public class AnnualEventsService
 {
     private static AnnualEventsService? _instance;
 
-    public static AnnualEventsService Instance{
-        get { return _instance ??= _instance = new AnnualEventsService();}
+    public static AnnualEventsService Instance
+    {
+        get { return _instance ??= _instance = new AnnualEventsService(); }
     }
     public AnnualEventsContext DbContext = AnnualEventsContext.Instance;
-    public AnnualEventsService(){}
+    public AnnualEventsService() { }
 
     // Recipes
     public void AddRecipe(Recipe recipe)
@@ -42,26 +44,60 @@ public class AnnualEventsService
 
     }
 
+    // This method should also use DbContext
+    public void ViewFavRecipesDb(string username)
+    {
+        string returnStr = "";
+        // Use the existing DbContext instance instead of creating a new one
+        var user = AnnualEventsContext.Annual_Events_User
+           .Include(u => u.FavRecipes)
+           .FirstOrDefault(u => u.Username == username);
+
+        if (user != null && user.FavRecipes != null && user.FavRecipes.Any())
+        {
+            foreach (var recipe in user.FavRecipes)
+            {
+                returnStr += $"{recipe.Name}\n";
+            }
+        }
+        else
+        {
+            returnStr += "No favorite recipes found.";
+        }
+        
+        Console.WriteLine(returnStr); 
+    }
+
+
     // Users
+
+    // This should use DbContext instead, just a package issue
+    public void AddUser(Annual_Events_User user)
+    {
+        AnnualEventsContext.Annual_Events_User.Add(user);
+        DbContext.SaveChanges();
+    }
+    
+    // this method should also work with DbContext: Will change
     public void DeleteUser(string authenticatedUsername)
     {
-        var userToDelete = AnnualEventContext.Annual_Events_User
+        var userToDelete = AnnualEventsContext.Annual_Events_User
                                            .Include(u => u.Recipes)
                                            .Include(u => u.FavRecipes)
                                            .SingleOrDefault(u => u.Username == authenticatedUsername);
         if (userToDelete != null)
         {
             // Remove associated recipes
-            AnnualEventContext.Recipe.RemoveRange(userToDelete.Recipes);
+            AnnualEventsContext.Recipe.RemoveRange(userToDelete.Recipes);
 
             // Remove associated favorite recipes
-            AnnualEventContext.Recipe.RemoveRange(userToDelete.FavRecipes);
+            AnnualEventsContext.Recipe.RemoveRange(userToDelete.FavRecipes);
 
             // Remove the user from the database
-            AnnualEventContext.Annual_Events_User.Remove(userToDelete);
+            AnnualEventsContext.Annual_Events_User.Remove(userToDelete);
 
             // Save changes to the database
-            AnnualEventContext.SaveChanges();
+            DbContext.SaveChanges();
         }
     }
 

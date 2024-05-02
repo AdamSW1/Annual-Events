@@ -188,27 +188,6 @@ public class Annual_Events_User
         {
             returnStr += $"{recipe.Name}\n"; // Assuming Name property exists in Recipe class
         }
-
-        // Database implementation of it
-        string username = Username;
-        using (var dbContext = new AnnualEventsContext())
-        {
-            var user = dbContext.Annual_Events_User
-                .Include(u => u.FavRecipes)
-                .FirstOrDefault(u => u.Username == username);
-
-            if (user != null && user.FavRecipes != null && user.FavRecipes.Any())
-            {
-                foreach (var recipe in user.FavRecipes)
-                {
-                    returnStr += $"{recipe.Name}\n"; 
-                }
-            }
-            else
-            {
-                returnStr += "No favorite recipes found.";
-            }
-        }
         return returnStr;
     }
 
@@ -229,39 +208,6 @@ public class Annual_Events_User
         }
         else
         {
-            string username = Username;
-            using (var dbContext = new AnnualEventsContext())
-            {
-                // Find the user by username
-                var user = dbContext.Annual_Events_User
-                    .Include(u => u.Recipes) // Include the user's recipes navigation property
-                    .FirstOrDefault(u => u.Username == username);
-
-                // Check if the user was found
-                if (user != null)
-                {
-                    // Find the recipe to update by name
-                    var recipeToUpdateInDb = user.Recipes.FirstOrDefault(r => r.Name == name);
-
-                    // Check if the recipe to update was found
-                    if (recipeToUpdate != null)
-                    {
-                        // Update the recipe's properties with the provided values
-                        recipeToUpdate.Name = updatedRecipeName;
-                        recipeToUpdate.Description = updatedDescription;
-                        recipeToUpdate.CookingTime = updatedCookingTime;
-                        recipeToUpdate.Preparation = updatedPreparation;
-                        recipeToUpdate.Servings = updatedServings;
-                        recipeToUpdate.AverageScore = updatedRatings;
-
-                        // Save changes to the database
-                        dbContext.SaveChanges();
-
-                        return true; // Return true to indicate success
-                    }
-                }
-            }
-
             // Recipe with the specified name not found or user not found
             return false;
         }
