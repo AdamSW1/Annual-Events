@@ -55,7 +55,7 @@ public class AnnualEventsService
         DbContext.SaveChanges();
     }
 
-    internal void RemovePreparation(Preparation preparation)
+    public void RemovePreparation(Preparation preparation)
     {
         var query = from Preparation in DbContext.Preparation
         where preparation.PreparationID == preparation.PreparationID
