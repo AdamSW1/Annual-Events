@@ -178,29 +178,6 @@ public class Annual_Events_User
         {
             throw new UnauthorizedAccessException("Cant delete another user");
         }
-
-        using (var dbContext = new AnnualEventsContext())
-        {
-            // Find the user in the database by their username
-            var userToDelete = dbContext.Annual_Events_User.Include(u => u.Recipes)
-                                                        .Include(u => u.FavRecipes)
-                                                        .SingleOrDefault(u => u.Username == Username);
-
-            if (userToDelete != null)
-            {
-                // Remove associated recipes
-                dbContext.Recipe.RemoveRange(userToDelete.Recipes);
-
-                // Remove associated favorite recipes
-                dbContext.Recipe.RemoveRange(userToDelete.FavRecipes);
-
-                // Remove the user from the database
-                dbContext.Annual_Events_User.Remove(userToDelete);
-
-                // Save changes to the database
-                dbContext.SaveChanges();
-            }
-        }
     }
 
     public string ViewFavRecipes()
