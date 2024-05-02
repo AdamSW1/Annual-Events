@@ -28,4 +28,19 @@ public class AnnualEventsService
         _AnnualEventsContext.SaveChanges();
     }
 
+    public void AddReview(Review review) 
+    {
+        
+    }
+
+    public void UpdateReview(Review updatedReview) 
+    {
+
+    }
+
+    public void DeleteReview(Review review) 
+    {
+
+    }
+
 }
