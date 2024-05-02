@@ -1,49 +1,66 @@
 using System;
 using System.Collections.Generic;
+using RecipeInfo;
+namespace BusinessLayer;
 
-namespace BusinessLayer
+public class AuthenticationManager
 {
-    class AuthenticationManager
+    private static AuthenticationManager? _instance;
+    public static AuthenticationManager Instance
     {
-        private List<User> users = new List<User>();
-        private User currentUser;
-
-        public AuthenticationManager()
+        get
         {
-            // Test data for now, since we dont have a database.
-            users.Add(new User("user1", "password1", "Description 1", 25));
-            users.Add(new User("user2", "password2", "Description 2", 30));
-
+            _instance ??= new AuthenticationManager();
+            return _instance;
         }
+    }
 
-        public User CurrentUser { get { return currentUser; } }
 
-        public bool Login(string username, string password)
+    private List<Annual_Events_User> Users {get;} = new();
+    private Annual_Events_User? _currentUser;
+
+    public Annual_Events_User CurrentUser
+    {
+        get
         {
-            foreach (var user in users)
+            return _currentUser!;
+        }
+    }
+    public void AddUser(Annual_Events_User user)
+    {
+        Users.Add(user);
+    }
+    private AuthenticationManager()
+    {
+        // Test data for now, since we dont have a database.
+        Users.Add(new Annual_Events_User("user1", "password1", "Description 1", 25));
+        Users.Add(new Annual_Events_User("user2", "password2", "Description 2", 30));
+    }
+    public bool Login(string username, string password)
+    {
+        foreach (var user in Users)
+        {
+            if (user.Authentication(username, password))
             {
-                if (user.Authentication(username, password))
-                {
-                    currentUser = user;
-                    return true;
-                }
+                _currentUser = user;
+                return true;
             }
-            return false;
         }
+        return false;
+    }
 
-        public (string, string) InitLogin()
-        {
-            Console.WriteLine("Login:");
-            Console.Write("Username: ");
-            string username = Console.ReadLine();
-            Console.Write("Password: ");
-            string password = Console.ReadLine();
-            return (username, password);
-        }
+    public void Logout()
+    {
+        _currentUser = null;
+    }
 
-        public void Logout()
+    public List<Recipe> GetAllRecipesFromAllUsers()
+    {
+        List<Recipe> allRecipes = new List<Recipe>();
+        foreach (var user in Users)
         {
-            currentUser = null;
+            allRecipes.AddRange(user.Recipes);
         }
+        return allRecipes;
     }
 }

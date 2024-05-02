@@ -7,36 +7,109 @@ namespace annual_events_test;
 [TestClass]
 public class ComparatorsTest
 {
+
     // Tests CompareByIngredients
     [TestMethod]
     public void TestIngredientsComparator()
     {
-        IComparer<Recipe> ingredientComparator = new CompareByTime();
-        UserTest user1 = new UserTest();
-        Recipe recipe1 = new Recipe("cheesecake", "tasty cheesecake for birthday party", 2, "do stuff", 2, 4, new List<Ingredient> {new Ingredient("cheese", "2", 3)}, 2, new User("cakelover123", "1234", "hello its me", 15));
-        Recipe recipe2 = new Recipe("cheese pizza", "tasty cheese pizza", 3, "do stuff", 2, 4, new List<Ingredient> {new Ingredient("cheese", "2", 3)}, 2, new User("cakelover123", "1234", "hello its me", 15));
+        // Arrange
+        IComparer<Recipe> ingredientComparator = new CompareByIngredients();
+        
 
-        Assert.AreEqual(ingredientComparator.Compare(recipe1, recipe2), -1);
+        // Act
+        (Recipe recipe1, Recipe recipe2) = AddExampleRecipes();
+
+        // Assert
+        Assert.AreEqual(ingredientComparator.Compare(recipe1, recipe2), 0);
+        Assert.AreEqual(ingredientComparator.Compare(recipe2, recipe1), 0);
     }
 
     // Tests CompareByRating
     [TestMethod]
     public void TestRatingComparator()
     {
-        throw new NotImplementedException();
+        // Arrange
+        IComparer<Recipe> ratingComparator = new CompareByRating();
+
+        // Act
+        (Recipe recipe1, Recipe recipe2) = AddExampleRecipes();
+
+        // Assert
+        Assert.AreEqual(ratingComparator.Compare(recipe1, recipe2), 1);
+        Assert.AreEqual(ratingComparator.Compare(recipe2, recipe1), -1);
+
     }
 
     // Tests CompareByServings
     [TestMethod]
     public void TestServingsComparator()
     {
-        throw new NotImplementedException();
+        // Arrange
+        IComparer<Recipe> servingsComparator = new CompareByServings();
+
+        // Act
+        (Recipe recipe1, Recipe recipe2) = AddExampleRecipes();
+
+        // Assert
+        Assert.AreEqual(servingsComparator.Compare(recipe1, recipe2), 1);
+        Assert.AreEqual(servingsComparator.Compare(recipe2, recipe1), -1);
     }
 
     // Tests CompareByTime
     [TestMethod]
     public void TestTimeComparator()
     {
-        throw new NotImplementedException();
+        // Arrange
+        IComparer<Recipe> timeComparator = new CompareByTime();
+
+        // Act
+        (Recipe recipe1, Recipe recipe2) = AddExampleRecipes();
+
+        // Assert
+        Assert.AreEqual(timeComparator.Compare(recipe1, recipe2), 1);
+        Assert.AreEqual(timeComparator.Compare(recipe2, recipe1), -1);
+    }
+
+    private static (Recipe, Recipe) AddExampleRecipes()
+    {
+        Ingredient flour = new("flour", "6 cups", 7);
+        Ingredient egg = new("egg", "4", 3);
+        List<Ingredient> ingredients = new() { flour, egg };
+        List<RecipeTag> tags = new List<RecipeTag>() { new("cake"), new("chocolate") };
+        Recipe exampleRecipe = new("Chocolate cake",
+                                            "A simple chocolate cake",
+                                            120,
+                                            new List<Preparation>(){
+                                                new(1, "bake"),
+                                                new(2, "put in oven"),
+                                                new(3, "do stuff")
+
+                                            },
+                                            8,
+                                            ingredients,
+                                            0,
+                                            new Annual_Events_User("cookielover123", "234", "nbdfnjgbd", 16),
+                                            tags,
+                                            new List<Review> { new("reviewer1", "review1",5)}
+                                            );
+        exampleRecipe.AverageScore=5;
+        Recipe exampleRecipe2 = new("Vanilla cake",
+                                            "A simple Vanilla cake",
+                                            100,
+                                            new List<Preparation>(){
+                                                new(1, "bake"),
+                                                new(2, "put in oven"),
+                                                new(3, "do stuff")
+
+                                            },
+                                            6,
+                                            ingredients,
+                                            0,
+                                            new Annual_Events_User("hello1234", "678", "ngjveuiwsnhg", 24),
+                                            tags,
+                                            new List<Review> { new("reviewer1", "review1",4)}
+                                            );
+        exampleRecipe2.AverageScore=4;
+        return (exampleRecipe, exampleRecipe2);
     }
 }
