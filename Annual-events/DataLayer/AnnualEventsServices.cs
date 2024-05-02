@@ -5,10 +5,13 @@ namespace DataLayer;
 
 public class AnnualEventsService
 {
-    public AnnualEventsContext DbContext = AnnualEventsContext.Instance;
-    public AnnualEventsService()
-    {
+    private static AnnualEventsService _instance;
+
+    public static AnnualEventsService Instance{
+        get { return _instance ??= _instance = new AnnualEventsService();}
     }
+    public AnnualEventsContext DbContext = AnnualEventsContext.Instance;
+    public AnnualEventsService(){}
 
     public void AddRecipe(Recipe recipe)
     {
