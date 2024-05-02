@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace annualevents.Migrations
 {
     [DbContext(typeof(AnnualEventsContext))]
-    [Migration("20240425220814_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240502215645_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,23 +30,23 @@ namespace annualevents.Migrations
                     b.Property<int>("FavRecipesRecipeID")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("FavouritedByAnnual_Events_UserID")
+                    b.Property<int>("FavouritedByAnnual_Events_UserId")
                         .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("FavRecipesRecipeID", "FavouritedByAnnual_Events_UserID");
+                    b.HasKey("FavRecipesRecipeID", "FavouritedByAnnual_Events_UserId");
 
-                    b.HasIndex("FavouritedByAnnual_Events_UserID");
+                    b.HasIndex("FavouritedByAnnual_Events_UserId");
 
                     b.ToTable("Annual_Events_UserRecipe");
                 });
 
             modelBuilder.Entity("BusinessLayer.Annual_Events_User", b =>
                 {
-                    b.Property<int>("Annual_Events_UserID")
+                    b.Property<int>("Annual_Events_UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Annual_Events_UserID"));
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Annual_Events_UserId"));
 
                     b.Property<int>("Age")
                         .HasColumnType("NUMBER(10)");
@@ -63,7 +63,7 @@ namespace annualevents.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.HasKey("Annual_Events_UserID");
+                    b.HasKey("Annual_Events_UserId");
 
                     b.ToTable("Annual_Events_User");
                 });
@@ -94,7 +94,22 @@ namespace annualevents.Migrations
 
                     b.HasIndex("RecipeID");
 
-                    b.ToTable("Annual_Events_Review");
+                    b.ToTable("Review");
+                });
+
+            modelBuilder.Entity("PreparationRecipe", b =>
+                {
+                    b.Property<int>("PreparationID")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<int>("RecipesRecipeID")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.HasKey("PreparationID", "RecipesRecipeID");
+
+                    b.HasIndex("RecipesRecipeID");
+
+                    b.ToTable("PreparationRecipe");
                 });
 
             modelBuilder.Entity("RecipeInfo.Ingredient", b =>
@@ -112,18 +127,9 @@ namespace annualevents.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("BINARY_DOUBLE");
 
-                    b.Property<string>("Quantity")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
-
-                    b.Property<int?>("RecipeID")
-                        .HasColumnType("NUMBER(10)");
-
                     b.HasKey("IngredientId");
 
-                    b.HasIndex("RecipeID");
-
-                    b.ToTable("Annual_Events_Ingredient");
+                    b.ToTable("Ingredient");
                 });
 
             modelBuilder.Entity("RecipeInfo.Preparation", b =>
@@ -134,9 +140,6 @@ namespace annualevents.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PreparationID"));
 
-                    b.Property<int?>("RecipeID")
-                        .HasColumnType("NUMBER(10)");
-
                     b.Property<string>("Step")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
@@ -146,9 +149,7 @@ namespace annualevents.Migrations
 
                     b.HasKey("PreparationID");
 
-                    b.HasIndex("RecipeID");
-
-                    b.ToTable("Annual_Events_Preparation");
+                    b.ToTable("Preparation");
                 });
 
             modelBuilder.Entity("RecipeInfo.Recipe", b =>
@@ -172,15 +173,11 @@ namespace annualevents.Migrations
                     b.Property<int>("Favourite")
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<int?>("FavouritedByID")
-                        .HasColumnType("NUMBER(10)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int?>("OwnerID")
-                        .IsRequired()
+                    b.Property<int>("OwnerAnnual_Events_UserId")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<int>("Servings")
@@ -188,9 +185,36 @@ namespace annualevents.Migrations
 
                     b.HasKey("RecipeID");
 
-                    b.HasIndex("OwnerID");
+                    b.HasIndex("OwnerAnnual_Events_UserId");
 
-                    b.ToTable("Annual_Events_Recipe");
+                    b.ToTable("Recipe");
+                });
+
+            modelBuilder.Entity("RecipeInfo.RecipeIngredient", b =>
+                {
+                    b.Property<int>("RecipeIngredientId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecipeIngredientId"));
+
+                    b.Property<int>("IngredientId")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<string>("Quantity")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<int>("RecipeID")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.HasKey("RecipeIngredientId");
+
+                    b.HasIndex("IngredientId");
+
+                    b.HasIndex("RecipeID");
+
+                    b.ToTable("RecipeIngredients");
                 });
 
             modelBuilder.Entity("RecipeInfo.RecipeTag", b =>
@@ -201,17 +225,27 @@ namespace annualevents.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecipeTagId"));
 
-                    b.Property<int?>("RecipeID")
-                        .HasColumnType("NUMBER(10)");
-
                     b.Property<string>("Tag")
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("RecipeTagId");
 
-                    b.HasIndex("RecipeID");
+                    b.ToTable("RecipeTag");
+                });
 
-                    b.ToTable("Annual_Events_RecipeTag");
+            modelBuilder.Entity("RecipeRecipeTag", b =>
+                {
+                    b.Property<int>("RecipeWithTagsRecipeID")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<int>("TagsRecipeTagId")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.HasKey("RecipeWithTagsRecipeID", "TagsRecipeTagId");
+
+                    b.HasIndex("TagsRecipeTagId");
+
+                    b.ToTable("RecipeRecipeTag");
                 });
 
             modelBuilder.Entity("Annual_Events_UserRecipe", b =>
@@ -224,7 +258,7 @@ namespace annualevents.Migrations
 
                     b.HasOne("BusinessLayer.Annual_Events_User", null)
                         .WithMany()
-                        .HasForeignKey("FavouritedByAnnual_Events_UserID")
+                        .HasForeignKey("FavouritedByAnnual_Events_UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -236,39 +270,72 @@ namespace annualevents.Migrations
                         .HasForeignKey("RecipeID");
                 });
 
-            modelBuilder.Entity("RecipeInfo.Ingredient", b =>
+            modelBuilder.Entity("PreparationRecipe", b =>
                 {
-                    b.HasOne("RecipeInfo.Recipe", null)
-                        .WithMany("Ingredients")
-                        .HasForeignKey("RecipeID");
-                });
+                    b.HasOne("RecipeInfo.Preparation", null)
+                        .WithMany()
+                        .HasForeignKey("PreparationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("RecipeInfo.Preparation", b =>
-                {
                     b.HasOne("RecipeInfo.Recipe", null)
-                        .WithMany("Preparation")
-                        .HasForeignKey("RecipeID");
+                        .WithMany()
+                        .HasForeignKey("RecipesRecipeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RecipeInfo.Recipe", b =>
                 {
                     b.HasOne("BusinessLayer.Annual_Events_User", "Owner")
                         .WithMany("Recipes")
-                        .HasForeignKey("OwnerID")
+                        .HasForeignKey("OwnerAnnual_Events_UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("RecipeInfo.RecipeTag", b =>
+            modelBuilder.Entity("RecipeInfo.RecipeIngredient", b =>
+                {
+                    b.HasOne("RecipeInfo.Ingredient", "Ingredient")
+                        .WithMany("Recipes")
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RecipeInfo.Recipe", "Recipe")
+                        .WithMany("Ingredients")
+                        .HasForeignKey("RecipeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ingredient");
+
+                    b.Navigation("Recipe");
+                });
+
+            modelBuilder.Entity("RecipeRecipeTag", b =>
                 {
                     b.HasOne("RecipeInfo.Recipe", null)
-                        .WithMany("Tags")
-                        .HasForeignKey("RecipeID");
+                        .WithMany()
+                        .HasForeignKey("RecipeWithTagsRecipeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RecipeInfo.RecipeTag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsRecipeTagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BusinessLayer.Annual_Events_User", b =>
+                {
+                    b.Navigation("Recipes");
+                });
+
+            modelBuilder.Entity("RecipeInfo.Ingredient", b =>
                 {
                     b.Navigation("Recipes");
                 });
@@ -277,11 +344,7 @@ namespace annualevents.Migrations
                 {
                     b.Navigation("Ingredients");
 
-                    b.Navigation("Preparation");
-
                     b.Navigation("Reviews");
-
-                    b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618
         }

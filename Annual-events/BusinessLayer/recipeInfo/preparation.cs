@@ -6,6 +6,8 @@ public class Preparation{
     public int PreparationID{ get; set; }
     private int _stepNumber;
 
+    public List<Recipe> Recipes{ get; set; }
+
     public int StepNumber { 
         get { return _stepNumber;}
         set { _stepNumber = value; }

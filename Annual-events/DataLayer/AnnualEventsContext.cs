@@ -18,6 +18,7 @@ public class AnnualEventsContext : DbContext
     
     public string DbPath { get; }
     public DbSet<Review> Review { get; set; }
+    public DbSet<RecipeIngredient> RecipeIngredients{ get; set; }
     public DbSet<Annual_Events_User> Annual_Events_User { get; set; }
     public DbSet<Recipe> Recipe { get; set; }
     public DbSet<Preparation> Preparation { get; set; }
@@ -70,5 +71,6 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         modelBuilder.Entity<Annual_Events_User>()
             .HasMany(user => user.FavRecipes)
             .WithMany(recipe => recipe.FavouritedBy);
+
     }
 }

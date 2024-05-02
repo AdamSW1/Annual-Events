@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using BusinessLayer;
 using RecipeInfo;
+using System.Security.Cryptography.X509Certificates;
 
 namespace DataLayer;
 
@@ -66,6 +67,22 @@ public class AnnualEventsService
         }
         DbContext.SaveChanges();
 
+    }
+
+    public Ingredient? GetIngredient(string ingredientName){
+        RecipeIngredient? RI = DbContext.RecipeIngredients.Where(x => x.Ingredient.Name == ingredientName).FirstOrDefault();
+        if (RI is null){
+            return null;
+        }
+        return RI.Ingredient;
+    }
+
+    public RecipeTag? GetRecipeTag(string recipeTag){
+        Recipe? R = DbContext.Recipe.Where(recipe => recipe.Tags.Where(tag => tag.Tag == recipeTag).Any()).FirstOrDefault();
+        if (R is null){
+            return null;
+        }
+        return R.Tags.Where(tag => tag.Tag == recipeTag).FirstOrDefault();
     }
 
 }
