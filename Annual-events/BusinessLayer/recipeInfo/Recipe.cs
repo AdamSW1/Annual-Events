@@ -7,8 +7,7 @@ using Microsoft.VisualBasic;
 namespace RecipeInfo;
 public class Recipe
 {
-    public AnnualEventsContext AnnualEventsContext {get;}
-    public AnnualEventsService AnnualEventsService {get;}
+    public AnnualEventsService AnnualEventsService = AnnualEventsService.Instance;
     public Utils Utils = new();
 
     public int RecipeID {get;set;}
@@ -261,7 +260,7 @@ public class Recipe
     {
         AnnualEventsService.AddRecipe(recipe);   
     }
-    public void UpdateRecipe(Recipe)
+    public void UpdateRecipe(Recipe recipe)
     {
         // Update an existing recipe
         throw new NotImplementedException();
