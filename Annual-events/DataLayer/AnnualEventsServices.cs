@@ -64,6 +64,8 @@ public class AnnualEventsService
         foreach (var prep in query){
             DbContext.Preparation.Remove(prep);
         }
+        DbContext.SaveChanges();
 
     }
+
 }
