@@ -5,27 +5,37 @@ namespace DataLayer;
 
 public class AnnualEventsService
 {
-    private AnnualEventsContext _AnnualEventsContext;
-    public AnnualEventsContext AnnualEventContext
+    public AnnualEventsContext DbContext = AnnualEventsContext.Instance;
+    public AnnualEventsService()
     {
-        get
-        {
-            return _AnnualEventsContext;
-        }
-        set
-        {
-            _AnnualEventsContext = value;
-        }
-    }
-    public AnnualEventsService(AnnualEventsContext annualEventsContext)
-    {
-        _AnnualEventsContext = annualEventsContext;
     }
 
     public void AddRecipe(Recipe recipe)
     {
-        _AnnualEventsContext.Recipe.Add(recipe);
-        _AnnualEventsContext.SaveChanges();
+        DbContext.Recipe.Add(recipe);
+        DbContext.SaveChanges();
+    }
+
+    public void UpdateRecipe(Recipe recipe)
+    {
+        var query = from Annual_Events_Recipe in DbContext.Recipe
+                    where recipe.RecipeID == recipe.RecipeID
+                    select recipe;
+
+        foreach (var rec in query)
+        {
+            rec.Name = recipe.Name;
+            rec.Description = recipe.Description;
+            rec.CookingTime = recipe.CookingTime;
+            rec.Preparation = recipe.Preparation;
+            rec.Servings = recipe.Servings;
+            rec.Ingredients = recipe.Ingredients;
+            rec.Favourite = recipe.Favourite;
+            rec.Owner = recipe.Owner;
+            rec.Tags = recipe.Tags;
+            rec.Reviews = recipe.Reviews;
+        }
+
     }
 
 }
