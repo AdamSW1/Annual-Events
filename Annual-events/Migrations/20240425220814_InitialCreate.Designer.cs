@@ -94,7 +94,7 @@ namespace annualevents.Migrations
 
                     b.HasIndex("RecipeID");
 
-                    b.ToTable("Review");
+                    b.ToTable("Annual_Events_Review");
                 });
 
             modelBuilder.Entity("RecipeInfo.Ingredient", b =>
@@ -123,7 +123,7 @@ namespace annualevents.Migrations
 
                     b.HasIndex("RecipeID");
 
-                    b.ToTable("Ingredient");
+                    b.ToTable("Annual_Events_Ingredient");
                 });
 
             modelBuilder.Entity("RecipeInfo.Preparation", b =>
@@ -148,7 +148,7 @@ namespace annualevents.Migrations
 
                     b.HasIndex("RecipeID");
 
-                    b.ToTable("Preparation");
+                    b.ToTable("Annual_Events_Preparation");
                 });
 
             modelBuilder.Entity("RecipeInfo.Recipe", b =>
@@ -190,7 +190,7 @@ namespace annualevents.Migrations
 
                     b.HasIndex("OwnerID");
 
-                    b.ToTable("Recipe");
+                    b.ToTable("Annual_Events_Recipe");
                 });
 
             modelBuilder.Entity("RecipeInfo.RecipeTag", b =>
@@ -211,7 +211,7 @@ namespace annualevents.Migrations
 
                     b.HasIndex("RecipeID");
 
-                    b.ToTable("RecipeTag");
+                    b.ToTable("Annual_Events_RecipeTag");
                 });
 
             modelBuilder.Entity("Annual_Events_UserRecipe", b =>
