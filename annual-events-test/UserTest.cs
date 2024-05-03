@@ -64,16 +64,17 @@ public class UserTest
     }
 
     private Recipe CreateExampleRecipe(Annual_Events_User cur){
-        Ingredient flour = new("flour", "6 cups", 7);
-        Ingredient egg = new("egg", "4", 3);
+        Ingredient flour = new("flour", 7);
+        Ingredient egg = new("egg", 3);
         List<Ingredient> ingredients = new() { flour, egg };
         List<RecipeTag> tags = new List<RecipeTag>(){new("cake"),new("chocolate")};
+        List<RecipeIngredient> recipIngredients = new List<RecipeIngredient>{new RecipeIngredient{Ingredient = new Ingredient("carrot",3)}};
         Recipe exampleRecipe = new("Chocolate cake",
                                             "A simple chocolate cake",
                                             120,
                                             new List<Preparation>{ new(1, "do")},
                                             8,
-                                            ingredients,
+                                            recipIngredients,
                                             0,
                                             cur,
                                             tags,null

@@ -9,9 +9,11 @@ namespace annual_events_test;
 public class RecipeTest
 {
     private Recipe CreateExampleRecipe(Annual_Events_User cur){
-        Ingredient flour = new("flour", "6 cups", 7);
-        Ingredient egg = new("egg", "4", 3);
+        Ingredient flour = new("flour", 7);
+        Ingredient egg = new("egg", 3);
         List<Ingredient> ingredients = new() { flour, egg };
+        List<RecipeIngredient> recipeIngredients= ingredients.Select(ingredient => new RecipeIngredient{Ingredient = ingredient,Quantity ="4"}).ToList();
+
         List<RecipeTag> tags = new List<RecipeTag>(){new("cake"),new("chocolate")};
         Recipe exampleRecipe = new("Chocolate cake",
                                             "A simple chocolate cake",
@@ -23,7 +25,7 @@ public class RecipeTest
 
                                             },
                                             8,
-                                            ingredients,
+                                            recipeIngredients,
                                             0,
                                             cur,
                                             tags,new List<Review> { new("reviewer1", "review1",4)}
@@ -191,7 +193,7 @@ public class RecipeTest
         
         // Assert
         // Annual_Events_User should only have 1 recipe added
-        Recipe updatedRecipe = user.Recipes.FirstOrDefault(r => r.Name == updatedRecipeName);
+        Recipe updatedRecipe = user.Recipes.FirstOrDefault(r => r.Name == updatedRecipeName)!;
         Assert.IsNotNull(updatedRecipe); // Ensure that the recipe exists in the user's recipes
         Assert.AreEqual(updatedDescription, updatedRecipe.Description);
         Assert.AreEqual(updatedCookingTime, updatedRecipe.CookingTime);
