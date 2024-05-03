@@ -2,21 +2,36 @@
 using System.Linq;
 using System.Collections.Generic;
 using BusinessLayer;
+using DataLayer;
 namespace RecipeInfo;
 
 
 public class RecipeManager
 {
-    public static void AddRecipe(Annual_Events_User user, string recipeName, string description,
-        double cookingTime, List<Preparation> preparation,
-        int servings, List<Ingredient> ingredients,
-        List<RecipeTag> tags)
+    public static void AddRecipe(Recipe  newRecipe)
     {
         // Create recipe
-        Recipe newRecipe = new(recipeName, description, cookingTime, preparation, servings, ingredients, 0, user, tags, new List<Review>());
 
         // Add the recipe to the user's list
-        user.AddRecipe(newRecipe);
+        newRecipe.Ingredients.ForEach(RI =>{
+            Ingredient? ingr = AnnualEventsService.Instance.GetIngredient(RI.Ingredient.Name);
+            if (ingr != null){
+                RI.Ingredient = ingr;
+            }
+            return;
+        });
+
+        newRecipe.Tags.ToList().ForEach(tag =>{
+            RecipeTag? RT = AnnualEventsService.Instance.GetRecipeTag(tag.Tag);
+            if (RT != null){
+                newRecipe.Tags.Remove(tag);
+                newRecipe.Tags.Add(RT);
+                return;
+            }
+            return;
+        });
+        newRecipe.Owner.AddRecipe(newRecipe);
+        AnnualEventsService.Instance.AddRecipe(newRecipe);
     }
 
     //Will delete from the DB in the future, maybe?

@@ -5,7 +5,7 @@ using API;
 public class Ingredient{
 
     public int IngredientId { get; set; }
-    
+    public List<RecipeIngredient> Recipes{ get; set; }
     private string _name;
     public string Name {
         get{
@@ -13,17 +13,6 @@ public class Ingredient{
         }
         set{
             _name=value;
-        }
-    }
-
-    private string _quantity;
-
-    public string Quantity{
-        get{
-            return _quantity;
-        }
-        set{
-            _quantity=value;
         }
     }
 
@@ -56,35 +45,29 @@ public class Ingredient{
         }
     }
 
-    public Ingredient(string name, string quantity, double price){
+    public Ingredient(string name, double price){
         _name = name;
-        _quantity = quantity;
         _price = price;
     }
+    public Ingredient(){}
 
     public override bool Equals(object? obj) 
     {
         return obj is Ingredient ing &&
             IngredientId == ing.IngredientId &&
             Name == ing.Name &&
-            Quantity == ing.Quantity &&
             Price == ing.Price;
     }
 
     public override int GetHashCode() 
     {
-        return HashCode.Combine(IngredientId, Name, Quantity, Price);
+        return HashCode.Combine(IngredientId, Name, Price);
     }
 
     public override string ToString()
     {
         var str = new StringBuilder();
-        if(int.TryParse(Quantity, out int quantNum)){
-            str.Append($"{quantNum} {Name}s, {Price}");
-        }
-        else{
-            str.Append($"{Quantity} of {Name}, {Price}");
-        }
+        str.Append($"{Name}, {Price}");
         return str.ToString();
     }
 
