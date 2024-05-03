@@ -129,7 +129,7 @@ public class Annual_Events_User
 
     public void AddRecipe(Recipe recipe)
     {
-        recipe.Owner = this;
+        // recipe.Owner = this;
         _recipes.Add(recipe);
     } // just adding a recipe to a list, other than Fav
 

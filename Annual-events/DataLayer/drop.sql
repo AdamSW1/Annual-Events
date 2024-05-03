@@ -1,0 +1,11 @@
+Drop table "__EFMigrationsHistory";
+Drop table "Recipe" CASCADE CONSTRAINTS;
+drop table "Annual_Events_User"  CASCADE CONSTRAINTS;
+drop table "Ingredient" CASCADE CONSTRAINTS;
+drop table "RecipeIngredients" CASCADE CONSTRAINTS;
+drop table "Preparation" CASCADE CONSTRAINTS;
+drop table "PreparationRecipe" CASCADE CONSTRAINTS;
+drop table "RecipeTag" CASCADE CONSTRAINTS;
+drop table "RecipeRecipeTag" CASCADE CONSTRAINTS;
+drop table "Review";
+drop table "Annual_Events_UserRecipe";

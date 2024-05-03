@@ -19,8 +19,9 @@ public class AnnualEventsContext : DbContext
 
     public string DbPath { get; }
     public DbSet<Review> Review { get; set; }
-    public static DbSet<Annual_Events_User>? Annual_Events_User { get; set; }
-    public static DbSet<Recipe>? Recipe { get; set; }
+    public DbSet<RecipeIngredient> RecipeIngredients{ get; set; }
+    public DbSet<Annual_Events_User> Annual_Events_User { get; set; }
+    public DbSet<Recipe> Recipe { get; set; }
     public DbSet<Preparation> Preparation { get; set; }
     public string HostName { get; set; }
 
@@ -71,5 +72,6 @@ public class AnnualEventsContext : DbContext
         modelBuilder.Entity<Annual_Events_User>()
             .HasMany(user => user.FavRecipes)
             .WithMany(recipe => recipe.FavouritedBy);
+
     }
 }

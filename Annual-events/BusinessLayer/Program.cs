@@ -1,12 +1,12 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.Intrinsics.Arm;
-using System.ComponentModel;
-using System.Runtime.Intrinsics.Arm;
+
 using System.Xml.Serialization;
 using BusinessLayer;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RecipeInfo;
+using DataLayer;
 class Program
 {
 
@@ -264,6 +264,8 @@ class Program
 
         // Get ingredients
         List<Ingredient> ingredients = new();
+        List<RecipeIngredient> recipeIngredients = new();
+        string quantity = "";
         Console.WriteLine("\nEnter Ingredients (press Enter without typing to finish):");
         while (true)
         {
@@ -274,7 +276,7 @@ class Program
                 break;
 
             Console.Write("Weight/Quantity: ");
-            string quantity = GetString();
+            quantity = GetString();
             if (int.TryParse(quantity, out int result) && result < 0)
             {
                 quantity = GetInt(true).ToString();
@@ -282,8 +284,10 @@ class Program
             Console.Write("Price: ");
             double price = GetDouble();
 
-            ingredients.Add(new Ingredient(ingredientName, quantity, price));
+            
+            recipeIngredients.Add(new RecipeIngredient{Ingredient = new Ingredient(ingredientName,price),Quantity = quantity});
         }
+
 
         //Get tags
         Console.WriteLine("Enter tags for the recipe (press Enter without typing to finish):");
@@ -315,7 +319,8 @@ class Program
             }
         }
 
-        RecipeManager.AddRecipe(user, recipeName, description, cookingTime, preparation, servings, ingredients, tagList);
+        Recipe newRecipe = new(recipeName, description, cookingTime, preparation, servings, recipeIngredients,0,user, tagList, new List<Review>());
+        RecipeManager.AddRecipe(newRecipe);
         Console.WriteLine("\nRecipe added successfully!");
     }
 
@@ -470,9 +475,13 @@ class Program
     /// </summary>
     public static void AddExampleRecipes()
     {
-        Ingredient flour = new Ingredient("flour", "6 cups", 7);
-        Ingredient egg = new Ingredient("egg", "4", 3);
+        Ingredient flour = new Ingredient("flour", 7);
+        Ingredient egg = new Ingredient("egg", 3);
+
+
         List<Ingredient> ingredients = new List<Ingredient>() { flour, egg };
+        List<RecipeIngredient> recipeIngredients= ingredients.Select(ingredient => new RecipeIngredient{Ingredient = ingredient,Quantity ="4"}).ToList();
+        
         List<string> tags = new List<string>() { "cake", "chocolate" };
         Recipe exampleRecipe = new Recipe("Chocolate cake",
                                             "A simple chocolate cake",
@@ -484,7 +493,7 @@ class Program
 
                                             },
                                             8,
-                                            ingredients,
+                                            recipeIngredients,
                                             0,
                                             AuthenticationManager.Instance.CurrentUser,
                                             new List<RecipeTag>(){new RecipeTag("vegan")}
@@ -500,7 +509,7 @@ class Program
 
                                             },
                                             6,
-                                            ingredients,
+                                            recipeIngredients,
                                             0,
                                             AuthenticationManager.Instance.CurrentUser,
                                             new List<RecipeTag>(){new RecipeTag("vegan")}
@@ -509,8 +518,13 @@ class Program
         exampleRecipe.AverageScore = 3;
         exampleRecipe2.AverageScore = 5;
 
-        AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe);
-        AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe2);
+        // AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe);
+        // AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe2);
+        RecipeManager.AddRecipe(exampleRecipe);
+        RecipeManager.AddRecipe(exampleRecipe2);
+        AnnualEventsContext.Instance.SaveChanges();
+        // AnnualEventsService.Instance.AddRecipe(exampleRecipe);
+        
     }
 
     public static string GetName()
@@ -580,6 +594,9 @@ class Program
                 int stepnum = 1;
                 prepString.ForEach(prep =>
                 {
+                    if(string.IsNullOrEmpty(prep)){
+                        return;
+                    }
                     stepnum++;
                     preparation.Add(new Preparation(stepnum, prep));
                 });
