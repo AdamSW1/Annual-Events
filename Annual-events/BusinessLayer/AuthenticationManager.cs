@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DataLayer;
 using RecipeInfo;
 namespace BusinessLayer;
 
@@ -35,6 +36,10 @@ public class AuthenticationManager
         // Test data for now, since we dont have a database.
         Users.Add(new Annual_Events_User("user1", "password1", "Description 1", 25));
         Users.Add(new Annual_Events_User("user2", "password2", "Description 2", 30));
+
+        AnnualEventsContext.Instance.Annual_Events_User.Add(Users[0]);
+        AnnualEventsContext.Instance.Annual_Events_User.Add(Users[1]);
+        AnnualEventsContext.Instance.SaveChanges();
     }
     public bool Login(string username, string password)
     {
