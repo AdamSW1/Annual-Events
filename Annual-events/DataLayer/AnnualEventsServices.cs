@@ -58,14 +58,14 @@ public class AnnualEventsService
 
     public void RemovePreparation(Preparation preparation)
     {
-        var query = from Preparation in DbContext.Preparation
+        var query = (from Preparation in DbContext.Preparation
         where preparation.PreparationID == preparation.PreparationID
-        select preparation;
+        select preparation).FirstOrDefault();
 
-        foreach (var prep in query){
-            DbContext.Preparation.Remove(prep);
+        if(query != null){
+            DbContext.Preparation.Remove(query);
+            DbContext.SaveChanges();
         }
-        DbContext.SaveChanges();
 
     }
 
