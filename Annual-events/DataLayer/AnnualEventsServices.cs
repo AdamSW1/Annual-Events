@@ -70,7 +70,7 @@ public class AnnualEventsService
     }
 
     public Ingredient? GetIngredient(string ingredientName){
-        RecipeIngredient? RI = DbContext.RecipeIngredients.Where(x => x.Ingredient.Name == ingredientName).FirstOrDefault();
+        RecipeIngredient? RI = DbContext.RecipeIngredients.Where(x => x.Ingredient!.Name == ingredientName).FirstOrDefault();
         if (RI is null){
             return null;
         }
