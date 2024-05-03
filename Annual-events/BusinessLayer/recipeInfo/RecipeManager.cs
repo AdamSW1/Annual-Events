@@ -14,6 +14,9 @@ public class RecipeManager
 
         // Add the recipe to the user's list
         newRecipe.Ingredients.ForEach(RI =>{
+            if (RI.Ingredient is null){
+                return;
+            }
             Ingredient? ingr = AnnualEventsService.Instance.GetIngredient(RI.Ingredient.Name);
             if (ingr != null){
                 RI.Ingredient = ingr;
@@ -22,6 +25,9 @@ public class RecipeManager
         });
 
         newRecipe.Tags.ToList().ForEach(tag =>{
+            if(tag is null || tag.Tag is null){
+                return;
+            }
             RecipeTag? RT = RecipeServices.Instance.GetRecipeTag(tag.Tag);
             if (RT != null){
                 newRecipe.Tags.Remove(tag);

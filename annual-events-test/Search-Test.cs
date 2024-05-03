@@ -32,7 +32,7 @@ public class SearchTest
         List<Recipe> recipes = CreateExampleList();
         Search search = new(recipes);
         //Act
-        List<Recipe> newRecipes = search.SearchRecipesByTags(tags);
+        List<Recipe> newRecipes = search.SearchRecipesByTags(tags)!;
         //Assert
         CollectionAssert.AreEquivalent(newRecipes, recipes);
     }
@@ -109,7 +109,7 @@ public class SearchTest
                 cookingTime: 3,
                 preparation: new List<Preparation>(){new(1,"do")},
                 servings: 2,
-                ingredients: new List<Ingredient>{new("cheese","2",3)},
+                ingredients: new List<RecipeIngredient>{new() { Ingredient = new Ingredient("carrot",3)}},
                 favourite: 2,
                 owner: new Annual_Events_User("Joe", "password", "Joe", 30),
                 tags: tags,
@@ -120,7 +120,7 @@ public class SearchTest
                 cookingTime: 0,
                 preparation: new List<Preparation>(){new(1,"do")},
                 servings: 1,
-                ingredients: new List<Ingredient> {new("carrot", "2", 3)},
+                ingredients: new List<RecipeIngredient>{new() { Ingredient = new Ingredient("carrot",3)}},
                 favourite: 0,
                 owner:new Annual_Events_User("Boe", "password", "Boe", 30),
                 tags: tags,

@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using DataLayer;
+using Microsoft.EntityFrameworkCore;
 using RecipeInfo;
 namespace BusinessLayer;
 public class Annual_Events_User
 {
-    
-    public int Annual_Events_UserId{get;set;}
+
+    public int Annual_Events_UserId { get; set; }
     // [InverseProperty("Owner")]
     private List<Recipe> _recipes = new List<Recipe>();
     public List<Recipe> Recipes
@@ -13,13 +15,13 @@ public class Annual_Events_User
         get { return _recipes; }
         set { _recipes = value; }
     }
-    
+
     //[InverseProperty("FavouritedBy")]
     private List<Recipe> _favRecipes = new List<Recipe>();
     public List<Recipe> FavRecipes
     {
         get { return _favRecipes; }
-        set { _favRecipes = value;}
+        set { _favRecipes = value; }
     }
 
     private string _username;
@@ -31,7 +33,8 @@ public class Annual_Events_User
         }
         set
         {
-            if(!Utils.CheckName(value)){
+            if (!Utils.CheckName(value))
+            {
                 throw new ArgumentException("Invalid name");
             }
             _username = value;
@@ -70,7 +73,8 @@ public class Annual_Events_User
         }
         set
         {
-            if (Utils.CheckInt(value) == false){
+            if (Utils.CheckInt(value) == false)
+            {
                 throw new ArgumentException("invalid age");
             }
             _age = value;
@@ -171,9 +175,15 @@ public class Annual_Events_User
         return Username == enteredUsername && Password == enteredPassword;
     } // verifies their passwords and usernames with database
 
-    public void DeleteAccount()
+
+    // should delete their account definitely
+    public void DeleteAccount(string authenticatedUsername)
     {
-    } // should delete their account definitely
+        if (authenticatedUsername != Username)
+        {
+            throw new UnauthorizedAccessException("Cant delete another user");
+        }
+    }
 
     public string ViewFavRecipes()
     {
@@ -183,10 +193,10 @@ public class Annual_Events_User
         {
             returnStr += $"{recipe.Name}\n"; // Assuming Name property exists in Recipe class
         }
-
         return returnStr;
     }
 
+    // Database implementation of UpdateRecipe, does both functionalities
     internal bool UpdateRecipe(string name, string updatedRecipeName, string updatedDescription, double updatedCookingTime, List<Preparation> updatedPreparation, int updatedServings, int updatedRatings)
     {
         Recipe recipeToUpdate = Recipes.FirstOrDefault(r => r.Name == name)!;
@@ -203,9 +213,10 @@ public class Annual_Events_User
         }
         else
         {
-            // Recipe with the specified name not found
+            // Recipe with the specified name not found or user not found
             return false;
         }
+
     }
 
 }
