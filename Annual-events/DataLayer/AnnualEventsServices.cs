@@ -13,32 +13,100 @@ public class AnnualEventsService
     public AnnualEventsContext DbContext = AnnualEventsContext.Instance;
     public AnnualEventsService(){}
 
-    public void AddRecipe(Recipe recipe)
+    public Recipe GetRecipe(string name)
     {
-        DbContext.Recipe.Add(recipe);
-        DbContext.SaveChanges();
+        return DbContext.Recipe
+        .Where(r=>r.Name == name)
+        .First();
     }
 
+    public List<Recipe> GetRecipes()
+    {
+        return DbContext.Recipe!
+        .OrderBy(r=>r.Name)
+        .ToList();
+    }
+    
+    public List<Recipe> GetRecipesByOwner(Annual_Events_User owner)
+    {
+        return DbContext.Recipe!
+        .Where(recipe => recipe.Owner.Username == owner.Username)
+        .ToList();
+    }
+
+    public List<Recipe> GetRecipesByRating(int rating)
+    {
+        return DbContext.Recipe!
+        .Where(recipe => recipe.AverageScore == rating)
+        .ToList();
+    }
+
+    public List<Recipe> GetRecipesByServings(int servings)
+    {
+        return DbContext.Recipe!
+        .Where(recipe => recipe.Servings == servings)
+        .ToList();
+    }
+
+    public List<Recipe> GetRecipesByTimeConstraint(int time)
+    {
+        return DbContext.Recipe!
+        .Where(recipe => recipe.CookingTime >= time -3 && recipe.CookingTime <= time + 3)
+        .ToList();
+    }
+
+    public List<Recipe> GetRecipesInFavorites(int favourite)
+    {
+        return DbContext.Recipe!
+        .Where(recipe => recipe.Favourite == favourite)
+        .ToList();
+    }
+
+    // public List<Recipe>
+
+    public void AddRecipe(Recipe recipe)
+    {
+        if (recipe != null)
+        {
+            DbContext.Recipe!.Add(recipe);
+            DbContext.SaveChanges();
+        }
+    }
     public void UpdateRecipe(Recipe recipe)
     {
-        var query = from Annual_Events_Recipe in DbContext.Recipe
-                    where recipe.RecipeID == recipe.RecipeID
-                    select recipe;
+        Recipe? DbRecipe = DbContext.Recipe
+        .Where(r=>r.RecipeID == recipe.RecipeID)
+        .FirstOrDefault();
 
-        foreach (var rec in query)
+        if(DbRecipe != null)
         {
-            rec.Name = recipe.Name;
-            rec.Description = recipe.Description;
-            rec.CookingTime = recipe.CookingTime;
-            rec.Preparation = recipe.Preparation;
-            rec.Servings = recipe.Servings;
-            rec.Ingredients = recipe.Ingredients;
-            rec.Favourite = recipe.Favourite;
-            rec.Owner = recipe.Owner;
-            rec.Tags = recipe.Tags;
-            rec.Reviews = recipe.Reviews;
-        }
+            DbRecipe.RecipeID = recipe.RecipeID;
+            DbRecipe.Name = recipe.Name;
+            DbRecipe.Description = recipe.Description;
+            DbRecipe.Preparation = recipe.Preparation;
+            DbRecipe.Servings = recipe.Servings;
+            DbRecipe.Ingredients = recipe.Ingredients;
+            DbRecipe.Favourite = recipe.Favourite;
+            DbRecipe.Owner = recipe.Owner;
+            DbRecipe.Tags = recipe.Tags;
+            DbRecipe.Reviews = recipe.Reviews;
 
+            DbContext.Recipe!.Update(DbRecipe);
+            DbContext.SaveChanges();
+        }
+    }
+
+    public void DeleteRecipe(Recipe recipe)
+    {
+        Recipe? DbRecipe = DbContext.Recipe
+        .Where(r=>r.RecipeID == recipe.RecipeID)
+        .FirstOrDefault();
+
+        if(DbRecipe != null)
+        {
+            DbContext.Recipe!.RemoveRange(DbRecipe);
+            DbContext.SaveChanges();
+        }
     }
 
 }

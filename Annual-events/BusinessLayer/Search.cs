@@ -6,25 +6,13 @@ using RecipeInfo;
 namespace BusinessLayer;
 
 class Search
-{
-    private List<Recipe> _recipes;
-    public List<Recipe> Recipes
-    {
-        get { return _recipes; }
-        set { _recipes = value; }
-    }
-    
-    public Search(List<Recipe> recipes)
-    {
-        _recipes = recipes;
-    }
-
-    public List<Recipe> getRecipes()
+{   
+    public static List<Recipe> getRecipes()
     { //gets the recipes from the database
         throw new NotImplementedException();
     }
     // Search recipes by keyword
-    public List<Recipe> SearchRecipesByKeyword(string keyword)
+    public static List<Recipe> SearchRecipesByKeyword(string keyword,List<Recipe> Recipes)
     {
         string escaped = Regex.Escape(keyword);
         var reg = new Regex(escaped, RegexOptions.IgnoreCase);
@@ -32,7 +20,7 @@ class Search
         return searched.ToList();
     }
     // Search recipes by tags
-    public List<Recipe>? SearchRecipesByTags(List<RecipeTag> tags)
+    public static List<Recipe>? SearchRecipesByTags(List<RecipeTag> tags,List<Recipe> Recipes)
     {
         if(!Utils.ValidateTags(tags)){
             return null;
@@ -41,31 +29,31 @@ class Search
         return searched.ToList();
     }
     // Search recipes by time constraint
-    public List<Recipe> SearchRecipesByTimeConstraint(int time)
+    public static List<Recipe> SearchRecipesByTimeConstraint(int time,List<Recipe> Recipes)
     {
         var searched = Recipes.Where(recipe => recipe.CookingTime >= time -3 && recipe.CookingTime <= time + 3);
         return searched.ToList();
     }
     // Search recipes by rating
-    public List<Recipe> SearchRecipesByRating(int rating)
+    public static List<Recipe> SearchRecipesByRating(int rating,List<Recipe> Recipes)
     {
         var searched = Recipes.Where(recipe => recipe.AverageScore == rating);
         return searched.ToList();
     }
     // Search recipes by servings constraint
-    public List<Recipe> SearchRecipesByServings(int servings)
+    public static List<Recipe> SearchRecipesByServings(int servings,List<Recipe> Recipes)
     {
         var searched = Recipes.Where(recipe => recipe.Servings == servings);
         return searched.ToList();
     }
     // Search recipes in favorites
-    public List<Recipe> SearchRecipesInFavorites(int favourite)
+    public static List<Recipe> SearchRecipesInFavorites(int favourite,List<Recipe> Recipes)
     {
         var searched = Recipes.Where(recipe => recipe.Favourite == favourite);
         return searched.ToList();
     }
     // Search recipes by owner username
-    public List<Recipe> SearchRecipesByOwnerUsername(string ownerUsername)
+    public static List<Recipe> SearchRecipesByOwnerUsername(string ownerUsername,List<Recipe> Recipes)
     {
         var searched = Recipes.Where(recipe => recipe.Owner.Username == ownerUsername);
         return searched.ToList();
