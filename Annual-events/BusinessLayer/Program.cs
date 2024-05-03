@@ -101,7 +101,6 @@ class Program
         }
         else if (choice == options[4])
         {
-            Search search;
             string[] searchOptions = new string[] { "By keyword" };
             string searchType = Utils.GetUserChoice("How do you want to search?", searchOptions) ?? "";
 

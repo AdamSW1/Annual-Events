@@ -17,7 +17,7 @@ public class RecipeManager
             if (RI.Ingredient is null){
                 return;
             }
-            Ingredient? ingr = AnnualEventsService.Instance.GetIngredient(RI.Ingredient.Name);
+            Ingredient? ingr = RecipeServices.Instance.GetIngredient(RI.Ingredient.Name);
             if (ingr != null){
                 RI.Ingredient = ingr;
             }

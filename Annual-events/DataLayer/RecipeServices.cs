@@ -64,7 +64,7 @@ public class RecipeServices
         .ToList();
     }
 
-    public void AddRecipe(Recipe recipe)
+    public void AddRecipe(Recipe recipe) 
     {
         if (recipe != null)
         {
@@ -92,5 +92,13 @@ public class RecipeServices
             return null;
         }
         return R.Tags.Where(tag => tag.Tag == recipeTag).FirstOrDefault();
+    }
+
+    public Ingredient? GetIngredient(string ingredientName){
+        RecipeIngredient? RI = DbContext.RecipeIngredients.Where(x => x.Ingredient!.Name == ingredientName).FirstOrDefault();
+        if (RI is null){
+            return null;
+        }
+        return RI.Ingredient;
     }
 }
