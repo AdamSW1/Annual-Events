@@ -243,7 +243,7 @@ public class UtilsTest
     public void CheckList_NonEmptyListIngredient_ReturnsTrue()
     {
         //arrange
-        List<Ingredient> list = new() { new Ingredient("name", "quantity", 10) };
+        List<Ingredient> list = new() { new Ingredient("name", 10) };
         //act
         bool check = Utils.CheckList(list);
         //assert
@@ -305,7 +305,7 @@ public class UtilsTest
                 cookingTime: 3,
                 preparation: new List<Preparation>() { new(1, "do") },
                 servings: 2,
-                ingredients: new List<Ingredient> { new("cheese", "2", 3) },
+                ingredients: new List<RecipeIngredient>{new() { Ingredient = new Ingredient("cheese",3)}},
                 favourite: 2,
                 owner: new Annual_Events_User("Joe", "password", "Joe", 30),
                 tags: new List<RecipeTag>() { new("vegan"), new("vegetarian") },
@@ -328,7 +328,7 @@ public class UtilsTest
                 cookingTime: 3,
                 preparation: new List<Preparation>() { new(1, "do") },
                 servings: 2,
-                ingredients: new List<Ingredient> { new("cheese", "2", 3) },
+                ingredients: new List<RecipeIngredient>{new() { Ingredient = new Ingredient("cheese",3)}},
                 favourite: 2,
                 owner: new Annual_Events_User("Joe", "password", "Joe", 30),
                 tags: new List<RecipeTag>() { new("vegan"), new("vegetarian") },
@@ -352,7 +352,7 @@ public class UtilsTest
                 cookingTime: 3,
                 preparation: new List<Preparation>(){new(1,"do")},
                 servings: 2,
-                ingredients: new List<Ingredient>{new("cheese","2",3)},
+                ingredients: new List<RecipeIngredient>{new() { Ingredient = new Ingredient("carrot",3)}},
                 favourite: 2,
                 owner: new Annual_Events_User("Joe", "password", "Joe", 30),
                 tags: tags,
@@ -363,7 +363,7 @@ public class UtilsTest
                 cookingTime: 0,
                 preparation: new List<Preparation>(){new(1,"do")},
                 servings: 1,
-                ingredients: new List<Ingredient> {new("carrot", "2", 3)},
+                ingredients: new List<RecipeIngredient>{new() { Ingredient = new Ingredient("carrot",3)}},
                 favourite: 0,
                 owner:new Annual_Events_User("Boe", "password", "Boe", 30),
                 tags: tags,
