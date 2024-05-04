@@ -43,6 +43,7 @@ public class Recipe
         }
     }
 
+
     private string _name;
     public string Name
     {
@@ -146,9 +147,9 @@ public class Recipe
         
     } 
 
-    private List<Ingredient> _ingredients;
+    private List<RecipeIngredient> _ingredients;
 
-    public List<Ingredient> Ingredients
+    public List<RecipeIngredient> Ingredients
     {
         get
         {
@@ -217,7 +218,7 @@ public class Recipe
     public Recipe(
         string name, string description,
         double cookingTime, List<Preparation> preparation, int servings,
-        List<Ingredient> ingredients,
+        List<RecipeIngredient> ingredients,
         int favourite, Annual_Events_User owner, List<RecipeTag> tags, List<Review> reviews
     )
     {
@@ -255,21 +256,6 @@ public class Recipe
     {
         return HashCode.Combine(_name, _description, _owner);
     }
-
-    public void AddToDatabase(Recipe recipe)
-    {
-        AnnualEventsService.AddRecipe(recipe);   
-    }
-    public void UpdateRecipe(Recipe recipe)
-    {
-        // Update an existing recipe
-        throw new NotImplementedException();
-    }
-    public void DeleteRecipe()
-    {
-        // Delete an existing recipe
-        throw new NotImplementedException();
-    }
     public void RateRecipe()
     {
         // Rate a recipe
@@ -296,9 +282,9 @@ public class Recipe
         returnStr += $"Description: {_description}\n";
         returnStr += $"Cooking Time: {_cookingTime} minutes\n";
         returnStr += "Ingredients:\n";
-        foreach (var ingredient in Ingredients)
+        foreach (var recipeIngredient in Ingredients)
         {
-            returnStr += $"{ingredient}\n";
+            returnStr += $"{recipeIngredient.Quantity} {recipeIngredient.Ingredient}\n";
         }
         returnStr += $"Preparation:\n";
         _preparation.ForEach(prepStep => returnStr += $"\t{prepStep.StepNumber} - {prepStep.Step.Trim()}\n");

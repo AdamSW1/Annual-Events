@@ -5,6 +5,9 @@ namespace RecipeInfo;
 public class RecipeTag
 {
     public int RecipeTagId { get; set; }
+
+    public List<Recipe>? RecipeWithTags { get; set; }
+   
     public string? Tag { get; set; }
 
     public RecipeTag(string tag){

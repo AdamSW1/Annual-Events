@@ -72,9 +72,10 @@ public class ComparatorsTest
 
     private static (Recipe, Recipe) AddExampleRecipes()
     {
-        Ingredient flour = new("flour", "6 cups", 7);
-        Ingredient egg = new("egg", "4", 3);
+        Ingredient flour = new("flour", 7);
+        Ingredient egg = new("egg", 3);
         List<Ingredient> ingredients = new() { flour, egg };
+        List<RecipeIngredient> recipeIngredients= ingredients.Select(ingredient => new RecipeIngredient{Ingredient = ingredient,Quantity ="4"}).ToList();
         List<RecipeTag> tags = new List<RecipeTag>() { new("cake"), new("chocolate") };
         Recipe exampleRecipe = new("Chocolate cake",
                                             "A simple chocolate cake",
@@ -86,7 +87,7 @@ public class ComparatorsTest
 
                                             },
                                             8,
-                                            ingredients,
+                                            recipeIngredients,
                                             0,
                                             new Annual_Events_User("cookielover123", "234", "nbdfnjgbd", 16),
                                             tags,
@@ -103,7 +104,7 @@ public class ComparatorsTest
 
                                             },
                                             6,
-                                            ingredients,
+                                            recipeIngredients,
                                             0,
                                             new Annual_Events_User("hello1234", "678", "ngjveuiwsnhg", 24),
                                             tags,

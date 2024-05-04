@@ -17,10 +17,9 @@ public class SearchTest
         //Arrange
         List<RecipeTag> tags = new List<RecipeTag>(){new("vegan"),new("vegetarian")};
         List<Recipe> recipes = CreateExampleList();
-        Search search = new(recipes);
         List<Recipe> expected_recipes = new() { recipes[0] };
         //Act
-        List<Recipe> newRecipes = search.SearchRecipesByKeyword("recipe1");
+        List<Recipe> newRecipes = Search.SearchRecipesByKeyword("recipe1",recipes);
         //Assert
         CollectionAssert.AreEquivalent(newRecipes, expected_recipes);
     }
@@ -30,9 +29,8 @@ public class SearchTest
         //Arrange
         List<RecipeTag> tags = new List<RecipeTag>(){new("vegan"),new("vegetarian")};
         List<Recipe> recipes = CreateExampleList();
-        Search search = new(recipes);
         //Act
-        List<Recipe> newRecipes = search.SearchRecipesByTags(tags);
+        List<Recipe> newRecipes = Search.SearchRecipesByTags(tags,recipes)!;
         //Assert
         CollectionAssert.AreEquivalent(newRecipes, recipes);
     }
@@ -42,9 +40,8 @@ public class SearchTest
         //Arrange
         List<RecipeTag> tags = new List<RecipeTag>(){new("vegan"),new("vegetarian")};
         List<Recipe> recipes = CreateExampleList();
-        Search search = new(recipes);
         //Act
-        List<Recipe> newRecipes = search.SearchRecipesByTimeConstraint(5);
+        List<Recipe> newRecipes = Search.SearchRecipesByTimeConstraint(5,recipes);
         //Assert
         Assert.AreEqual(newRecipes.Count, 1);
     }
@@ -54,9 +51,8 @@ public class SearchTest
         //Arrange
         List<RecipeTag> tags = new List<RecipeTag>(){new("vegan"),new("vegetarian")};
         List<Recipe> recipes = CreateExampleList();
-        Search search = new(recipes);
         //Act
-        List<Recipe> newRecipes = search.SearchRecipesByRating(2);
+        List<Recipe> newRecipes = Search.SearchRecipesByRating(2,recipes);
         Assert.AreEqual(newRecipes.Count, 1);
     }
     [TestMethod]
@@ -65,9 +61,8 @@ public class SearchTest
         //Arrange
         List<RecipeTag> tags = new List<RecipeTag>(){new("vegan"),new("vegetarian")};
         List<Recipe> recipes = CreateExampleList();
-        Search search = new(recipes);
         //Act
-        List<Recipe> newRecipes = search.SearchRecipesByServings(1);
+        List<Recipe> newRecipes = Search.SearchRecipesByServings(1,recipes);
         //Assert
         Assert.AreEqual(newRecipes.Count, 1);
     }
@@ -77,9 +72,8 @@ public class SearchTest
         //Arrange
         List<RecipeTag> tags = new List<RecipeTag>(){new("vegan"),new("vegetarian")};
         List<Recipe> recipes = CreateExampleList();
-        Search search = new(recipes);
         //Act
-        List<Recipe> newRecipes = search.SearchRecipesInFavorites(0);
+        List<Recipe> newRecipes = Search.SearchRecipesInFavorites(0,recipes);
         //Assert
         Assert.AreEqual(newRecipes.Count, 1);
     }
@@ -90,9 +84,8 @@ public class SearchTest
         List<RecipeTag> tags = new List<RecipeTag>(){new("vegan"),new("vegetarian")};
         List<string> review = new() { "review1", "review2" };
         List<Recipe> recipes = CreateExampleList();
-        Search search = new(recipes);
         //Act
-        List<Recipe> newRecipes = search.SearchRecipesByOwnerUsername("Joe");
+        List<Recipe> newRecipes = Search.SearchRecipesByOwnerUsername("Joe",recipes);
         //Assert
         Assert.AreEqual(newRecipes[0].Owner.Username, "Joe");
     }
@@ -109,7 +102,7 @@ public class SearchTest
                 cookingTime: 3,
                 preparation: new List<Preparation>(){new(1,"do")},
                 servings: 2,
-                ingredients: new List<Ingredient>{new("cheese","2",3)},
+                ingredients: new List<RecipeIngredient>{new() { Ingredient = new Ingredient("carrot",3)}},
                 favourite: 2,
                 owner: new Annual_Events_User("Joe", "password", "Joe", 30),
                 tags: tags,
@@ -120,7 +113,7 @@ public class SearchTest
                 cookingTime: 0,
                 preparation: new List<Preparation>(){new(1,"do")},
                 servings: 1,
-                ingredients: new List<Ingredient> {new("carrot", "2", 3)},
+                ingredients: new List<RecipeIngredient>{new() { Ingredient = new Ingredient("carrot",3)}},
                 favourite: 0,
                 owner:new Annual_Events_User("Boe", "password", "Boe", 30),
                 tags: tags,

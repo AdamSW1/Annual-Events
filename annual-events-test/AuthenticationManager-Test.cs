@@ -18,7 +18,7 @@ public class AuthenticationManagerTest
         // Assert
         Assert.IsTrue(loginResult);
     }
-
+    
     [TestMethod]
     public void Login_CurrentUser_Success()
     {
