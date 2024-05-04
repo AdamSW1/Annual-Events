@@ -256,21 +256,6 @@ public class Recipe
     {
         return HashCode.Combine(_name, _description, _owner);
     }
-
-    public void AddToDatabase(Recipe recipe)
-    {
-        AnnualEventsService.AddRecipe(recipe);   
-    }
-    public void UpdateRecipe(Recipe recipe)
-    {
-        // Update an existing recipe
-        throw new NotImplementedException();
-    }
-    public void DeleteRecipe()
-    {
-        // Delete an existing recipe
-        throw new NotImplementedException();
-    }
     public void RateRecipe()
     {
         // Rate a recipe
