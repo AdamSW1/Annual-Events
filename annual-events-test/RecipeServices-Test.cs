@@ -37,19 +37,22 @@ public class RecipeServicesTest
         List<RecipeIngredient> recipeIngredients = ingredients.Select(ingredient => new RecipeIngredient { Ingredient = ingredient, Quantity = "4" }).ToList();
 
         List<RecipeTag> tags = new List<RecipeTag>() { new("cake"), new("chocolate") };
-        Recipe exampleRecipe = new("Chocolate cake",
-                                            "A simple chocolate cake",
-                                            120,
-                                            new List<Preparation>(){
-                                                new(1, "bake"),
-                                                new(2, "put in oven"),
-                                                new(3, "do stuff")
-                                            },
-                                            8,
-                                            recipeIngredients,
-                                            0,
-                                            cur,
-                                            tags, new List<Review> { new("reviewer1", "review1", 4) }
+        Recipe exampleRecipe = new(
+            name: "Chocolate cake",
+            description: "A simple chocolate cake",
+            cookingTime: 120,
+            preparation: new List<Preparation>()
+                {
+                    new(1, "bake"),
+                    new(2, "put in oven"),
+                    new(3, "do stuff")
+                },
+            servings: 8,
+            ingredients: recipeIngredients,
+            favourite: 0,
+            owner: cur,
+            tags: tags,
+            reviews: new List<Review> { new("reviewer1", "review1", 4) }
                                             );
 
         return exampleRecipe;
@@ -62,20 +65,23 @@ public class RecipeServicesTest
         List<RecipeIngredient> recipeIngredients = ingredients.Select(ingredient => new RecipeIngredient { Ingredient = ingredient, Quantity = "3" }).ToList();
 
         List<RecipeTag> tags = new List<RecipeTag>() { new("cake"), new("beer"), new("chocolate") };
-        Recipe exampleRecipe = new("Chocolate beer cake",
-                                            "A simple beer chocolate cake",
-                                            120,
-                                            new List<Preparation>(){
-                                                new(1, "bake"),
-                                                new(2, "put in oven"),
-                                                new(3, "take out")
-                                            },
-                                            8,
-                                            recipeIngredients,
-                                            0,
-                                            cur,
-                                            tags, new List<Review> { new("reviewer2", "review2", 3) }
-                                            );
+        Recipe exampleRecipe = new(
+            name: "Chocolate beer cake",
+            description: "A simple beer chocolate cake",
+            cookingTime: 100,
+            preparation: new List<Preparation>()
+                {
+                    new(1, "bake"),
+                    new(2, "put in oven"),
+                    new(3, "take out")
+                },
+            servings: 8,
+            ingredients: recipeIngredients,
+            favourite: 1,
+            owner: cur,
+            tags: tags,
+            reviews:   new List<Review> { new("reviewer2", "review2", 3) }
+            );
 
         return exampleRecipe;
     }
@@ -135,4 +141,176 @@ public class RecipeServicesTest
         Assert.AreEqual("Chocolate cake", recipe.Name);
     }
 
+    //Test the method GetRecipesByRating
+    [TestMethod]
+    public void Get_Recipes_By_Rating()
+    {
+        //Arrange
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var data_list = new List<Recipe>
+        {
+            CreateExampleRecipe(user),
+            CreateExampleRecipe2(user)
+        };
+        data_list[1].AverageScore = 4;
+        data_list[0].AverageScore = 3;
+        var data = data_list.AsQueryable();
+        //context
+        var mockSet = new Mock<DbSet<Recipe>>();
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
+        var mockContext = new Mock<AnnualEventsContext>();
+        mockContext.Setup(r => r.Recipe).Returns(mockSet.Object);
+        var service = RecipeServices.Instance;
+        service.DbContext = mockContext.Object;
+        //act
+        var recipes = service.GetRecipesByRating(4);
+        //Assert
+        Assert.AreEqual("Chocolate beer cake",recipes[0].Name);
+    }
+    //Test the method GetRecipesByServings
+    [TestMethod]
+    public void Get_recipes_By_Servings()
+    {
+        //Arrange
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var data_list = new List<Recipe>
+        {
+            CreateExampleRecipe(user),
+            CreateExampleRecipe2(user)
+        };
+        var data = data_list.AsQueryable();
+        //context
+        var mockSet = new Mock<DbSet<Recipe>>();
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
+        var mockContext = new Mock<AnnualEventsContext>();
+        mockContext.Setup(r => r.Recipe).Returns(mockSet.Object);
+        var service = RecipeServices.Instance;
+        service.DbContext = mockContext.Object;
+        //act 
+        var recipes = service.GetRecipesByServings(8);
+        //Assert
+        Assert.AreEqual("Chocolate cake", recipes[0].Name);
+        Assert.AreEqual("Chocolate beer cake", recipes[1].Name);    
+    }
+
+    //Test the method GetRecipesByTimeConstraint
+    [TestMethod]
+    public void Get_Recipes_By_Time_Constraint()
+    {
+        //Arrange
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var data_list = new List<Recipe>
+        {
+            CreateExampleRecipe(user),
+            CreateExampleRecipe2(user)
+        };
+        var data = data_list.AsQueryable();
+        //context
+        var mockSet = new Mock<DbSet<Recipe>>();
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
+        var mockContext = new Mock<AnnualEventsContext>();
+        mockContext.Setup(r => r.Recipe).Returns(mockSet.Object);
+        var service = RecipeServices.Instance;
+        service.DbContext = mockContext.Object;
+        //act 
+        var recipes = service.GetRecipesByTimeConstraint(100);
+        //Assert
+        Assert.AreEqual("Chocolate beer cake",recipes[0].Name);
+    }
+    //Test the method GetRecipesInFavorites
+    [TestMethod]
+    public void Get_Recipe_By_Favourites_Count()
+    {
+        //Arrange
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var data_list = new List<Recipe>
+        {
+            CreateExampleRecipe(user),
+            CreateExampleRecipe2(user)
+        };
+        var data = data_list.AsQueryable();
+        //context
+        var mockSet = new Mock<DbSet<Recipe>>();
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
+        var mockContext = new Mock<AnnualEventsContext>();
+        mockContext.Setup(r => r.Recipe).Returns(mockSet.Object);
+        var service = RecipeServices.Instance;
+        service.DbContext = mockContext.Object;
+        //act 
+        var recipes = service.GetRecipesInFavorites(1);
+        //Assert
+        Assert.AreEqual("Chocolate beer cake", recipes[0].Name);
+    }
+    //Test the method AddRecipe
+    [TestMethod]
+    public void Add_Recipe()
+    {
+        //Arrange
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var data_list = new List<Recipe>
+        {
+            CreateExampleRecipe(user),
+            CreateExampleRecipe2(user)
+        };
+        var data = data_list.AsQueryable();
+        //context
+        var mockSet = new Mock<DbSet<Recipe>>();
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
+        var mockContext = new Mock<AnnualEventsContext>();
+        mockContext.Setup(r => r.Recipe).Returns(mockSet.Object);
+        var service = RecipeServices.Instance;
+        service.DbContext = mockContext.Object;
+        //act 
+        var recipe = CreateExampleRecipe(user);
+        service.AddRecipe(recipe);
+        //Assert
+        mockSet.Verify(mock => mock.Add(It.Is<Recipe>(
+            actualRecipe => recipe.Equals(actualRecipe))),Times.Once());
+        mockContext.Verify(mock => mock.SaveChanges(), Times.Once());
+    }
+    //Test the method Delete Recipe
+    [TestMethod]
+    public void Delete_Recipe()
+    {
+        //Arrange
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var data_list = new List<Recipe>
+        {
+            CreateExampleRecipe(user),
+            CreateExampleRecipe2(user)
+        };
+        var data = data_list.AsQueryable();
+        //context
+        var mockSet = new Mock<DbSet<Recipe>>();
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
+        var mockContext = new Mock<AnnualEventsContext>();
+        mockContext.Setup(r => r.Recipe).Returns(mockSet.Object);
+        var service = RecipeServices.Instance;
+        service.DbContext = mockContext.Object;
+        //act 
+        var del_recipe = CreateExampleRecipe(user);
+        service.DeleteRecipe(del_recipe);
+        //Assert
+        mockSet.Verify(mock => mock.Remove(It.Is<Recipe>(
+            actualRecipe => del_recipe.Equals(actualRecipe))), Times.Once());
+        mockContext.Verify(mock => mock.SaveChanges(), Times.Once());
+    }
 }
