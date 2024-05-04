@@ -29,11 +29,13 @@ public class AuthenticationManager
     }
     public void AddUser(Annual_Events_User user)
     {
+        AnnualEventsUserService.Instance.AddUser(user);
+        AnnualEventsContext.Instance.SaveChanges();
         Users.Add(user);
     }
     private AuthenticationManager()
     {
-        // Test data for now, since we dont have a database.
+        // Test users
         Users.Add(new Annual_Events_User("user1", "password1", "Description 1", 25));
         Users.Add(new Annual_Events_User("user2", "password2", "Description 2", 30));
 
