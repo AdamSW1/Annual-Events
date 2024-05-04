@@ -101,8 +101,6 @@ class Program
         }
         else if (choice == options[4])
         {
-            Search search = new(AuthenticationManager.Instance.GetAllRecipesFromAllUsers());
-
             string[] searchOptions = new string[] { "By keyword" };
             string searchType = Utils.GetUserChoice("How do you want to search?", searchOptions) ?? "";
 
@@ -117,7 +115,7 @@ class Program
                 string keyword = Console.ReadLine() ?? " ";
 
                 Console.WriteLine(seperator);
-                List<Recipe> recipes = search.SearchRecipesByKeyword(keyword);
+                List<Recipe> recipes = Search.SearchRecipesByKeyword(keyword, AuthenticationManager.Instance.GetAllRecipesFromAllUsers());
                 if (recipes.Count == 0)
                 {
 
@@ -284,8 +282,8 @@ class Program
             Console.Write("Price: ");
             double price = GetDouble();
 
-            
-            recipeIngredients.Add(new RecipeIngredient{Ingredient = new Ingredient(ingredientName,price),Quantity = quantity});
+
+            recipeIngredients.Add(new RecipeIngredient { Ingredient = new Ingredient(ingredientName, price), Quantity = quantity });
         }
 
 
@@ -319,37 +317,35 @@ class Program
             }
         }
 
-        Recipe newRecipe = new(recipeName, description, cookingTime, preparation, servings, recipeIngredients,0,user, tagList, new List<Review>());
+        Recipe newRecipe = new(recipeName, description, cookingTime, preparation, servings, recipeIngredients, 0, user, tagList, new List<Review>());
         RecipeManager.AddRecipe(newRecipe);
         Console.WriteLine("\nRecipe added successfully!");
     }
 
     private static void UpdatingRecipe()
     {
-        if(!FindRecipe(AuthenticationManager.Instance.CurrentUser, out string recipeName, out Recipe recipeToUpdate)){
+        if (!FindRecipe(AuthenticationManager.Instance.CurrentUser, out string recipeName, out Recipe recipeToUpdate))
+        {
             return;
         }
-       
-        
+
         Console.WriteLine($"Updating recipe '{recipeName}'...");
         Console.Write("New Recipe Name: ");
-        string newName = GetName();
+        recipeToUpdate.Name = GetName();
 
         Console.Write("New Description: ");
-        string newDescription = GetLongString();
+        recipeToUpdate.Description = GetLongString();
 
         Console.Write("New Cooking Time (minutes): ");
-        double newCookingTime = GetDouble();
+        recipeToUpdate.CookingTime = GetDouble();
 
         Console.Write("New Preparations: ");
-        List<Preparation> newPreparation = GetRecipePreparation();
+        recipeToUpdate.Preparation = GetRecipePreparation();
 
         Console.Write("New Servings: ");
-        int newServings = GetInt();
+        recipeToUpdate.Servings = GetInt();
 
-
-        RecipeManager.UpdateRecipe(newName, newDescription, newCookingTime, newPreparation, newServings, recipeToUpdate);
-
+        RecipeServices.Instance.DbContext.SaveChanges();
         Console.WriteLine($"\nRecipe '{recipeName}' updated successfully!");
     }
 
@@ -480,8 +476,8 @@ class Program
 
 
         List<Ingredient> ingredients = new List<Ingredient>() { flour, egg };
-        List<RecipeIngredient> recipeIngredients= ingredients.Select(ingredient => new RecipeIngredient{Ingredient = ingredient,Quantity ="4"}).ToList();
-        
+        List<RecipeIngredient> recipeIngredients = ingredients.Select(ingredient => new RecipeIngredient { Ingredient = ingredient, Quantity = "4" }).ToList();
+
         List<string> tags = new List<string>() { "cake", "chocolate" };
         Recipe exampleRecipe = new Recipe("Chocolate cake",
                                             "A simple chocolate cake",
@@ -496,7 +492,7 @@ class Program
                                             recipeIngredients,
                                             0,
                                             AuthenticationManager.Instance.CurrentUser,
-                                            new List<RecipeTag>(){new RecipeTag("vegan")}
+                                            new List<RecipeTag>() { new RecipeTag("vegan") }
                                             , new List<Review>()
                                             );
         Recipe exampleRecipe2 = new Recipe("Vanilla cake",
@@ -512,7 +508,7 @@ class Program
                                             recipeIngredients,
                                             0,
                                             AuthenticationManager.Instance.CurrentUser,
-                                            new List<RecipeTag>(){new RecipeTag("vegan")}
+                                            new List<RecipeTag>() { new RecipeTag("vegan") }
                                             , new List<Review>()
                                             );
         exampleRecipe.AverageScore = 3;
@@ -524,7 +520,7 @@ class Program
         RecipeManager.AddRecipe(exampleRecipe2);
         AnnualEventsContext.Instance.SaveChanges();
         // AnnualEventsService.Instance.AddRecipe(exampleRecipe);
-        
+
     }
 
     public static string GetName()
@@ -594,7 +590,8 @@ class Program
                 int stepnum = 1;
                 prepString.ForEach(prep =>
                 {
-                    if(string.IsNullOrEmpty(prep)){
+                    if (string.IsNullOrEmpty(prep))
+                    {
                         return;
                     }
                     stepnum++;

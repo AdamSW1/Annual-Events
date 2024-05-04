@@ -9,8 +9,9 @@ public class AnnualEventsService
 {
     private static AnnualEventsService? _instance;
 
-    public static AnnualEventsService Instance{
-        get { return _instance ??= _instance = new AnnualEventsService();}
+    public static AnnualEventsService Instance
+    {
+        get { return _instance ??= _instance = new AnnualEventsService(); }
     }
 
     public AnnualEventsContext DbContext{get;set;} = AnnualEventsContext.Instance;
@@ -22,43 +23,29 @@ public class AnnualEventsService
         DbContext.SaveChanges();
     }
 
-    public void UpdateRecipe(Recipe recipe)
+    public Preparation GetPreparation(int id)
     {
-        var query = from Annual_Events_Recipe in DbContext.Recipe
-                    where recipe.RecipeID == recipe.RecipeID
-                    select recipe;
+        Preparation preparation = (Preparation)DbContext.Preparation
+                                    .Where(prep => prep.PreparationID == id)
+                                    .First();
+        return preparation;
+    }
+    public void AddPreparation(Preparation preparation)
+    {
+        DbContext.Preparation.Add(preparation);
+        DbContext.SaveChanges();
+    }
 
-        foreach (var rec in query)
-        {
-            rec.Name = recipe.Name;
-            rec.Description = recipe.Description;
-            rec.CookingTime = recipe.CookingTime;
-            rec.Preparation = recipe.Preparation;
-            rec.Servings = recipe.Servings;
-            rec.Ingredients = recipe.Ingredients;
-            rec.Favourite = recipe.Favourite;
-            rec.Owner = recipe.Owner;
-            rec.Tags = recipe.Tags;
-            rec.Reviews = recipe.Reviews;
+    public void RemovePreparation(Preparation preparation)
+    {
+        var query = (from Preparation in DbContext.Preparation
+        where preparation.PreparationID == preparation.PreparationID
+        select preparation).FirstOrDefault();
+
+        if(query != null){
+            DbContext.Preparation.Remove(query);
+            DbContext.SaveChanges();
         }
 
     }
-
-
-    public Ingredient? GetIngredient(string ingredientName){
-        RecipeIngredient? RI = DbContext.RecipeIngredients.Where(x => x.Ingredient!.Name == ingredientName).FirstOrDefault();
-        if (RI is null){
-            return null;
-        }
-        return RI.Ingredient;
-    }
-
-    public RecipeTag? GetRecipeTag(string recipeTag){
-        Recipe? R = DbContext.Recipe.Where(recipe => recipe.Tags.Where(tag => tag.Tag == recipeTag).Any()).FirstOrDefault();
-        if (R is null){
-            return null;
-        }
-        return R.Tags.Where(tag => tag.Tag == recipeTag).FirstOrDefault();
-    }
-
 }
