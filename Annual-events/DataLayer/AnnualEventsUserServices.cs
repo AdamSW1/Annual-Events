@@ -5,18 +5,21 @@ using System.Linq;
 
 namespace DataLayer
 {
-    public class AnnualEventsUserService
+    public class AnnualEventsUserServices
     {
-        private static AnnualEventsUserService? _instance;
-
-        public static AnnualEventsUserService Instance
+        private static AnnualEventsUserServices? _instance;
+        private readonly AnnualEventsContext _dbContext;
+        public static AnnualEventsUserServices Instance
         {
-            get { return _instance ??= _instance = new AnnualEventsUserService(); }
+            get { return _instance ??= _instance = new AnnualEventsUserServices(AnnualEventsContext.Instance); }
         }
 
         public AnnualEventsContext DbContext = AnnualEventsContext.Instance;
 
-        public AnnualEventsUserService() {}
+        public AnnualEventsUserServices(AnnualEventsContext dbContext) 
+        {
+            _dbContext = dbContext;
+        }
 
         // Users
         public void AddUser(Annual_Events_User user)
