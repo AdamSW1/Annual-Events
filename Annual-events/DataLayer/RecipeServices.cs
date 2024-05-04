@@ -25,7 +25,6 @@ public class RecipeServices
     public List<Recipe> GetRecipes()
     {
         return DbContext.Recipe!
-        .OrderBy(r=>r.Name)
         .ToList();
     }
     

@@ -18,11 +18,11 @@ public class AnnualEventsContext : DbContext
     }
 
     public string DbPath { get; }
-    public DbSet<Review> Review { get; set; }
-    public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
-    public DbSet<Annual_Events_User> Annual_Events_User { get; set; }
-    public DbSet<Recipe> Recipe { get; set; }
-    public DbSet<Preparation> Preparation { get; set; }
+    public virtual DbSet<Review> Review { get; set; }
+    public virtual DbSet<RecipeIngredient> RecipeIngredients { get; set; }
+    public virtual DbSet<Annual_Events_User> Annual_Events_User { get; set; }
+    public virtual DbSet<Recipe> Recipe { get; set; }
+    public virtual DbSet<Preparation> Preparation { get; set; }
     public string HostName { get; set; }
 
     public string Port { get; set; }
