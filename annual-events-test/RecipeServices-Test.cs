@@ -367,4 +367,33 @@ public class RecipeServicesTest
         //Assert
         Assert.AreEqual("oil", ingredient!.Name);
     }
+    //Test the method GetRecipesByFavUser
+    [TestMethod]
+    public void Get_Recipes_Fav_By_User()
+    {
+        //Arrange
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var data_list = new List<Recipe>
+        {
+            CreateExampleRecipe(user),
+            CreateExampleRecipe2(user)
+        };
+        var data = data_list.AsQueryable();
+        user.AddToFavRecipe(data_list[1]);
+        data_list.ForEach(recipe => recipe.Ingredients.ForEach(ingredient => ingredient.Recipe = recipe));
+        //context
+        var mockSet = new Mock<DbSet<Recipe>>();
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
+        var mockContext = new Mock<AnnualEventsContext>();
+        mockContext.Setup(r => r.Recipe).Returns(mockSet.Object);
+        var service = RecipeServices.Instance;
+        service.DbContext = mockContext.Object;
+        //act 
+        var recipes = service.GetRecipesFavByUser(user);
+        //Assert
+        Assert.AreEqual("Chocolate beer cake", recipes[0].Name);
+    }
 }
