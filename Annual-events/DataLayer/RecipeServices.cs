@@ -21,50 +21,61 @@ public class RecipeServices
             return null;
         }
         return DbContext.Recipe
-        .Where(r=>r.Name == name)
-        .First();
+            .Where(r=>r.Name == name)
+            .First();
     }
 
     public List<Recipe> GetRecipes()
     {
         return DbContext.Recipe!
-        .ToList();
+            .ToList();
     }
     
     public List<Recipe> GetRecipesByOwner(Annual_Events_User owner)
     {
         return DbContext.Recipe!
-        .Where(recipe => recipe.Owner.Username == owner.Username)
-        .ToList();
+            .Where(recipe => recipe.Owner.Username == owner.Username)
+            .ToList();
     }
 
     public List<Recipe> GetRecipesByRating(int rating)
     {
         return DbContext.Recipe!
-        .Where(recipe => recipe.AverageScore == rating)
-        .ToList();
+            .Where(recipe => recipe.AverageScore == rating)
+            .ToList();
     }
 
     public List<Recipe> GetRecipesByServings(int servings)
     {
         return DbContext.Recipe!
-        .Where(recipe => recipe.Servings == servings)
-        .ToList();
+            .Where(recipe => recipe.Servings == servings)
+            .ToList();
     }
 
     public List<Recipe> GetRecipesByTimeConstraint(int time)
     {
         return DbContext.Recipe!
-        .Where(recipe => recipe.CookingTime >= time -3 && recipe.CookingTime <= time + 3)
-        .ToList();
+            .Where(recipe => recipe.CookingTime >= time -3 && recipe.CookingTime <= time + 3)
+            .ToList();
     }
 
     public List<Recipe> GetRecipesInFavorites(int favourite)
     {
         return DbContext.Recipe!
-        .Where(recipe => recipe.Favourite == favourite)
-        .ToList();
+            .Where(recipe => recipe.Favourite == favourite)
+            .ToList();
     }
+    public List<Recipe> GetRecipesFavByUser(Annual_Events_User user)
+    {
+        return DbContext.Recipe
+            .Where(recipe => recipe.FavouritedBy.Any(favUser => favUser.Annual_Events_UserId == user.Annual_Events_UserId))
+            .ToList();
+    }
+
+    //Select recipe from recipe
+    //join user_recipe using recipe_id
+    //join user using user_id
+    //where user.user_id = user_recipe.user_id
 
     public void AddRecipe(Recipe recipe) 
     {
