@@ -383,6 +383,7 @@ class Program
         recipeToAdd.AddFavourite();
         Console.WriteLine($"\nRecipe '{recipeName}' added to favorites successfully!");
         RecipeManager.AddToFavRecipe(user, recipeToAdd);
+        RecipeServices.Instance.DbContext.SaveChanges();
     }
 
 
