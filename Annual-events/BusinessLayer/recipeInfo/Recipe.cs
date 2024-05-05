@@ -36,7 +36,7 @@ public class Recipe
     public List<Annual_Events_User>? FavouritedBy
     {
         get{
-            return _favouritedBy;
+            return _favouritedBy;   
         }
         set{
             _favouritedBy = value;
