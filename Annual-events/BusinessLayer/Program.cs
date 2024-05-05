@@ -492,6 +492,7 @@ class Program
     /// </summary>
     public static void AddExampleRecipes()
     {
+
         Ingredient flour = new Ingredient("flour", 7);
         Ingredient egg = new Ingredient("egg", 3);
 
@@ -535,8 +536,10 @@ class Program
         exampleRecipe.AverageScore = 3;
         exampleRecipe2.AverageScore = 5;
 
-        // AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe);
-        // AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe2);
+        //check if the recipes already exist
+        if(exampleRecipe.Equals(RecipeServices.Instance.GetRecipe(exampleRecipe.Name)) ||exampleRecipe2.Equals(RecipeServices.Instance.GetRecipe(exampleRecipe2.Name)) ){
+            return;
+        }
         RecipeManager.AddRecipe(exampleRecipe);
         RecipeManager.AddRecipe(exampleRecipe2);
         AnnualEventsContext.Instance.SaveChanges();
