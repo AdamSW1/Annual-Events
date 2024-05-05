@@ -45,6 +45,7 @@ public class AuthenticationManager
     public bool Login(string username, string password)
     {
         if(AnnualEventsUserServices.Instance.VerifyLogin(username, password)){
+            _currentUser = AnnualEventsUserServices.Instance.GetUserByUsername(username);
             return true;
         }
         return false;
