@@ -78,7 +78,7 @@ class Program
         else if (choice == options[0])
         {
             //Add a recipe
-            AddRecipe(AuthenticationManager.Instance.CurrentUser);
+            AddRecipe();
         }
         else if (choice == options[1])
         {
@@ -239,15 +239,19 @@ class Program
 
         Console.Write("Enter your description (or leave blank): ");
         string description = Console.ReadLine() ?? "";
+        if( string.IsNullOrEmpty(description)){
+            description = " ";
+        }
 
         Annual_Events_User newUser = new(username, password, description, age);
         AuthenticationManager.Instance.AddUser(newUser);
 
         return (username, password);
     }
-    private static void AddRecipe(Annual_Events_User user)
+    private static void AddRecipe()
     {
         //Get recipeName, descroption, cookingTime, preparation, servings, ratings
+        Annual_Events_User user = AuthenticationManager.Instance.CurrentUser;
         Console.WriteLine("\nAdd a Recipe:");
         Console.Write("Recipe Name: ");
         string recipeName = GetName();
@@ -319,7 +323,7 @@ class Program
 
         Recipe newRecipe = new(recipeName, description, cookingTime, preparation, servings, recipeIngredients, 0, user, tagList, new List<Review>());
         RecipeManager.AddRecipe(newRecipe);
-        Console.WriteLine("\nRecipe added successfully!");
+        Console.WriteLine($"\nRecipe {recipeName} added successfully!");
     }
 
     private static void UpdatingRecipe()
