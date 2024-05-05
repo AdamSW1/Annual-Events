@@ -18,7 +18,7 @@ namespace annualevents.Migrations
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
                     Username = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     Password = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    Description = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true),
+                    Description = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     Age = table.Column<int>(type: "NUMBER(10)", nullable: false)
                 },
                 constraints: table =>

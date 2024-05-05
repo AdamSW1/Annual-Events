@@ -244,6 +244,10 @@ class Program
         Console.Write("Enter your description (or leave blank): ");
         string description = Console.ReadLine() ?? "";
 
+        if(string.IsNullOrEmpty(description)){
+            description = " ";
+        }
+
         Annual_Events_User newUser = new(username, password, description, age);
         AuthenticationManager.Instance.AddUser(newUser);
 
