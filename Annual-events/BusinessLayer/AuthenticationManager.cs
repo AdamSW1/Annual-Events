@@ -35,7 +35,7 @@ public class AuthenticationManager
     }
     public void AddUser(Annual_Events_User user)
     {
-        AnnualEventsUserService.Instance.AddUser(user);
+        AnnualEventsUserServices.Instance.AddUser(user);
         AnnualEventsContext.Instance.SaveChanges();
         UpdateUsers();
     }
@@ -44,13 +44,8 @@ public class AuthenticationManager
     {}
     public bool Login(string username, string password)
     {
-        foreach (var user in Users)
-        {
-            if (user.Authentication(username, password))
-            {
-                _currentUser = user;
-                return true;
-            }
+        if(AnnualEventsUserServices.Instance.VerifyLogin(username, password)){
+            return true;
         }
         return false;
     }
