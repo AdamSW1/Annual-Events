@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace annualevents.Migrations
 {
     [DbContext(typeof(AnnualEventsContext))]
-    [Migration("20240502215645_Init")]
-    partial class Init
+    [Migration("20240505012104_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -192,20 +192,19 @@ namespace annualevents.Migrations
 
             modelBuilder.Entity("RecipeInfo.RecipeIngredient", b =>
                 {
-                    b.Property<int>("RecipeIngredientId")
+                    b.Property<int?>("RecipeIngredientId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecipeIngredientId"));
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("RecipeIngredientId"));
 
-                    b.Property<int>("IngredientId")
+                    b.Property<int?>("IngredientId")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("Quantity")
-                        .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<int>("RecipeID")
+                    b.Property<int?>("RecipeID")
                         .HasColumnType("NUMBER(10)");
 
                     b.HasKey("RecipeIngredientId");
@@ -300,15 +299,11 @@ namespace annualevents.Migrations
                 {
                     b.HasOne("RecipeInfo.Ingredient", "Ingredient")
                         .WithMany("Recipes")
-                        .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IngredientId");
 
                     b.HasOne("RecipeInfo.Recipe", "Recipe")
                         .WithMany("Ingredients")
-                        .HasForeignKey("RecipeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RecipeID");
 
                     b.Navigation("Ingredient");
 

@@ -5,7 +5,7 @@
 namespace annualevents.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,7 @@ namespace annualevents.Migrations
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
                     Username = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     Password = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    Description = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    Description = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true),
                     Age = table.Column<int>(type: "NUMBER(10)", nullable: false)
                 },
                 constraints: table =>
@@ -146,9 +146,9 @@ namespace annualevents.Migrations
                 {
                     RecipeIngredientId = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    RecipeID = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    IngredientId = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    Quantity = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false)
+                    RecipeID = table.Column<int>(type: "NUMBER(10)", nullable: true),
+                    IngredientId = table.Column<int>(type: "NUMBER(10)", nullable: true),
+                    Quantity = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -157,14 +157,12 @@ namespace annualevents.Migrations
                         name: "FK_RecipeIngredients_Ingredient_IngredientId",
                         column: x => x.IngredientId,
                         principalTable: "Ingredient",
-                        principalColumn: "IngredientId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IngredientId");
                     table.ForeignKey(
                         name: "FK_RecipeIngredients_Recipe_RecipeID",
                         column: x => x.RecipeID,
                         principalTable: "Recipe",
-                        principalColumn: "RecipeID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "RecipeID");
                 });
 
             migrationBuilder.CreateTable(
