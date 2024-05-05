@@ -17,7 +17,13 @@ public class AuthenticationManager
     }
 
 
-    private List<Annual_Events_User> Users {get;} = new();
+    private List<Annual_Events_User> Users {get;set;} = AnnualEventsContext.Instance.Annual_Events_User.ToList();
+    /// <summary>
+    /// Updates the list of users to match the database
+    /// </summary>
+    private void UpdateUsers(){
+        Users = AnnualEventsContext.Instance.Annual_Events_User.ToList();
+    }
     private Annual_Events_User? _currentUser;
 
     public Annual_Events_User CurrentUser
@@ -29,27 +35,18 @@ public class AuthenticationManager
     }
     public void AddUser(Annual_Events_User user)
     {
-        Users.Add(user);
-    }
-    private AuthenticationManager()
-    {
-        // Test data for now, since we dont have a database.
-        Users.Add(new Annual_Events_User("user1", "password1", "Description 1", 25));
-        Users.Add(new Annual_Events_User("user2", "password2", "Description 2", 30));
-
-        AnnualEventsContext.Instance.Annual_Events_User.Add(Users[0]);
-        AnnualEventsContext.Instance.Annual_Events_User.Add(Users[1]);
+        AnnualEventsUserServices.Instance.AddUser(user);
         AnnualEventsContext.Instance.SaveChanges();
+        UpdateUsers();
     }
+
+    private AuthenticationManager()
+    {}
     public bool Login(string username, string password)
     {
-        foreach (var user in Users)
-        {
-            if (user.Authentication(username, password))
-            {
-                _currentUser = user;
-                return true;
-            }
+        if(AnnualEventsUserServices.Instance.VerifyLogin(username, password)){
+            _currentUser = AnnualEventsUserServices.Instance.GetUserByUsername(username);
+            return true;
         }
         return false;
     }

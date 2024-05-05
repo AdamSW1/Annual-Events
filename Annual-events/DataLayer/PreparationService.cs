@@ -1,33 +1,24 @@
-using Microsoft.EntityFrameworkCore;
-using BusinessLayer;
 using RecipeInfo;
-using System.Security.Cryptography.X509Certificates;
 
 namespace DataLayer;
 
-public class AnnualEventsService
+public class PreparationService
 {
-    private static AnnualEventsService? _instance;
+    private static PreparationService? _instance;
 
-    public static AnnualEventsService Instance
+    public static PreparationService Instance
     {
-        get { return _instance ??= _instance = new AnnualEventsService(); }
+        get { return _instance ??= _instance = new PreparationService(); }
     }
 
-    public AnnualEventsContext DbContext{get;set;} = AnnualEventsContext.Instance;
-    public AnnualEventsService(){}
-
-    public void AddRecipe(Recipe recipe)
-    {
-        DbContext.Recipe.Add(recipe);
-        DbContext.SaveChanges();
-    }
-
+    public AnnualEventsContext DbContext { get; set; } = AnnualEventsContext.Instance;
+    public PreparationService(){}
     public Preparation GetPreparation(int id)
     {
         Preparation preparation = (Preparation)DbContext.Preparation
                                     .Where(prep => prep.PreparationID == id)
                                     .First();
+
         return preparation;
     }
     public void AddPreparation(Preparation preparation)
@@ -39,10 +30,11 @@ public class AnnualEventsService
     public void RemovePreparation(Preparation preparation)
     {
         var query = (from Preparation in DbContext.Preparation
-        where preparation.PreparationID == preparation.PreparationID
-        select preparation).FirstOrDefault();
+                     where preparation.PreparationID == preparation.PreparationID
+                     select preparation).FirstOrDefault();
 
-        if(query != null){
+        if (query != null)
+        {
             DbContext.Preparation.Remove(query);
             DbContext.SaveChanges();
         }

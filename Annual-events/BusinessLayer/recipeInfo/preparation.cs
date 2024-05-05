@@ -23,12 +23,4 @@ public class Preparation{
         _stepNumber = stepNumber;
         _step = step;
     }
-
-    public void AddToDatabase(){
-        AnnualEventsService.Instance.AddPreparation(this);
-    }
-
-    public void RemoveFromDatabase(){
-        AnnualEventsService.Instance.RemovePreparation(this);
-    }
 }

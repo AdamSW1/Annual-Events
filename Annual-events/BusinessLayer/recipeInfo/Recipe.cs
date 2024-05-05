@@ -101,7 +101,7 @@ public class Recipe
         
         get
         {
-            return _preparation;
+            return (List<Preparation>)_preparation.OrderBy( prep => prep.StepNumber);
         }
         set
         {
@@ -133,7 +133,7 @@ public class Recipe
         get{
             double total = 0;
             double averageScore = 0;
-            _reviews
+            Reviews
                 .ForEach(review =>{
                     total += review.Score;
                 });
@@ -183,6 +183,7 @@ public class Recipe
     private List<RecipeTag> _tags;
     public List<RecipeTag> Tags {
         get{
+            _tags ??= new List<RecipeTag>();
             return _tags;
         }
         set{
@@ -277,20 +278,20 @@ public class Recipe
     {
         string returnStr = "";
 
-        returnStr += $"Written by: {_owner.Username}\n";
-        returnStr += $"Name: {_name}\n";
-        returnStr += $"Description: {_description}\n";
-        returnStr += $"Cooking Time: {_cookingTime} minutes\n";
+        returnStr += $"Written by: {Owner.Username}\n";
+        returnStr += $"Name: {Name}\n";
+        returnStr += $"Description: {Description}\n";
+        returnStr += $"Cooking Time: {CookingTime} minutes\n";
         returnStr += "Ingredients:\n";
         foreach (var recipeIngredient in Ingredients)
         {
             returnStr += $"{recipeIngredient.Quantity} {recipeIngredient.Ingredient}\n";
         }
         returnStr += $"Preparation:\n";
-        _preparation.ForEach(prepStep => returnStr += $"\t{prepStep.StepNumber} - {prepStep.Step.Trim()}\n");
-        returnStr += $"Servings: {_servings}\n";
+        Preparation.ForEach(prepStep => returnStr += $"\t{prepStep.StepNumber} - {prepStep.Step.Trim()}\n");
+        returnStr += $"Servings: {Servings}\n";
         returnStr += $"Average Rating: {AverageScore}\n";
-        returnStr += $"Favourites: {_favourite}\n";
+        returnStr += $"Favourites: {Favourite}\n";
 
         return returnStr;
     }
