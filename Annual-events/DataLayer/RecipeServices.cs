@@ -15,8 +15,11 @@ public class RecipeServices
     public AnnualEventsContext DbContext { get; set; } = AnnualEventsContext.Instance;
     public RecipeServices(){}
 
-    public Recipe GetRecipe(string name)
+    public Recipe? GetRecipe(string name)
     {
+        if(!DbContext.Recipe.Any()){
+            return null;
+        }
         return DbContext.Recipe
         .Where(r=>r.Name == name)
         .First();
