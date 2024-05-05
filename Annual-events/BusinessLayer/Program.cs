@@ -14,6 +14,7 @@ class Program
     public static string seperator = "-----------------------";
     public static void Main(string[] args)
     {
+        Setup();
         (string, string) loginCredentials = new("null", "null");
         string[] loginOptions = new string[] { "Login", "Create Account" };
         string? choice = Utils.GetUserChoice("Login or create an account", loginOptions);
@@ -49,7 +50,10 @@ class Program
         }
     }
 
-
+    private static void Setup(){
+        AuthenticationManager.Instance.AddUser(new Annual_Events_User("user1", "password1", "Description 1", 25));
+        AuthenticationManager.Instance.AddUser(new Annual_Events_User("user2", "password2", "Description 2", 30));
+    }
     public static void Init()
     {
         string[] options = new string[]
