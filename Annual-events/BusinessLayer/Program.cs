@@ -7,6 +7,7 @@ using BusinessLayer;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RecipeInfo;
 using DataLayer;
+using System.Runtime.CompilerServices;
 class Program
 {
 
@@ -51,6 +52,10 @@ class Program
     }
 
     private static void Setup(){
+
+        if (AnnualEventsUserServices.Instance.GetUserByUsername("user1") is not null || AnnualEventsUserServices.Instance.GetUserByUsername("user1") is not null){
+            return;
+        }
         AuthenticationManager.Instance.AddUser(new Annual_Events_User("user1", "password1", "Description 1", 25));
         AuthenticationManager.Instance.AddUser(new Annual_Events_User("user2", "password2", "Description 2", 30));
     }
@@ -217,12 +222,19 @@ class Program
         Console.Write("enter a username: ");
         string username = Console.ReadLine() ?? "null";
 
-        while (username == "null" || string.IsNullOrEmpty(username))
+        Annual_Events_User checkUserExists = AnnualEventsUserServices.Instance.GetUserByUsername(username);
+        while (username == "null" || string.IsNullOrEmpty(username) || checkUserExists != null)
         {
-            Console.Write("Enter a valid username: ");
+            if(checkUserExists != null){
+                Console.Write("User with that name already exists");
+            }
+            else{
+                Console.Write("Enter a valid username: ");
+            }
             username = Console.ReadLine() ?? "null";
-        }
-
+            checkUserExists = AnnualEventsUserServices.Instance.GetUserByUsername(username);
+        }   
+        
         Console.Write("Enter a password: ");
         string password = Console.ReadLine() ?? "null";
 
