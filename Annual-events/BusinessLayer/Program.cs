@@ -7,6 +7,7 @@ using BusinessLayer;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RecipeInfo;
 using DataLayer;
+using System.Runtime.CompilerServices;
 class Program
 {
 
@@ -14,6 +15,7 @@ class Program
     public static string seperator = "-----------------------";
     public static void Main(string[] args)
     {
+        Setup();
         (string, string) loginCredentials = new("null", "null");
         string[] loginOptions = new string[] { "Login", "Create Account" };
         string? choice = Utils.GetUserChoice("Login or create an account", loginOptions);
@@ -49,7 +51,14 @@ class Program
         }
     }
 
+    private static void Setup(){
 
+        if (AnnualEventsUserServices.Instance.GetUserByUsername("user1") is not null || AnnualEventsUserServices.Instance.GetUserByUsername("user1") is not null){
+            return;
+        }
+        AuthenticationManager.Instance.AddUser(new Annual_Events_User("user1", "password1", "Description 1", 25));
+        AuthenticationManager.Instance.AddUser(new Annual_Events_User("user2", "password2", "Description 2", 30));
+    }
     public static void Init()
     {
         string[] options = new string[]
@@ -78,7 +87,7 @@ class Program
         else if (choice == options[0])
         {
             //Add a recipe
-            AddRecipe(AuthenticationManager.Instance.CurrentUser);
+            AddRecipe();
         }
         else if (choice == options[1])
         {
@@ -213,12 +222,19 @@ class Program
         Console.Write("enter a username: ");
         string username = Console.ReadLine() ?? "null";
 
-        while (username == "null" || string.IsNullOrEmpty(username))
+        Annual_Events_User checkUserExists = AnnualEventsUserServices.Instance.GetUserByUsername(username);
+        while (username == "null" || string.IsNullOrEmpty(username) || checkUserExists != null)
         {
-            Console.Write("Enter a valid username: ");
+            if(checkUserExists != null){
+                Console.Write("User with that name already exists");
+            }
+            else{
+                Console.Write("Enter a valid username: ");
+            }
             username = Console.ReadLine() ?? "null";
-        }
-
+            checkUserExists = AnnualEventsUserServices.Instance.GetUserByUsername(username);
+        }   
+        
         Console.Write("Enter a password: ");
         string password = Console.ReadLine() ?? "null";
 
@@ -240,14 +256,19 @@ class Program
         Console.Write("Enter your description (or leave blank): ");
         string description = Console.ReadLine() ?? "";
 
+        if(string.IsNullOrEmpty(description)){
+            description = " ";
+        }
+
         Annual_Events_User newUser = new(username, password, description, age);
         AuthenticationManager.Instance.AddUser(newUser);
 
         return (username, password);
     }
-    private static void AddRecipe(Annual_Events_User user)
+    private static void AddRecipe()
     {
         //Get recipeName, descroption, cookingTime, preparation, servings, ratings
+        Annual_Events_User user = AuthenticationManager.Instance.CurrentUser;
         Console.WriteLine("\nAdd a Recipe:");
         Console.Write("Recipe Name: ");
         string recipeName = GetName();
@@ -319,7 +340,7 @@ class Program
 
         Recipe newRecipe = new(recipeName, description, cookingTime, preparation, servings, recipeIngredients, 0, user, tagList, new List<Review>());
         RecipeManager.AddRecipe(newRecipe);
-        Console.WriteLine("\nRecipe added successfully!");
+        Console.WriteLine($"\nRecipe {recipeName} added successfully!");
     }
 
     private static void UpdatingRecipe()
@@ -493,6 +514,7 @@ class Program
     /// </summary>
     public static void AddExampleRecipes()
     {
+
         Ingredient flour = new Ingredient("flour", 7);
         Ingredient egg = new Ingredient("egg", 3);
 
@@ -536,8 +558,10 @@ class Program
         exampleRecipe.AverageScore = 3;
         exampleRecipe2.AverageScore = 5;
 
-        // AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe);
-        // AuthenticationManager.Instance.CurrentUser.AddRecipe(exampleRecipe2);
+        //check if the recipes already exist
+        if(exampleRecipe.Equals(RecipeServices.Instance.GetRecipe(exampleRecipe.Name)) ||exampleRecipe2.Equals(RecipeServices.Instance.GetRecipe(exampleRecipe2.Name)) ){
+            return;
+        }
         RecipeManager.AddRecipe(exampleRecipe);
         RecipeManager.AddRecipe(exampleRecipe2);
         AnnualEventsContext.Instance.SaveChanges();

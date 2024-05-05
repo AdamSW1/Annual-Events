@@ -14,8 +14,14 @@ public class AnnualEventsService
         get { return _instance ??= _instance = new AnnualEventsService(); }
     }
 
-    public AnnualEventsContext DbContext = AnnualEventsContext.Instance;
-    public AnnualEventsService() { }
+    public AnnualEventsContext DbContext{get;set;} = AnnualEventsContext.Instance;
+    public AnnualEventsService(){}
+
+    public void AddRecipe(Recipe recipe)
+    {
+        DbContext.Recipe.Add(recipe);
+        DbContext.SaveChanges();
+    }
 
     public Preparation GetPreparation(int id)
     {

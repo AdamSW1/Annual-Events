@@ -72,6 +72,5 @@ public class AnnualEventsContext : DbContext
         modelBuilder.Entity<Annual_Events_User>()
             .HasMany(user => user.FavRecipes)
             .WithMany(recipe => recipe.FavouritedBy);
-
     }
 }
