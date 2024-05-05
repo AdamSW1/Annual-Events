@@ -486,9 +486,9 @@ class Program
         }
     }
 
-    public void UpdateReview(Review review) 
+    public void UpdateReview(Review reviewToUpdate) 
     {
-        if (!FindRecipe(AuthenticationManager.Instance.CurrentUser, out int reviewId, out Recipe reviewToUpdate))
+        if (Instance.GetReview(review) == Null)
         {
             return;
         }
@@ -498,9 +498,10 @@ class Program
         reviewToUpdate.ReviewText = GetLongString();
 
         Console.Write("New Score: ");
-        reviewToUpdate.Score = GetInt();
+        reviewToUpdate.Score = GetScore();
 
-        Console.Write("New ")
+        Console.Write("New reviewer: ");
+        reviewToUpdate.ReviewerUsername = GetString();
 
         RecipeServices.Instance.DbContext.SaveChanges();
         Console.WriteLine($"Review updated successfully!");
