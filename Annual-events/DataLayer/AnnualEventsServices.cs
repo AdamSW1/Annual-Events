@@ -42,24 +42,18 @@ public class AnnualEventsService
         }
 
     }
+
+    public void GetReview(int id) 
+    {
+        Review review = (Review)DbContext.Review
+                        .Where(rev => rev.ReviewId == id)
+                        .First();
+        return review;
+    }
     public void AddReview(Review review) 
     {
         DbContext.Review.Add(review);
         DbContext.SaveChanges();
-    }
-
-    public void UpdateReview(Review review) 
-    {
-        var query = from Annual_Events_Review in DbContext.Review where review.ReviewId == review.ReviewId select review;
-
-        foreach (var rec in query) 
-        {
-            rec.ReviewId = review.ReviewId;
-            rec.Score = review.Score;
-            rec.ReviewerUsername = review.ReviewerUsername;
-            rec.ReviewText = review.ReviewText;
-        }
-
     }
 
     public void DeleteReview(Review review) 

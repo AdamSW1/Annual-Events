@@ -465,6 +465,27 @@ class Program
         }
     }
 
+    public void UpdateReview(Review review) 
+    {
+        if (!FindRecipe(AuthenticationManager.Instance.CurrentUser, out int reviewId, out Recipe reviewToUpdate))
+        {
+            return;
+        }
+
+        Console.WriteLine($"Updating review by {reviewToUpdate.ReviewerUsername} ");
+        Console.Write("New Review Text: ");
+        reviewToUpdate.ReviewText = GetLongString();
+
+        Console.Write("New Score: ");
+        reviewToUpdate.Score = GetInt();
+
+        Console.Write("New ")
+
+        RecipeServices.Instance.DbContext.SaveChanges();
+        Console.WriteLine($"Review updated successfully!");
+        
+    }
+
     /// <summary>
     /// A method that adds an example recipe to the fake database
     /// so recipes viewing can be done without creating one first
