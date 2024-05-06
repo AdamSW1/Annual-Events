@@ -10,9 +10,8 @@ public class RecipeManager
 {
     public static void AddRecipe(Recipe  newRecipe)
     {
-        // Create recipe
 
-        // Add the recipe to the user's list
+        //check if the ingredient already exists, replace it in the recipe object if it does
         newRecipe.RecipeIngredients.ForEach(RI =>{
             if (RI.Ingredient is null){
                 return;
@@ -24,6 +23,7 @@ public class RecipeManager
             return;
         });
 
+        //checks if the tags are already in the db and assigns or creates them
         newRecipe.Tags.ToList().ForEach(tag =>{
             if(tag is null || tag.Tag is null){
                 return;
@@ -36,6 +36,7 @@ public class RecipeManager
             }
             return;
         });
+        // Add the recipe to the user's list
         newRecipe.Owner.AddRecipe(newRecipe);
         RecipeServices.Instance.AddRecipe(newRecipe);
     }
@@ -46,6 +47,7 @@ public class RecipeManager
         RecipeServices.Instance.DeleteRecipe(recipeToDelete);
         AnnualEventsContext.Instance.SaveChanges();
     }
+    
     public static void AddToFavRecipe(Annual_Events_User user, Recipe recipeToAdd)
     {
 
