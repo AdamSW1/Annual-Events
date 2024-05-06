@@ -19,7 +19,7 @@ public class RecipeServices
     {
         var dbRecipe =  DbContext.Recipe
             .Where(r=>r.Name == name)
-            .First();
+            .FirstOrDefault();
         if(dbRecipe is null)
         {
             return null;
