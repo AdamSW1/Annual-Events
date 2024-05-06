@@ -396,24 +396,24 @@ class Program
 
     private static void AddingToFavRecipe()
     {
-        Annual_Events_User user = AuthenticationManager.Instance.CurrentUser;
-        if (!FindRecipe(user, out string recipeName, out Recipe recipeToAdd))
+        Annual_Events_User userFrom = AuthenticationManager.Instance.CurrentUser;
+        if (!FindRecipe(userFrom, out string recipeName, out Recipe recipeToAdd))
         {
             return;
         }
         recipeToAdd.AddFavourite();
         Console.WriteLine($"\nRecipe '{recipeName}' added to favorites successfully!");
-        RecipeManager.AddToFavRecipe(user, recipeToAdd);
+        RecipeManager.AddToFavRecipe(userFrom, recipeToAdd);
         RecipeServices.Instance.DbContext.SaveChanges();
     }
 
 
-    private static bool FindRecipe(Annual_Events_User user, out string recipeName, out Recipe recipeToDelete)
+    private static bool FindRecipe(Annual_Events_User user, out string recipeName, out Recipe recipeToFind)
     {
         string localRecipeName = GetName();
-        recipeToDelete = GetRecipeByName(user.Recipes, localRecipeName)!;
+        recipeToFind = GetRecipeByName(user.Recipes, localRecipeName)!;
         recipeName = localRecipeName;
-        if (recipeToDelete == null)
+        if (recipeToFind == null)
         {
             Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
             return false;
@@ -500,6 +500,7 @@ class Program
 
         List<Ingredient> ingredients = new List<Ingredient>() { flour, egg };
         List<RecipeIngredient> recipeIngredients = ingredients.Select(ingredient => new RecipeIngredient { Ingredient = ingredient, Quantity = "4" }).ToList();
+        List<RecipeIngredient> recipeIngredients2 = ingredients.Select(ingredient => new RecipeIngredient { Ingredient = ingredient, Quantity = "4" }).ToList();
 
         List<string> tags = new List<string>() { "cake", "chocolate" };
         Recipe exampleRecipe = new Recipe("Chocolate cake",
@@ -528,17 +529,34 @@ class Program
 
                                             },
                                             6,
-                                            recipeIngredients,
+                                            recipeIngredients2,
                                             0,
                                             AuthenticationManager.Instance.CurrentUser,
                                             new List<RecipeTag>() { new RecipeTag("vegan") }
                                             , new List<Review>()
                                             );
+        exampleRecipe.Ingredients.ForEach(ingr =>{ 
+            ingr.Recipe = exampleRecipe;
+            ingr.Ingredient!.Recipes!.Add(ingr);
+            });
+        exampleRecipe2.Ingredients.ForEach(ingr => {
+            ingr.Recipe = exampleRecipe2;
+            ingr.Ingredient!.Recipes!.Add(ingr);
+            });
         exampleRecipe.AverageScore = 3;
         exampleRecipe2.AverageScore = 5;
 
         //check if the recipes already exist
-        if(exampleRecipe.Equals(RecipeServices.Instance.GetRecipe(exampleRecipe.Name)) ||exampleRecipe2.Equals(RecipeServices.Instance.GetRecipe(exampleRecipe2.Name)) ){
+        Recipe? checkRecipe1Exists = RecipeServices.Instance.GetRecipe(exampleRecipe.Name);
+        Recipe? checkRecipe2Exists = RecipeServices.Instance.GetRecipe(exampleRecipe2.Name);
+        if (checkRecipe1Exists is null || checkRecipe2Exists is null){
+            RecipeManager.AddRecipe(exampleRecipe);
+            RecipeManager.AddRecipe(exampleRecipe2);
+            AnnualEventsContext.Instance.SaveChanges();
+            return;
+        }
+        else if(exampleRecipe.Name.Equals(checkRecipe1Exists.Name)
+            || exampleRecipe2.Name.Equals(checkRecipe2Exists.Name)){
             return;
         }
         RecipeManager.AddRecipe(exampleRecipe);

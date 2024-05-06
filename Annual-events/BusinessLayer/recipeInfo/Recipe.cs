@@ -101,7 +101,7 @@ public class Recipe
         
         get
         {
-            return (List<Preparation>)_preparation.OrderBy( prep => prep.StepNumber);
+            return _preparation.OrderBy( prep => prep.StepNumber).ToList();
         }
         set
         {
