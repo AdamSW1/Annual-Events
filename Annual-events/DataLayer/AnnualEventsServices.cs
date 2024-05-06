@@ -63,4 +63,24 @@ public class AnnualEventsService
             .Where(review => review.Recipe.Name == recipe.Name)
             .ToList();
     }
+
+    public Review GetReview(int id) 
+    {
+        Review review = (Review)DbContext.Review
+                        .Where(rev => rev.ReviewId == id)
+                        .First();
+        return review;
+    }
+    public void AddReview(Review review) 
+    {
+        DbContext.Review.Add(review);
+        DbContext.SaveChanges();
+    }
+
+    public void DeleteReview(Review review) 
+    {
+        DbContext.Review.Remove(review);
+        DbContext.SaveChanges();
+    }
+
 }
