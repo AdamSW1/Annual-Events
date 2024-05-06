@@ -13,7 +13,7 @@ public class RecipeManager
         // Create recipe
 
         // Add the recipe to the user's list
-        newRecipe.Ingredients.ForEach(RI =>{
+        newRecipe.RecipeIngredients.ForEach(RI =>{
             if (RI.Ingredient is null){
                 return;
             }
