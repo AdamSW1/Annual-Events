@@ -44,6 +44,12 @@ namespace DataLayer
             _dbContext.SaveChanges();
         }
 
+        public void AddFavRecipes(Recipe favRecipe)
+        {
+            _dbContext.Recipe.Add(favRecipe);
+            _dbContext.SaveChanges();
+        }
+
         public Annual_Events_User GetUserByUsername(string username)
         {
             // Retrieve the user by username

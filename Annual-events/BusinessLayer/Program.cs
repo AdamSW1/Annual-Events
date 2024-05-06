@@ -63,6 +63,7 @@ class Program
     {
         string[] options = new string[]
         {
+            "Update your profile",
             "Add a recipe",
             "See your recipes",
             "See your Favourite Recipes",
@@ -86,19 +87,31 @@ class Program
         }
         else if (choice == options[0])
         {
+            Console.WriteLine("Enter your new username:");
+            string Username = Console.ReadLine();
+            Console.WriteLine("Enter your new password:");
+            string password = Console.ReadLine();
+            Console.WriteLine("Enter your new description:");
+            string description = Console.ReadLine();
+            Console.WriteLine("Enter your new age:");
+            int age  = Console.ReadLine();
+            UpdateProfile(Annual_Events_User user, string Username,string password,string description, int age);
+        }
+        else if (choice == options[1])
+        {
             //Add a recipe
             AddRecipe();
         }
-        else if (choice == options[1])
+        else if (choice == options[2])
         {
             Console.WriteLine($"\n{seperator}\n");
             Console.WriteLine(AuthenticationManager.Instance.CurrentUser.DisplayRecipes());
         }
-        else if (choice == options[2])
+        else if (choice == options[3])
         {
             Console.WriteLine(AuthenticationManager.Instance.CurrentUser.ViewFavRecipes());
         }
-        else if (choice == options[3])
+        else if (choice == options[4])
         {
             RecipeServices.Instance.GetRecipes().ForEach(
                 recipe =>
@@ -108,7 +121,7 @@ class Program
                 }
                 );
         }
-        else if (choice == options[4])
+        else if (choice == options[5])
         {
             string[] searchOptions = new string[] { "By keyword" };
             string searchType = Utils.GetUserChoice("How do you want to search?", searchOptions) ?? "";
@@ -140,40 +153,40 @@ class Program
             }
 
         }
-        else if (choice == options[5])
+        else if (choice == options[6])
         {
             Console.WriteLine("Your recipes: ");
             AuthenticationManager.Instance.CurrentUser.Recipes.ForEach(recipe => Console.WriteLine($"{recipe.Name}"));
             Console.WriteLine("\nEnter the name of the recipe you want to update/modify:");
             UpdatingRecipe();
         }
-        else if (choice == options[6])
+        else if (choice == options[7])
         {
             Console.WriteLine("Your recipes: ");
             AuthenticationManager.Instance.CurrentUser.Recipes.ForEach(recipe => Console.WriteLine($"{recipe.Name}"));
             Console.WriteLine("\nEnter the name of the recipe you want to delete:");
             DeletingRecipe();
         }
-        else if (choice == options[7])
+        else if (choice == options[8])
         {
             Console.WriteLine("\nEnter the name of your favourite recipe:");
             AddingToFavRecipe();
         }
-        else if (choice == options[8])
+        else if (choice == options[9])
         {
             Console.WriteLine(AuthenticationManager.Instance.CurrentUser.ViewFavRecipes());
             Console.WriteLine("\nEnter the name of the recipe (Favourites) you want to delete:");
             RemovingFromFavRecipe();
         }
-        else if (choice == options[9])
+        else if (choice == options[10])
         {
             GiveReviewToAnotherUser();
         }
-        else if (choice == options[10])
+        else if (choice == options[11])
         {
             ViewReviewsFromUserRecipes();
         }
-        else if (choice == options[11])
+        else if (choice == options[12])
         {
             AuthenticationManager.Instance.Logout();
             Console.WriteLine("\nLogged out.");
@@ -265,6 +278,7 @@ class Program
 
         return (username, password);
     }
+
     private static void AddRecipe()
     {
         //Get recipeName, descroption, cookingTime, preparation, servings, ratings
