@@ -20,7 +20,14 @@ public class Annual_Events_User
     private List<Recipe> _favRecipes = new List<Recipe>();
     public List<Recipe> FavRecipes
     {
-        get { return _favRecipes; }
+        get
+        {
+            if (_favRecipes == null || _favRecipes.Count == 0)
+            {
+                _favRecipes = RecipeServices.Instance.GetRecipesFavByUser(this);
+            }
+            return _favRecipes;
+        }
         set { _favRecipes = value; }
     }
 
@@ -184,9 +191,9 @@ public class Annual_Events_User
     {
         string returnStr = "";
         returnStr += "Favorite Recipes:\n";
-        foreach (var recipe in _favRecipes)
+        foreach (var recipe in FavRecipes)
         {
-            returnStr += $"{recipe.Name}\n"; // Assuming Name property exists in Recipe class
+            returnStr += $"{recipe.Name} by {recipe.Owner.Username}\n"; // Assuming Name property exists in Recipe class
         }
         return returnStr;
     }
