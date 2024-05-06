@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using BusinessLayer;
 using RecipeInfo;
 using System.Security.Cryptography.X509Certificates;
+using System.Collections.Specialized;
 
 namespace DataLayer;
 
@@ -46,6 +47,20 @@ public class AnnualEventsService
             DbContext.Preparation.Remove(query);
             DbContext.SaveChanges();
         }
+    }
 
+    //Get all the reviews for a user
+    public List<Review> GetReviewsForUser(Annual_Events_User user)
+    {
+        return DbContext.Review!
+            .Where(review => review.ReviewerUsername == user.Username)
+            .ToList();
+    }   
+    //Get all the reviews for a recipe
+    public List<Review> GetReviewsForRecipe(Recipe recipe)
+    {
+        return DbContext.Review!
+            .Where(review => review.Recipe.Name == recipe.Name)
+            .ToList();
     }
 }
