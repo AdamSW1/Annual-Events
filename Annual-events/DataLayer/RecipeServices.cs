@@ -17,12 +17,14 @@ public class RecipeServices
 
     public Recipe? GetRecipe(string name)
     {
-        if(!DbContext.Recipe.Any()){
+        var dbRecipe =  DbContext.Recipe
+            .Where(r=>r.Name.ToLower() == name.ToLower())
+            .FirstOrDefault();
+        if(dbRecipe is null)
+        {
             return null;
         }
-        return DbContext.Recipe
-            .Where(r=>r.Name == name)
-            .First();
+        return dbRecipe;
     }
 
     public List<Recipe> GetRecipes()
@@ -67,16 +69,10 @@ public class RecipeServices
     }
     public List<Recipe> GetRecipesFavByUser(Annual_Events_User user)
     {
-        return DbContext.Recipe
-            .Where(recipe => recipe.FavouritedBy.Any(favUser => favUser.Annual_Events_UserId == user.Annual_Events_UserId))
+        return DbContext.Recipe!
+            .Where(recipe => recipe.FavouritedBy.Any(favUser => favUser.Username == user.Username))
             .ToList();
     }
-
-    //Select recipe from recipe
-    //join user_recipe using recipe_id
-    //join user using user_id
-    //where user.user_id = user_recipe.user_id
-
     public void AddRecipe(Recipe recipe) 
     {
         if (recipe != null)

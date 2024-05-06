@@ -32,7 +32,7 @@ public class Recipe
 
     //[ForeignKey("FavouritedBy")]
     // public int? FavouritedByID {get;set;}
-    private List<Annual_Events_User>? _favouritedBy;
+    private List<Annual_Events_User>? _favouritedBy = new List<Annual_Events_User>();
     public List<Annual_Events_User>? FavouritedBy
     {
         get{
@@ -95,13 +95,13 @@ public class Recipe
     }
 
     // make a list of preparation objects
-    private List<Preparation> _preparation;
+    private List<Preparation> _preparation = new List<Preparation>();
     public List<Preparation> Preparation
     {
         
         get
         {
-            return (List<Preparation>)_preparation.OrderBy( prep => prep.StepNumber);
+            return _preparation.OrderBy( prep => prep.StepNumber).ToList();
         }
         set
         {
@@ -147,20 +147,20 @@ public class Recipe
         
     } 
 
-    private List<RecipeIngredient> _ingredients;
+    private List<RecipeIngredient> _recipeIngredients = new List<RecipeIngredient>();
 
-    public List<RecipeIngredient> Ingredients
+    public List<RecipeIngredient> RecipeIngredients
     {
         get
         {
-            return _ingredients;
+            return _recipeIngredients;
         }
         set
         {
             if(!Utils.CheckList(value)){
                 throw new ArgumentException("Invalid list of ingredients");
             }
-            _ingredients = value;
+            _recipeIngredients = value;
         }
 
     }
@@ -180,7 +180,7 @@ public class Recipe
         }
     }
 
-    private List<RecipeTag> _tags;
+    private List<RecipeTag> _tags = new List<RecipeTag>();
     public List<RecipeTag> Tags {
         get{
             _tags ??= new List<RecipeTag>();
@@ -191,7 +191,7 @@ public class Recipe
         }
     }
 
-    private List<Review> _reviews;
+    private List<Review> _reviews = new List<Review>();
     public List<Review> Reviews
     {
         get
@@ -228,7 +228,7 @@ public class Recipe
         _cookingTime = cookingTime;
         _preparation = preparation;
         _servings = servings;
-        _ingredients = ingredients;
+        _recipeIngredients = ingredients;
         _favourite = favourite;
         _owner = owner;
         _tags = tags;
@@ -274,6 +274,11 @@ public class Recipe
         //UpdateRecipe();
     }
 
+    public void AddFavouriteBy(Annual_Events_User user)
+    {
+        _favouritedBy!.Add(user);
+    }
+
     internal string DisplayRecipeInfo()
     {
         string returnStr = "";
@@ -283,7 +288,7 @@ public class Recipe
         returnStr += $"Description: {Description}\n";
         returnStr += $"Cooking Time: {CookingTime} minutes\n";
         returnStr += "Ingredients:\n";
-        foreach (var recipeIngredient in Ingredients)
+        foreach (var recipeIngredient in RecipeIngredients)
         {
             returnStr += $"{recipeIngredient.Quantity} {recipeIngredient.Ingredient}\n";
         }
@@ -300,5 +305,6 @@ public class Recipe
     {
         Review review = new(reviewer.Username, reviewText,score);
         Reviews.Add(review);
+        AnnualEventsContext.Instance.SaveChanges();
     }
 }

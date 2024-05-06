@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using RecipeInfo;
 namespace BusinessLayer;
+using RecipeInfo;
 
 public class Review
 {
 
+    private Recipe _recipe;
+    public Recipe Recipe
+    {
+        get { return _recipe; }
+        set { _recipe = value; }
+    }
     public int ReviewId { get; set; }
     private int _score;
     public int Score

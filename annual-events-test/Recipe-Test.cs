@@ -34,24 +34,6 @@ public class RecipeTest
         return exampleRecipe;
     }
 
-    //Test for creating a recipe
-    [TestMethod]
-    public void CreateRecipeTest()
-    {
-        throw new NotImplementedException();
-    }
-    //Test for updating a recipe
-    [TestMethod]
-    public void UpdateRecipeTest()
-    {
-        throw new NotImplementedException();
-    }
-    //Test for deleting a recipe
-    [TestMethod]
-    public void DeleteRecipeTest()
-    {
-        throw new NotImplementedException();
-    }
     //Test for rating a recipe
     [TestMethod]
     public void RateRecipeTest()
