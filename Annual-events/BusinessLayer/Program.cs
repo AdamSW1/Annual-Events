@@ -87,7 +87,15 @@ class Program
         }
         else if (choice == options[0])
         {
-            UpdateOptions();
+            Console.WriteLine("Enter your new username:");
+            string Username = Console.ReadLine();
+            Console.WriteLine("Enter your new password:");
+            string password = Console.ReadLine();
+            Console.WriteLine("Enter your new description:");
+            string description = Console.ReadLine();
+            Console.WriteLine("Enter your new age:");
+            int age  = Console.ReadLine();
+            UpdateProfile(Annual_Events_User user, string Username,string password,string description, int age);
         }
         else if (choice == options[1])
         {
