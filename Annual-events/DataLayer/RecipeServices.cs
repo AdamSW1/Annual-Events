@@ -18,8 +18,8 @@ public class RecipeServices
     public Recipe? GetRecipe(string name)
     {
         var dbRecipe =  DbContext.Recipe
-            .Where(r=>r.Name == name)
-            .First();
+            .Where(r=>r.Name.ToLower() == name.ToLower())
+            .FirstOrDefault();
         if(dbRecipe is null)
         {
             return null;

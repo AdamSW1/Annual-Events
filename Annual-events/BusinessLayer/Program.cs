@@ -345,7 +345,7 @@ class Program
 
     private static void UpdatingRecipe()
     {
-        if (!FindRecipe(AuthenticationManager.Instance.CurrentUser, out string recipeName, out Recipe recipeToUpdate))
+        if (!FindCurrentUserRecipe(AuthenticationManager.Instance.CurrentUser, out string recipeName, out Recipe recipeToUpdate))
         {
             return;
         }
@@ -373,7 +373,7 @@ class Program
     private static void DeletingRecipe()
     {
         Annual_Events_User user = AuthenticationManager.Instance.CurrentUser;
-        if (!FindRecipe(user, out string recipeName, out Recipe recipeToDelete))
+        if (!FindCurrentUserRecipe(user, out string recipeName, out Recipe recipeToDelete))
         {
             return;
         }
@@ -385,30 +385,31 @@ class Program
     private static void RemovingFromFavRecipe()
     {
         Annual_Events_User user = AuthenticationManager.Instance.CurrentUser;
-        if (!FindRecipe(user, out string recipeName, out Recipe recipeToDelete))
+        if (!FindRecipe(out string recipeName, out Recipe? recipeToDelete))
         {
             return;
         }
-        recipeToDelete.RemoveFavourite();
+        recipeToDelete!.RemoveFavourite();
         Console.WriteLine($"\nRecipe '{recipeName}' removed from favorites successfully!");
         RecipeManager.DeleteFavRecipe(user, recipeToDelete);
     }
 
+
     private static void AddingToFavRecipe()
     {
         Annual_Events_User userFrom = AuthenticationManager.Instance.CurrentUser;
-        if (!FindRecipe(userFrom, out string recipeName, out Recipe recipeToAdd))
+        if (!FindRecipe(out string recipeName, out Recipe? recipeToAdd))
         {
             return;
         }
-        recipeToAdd.AddFavourite();
+        recipeToAdd!.AddFavourite();
         Console.WriteLine($"\nRecipe '{recipeName}' added to favorites successfully!");
         RecipeManager.AddToFavRecipe(userFrom, recipeToAdd);
         RecipeServices.Instance.DbContext.SaveChanges();
     }
 
 
-    private static bool FindRecipe(Annual_Events_User user, out string recipeName, out Recipe recipeToFind)
+    private static bool FindCurrentUserRecipe(Annual_Events_User user, out string recipeName, out Recipe recipeToFind)
     {
         string localRecipeName = GetName();
         recipeToFind = GetRecipeByName(user.Recipes, localRecipeName)!;
@@ -416,6 +417,19 @@ class Program
         if (recipeToFind == null)
         {
             Console.WriteLine($"\nRecipe '{recipeName}' not found in your recipes.");
+            return false;
+        }
+        return true;
+    }
+
+    private static bool FindRecipe(out string recipeName, out Recipe? recipeToFind)
+    {
+        string name = GetName();
+        recipeToFind = RecipeServices.Instance.GetRecipe(name);
+        recipeName = name;
+        if (recipeToFind == null)
+        {
+            Console.WriteLine($"\nRecipe '{name}' not found in your recipes.");
             return false;
         }
         return true;
@@ -535,14 +549,7 @@ class Program
                                             new List<RecipeTag>() { new RecipeTag("vegan") }
                                             , new List<Review>()
                                             );
-        exampleRecipe.Ingredients.ForEach(ingr =>{ 
-            ingr.Recipe = exampleRecipe;
-            ingr.Ingredient!.Recipes!.Add(ingr);
-            });
-        exampleRecipe2.Ingredients.ForEach(ingr => {
-            ingr.Recipe = exampleRecipe2;
-            ingr.Ingredient!.Recipes!.Add(ingr);
-            });
+
         exampleRecipe.AverageScore = 3;
         exampleRecipe2.AverageScore = 5;
 

@@ -124,7 +124,7 @@ public class Annual_Events_User
 
     public void AddToFavRecipe(Recipe recipe)
     {
-        _favRecipes.Add(recipe);
+        FavRecipes.Add(recipe);
     } // lets them add a recipe to an [] list
 
     public void AddRecipe(Recipe recipe)
