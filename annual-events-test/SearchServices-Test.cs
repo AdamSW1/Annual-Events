@@ -197,6 +197,7 @@ public class SearchServicesTest
         Assert.AreEqual(1, search.Count);
     }
 
+    [TestMethod]
     public void SearchRecipesByOwnerUsernameTest() 
     {
         // Arrange
