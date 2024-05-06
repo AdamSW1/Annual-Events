@@ -100,7 +100,7 @@ class Program
         }
         else if (choice == options[3])
         {
-            AuthenticationManager.Instance.GetAllRecipesFromAllUsers().ForEach(
+            RecipeServices.Instance.GetRecipes().ForEach(
                 recipe =>
                 {
                     Console.WriteLine($"\n{seperator}\n");
@@ -124,7 +124,7 @@ class Program
                 string keyword = Console.ReadLine() ?? " ";
 
                 Console.WriteLine(seperator);
-                List<Recipe> recipes = Search.SearchRecipesByKeyword(keyword, AuthenticationManager.Instance.GetAllRecipesFromAllUsers());
+                List<Recipe> recipes = Search.SearchRecipesByKeyword(keyword, RecipeServices.Instance.GetRecipes());
                 if (recipes.Count == 0)
                 {
 
@@ -452,7 +452,7 @@ class Program
         Console.WriteLine("Select a recipe to review:");
 
         // Retrieve list of all recipes from all users using AuthenticationManager method
-        List<Recipe> recipeList = AuthenticationManager.Instance.GetAllRecipesFromAllUsers();
+        List<Recipe> recipeList = RecipeServices.Instance.GetRecipes();
 
         if (recipeList.Count == 0)
         {

@@ -56,13 +56,5 @@ public class AuthenticationManager
         _currentUser = null;
     }
 
-    public List<Recipe> GetAllRecipesFromAllUsers()
-    {
-        List<Recipe> allRecipes = new List<Recipe>();
-        foreach (var user in Users)
-        {
-            allRecipes.AddRange(user.Recipes);
-        }
-        return allRecipes;
-    }
+
 }
