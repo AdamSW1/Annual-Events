@@ -32,7 +32,7 @@ public class Recipe
 
     //[ForeignKey("FavouritedBy")]
     // public int? FavouritedByID {get;set;}
-    private List<Annual_Events_User>? _favouritedBy;
+    private List<Annual_Events_User>? _favouritedBy = new List<Annual_Events_User>();
     public List<Annual_Events_User>? FavouritedBy
     {
         get{
@@ -95,7 +95,7 @@ public class Recipe
     }
 
     // make a list of preparation objects
-    private List<Preparation> _preparation;
+    private List<Preparation> _preparation = new List<Preparation>();
     public List<Preparation> Preparation
     {
         
@@ -147,7 +147,7 @@ public class Recipe
         
     } 
 
-    private List<RecipeIngredient> _ingredients;
+    private List<RecipeIngredient> _ingredients = new List<RecipeIngredient>();
 
     public List<RecipeIngredient> Ingredients
     {
@@ -180,7 +180,7 @@ public class Recipe
         }
     }
 
-    private List<RecipeTag> _tags;
+    private List<RecipeTag> _tags = new List<RecipeTag>();
     public List<RecipeTag> Tags {
         get{
             _tags ??= new List<RecipeTag>();
@@ -191,7 +191,7 @@ public class Recipe
         }
     }
 
-    private List<Review> _reviews;
+    private List<Review> _reviews = new List<Review>();
     public List<Review> Reviews
     {
         get
@@ -274,6 +274,11 @@ public class Recipe
         //UpdateRecipe();
     }
 
+    public void AddFavouriteBy(Annual_Events_User user)
+    {
+        _favouritedBy!.Add(user);
+    }
+
     internal string DisplayRecipeInfo()
     {
         string returnStr = "";
@@ -300,5 +305,6 @@ public class Recipe
     {
         Review review = new(reviewer.Username, reviewText,score);
         Reviews.Add(review);
+        AnnualEventsContext.Instance.SaveChanges();
     }
 }

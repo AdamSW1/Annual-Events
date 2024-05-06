@@ -75,6 +75,28 @@ namespace DataLayer.Tests
             Assert.AreEqual(username, resultUser.Username);
         }
 
+        [TestMethod]
+        public void GetUserByUsername_NonExistingUser_ShouldReturnNull()
+        {
+            // Arrange
+            string username = "NonExistingUser";
+
+            var userList = new List<Annual_Events_User>(); // Empty list
+
+            var mockSet = new Mock<DbSet<Annual_Events_User>>();
+            ConfigureDbSetMock(userList.AsQueryable(), mockSet); // Configure mock DbSet
+
+            var mockContext = new Mock<AnnualEventsContext>();
+            mockContext.Setup(m => m.Annual_Events_User).Returns(mockSet.Object);
+
+            var userService = new AnnualEventsUserServices(mockContext.Object);
+
+            // Act
+            var resultUser = userService.GetUserByUsername(username);
+
+            // Assert
+            Assert.IsNull(resultUser);
+        }
 
         [TestMethod]
         public void VerifyLogin_ValidCredentials_ShouldReturnTrue()
@@ -89,7 +111,7 @@ namespace DataLayer.Tests
             var userList = new List<Annual_Events_User> { mockUser };
 
             var mockSet = new Mock<DbSet<Annual_Events_User>>();
-            ConfigureDbSetMock(userList.AsQueryable(), mockSet); // Configure mock DbSet
+            ConfigureDbSetMock(userList.AsQueryable(), mockSet);
 
             var mockContext = new Mock<AnnualEventsContext>();
             mockContext.Setup(m => m.Annual_Events_User).Returns(mockSet.Object);
@@ -103,11 +125,32 @@ namespace DataLayer.Tests
             Assert.IsTrue(loginResult);
         }
 
+        [TestMethod]
+        public void VerifyLogin_IncorrectCredentials_ShouldReturnFalse()
+        {
+            // Arrange
+            var username = "Testing";
+            var correctPassword = "CorrectPassword";
+            var incorrectPassword = "IncorrectPassword";
 
+            // Create a mock user with correct password
+            var mockUser = new Annual_Events_User(username, HashPassword(correctPassword), "Test test test", 5);
+            var userList = new List<Annual_Events_User> { mockUser };
 
+            var mockSet = new Mock<DbSet<Annual_Events_User>>();
+            ConfigureDbSetMock(userList.AsQueryable(), mockSet);
 
+            var mockContext = new Mock<AnnualEventsContext>();
+            mockContext.Setup(m => m.Annual_Events_User).Returns(mockSet.Object);
 
+            var userService = new AnnualEventsUserServices(mockContext.Object);
 
+            // Act
+            bool loginResult = userService.VerifyLogin(username, incorrectPassword);
+
+            // Assert
+            Assert.IsFalse(loginResult);
+        }
 
         [TestMethod]
         public void DeleteUser_WhenCalled_ShouldDeleteUserFromDatabase()
