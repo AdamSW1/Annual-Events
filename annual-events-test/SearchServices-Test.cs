@@ -51,9 +51,11 @@ public class SearchServicesTest
 
         // Act
         var search = Search.SearchRecipesByKeyword("chocolate", mockContext.Object.Recipe.ToList());
+        var search2 = Search.SearchRecipesByKeyword("yo", mockContext.Object.Recipe.ToList());
 
         // Assert
         Assert.AreEqual(2, search.Count);
+        Assert.AreEqual(0, search2.Count);
     }
 
     [TestMethod]
@@ -77,12 +79,15 @@ public class SearchServicesTest
         var mockContext = new Mock<AnnualEventsContext>();
         mockContext.Setup(c => c.Recipe).Returns(mockSet.Object);
         List<RecipeTag> tags = new List<RecipeTag>() { new("cake"), new("chocolate") };
+        List<RecipeTag> tags2 = new List<RecipeTag>() { new("yo"), new("hello") };
 
         // Act
         var search = Search.SearchRecipesByTags(tags, mockContext.Object.Recipe.ToList());
+        var search2 = Search.SearchRecipesByTags(tags2, mockContext.Object.Recipe.ToList());
 
         // Assert
         Assert.AreEqual(2, search.Count);
+        Assert.AreEqual(null, search2);
     }
 
     [TestMethod]
@@ -108,9 +113,11 @@ public class SearchServicesTest
 
         // Act
         var search = Search.SearchRecipesByTimeConstraint(118, mockContext.Object.Recipe.ToList());
+        var search2 = Search.SearchRecipesByTimeConstraint(160, mockContext.Object.Recipe.ToList());
 
         // Assert
         Assert.AreEqual(1, search.Count);
+        Assert.AreEqual(0, search2.Count);
     }
 
     [TestMethod]
@@ -136,9 +143,11 @@ public class SearchServicesTest
 
         // Act
         var search = Search.SearchRecipesByRating(4, mockContext.Object.Recipe.ToList());
+        var search2 = Search.SearchRecipesByRating(1, mockContext.Object.Recipe.ToList());
 
         // Assert
         Assert.AreEqual(1, search.Count);
+        Assert.AreEqual(0, search2.Count);
     }
 
     [TestMethod]
@@ -164,9 +173,11 @@ public class SearchServicesTest
 
         // Act
         var search = Search.SearchRecipesByServings(8, mockContext.Object.Recipe.ToList());
+        var search2 = Search.SearchRecipesByServings(1, mockContext.Object.Recipe.ToList());
 
         // Assert
         Assert.AreEqual(2, search.Count);
+        Assert.AreEqual(0, search2.Count);
     }
 
     [TestMethod]
@@ -192,9 +203,11 @@ public class SearchServicesTest
 
         // Act
         var search = Search.SearchRecipesInFavorites(1, mockContext.Object.Recipe.ToList());
+        var search2 = Search.SearchRecipesInFavorites(8, mockContext.Object.Recipe.ToList());
 
         // Assert
         Assert.AreEqual(1, search.Count);
+        Assert.AreEqual(0, search2.Count);
     }
 
     [TestMethod]
@@ -220,9 +233,11 @@ public class SearchServicesTest
 
         // Act
         var search = Search.SearchRecipesByOwnerUsername("testUser", mockContext.Object.Recipe.ToList());
+        var search2 = Search.SearchRecipesByOwnerUsername("hello123", mockContext.Object.Recipe.ToList());
 
         // Assert
         Assert.AreEqual(2, search.Count);
+        Assert.AreEqual(0, search2.Count);
     }
 
     private Recipe CreateExampleRecipe(Annual_Events_User cur)
