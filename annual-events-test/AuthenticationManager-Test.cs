@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BusinessLayer;
 using RecipeInfo;
+using DataLayer;
 namespace annual_events_test;
 
 [TestClass]
@@ -59,7 +60,7 @@ public class AuthenticationManagerTest
         // Arrange
 
         // Act
-        List<Recipe> allRecipes = AuthenticationManager.Instance.GetAllRecipesFromAllUsers();
+        List<Recipe> allRecipes = RecipeServices.Instance.GetRecipes();
 
         // Assert
         Assert.AreEqual(0, allRecipes.Count);
