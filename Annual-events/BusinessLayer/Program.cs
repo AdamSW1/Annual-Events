@@ -500,13 +500,8 @@ class Program
         }
     }
 
-    /*public void UpdateReview(Review reviewToUpdate) 
+    public static void UpdateReview(Review reviewToUpdate) 
     {
-        if (Instance.GetReview(review) == Null)
-        {
-            return;
-        }
-
         Console.WriteLine($"Updating review by {reviewToUpdate.ReviewerUsername} ");
         Console.Write("New Review Text: ");
         reviewToUpdate.ReviewText = GetLongString();
@@ -519,8 +514,7 @@ class Program
 
         RecipeServices.Instance.DbContext.SaveChanges();
         Console.WriteLine($"Review updated successfully!");
-        
-    }*/
+    }
 
     /// <summary>
     /// A method that adds an example recipe to the fake database
