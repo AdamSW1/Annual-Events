@@ -515,7 +515,7 @@ public class RecipeServicesTest
         List<Ingredient> ingredients = new() { flour, egg };
         List<RecipeIngredient> recipeIngredients = ingredients.Select(ingredient => new RecipeIngredient { Ingredient = ingredient, Quantity = "4" }).ToList();
         var ingData = recipeIngredients.AsQueryable();
-        data_list.ForEach(recipe => recipe.Ingredients.ForEach(ingredient => ingredient.Recipe = recipe));
+        data_list.ForEach(recipe => recipe.RecipeIngredients.ForEach(ingredient => ingredient.Recipe = recipe));
         //context
         var mockSet = new Mock<DbSet<Recipe>>();
         mockSet.As<IQueryable<Recipe>>().Setup(r => r.Provider).Returns(data.Provider);
@@ -555,7 +555,7 @@ public class RecipeServicesTest
         };
         data_list.ForEach(recipe => user.ForEach(u => u.AddToFavRecipe(recipe)));
         user.ForEach(u => data_list.ForEach(recipe => recipe.AddFavouriteBy(u)));
-        data_list.ForEach(recipe => recipe.Ingredients.ForEach(ingredient => ingredient.Recipe = recipe));
+        data_list.ForEach(recipe => recipe.RecipeIngredients.ForEach(ingredient => ingredient.Recipe = recipe));
         var data = data_list.AsQueryable();
         var user_data = user.AsQueryable();
         //context
