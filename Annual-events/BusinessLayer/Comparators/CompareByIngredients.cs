@@ -16,8 +16,8 @@ public class CompareByIngredients : IComparer<Recipe>
         if(x == null || y == null){
             return 0;
         }
-        if(x.Ingredients.Count.CompareTo(y.Ingredients.Count) != 0){
-            return x.Ingredients.Count.CompareTo(y.Ingredients.Count);
+        if(x.RecipeIngredients.Count.CompareTo(y.RecipeIngredients.Count) != 0){
+            return x.RecipeIngredients.Count.CompareTo(y.RecipeIngredients.Count);
         }
 
         return 0;

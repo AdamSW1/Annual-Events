@@ -5,7 +5,7 @@ using API;
 public class Ingredient{
 
     public int IngredientId { get; set; }
-    public List<RecipeIngredient>? Recipes{ get; set; }
+    public List<RecipeIngredient>? RecipeIngredients{ get; set; } = new(){};
     private string _name;
     public string Name {
         get{

@@ -101,7 +101,7 @@ public class Recipe
         
         get
         {
-            return (List<Preparation>)_preparation.OrderBy( prep => prep.StepNumber);
+            return _preparation.OrderBy( prep => prep.StepNumber).ToList();
         }
         set
         {
@@ -147,20 +147,20 @@ public class Recipe
         
     } 
 
-    private List<RecipeIngredient> _ingredients = new List<RecipeIngredient>();
+    private List<RecipeIngredient> _recipeIngredients = new List<RecipeIngredient>();
 
-    public List<RecipeIngredient> Ingredients
+    public List<RecipeIngredient> RecipeIngredients
     {
         get
         {
-            return _ingredients;
+            return _recipeIngredients;
         }
         set
         {
             if(!Utils.CheckList(value)){
                 throw new ArgumentException("Invalid list of ingredients");
             }
-            _ingredients = value;
+            _recipeIngredients = value;
         }
 
     }
@@ -228,7 +228,7 @@ public class Recipe
         _cookingTime = cookingTime;
         _preparation = preparation;
         _servings = servings;
-        _ingredients = ingredients;
+        _recipeIngredients = ingredients;
         _favourite = favourite;
         _owner = owner;
         _tags = tags;
@@ -288,7 +288,7 @@ public class Recipe
         returnStr += $"Description: {Description}\n";
         returnStr += $"Cooking Time: {CookingTime} minutes\n";
         returnStr += "Ingredients:\n";
-        foreach (var recipeIngredient in Ingredients)
+        foreach (var recipeIngredient in RecipeIngredients)
         {
             returnStr += $"{recipeIngredient.Quantity} {recipeIngredient.Ingredient}\n";
         }
