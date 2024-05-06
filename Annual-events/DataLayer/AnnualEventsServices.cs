@@ -49,7 +49,7 @@ public class AnnualEventsService
 
     }
 
-    public void GetReview(int id) 
+    public Review GetReview(int id) 
     {
         Review review = (Review)DbContext.Review
                         .Where(rev => rev.ReviewId == id)

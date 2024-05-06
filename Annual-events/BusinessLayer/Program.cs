@@ -486,7 +486,7 @@ class Program
         }
     }
 
-    public void UpdateReview(Review reviewToUpdate) 
+    /*public void UpdateReview(Review reviewToUpdate) 
     {
         if (Instance.GetReview(review) == Null)
         {
@@ -506,7 +506,7 @@ class Program
         RecipeServices.Instance.DbContext.SaveChanges();
         Console.WriteLine($"Review updated successfully!");
         
-    }
+    }*/
 
     /// <summary>
     /// A method that adds an example recipe to the fake database

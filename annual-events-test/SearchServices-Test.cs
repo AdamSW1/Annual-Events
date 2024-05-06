@@ -6,8 +6,6 @@ using System.Reflection;
 using Moq;
 using DataLayer;
 using Microsoft.EntityFrameworkCore;
-using BusinessLayer;
-using RecipeInfo;
 using System.Security.Cryptography.X509Certificates;
 namespace annual_events_test;
 
@@ -49,10 +47,10 @@ public class SearchServicesTest
         mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
         
         var mockContext = new Mock<AnnualEventsContext>();
-        mockContext.Setup(c => c.Recipes).Returns(mockSet.Object);
+        mockContext.Setup(c => c.Recipe).Returns(mockSet.Object);
 
         // Act
-        var search = Search.SearchRecipesByKeyword("chocolate", mockContext.Object.Recipes.ToList());
+        var search = Search.SearchRecipesByKeyword("chocolate", mockContext.Object.Recipe.ToList());
 
         // Assert
         Assert.AreEqual(2, search.Count);
@@ -77,10 +75,11 @@ public class SearchServicesTest
         mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
         
         var mockContext = new Mock<AnnualEventsContext>();
-        mockContext.Setup(c => c.Recipes).Returns(mockSet.Object);
+        mockContext.Setup(c => c.Recipe).Returns(mockSet.Object);
+        List<RecipeTag> tags = new List<RecipeTag>() { new("cake"), new("chocolate") };
 
         // Act
-        var search = Search.SearchRecipesByTags("cake", mockContext.Object.Recipes.ToList());
+        var search = Search.SearchRecipesByTags(tags, mockContext.Object.Recipe.ToList());
 
         // Assert
         Assert.AreEqual(2, search.Count);
@@ -105,10 +104,10 @@ public class SearchServicesTest
         mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
         
         var mockContext = new Mock<AnnualEventsContext>();
-        mockContext.Setup(c => c.Recipes).Returns(mockSet.Object);
+        mockContext.Setup(c => c.Recipe).Returns(mockSet.Object);
 
         // Act
-        var search = Search.SearchRecipesByTags(118, mockContext.Object.Recipes.ToList());
+        var search = Search.SearchRecipesByTimeConstraint(118, mockContext.Object.Recipe.ToList());
 
         // Assert
         Assert.AreEqual(1, search.Count);
@@ -133,10 +132,10 @@ public class SearchServicesTest
         mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
         
         var mockContext = new Mock<AnnualEventsContext>();
-        mockContext.Setup(c => c.Recipes).Returns(mockSet.Object);
+        mockContext.Setup(c => c.Recipe).Returns(mockSet.Object);
 
         // Act
-        var search = Search.SearchRecipesByRating(4, mockContext.Object.Recipes.ToList());
+        var search = Search.SearchRecipesByRating(4, mockContext.Object.Recipe.ToList());
 
         // Assert
         Assert.AreEqual(1, search.Count);
@@ -161,10 +160,10 @@ public class SearchServicesTest
         mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
         
         var mockContext = new Mock<AnnualEventsContext>();
-        mockContext.Setup(c => c.Recipes).Returns(mockSet.Object);
+        mockContext.Setup(c => c.Recipe).Returns(mockSet.Object);
 
         // Act
-        var search = Search.SearchRecipesByServings(8, mockContext.Object.Recipes.ToList());
+        var search = Search.SearchRecipesByServings(8, mockContext.Object.Recipe.ToList());
 
         // Assert
         Assert.AreEqual(2, search.Count);
@@ -189,10 +188,10 @@ public class SearchServicesTest
         mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
         
         var mockContext = new Mock<AnnualEventsContext>();
-        mockContext.Setup(c => c.Recipes).Returns(mockSet.Object);
+        mockContext.Setup(c => c.Recipe).Returns(mockSet.Object);
 
         // Act
-        var search = Search.SearchRecipesInFavorites(1, mockContext.Object.Recipes.ToList());
+        var search = Search.SearchRecipesInFavorites(1, mockContext.Object.Recipe.ToList());
 
         // Assert
         Assert.AreEqual(1, search.Count);
@@ -216,10 +215,10 @@ public class SearchServicesTest
         mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
         
         var mockContext = new Mock<AnnualEventsContext>();
-        mockContext.Setup(c => c.Recipes).Returns(mockSet.Object);
+        mockContext.Setup(c => c.Recipe).Returns(mockSet.Object);
 
         // Act
-        var search = Search.SearchRecipesByOwnerUsername("testUser", mockContext.Object.Recipes.ToList());
+        var search = Search.SearchRecipesByOwnerUsername("testUser", mockContext.Object.Recipe.ToList());
 
         // Assert
         Assert.AreEqual(2, search.Count);
