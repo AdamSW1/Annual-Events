@@ -349,6 +349,12 @@ public class RecipeServicesTest
             CreateExampleRecipe2(user)
         };
         var data = data_list.AsQueryable();
+        //Ingredients
+        Ingredient flour = new("flour", 7);
+        Ingredient egg = new("egg", 3);
+        List<Ingredient> ingredients = new() { flour, egg };
+        List<RecipeIngredient> recipeIngredients = ingredients.Select(ingredient => new RecipeIngredient { Ingredient = ingredient, Quantity = "4" }).ToList();
+        var ingData = recipeIngredients.AsQueryable();
         data_list.ForEach(recipe => recipe.Ingredients.ForEach(ingredient => ingredient.Recipe = recipe));
         //context
         var mockSet = new Mock<DbSet<Recipe>>();
@@ -356,44 +362,61 @@ public class RecipeServicesTest
         mockSet.As<IQueryable<Recipe>>().Setup(r => r.Expression).Returns(data.Expression);
         mockSet.As<IQueryable<Recipe>>().Setup(r => r.ElementType).Returns(data.ElementType);
         mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
+        var ingMockSet = new Mock<DbSet<RecipeIngredient>>();
+        ingMockSet.As<IQueryable<RecipeIngredient>>().Setup(r => r.Provider).Returns(recipeIngredients.AsQueryable().Provider);
+        ingMockSet.As<IQueryable<RecipeIngredient>>().Setup(r => r.Expression).Returns(recipeIngredients.AsQueryable().Expression);
+        ingMockSet.As<IQueryable<RecipeIngredient>>().Setup(r => r.ElementType).Returns(recipeIngredients.AsQueryable().ElementType);
+        ingMockSet.As<IQueryable<RecipeIngredient>>().Setup(r => r.GetEnumerator()).Returns(recipeIngredients.AsQueryable().GetEnumerator());
         var mockContext = new Mock<AnnualEventsContext>();
         mockContext.Setup(r => r.Recipe).Returns(mockSet.Object);
+        mockContext.Setup(r => r.RecipeIngredients).Returns(ingMockSet.Object);
         var service = RecipeServices.Instance;
         service.DbContext = mockContext.Object;
         //act 
         data_list.ForEach(recipe => service.AddRecipe(recipe));
         var recipesss = service.GetRecipes();
-        var ingredient = service.GetIngredient("oil");
+        var ingredient = service.GetIngredient("flour");
         //Assert
-        Assert.AreEqual("oil", ingredient!.Name);
+        Assert.AreEqual("flour", ingredient!.Name);
     }
     //Test the method GetRecipesByFavUser
     [TestMethod]
     public void Get_Recipes_Fav_By_User()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new List<Annual_Events_User>
+        { new Annual_Events_User ("testUser", "password", "Test user", 30),
+          new Annual_Events_User ("testUser2", "password", "Test user2", 40)
+        };
         var data_list = new List<Recipe>
         {
-            CreateExampleRecipe(user),
-            CreateExampleRecipe2(user)
+            CreateExampleRecipe(user[0]),
+            CreateExampleRecipe2(user[1])
         };
-        var data = data_list.AsQueryable();
-        user.AddToFavRecipe(data_list[1]);
+        data_list.ForEach(recipe => user.ForEach(u => u.AddToFavRecipe(recipe)));
+        user.ForEach(u => data_list.ForEach(recipe => recipe.AddFavouriteBy(u)));
         data_list.ForEach(recipe => recipe.Ingredients.ForEach(ingredient => ingredient.Recipe = recipe));
+        var data = data_list.AsQueryable();
+        var user_data = user.AsQueryable();
         //context
         var mockSet = new Mock<DbSet<Recipe>>();
         mockSet.As<IQueryable<Recipe>>().Setup(r => r.Provider).Returns(data.Provider);
         mockSet.As<IQueryable<Recipe>>().Setup(r => r.Expression).Returns(data.Expression);
         mockSet.As<IQueryable<Recipe>>().Setup(r => r.ElementType).Returns(data.ElementType);
         mockSet.As<IQueryable<Recipe>>().Setup(r => r.GetEnumerator()).Returns(data.GetEnumerator());
+        var userMockSet = new Mock<DbSet<Annual_Events_User>>();
+        userMockSet.As<IQueryable<Annual_Events_User>>().Setup(r => r.Provider).Returns(user_data.Provider);
+        userMockSet.As<IQueryable<Annual_Events_User>>().Setup(r => r.Expression).Returns(user_data.Expression);
+        userMockSet.As<IQueryable<Annual_Events_User>>().Setup(r => r.ElementType).Returns(user_data.ElementType);
+        userMockSet.As<IQueryable<Annual_Events_User>>().Setup(r => r.GetEnumerator()).Returns(user_data.GetEnumerator());
         var mockContext = new Mock<AnnualEventsContext>();
         mockContext.Setup(r => r.Recipe).Returns(mockSet.Object);
+        mockContext.Setup(u => u.Annual_Events_User).Returns(userMockSet.Object);
         var service = RecipeServices.Instance;
         service.DbContext = mockContext.Object;
         //act 
-        var recipes = service.GetRecipesFavByUser(user);
+        var recipes = service.GetRecipesFavByUser(user[0]);
         //Assert
-        Assert.AreEqual("Chocolate beer cake", recipes[0].Name);
+        Assert.AreEqual("Chocolate beer cake", recipes[1].Name);
     }
 }
