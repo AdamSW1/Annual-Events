@@ -9,15 +9,17 @@ class Profile// The Profile class is used to manage a Annual_Events_User
 {
     public Annual_Events_User Annual_Events_User { get; set; }
 
-    public Profile(Annual_Events_User _user) // Constructs the Profile object with a Annual_Events_User
+    public Profile() // Constructs the Profile object with a Annual_Events_User
     {
-       Annual_Events_User = _user;
     }
-    public void UpdatePWD(string _password) // Updates the password of a user
+     // Updates the profile of a user
+    public void UpdateProfile(Annual_Events_User user, string Username,string password,string description, int age)
     {
-        var user = AnnualEventsUserServices.Instance.GetUserByUsername(Annual_Events_User.Username);
-        user.Password = _password;
-        //Needa hash the password
+        user.Username = Username;
+        user.Password = password;
+        user.Description = description;
+        user.Age = age;
+        AnnualEventsUserServices.Instance.HashPassword(user.Password);
         AnnualEventsUserServices.Instance.DbContext.SaveChanges();
     }
     public void UpdatePFP() // Updates the profile picture of the user
