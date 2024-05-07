@@ -66,6 +66,7 @@ class Program
         string[] options = new string[]
         {
             "Update your profile",
+            "Delete your account",
             "Add a recipe",
             "See your recipes",
             "See your Favourite Recipes",
