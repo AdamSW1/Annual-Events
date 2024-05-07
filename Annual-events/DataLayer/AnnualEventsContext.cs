@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using BusinessLayer;
 using RecipeInfo;
+using System.Security.Cryptography.X509Certificates;
 namespace DataLayer;
 
 public class AnnualEventsContext : DbContext
@@ -35,8 +36,8 @@ public class AnnualEventsContext : DbContext
 
     public AnnualEventsContext()
     {
-        var path = "Annual-Events";
-        DbPath = System.IO.Path.Join(path, "Annual-Events.db");
+        // var path = "Annual-Events";
+        // DbPath = System.IO.Path.Join(path, "Annual-Events.db");
         HostName = Environment.GetEnvironmentVariable("ORACLE_DB_HOST")!;
 
         Port = Environment.GetEnvironmentVariable("ORACLE_DB_PORT") ?? "1521";
@@ -46,15 +47,22 @@ public class AnnualEventsContext : DbContext
         UserName = Environment.GetEnvironmentVariable("ORACLE_DB_USER")!;
 
         Password = Environment.GetEnvironmentVariable("ORACLE_DB_PASSWORD")!;
+        var folder = Environment.SpecialFolder.LocalApplicationData;
+        var path = Environment.GetFolderPath(folder);
+        DbPath = System.IO.Path.Join(path, "Annual-Events.db");
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        Console.WriteLine($"Data Source={HostName}:{Port}/{ServiceName}; " +
-          $"User Id={UserName}");
-        optionsBuilder.UseOracle($"Data Source={HostName}:{Port}/{ServiceName}; " +
-          $"User Id={UserName}; Password={Password}");
-    }
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     Console.WriteLine($"Data Source={HostName}:{Port}/{ServiceName}; " +
+    //       $"User Id={UserName}");
+    //     optionsBuilder.UseOracle($"Data Source={HostName}:{Port}/{ServiceName}; " +
+    //       $"User Id={UserName}; Password={Password}");
+    // }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+        => options.UseSqlite($"Data Source={DbPath}");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Recipe>()
