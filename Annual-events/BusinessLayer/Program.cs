@@ -170,6 +170,151 @@ class Program
                     Console.WriteLine(recipe.DisplayRecipeInfo());
                 }
             }
+            else if (searchType == searchOptions[1] || searchType == "2")
+            {
+                bool validInput;
+                List<RecipeTag> tags = new();
+                do
+                {
+                    string tag_list = Console.ReadLine() ?? "";
+                    if (!Utils.CheckMultiStringInput(tag_list))
+                    {
+                        validInput = false;
+                        Console.WriteLine("Tags must be a comma seperated list");
+                        Console.WriteLine();
+
+                    }
+                    else
+                    {
+                        List<string> prepString = tag_list.Split(",").ToList();
+                        int stepnum = 1;
+                        prepString.ForEach(prep =>
+                        {
+                            if (string.IsNullOrEmpty(prep))
+                            {
+                                return;
+                            }
+                            stepnum++;
+                            tags.Add(new RecipeTag());
+                            tags[stepnum - 2].Tag = prep;
+                        });
+                        validInput = true;
+
+                    }
+
+                } while (validInput != true);                
+                Console.WriteLine(seperator);
+                List<Recipe> recipes = Search.SearchRecipesByTags(tags, RecipeServices.Instance.GetRecipes());
+                if (recipes.Count == 0)
+                {
+                    Console.Write("No recipes found with that tag");
+                    return;
+                }
+
+                foreach (Recipe recipe in recipes)
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
+                }
+            }
+            else if (searchType == searchOptions[2] || searchType == "3")
+            {
+                Console.Write("Enter a time: ");
+                int time = int.Parse(Console.ReadLine() ?? " ");
+
+                Console.WriteLine(seperator);
+                List<Recipe> recipes = Search.SearchRecipesByTimeConstraint(time, RecipeServices.Instance.GetRecipes());
+                if (recipes.Count == 0)
+                {
+                    Console.Write("No recipes found with that time");
+                    return;
+                }
+
+                foreach (Recipe recipe in recipes)
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
+                }
+            }
+            else if (searchType == searchOptions[3] || searchType == "4")
+            {
+                Console.Write("Enter a rating: ");
+                int rating = int.Parse(Console.ReadLine() ?? " ");
+
+                Console.WriteLine(seperator);
+                List<Recipe> recipes = Search.SearchRecipesByRating(rating, RecipeServices.Instance.GetRecipes());
+                if (recipes.Count == 0)
+                {
+                    Console.Write("No recipes found with that rating");
+                    return;
+                }
+
+                foreach (Recipe recipe in recipes)
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
+                }
+            }
+            else if (searchType == searchOptions[4] || searchType == "5")
+            {
+                Console.Write("Enter a servings: ");
+                int servings = int.Parse(Console.ReadLine() ?? " ");
+
+                Console.WriteLine(seperator);
+                List<Recipe> recipes = Search.SearchRecipesByServings(servings, RecipeServices.Instance.GetRecipes());
+                if (recipes.Count == 0)
+                {
+                    Console.Write("No recipes found with that servings");
+                    return;
+                }
+
+                foreach (Recipe recipe in recipes)
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
+                }
+            }
+            else if (searchType == searchOptions[5] || searchType == "6")
+            {
+                Console.Write("Enter a favourite: ");
+                int favourite = int.Parse(Console.ReadLine() ?? " ");
+
+                Console.WriteLine(seperator);
+                List<Recipe> recipes = Search.SearchRecipesInFavorites(favourite, RecipeServices.Instance.GetRecipes());
+                if (recipes.Count == 0)
+                {
+                    Console.Write("No recipes found with that favourite");
+                    return;
+                }
+
+                foreach (Recipe recipe in recipes)
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
+                }
+            }
+            else if (searchType == searchOptions[6] || searchType == "7")
+            {
+                Console.Write("Enter a owner username: ");
+                string ownerUsername = Console.ReadLine() ?? " ";
+
+                Console.WriteLine(seperator);
+                List<Recipe> recipes = Search.SearchRecipesByOwnerUsername(ownerUsername, RecipeServices.Instance.GetRecipes());
+                if (recipes.Count == 0)
+                {
+                    Console.Write("No recipes found with that owner username");
+                    return;
+                }
+                foreach (Recipe recipe in recipes)
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid choice");
+            }
 
         }
         else if (choice == options[7])
