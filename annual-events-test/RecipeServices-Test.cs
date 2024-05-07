@@ -440,29 +440,29 @@ public class RecipeServicesTest
     }
 
     // Adding a favourite recipe
-    public Recipe AddFavRecipe(Annual_Events_User user)
-    {
-        //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
-        var data_list = new List<Recipe>
-        {
-            CreateExampleRecipe(user),
-            CreateExampleRecipe2(user)
-        };
-        //context
-        var mockSet = new Mock<DbSet<Recipe>>();
-        var mockContext = new Mock<AnnualEventsContext>();
-        mockContext.Setup(r => r.Recipe).Returns(mockSet.Object);
-        var service = RecipeServices.Instance;
-        service.DbContext = mockContext.Object;
-        //act 
-        var recipe = CreateExampleRecipe(user);
-        service.AddRecipe(recipe);
-        //Assert
-        mockSet.Verify(mock => mock.Add(It.Is<Recipe>(
-            actualRecipe => recipe.Equals(actualRecipe))), Times.Once());
-        mockContext.Verify(mock => mock.SaveChanges(), Times.Once());
-    }
+    // public Recipe AddFavRecipe(Annual_Events_User user)
+    // {
+    //     //Arrange
+    //     var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+    //     var data_list = new List<Recipe>
+    //     {
+    //         CreateExampleRecipe(user),
+    //         CreateExampleRecipe2(user)
+    //     };
+    //     //context
+    //     var mockSet = new Mock<DbSet<Recipe>>();
+    //     var mockContext = new Mock<AnnualEventsContext>();
+    //     mockContext.Setup(r => r.Recipe).Returns(mockSet.Object);
+    //     var service = RecipeServices.Instance;
+    //     service.DbContext = mockContext.Object;
+    //     //act 
+    //     var recipe = CreateExampleRecipe(user);
+    //     service.AddRecipe(recipe);
+    //     //Assert
+    //     mockSet.Verify(mock => mock.Add(It.Is<Recipe>(
+    //         actualRecipe => recipe.Equals(actualRecipe))), Times.Once());
+    //     mockContext.Verify(mock => mock.SaveChanges(), Times.Once());
+    // }
 
     //Test the method Delete Recipe
     [TestMethod]
