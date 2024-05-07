@@ -39,4 +39,9 @@ public class RecipeTag
     {
         return Tag == null ? 0 : Tag.GetHashCode();
     }
+
+    public RecipeTag ConvertStringToTag(string tag)
+    {
+        return new RecipeTag(tag);
+    }
 }

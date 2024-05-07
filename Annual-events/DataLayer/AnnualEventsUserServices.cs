@@ -44,6 +44,12 @@ namespace DataLayer
             _dbContext.SaveChanges();
         }
 
+        public void AddFavRecipes(Recipe favRecipe)
+        {
+            _dbContext.Recipe.Add(favRecipe);
+            _dbContext.SaveChanges();
+        }
+
         public Annual_Events_User GetUserByUsername(string username)
         {
             // Retrieve the user by username
@@ -52,7 +58,7 @@ namespace DataLayer
             return user;
         }
 
-        private string HashPassword(string password)
+        public string HashPassword(string password)
         {
             using (var sha256 = SHA256.Create())
             {
@@ -84,7 +90,7 @@ namespace DataLayer
         }
 
         // Method to compare hashed password with provided password
-        private bool VerifyPassword(string inputPassword, string storedHashedPassword)
+        public bool VerifyPassword(string inputPassword, string storedHashedPassword)
         {
             using (var sha256 = SHA256.Create())
             {

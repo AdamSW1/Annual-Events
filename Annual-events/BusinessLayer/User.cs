@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using RecipeInfo;
+using DataLayer;
 namespace BusinessLayer;
 public class Annual_Events_User
 {
@@ -136,14 +137,12 @@ public class Annual_Events_User
 
     public void AddRecipe(Recipe recipe)
     {
-        // recipe.Owner = this;
         _recipes.Add(recipe);
-    } // just adding a recipe to a list, other than Fav
-
+    }
     public void RemoveFromFavRecipe(Recipe recipe)
     {
         _favRecipes.Remove(recipe);
-    } // removes a recipe from the [] list
+    }
 
     public void DeleteRecipe(Recipe recipe)
     {

@@ -3,6 +3,8 @@ using BusinessLayer;
 using System;
 using RecipeInfo;
 using System.Reflection;
+using DataLayer;
+using System.Collections.ObjectModel;
 namespace annual_events_test;
 
 [TestClass]
@@ -34,12 +36,12 @@ public class RecipeTest
         return exampleRecipe;
     }
 
-    //Test for rating a recipe
-    [TestMethod]
-    public void RateRecipeTest()
-    {
-        throw new NotImplementedException();
-    }
+    // //Test for rating a recipe
+    // [TestMethod]
+    // public void RateRecipeTest()
+    // {
+    //     throw new NotImplementedException();
+    // }
 
     [TestMethod]
     public void AddRecipe_ValidInput_Success()
@@ -78,7 +80,7 @@ public class RecipeTest
         // Arrange
         var user = new Annual_Events_User("testUser", "password", "Test user", 30);
         Recipe test = CreateExampleRecipe(user);
-        user.AddRecipe(test);
+        RecipeManager.AddRecipe(test);
 
         // Act
         RecipeManager.DeleteRecipe(user, test);
@@ -148,7 +150,6 @@ public class RecipeTest
         user2.AddToFavRecipe(test);
         user2.RemoveFromFavRecipe(test);
         
-
         //assert
         CollectionAssert.DoesNotContain(user2.FavRecipes, test);
 
@@ -165,7 +166,7 @@ public class RecipeTest
         string updatedDescription = "Updated Test Description";
         double updatedCookingTime = 75;
         List<Preparation> updatedPreparation = new(){
-            new Preparation(1, "do")
+            new Preparation(1, "do")    
         };
         int updatedServings = 6;
         int updatedRatings = 4;
@@ -179,7 +180,7 @@ public class RecipeTest
         Assert.IsNotNull(updatedRecipe); // Ensure that the recipe exists in the user's recipes
         Assert.AreEqual(updatedDescription, updatedRecipe.Description);
         Assert.AreEqual(updatedCookingTime, updatedRecipe.CookingTime);
-        Assert.AreEqual(updatedPreparation, updatedRecipe.Preparation);
+        CollectionAssert.AreEqual(updatedPreparation, updatedRecipe.Preparation);
         Assert.AreEqual(updatedServings, updatedRecipe.Servings);
         Assert.AreEqual(updatedRatings, updatedRecipe.AverageScore);
         Assert.IsTrue(result);

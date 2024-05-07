@@ -42,7 +42,7 @@ class Program
             AddExampleRecipes();
             while (true)
             {
-                Init();
+                Init(AuthenticationManager.Instance.CurrentUser);
             }
         }
         else
@@ -51,18 +51,22 @@ class Program
         }
     }
 
-    private static void Setup(){
+    private static void Setup()
+    {
 
-        if (AnnualEventsUserServices.Instance.GetUserByUsername("user1") is not null || AnnualEventsUserServices.Instance.GetUserByUsername("user1") is not null){
+        if (AnnualEventsUserServices.Instance.GetUserByUsername("user1") is not null || AnnualEventsUserServices.Instance.GetUserByUsername("user1") is not null)
+        {
             return;
         }
         AuthenticationManager.Instance.AddUser(new Annual_Events_User("user1", "password1", "Description 1", 25));
         AuthenticationManager.Instance.AddUser(new Annual_Events_User("user2", "password2", "Description 2", 30));
     }
-    public static void Init()
+    public static void Init(Annual_Events_User user)
     {
         string[] options = new string[]
         {
+            "Update your profile",
+            "Delete your account",
             "Add a recipe",
             "See your recipes",
             "See your Favourite Recipes",
@@ -86,19 +90,48 @@ class Program
         }
         else if (choice == options[0])
         {
+            Console.WriteLine("Enter your new username:");
+            string newUsername = Console.ReadLine();
+            Console.WriteLine("Enter your new password:");
+            string newPassword = Console.ReadLine();
+            Console.WriteLine("Enter your new description:");
+            string newDescription = Console.ReadLine();
+            Console.WriteLine("Enter your new age:");
+            int newAge = int.Parse(Console.ReadLine());
+            Profile userProfile = new Profile();
+            userProfile.UpdateProfile(user, newUsername, newPassword, newDescription, newAge);
+        }
+        else if (choice == options[1])
+        {
+            Console.WriteLine("Are you sure you want to delete your account? (yes/no)");
+            string confirmDelete = Console.ReadLine()?.ToLower();
+
+            if (confirmDelete == "yes")
+            {
+                AnnualEventsUserServices.Instance.DeleteUser(AuthenticationManager.Instance.CurrentUser);
+                Console.WriteLine("Your account has been deleted successfully.");
+                Environment.Exit(0); // Exit the program after deleting the user
+            }
+            else
+            {
+                Console.WriteLine("Account deletion canceled.");
+            }
+        }
+        else if (choice == options[2])
+        {
             //Add a recipe
             AddRecipe();
         }
-        else if (choice == options[1])
+        else if (choice == options[3])
         {
             Console.WriteLine($"\n{seperator}\n");
             Console.WriteLine(AuthenticationManager.Instance.CurrentUser.DisplayRecipes());
         }
-        else if (choice == options[2])
+        else if (choice == options[4])
         {
             Console.WriteLine(AuthenticationManager.Instance.CurrentUser.ViewFavRecipes());
         }
-        else if (choice == options[3])
+        else if (choice == options[5])
         {
             RecipeServices.Instance.GetRecipes().ForEach(
                 recipe =>
@@ -108,7 +141,7 @@ class Program
                 }
                 );
         }
-        else if (choice == options[4])
+        else if (choice == options[6])
         {
             string[] searchOptions = new string[] { "By keyword" };
             string searchType = Utils.GetUserChoice("How do you want to search?", searchOptions) ?? "";
@@ -138,42 +171,187 @@ class Program
                     Console.WriteLine(recipe.DisplayRecipeInfo());
                 }
             }
+            else if (searchType == searchOptions[1] || searchType == "2")
+            {
+                bool validInput;
+                List<RecipeTag> tags = new();
+                do
+                {
+                    string tag_list = Console.ReadLine() ?? "";
+                    if (!Utils.CheckMultiStringInput(tag_list))
+                    {
+                        validInput = false;
+                        Console.WriteLine("Tags must be a comma seperated list");
+                        Console.WriteLine();
+
+                    }
+                    else
+                    {
+                        List<string> prepString = tag_list.Split(",").ToList();
+                        int stepnum = 1;
+                        prepString.ForEach(prep =>
+                        {
+                            if (string.IsNullOrEmpty(prep))
+                            {
+                                return;
+                            }
+                            stepnum++;
+                            tags.Add(new RecipeTag());
+                            tags[stepnum - 2].Tag = prep;
+                        });
+                        validInput = true;
+
+                    }
+
+                } while (validInput != true);                
+                Console.WriteLine(seperator);
+                List<Recipe> recipes = Search.SearchRecipesByTags(tags, RecipeServices.Instance.GetRecipes());
+                if (recipes.Count == 0)
+                {
+                    Console.Write("No recipes found with that tag");
+                    return;
+                }
+
+                foreach (Recipe recipe in recipes)
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
+                }
+            }
+            else if (searchType == searchOptions[2] || searchType == "3")
+            {
+                Console.Write("Enter a time: ");
+                int time = int.Parse(Console.ReadLine() ?? " ");
+
+                Console.WriteLine(seperator);
+                List<Recipe> recipes = Search.SearchRecipesByTimeConstraint(time, RecipeServices.Instance.GetRecipes());
+                if (recipes.Count == 0)
+                {
+                    Console.Write("No recipes found with that time");
+                    return;
+                }
+
+                foreach (Recipe recipe in recipes)
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
+                }
+            }
+            else if (searchType == searchOptions[3] || searchType == "4")
+            {
+                Console.Write("Enter a rating: ");
+                int rating = int.Parse(Console.ReadLine() ?? " ");
+
+                Console.WriteLine(seperator);
+                List<Recipe> recipes = Search.SearchRecipesByRating(rating, RecipeServices.Instance.GetRecipes());
+                if (recipes.Count == 0)
+                {
+                    Console.Write("No recipes found with that rating");
+                    return;
+                }
+
+                foreach (Recipe recipe in recipes)
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
+                }
+            }
+            else if (searchType == searchOptions[4] || searchType == "5")
+            {
+                Console.Write("Enter a servings: ");
+                int servings = int.Parse(Console.ReadLine() ?? " ");
+
+                Console.WriteLine(seperator);
+                List<Recipe> recipes = Search.SearchRecipesByServings(servings, RecipeServices.Instance.GetRecipes());
+                if (recipes.Count == 0)
+                {
+                    Console.Write("No recipes found with that servings");
+                    return;
+                }
+
+                foreach (Recipe recipe in recipes)
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
+                }
+            }
+            else if (searchType == searchOptions[5] || searchType == "6")
+            {
+                Console.Write("Enter a favourite: ");
+                int favourite = int.Parse(Console.ReadLine() ?? " ");
+
+                Console.WriteLine(seperator);
+                List<Recipe> recipes = Search.SearchRecipesInFavorites(favourite, RecipeServices.Instance.GetRecipes());
+                if (recipes.Count == 0)
+                {
+                    Console.Write("No recipes found with that favourite");
+                    return;
+                }
+
+                foreach (Recipe recipe in recipes)
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
+                }
+            }
+            else if (searchType == searchOptions[6] || searchType == "7")
+            {
+                Console.Write("Enter a owner username: ");
+                string ownerUsername = Console.ReadLine() ?? " ";
+
+                Console.WriteLine(seperator);
+                List<Recipe> recipes = Search.SearchRecipesByOwnerUsername(ownerUsername, RecipeServices.Instance.GetRecipes());
+                if (recipes.Count == 0)
+                {
+                    Console.Write("No recipes found with that owner username");
+                    return;
+                }
+                foreach (Recipe recipe in recipes)
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid choice");
+            }
 
         }
-        else if (choice == options[5])
+        else if (choice == options[7])
         {
             Console.WriteLine("Your recipes: ");
             AuthenticationManager.Instance.CurrentUser.Recipes.ForEach(recipe => Console.WriteLine($"{recipe.Name}"));
             Console.WriteLine("\nEnter the name of the recipe you want to update/modify:");
             UpdatingRecipe();
         }
-        else if (choice == options[6])
+        else if (choice == options[8])
         {
             Console.WriteLine("Your recipes: ");
             AuthenticationManager.Instance.CurrentUser.Recipes.ForEach(recipe => Console.WriteLine($"{recipe.Name}"));
             Console.WriteLine("\nEnter the name of the recipe you want to delete:");
             DeletingRecipe();
         }
-        else if (choice == options[7])
+        else if (choice == options[9])
         {
             Console.WriteLine("\nEnter the name of your favourite recipe:");
             AddingToFavRecipe();
         }
-        else if (choice == options[8])
+        else if (choice == options[10])
         {
             Console.WriteLine(AuthenticationManager.Instance.CurrentUser.ViewFavRecipes());
             Console.WriteLine("\nEnter the name of the recipe (Favourites) you want to delete:");
             RemovingFromFavRecipe();
         }
-        else if (choice == options[9])
+        else if (choice == options[11])
         {
             GiveReviewToAnotherUser();
         }
-        else if (choice == options[10])
+        else if (choice == options[12])
         {
             ViewReviewsFromUserRecipes();
         }
-        else if (choice == options[11])
+        else if (choice == options[13])
         {
             AuthenticationManager.Instance.Logout();
             Console.WriteLine("\nLogged out.");
@@ -225,16 +403,18 @@ class Program
         Annual_Events_User checkUserExists = AnnualEventsUserServices.Instance.GetUserByUsername(username);
         while (username == "null" || string.IsNullOrEmpty(username) || checkUserExists != null)
         {
-            if(checkUserExists != null){
+            if (checkUserExists != null)
+            {
                 Console.Write("User with that name already exists");
             }
-            else{
+            else
+            {
                 Console.Write("Enter a valid username: ");
             }
             username = Console.ReadLine() ?? "null";
             checkUserExists = AnnualEventsUserServices.Instance.GetUserByUsername(username);
-        }   
-        
+        }
+
         Console.Write("Enter a password: ");
         string password = Console.ReadLine() ?? "null";
 
@@ -256,7 +436,8 @@ class Program
         Console.Write("Enter your description (or leave blank): ");
         string description = Console.ReadLine() ?? "";
 
-        if(string.IsNullOrEmpty(description)){
+        if (string.IsNullOrEmpty(description))
+        {
             description = " ";
         }
 
@@ -265,6 +446,7 @@ class Program
 
         return (username, password);
     }
+
     private static void AddRecipe()
     {
         //Get recipeName, descroption, cookingTime, preparation, servings, ratings
@@ -500,6 +682,22 @@ class Program
         }
     }
 
+    public static void UpdateReview(Review reviewToUpdate)
+    {
+        Console.WriteLine($"Updating review by {reviewToUpdate.ReviewerUsername} ");
+        Console.Write("New Review Text: ");
+        reviewToUpdate.ReviewText = GetLongString();
+
+        Console.Write("New Score: ");
+        reviewToUpdate.Score = GetScore();
+
+        Console.Write("New reviewer: ");
+        reviewToUpdate.ReviewerUsername = GetString();
+
+        RecipeServices.Instance.DbContext.SaveChanges();
+        Console.WriteLine($"Review updated successfully!");
+    }
+
     /// <summary>
     /// A method that adds an example recipe to the fake database
     /// so recipes viewing can be done without creating one first
@@ -556,14 +754,16 @@ class Program
         //check if the recipes already exist
         Recipe? checkRecipe1Exists = RecipeServices.Instance.GetRecipe(exampleRecipe.Name);
         Recipe? checkRecipe2Exists = RecipeServices.Instance.GetRecipe(exampleRecipe2.Name);
-        if (checkRecipe1Exists is null || checkRecipe2Exists is null){
+        if (checkRecipe1Exists is null || checkRecipe2Exists is null)
+        {
             RecipeManager.AddRecipe(exampleRecipe);
             RecipeManager.AddRecipe(exampleRecipe2);
             AnnualEventsContext.Instance.SaveChanges();
             return;
         }
-        else if(exampleRecipe.Name.Equals(checkRecipe1Exists.Name)
-            || exampleRecipe2.Name.Equals(checkRecipe2Exists.Name)){
+        else if (exampleRecipe.Name.Equals(checkRecipe1Exists.Name)
+            || exampleRecipe2.Name.Equals(checkRecipe2Exists.Name))
+        {
             return;
         }
         RecipeManager.AddRecipe(exampleRecipe);
