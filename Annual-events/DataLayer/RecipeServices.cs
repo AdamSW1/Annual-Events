@@ -70,7 +70,7 @@ public class RecipeServices
     public List<Recipe> GetRecipesFavByUser(Annual_Events_User user)
     {
         return DbContext.Recipe!
-            .Where(recipe => recipe.FavouritedBy.Any(favUser => favUser.Username == user.Username))
+            .Where(recipe => recipe.FavouritedBy!.Any(favUser => favUser.Username == user.Username))
             .ToList();
     }
     public void AddRecipe(Recipe recipe) 
