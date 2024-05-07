@@ -4,6 +4,7 @@ using System;
 using RecipeInfo;
 using System.Reflection;
 using DataLayer;
+using System.Collections.ObjectModel;
 namespace annual_events_test;
 
 [TestClass]
@@ -165,7 +166,7 @@ public class RecipeTest
         string updatedDescription = "Updated Test Description";
         double updatedCookingTime = 75;
         List<Preparation> updatedPreparation = new(){
-            new Preparation(1, "do")
+            new Preparation(1, "do")    
         };
         int updatedServings = 6;
         int updatedRatings = 4;
@@ -179,7 +180,7 @@ public class RecipeTest
         Assert.IsNotNull(updatedRecipe); // Ensure that the recipe exists in the user's recipes
         Assert.AreEqual(updatedDescription, updatedRecipe.Description);
         Assert.AreEqual(updatedCookingTime, updatedRecipe.CookingTime);
-        Assert.AreEqual(updatedPreparation, updatedRecipe.Preparation);
+        CollectionAssert.AreEqual(updatedPreparation, updatedRecipe.Preparation);
         Assert.AreEqual(updatedServings, updatedRecipe.Servings);
         Assert.AreEqual(updatedRatings, updatedRecipe.AverageScore);
         Assert.IsTrue(result);
