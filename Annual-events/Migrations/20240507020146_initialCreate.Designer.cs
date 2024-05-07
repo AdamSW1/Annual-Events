@@ -5,33 +5,28 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Oracle.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
 namespace annualevents.Migrations
 {
     [DbContext(typeof(AnnualEventsContext))]
-    [Migration("20240505013404_init")]
-    partial class init
+    [Migration("20240507020146_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
 
             modelBuilder.Entity("Annual_Events_UserRecipe", b =>
                 {
                     b.Property<int>("FavRecipesRecipeID")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("FavouritedByAnnual_Events_UserId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("FavRecipesRecipeID", "FavouritedByAnnual_Events_UserId");
 
@@ -44,24 +39,22 @@ namespace annualevents.Migrations
                 {
                     b.Property<int>("Annual_Events_UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Annual_Events_UserId"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Age")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Annual_Events_UserId");
 
@@ -72,23 +65,21 @@ namespace annualevents.Migrations
                 {
                     b.Property<int>("ReviewId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("INTEGER");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"));
-
-                    b.Property<int?>("RecipeID")
-                        .HasColumnType("NUMBER(10)");
+                    b.Property<int>("RecipeID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ReviewText")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ReviewerUsername")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Score")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ReviewId");
 
@@ -100,10 +91,10 @@ namespace annualevents.Migrations
             modelBuilder.Entity("PreparationRecipe", b =>
                 {
                     b.Property<int>("PreparationID")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("RecipesRecipeID")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("PreparationID", "RecipesRecipeID");
 
@@ -116,16 +107,14 @@ namespace annualevents.Migrations
                 {
                     b.Property<int>("IngredientId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IngredientId"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("TEXT");
 
                     b.Property<double>("Price")
-                        .HasColumnType("BINARY_DOUBLE");
+                        .HasColumnType("REAL");
 
                     b.HasKey("IngredientId");
 
@@ -136,16 +125,14 @@ namespace annualevents.Migrations
                 {
                     b.Property<int>("PreparationID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PreparationID"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Step")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("StepNumber")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("PreparationID");
 
@@ -156,32 +143,30 @@ namespace annualevents.Migrations
                 {
                     b.Property<int>("RecipeID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecipeID"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<double>("AverageScore")
-                        .HasColumnType("BINARY_DOUBLE");
+                        .HasColumnType("REAL");
 
                     b.Property<double>("CookingTime")
-                        .HasColumnType("BINARY_DOUBLE");
+                        .HasColumnType("REAL");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Favourite")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("OwnerAnnual_Events_UserId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Servings")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("RecipeID");
 
@@ -194,18 +179,16 @@ namespace annualevents.Migrations
                 {
                     b.Property<int?>("RecipeIngredientId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("RecipeIngredientId"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("IngredientId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Quantity")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("RecipeID")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("RecipeIngredientId");
 
@@ -220,12 +203,10 @@ namespace annualevents.Migrations
                 {
                     b.Property<int>("RecipeTagId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecipeTagId"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Tag")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("RecipeTagId");
 
@@ -235,10 +216,10 @@ namespace annualevents.Migrations
             modelBuilder.Entity("RecipeRecipeTag", b =>
                 {
                     b.Property<int>("RecipeWithTagsRecipeID")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("TagsRecipeTagId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("RecipeWithTagsRecipeID", "TagsRecipeTagId");
 
@@ -264,9 +245,13 @@ namespace annualevents.Migrations
 
             modelBuilder.Entity("BusinessLayer.Review", b =>
                 {
-                    b.HasOne("RecipeInfo.Recipe", null)
+                    b.HasOne("RecipeInfo.Recipe", "Recipe")
                         .WithMany("Reviews")
-                        .HasForeignKey("RecipeID");
+                        .HasForeignKey("RecipeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Recipe");
                 });
 
             modelBuilder.Entity("PreparationRecipe", b =>
@@ -298,11 +283,11 @@ namespace annualevents.Migrations
             modelBuilder.Entity("RecipeInfo.RecipeIngredient", b =>
                 {
                     b.HasOne("RecipeInfo.Ingredient", "Ingredient")
-                        .WithMany("Recipes")
+                        .WithMany("RecipeIngredients")
                         .HasForeignKey("IngredientId");
 
                     b.HasOne("RecipeInfo.Recipe", "Recipe")
-                        .WithMany("Ingredients")
+                        .WithMany("RecipeIngredients")
                         .HasForeignKey("RecipeID");
 
                     b.Navigation("Ingredient");
@@ -332,12 +317,12 @@ namespace annualevents.Migrations
 
             modelBuilder.Entity("RecipeInfo.Ingredient", b =>
                 {
-                    b.Navigation("Recipes");
+                    b.Navigation("RecipeIngredients");
                 });
 
             modelBuilder.Entity("RecipeInfo.Recipe", b =>
                 {
-                    b.Navigation("Ingredients");
+                    b.Navigation("RecipeIngredients");
 
                     b.Navigation("Reviews");
                 });

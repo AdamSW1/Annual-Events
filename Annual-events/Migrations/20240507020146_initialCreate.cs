@@ -5,7 +5,7 @@
 namespace annualevents.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,12 +14,12 @@ namespace annualevents.Migrations
                 name: "Annual_Events_User",
                 columns: table => new
                 {
-                    AnnualEventsUserId = table.Column<int>(name: "Annual_Events_UserId", type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    Username = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    Password = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    Description = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    Age = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    AnnualEventsUserId = table.Column<int>(name: "Annual_Events_UserId", type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Username = table.Column<string>(type: "TEXT", nullable: false),
+                    Password = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Age = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,10 +30,10 @@ namespace annualevents.Migrations
                 name: "Ingredient",
                 columns: table => new
                 {
-                    IngredientId = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    Name = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    Price = table.Column<double>(type: "BINARY_DOUBLE", nullable: false)
+                    IngredientId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Price = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,10 +44,10 @@ namespace annualevents.Migrations
                 name: "Preparation",
                 columns: table => new
                 {
-                    PreparationID = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    StepNumber = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    Step = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false)
+                    PreparationID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    StepNumber = table.Column<int>(type: "INTEGER", nullable: false),
+                    Step = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -58,9 +58,9 @@ namespace annualevents.Migrations
                 name: "RecipeTag",
                 columns: table => new
                 {
-                    RecipeTagId = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    Tag = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true)
+                    RecipeTagId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Tag = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -71,15 +71,15 @@ namespace annualevents.Migrations
                 name: "Recipe",
                 columns: table => new
                 {
-                    RecipeID = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    OwnerAnnualEventsUserId = table.Column<int>(name: "OwnerAnnual_Events_UserId", type: "NUMBER(10)", nullable: false),
-                    Name = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    Description = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    CookingTime = table.Column<double>(type: "BINARY_DOUBLE", nullable: false),
-                    Servings = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    AverageScore = table.Column<double>(type: "BINARY_DOUBLE", nullable: false),
-                    Favourite = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    RecipeID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    OwnerAnnualEventsUserId = table.Column<int>(name: "OwnerAnnual_Events_UserId", type: "INTEGER", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    CookingTime = table.Column<double>(type: "REAL", nullable: false),
+                    Servings = table.Column<int>(type: "INTEGER", nullable: false),
+                    AverageScore = table.Column<double>(type: "REAL", nullable: false),
+                    Favourite = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,8 +96,8 @@ namespace annualevents.Migrations
                 name: "Annual_Events_UserRecipe",
                 columns: table => new
                 {
-                    FavRecipesRecipeID = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    FavouritedByAnnualEventsUserId = table.Column<int>(name: "FavouritedByAnnual_Events_UserId", type: "NUMBER(10)", nullable: false)
+                    FavRecipesRecipeID = table.Column<int>(type: "INTEGER", nullable: false),
+                    FavouritedByAnnualEventsUserId = table.Column<int>(name: "FavouritedByAnnual_Events_UserId", type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -120,8 +120,8 @@ namespace annualevents.Migrations
                 name: "PreparationRecipe",
                 columns: table => new
                 {
-                    PreparationID = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    RecipesRecipeID = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    PreparationID = table.Column<int>(type: "INTEGER", nullable: false),
+                    RecipesRecipeID = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -144,11 +144,11 @@ namespace annualevents.Migrations
                 name: "RecipeIngredients",
                 columns: table => new
                 {
-                    RecipeIngredientId = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    RecipeID = table.Column<int>(type: "NUMBER(10)", nullable: true),
-                    IngredientId = table.Column<int>(type: "NUMBER(10)", nullable: true),
-                    Quantity = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true)
+                    RecipeIngredientId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    RecipeID = table.Column<int>(type: "INTEGER", nullable: true),
+                    IngredientId = table.Column<int>(type: "INTEGER", nullable: true),
+                    Quantity = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -169,8 +169,8 @@ namespace annualevents.Migrations
                 name: "RecipeRecipeTag",
                 columns: table => new
                 {
-                    RecipeWithTagsRecipeID = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    TagsRecipeTagId = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    RecipeWithTagsRecipeID = table.Column<int>(type: "INTEGER", nullable: false),
+                    TagsRecipeTagId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -193,12 +193,12 @@ namespace annualevents.Migrations
                 name: "Review",
                 columns: table => new
                 {
-                    ReviewId = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    Score = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    ReviewerUsername = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    ReviewText = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    RecipeID = table.Column<int>(type: "NUMBER(10)", nullable: true)
+                    ReviewId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    RecipeID = table.Column<int>(type: "INTEGER", nullable: false),
+                    Score = table.Column<int>(type: "INTEGER", nullable: false),
+                    ReviewerUsername = table.Column<string>(type: "TEXT", nullable: false),
+                    ReviewText = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -207,7 +207,8 @@ namespace annualevents.Migrations
                         name: "FK_Review_Recipe_RecipeID",
                         column: x => x.RecipeID,
                         principalTable: "Recipe",
-                        principalColumn: "RecipeID");
+                        principalColumn: "RecipeID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
