@@ -18,7 +18,7 @@ public class ProfileTests
         // Act
         profile.UpdateProfile(user,user.Username,newPassword,user.Description,user.Age);
         // Assert
-        Assert.IsTrue(AnnualEventsUserServices.Instance.VerifyPassword(user.Password, AnnualEventsUserServices.Instance.HashPassword(newPassword)));
+        Assert.IsTrue(AnnualEventsUserServices.Instance.VerifyPassword(newPassword,user.Password));
     }
     // Checks if the profile picture is changed, might be related to GUI 
     [TestMethod]
