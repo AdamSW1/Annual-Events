@@ -45,8 +45,8 @@ public class Review
     {
         var str = new StringBuilder();
         str.Append($"- review by ");
-        str.Append($"{ReviewerUsername}");
-        str.Append($"{ReviewText}.");
+        str.Append($"{ReviewerUsername} ");
+        str.Append($"{ReviewText}. ");
         str.Append($"{Score}/5");
         return str.ToString();
     }
