@@ -445,13 +445,13 @@ class Program
         {
             Console.WriteLine($"Reviews for recipe '{recipe.Name}':");
 
-            if (recipe.Reviews.Count == 0)
+            if (AnnualEventsService.Instance.GetReviewsForRecipe(recipe).Count == 0)
             {
                 Console.WriteLine("No reviews yet.");
             }
             else
             {
-                foreach (var review in recipe.Reviews)
+                foreach (var review in AnnualEventsService.Instance.GetReviewsForRecipe(recipe))
                 {
                     Console.WriteLine(review);
                 }
