@@ -91,20 +91,20 @@ class Program
         else if (choice == options[0])
         {
             Console.WriteLine("Enter your new username:");
-            string newUsername = Console.ReadLine();
+            string newUsername = Console.ReadLine() ?? "";
             Console.WriteLine("Enter your new password:");
-            string newPassword = Console.ReadLine();
+            string newPassword = Console.ReadLine() ?? "";
             Console.WriteLine("Enter your new description:");
-            string newDescription = Console.ReadLine();
+            string newDescription = Console.ReadLine() ?? "";
             Console.WriteLine("Enter your new age:");
-            int newAge = int.Parse(Console.ReadLine());
+            int newAge = int.Parse(Console.ReadLine() ?? "");
             Profile userProfile = new Profile();
             userProfile.UpdateProfile(user, newUsername, newPassword, newDescription, newAge);
         }
         else if (choice == options[1])
         {
             Console.WriteLine("Are you sure you want to delete your account? (yes/no)");
-            string confirmDelete = Console.ReadLine()?.ToLower();
+            string confirmDelete = Console.ReadLine()?.ToLower() ?? "";
 
             if (confirmDelete == "yes")
             {
@@ -143,7 +143,7 @@ class Program
         }
         else if (choice == options[6])
         {
-            string[] searchOptions = new string[] { "By keyword" };
+            string[] searchOptions = new string[] { "By keyword", "By tags", "By time","By rating", "By servings", "By favourite count", "By owner" };
             string searchType = Utils.GetUserChoice("How do you want to search?", searchOptions) ?? "";
 
             if (string.IsNullOrEmpty(searchType))
@@ -173,6 +173,7 @@ class Program
             }
             else if (searchType == searchOptions[1] || searchType == "2")
             {
+                Console.WriteLine("Enter tags for the recipe (Type with commas):");
                 bool validInput;
                 List<RecipeTag> tags = new();
                 do
@@ -206,7 +207,7 @@ class Program
                 } while (validInput != true);                
                 Console.WriteLine(seperator);
                 List<Recipe> recipes = Search.SearchRecipesByTags(tags, RecipeServices.Instance.GetRecipes());
-                if (recipes.Count == 0)
+                if (recipes is null || recipes.Count == 0)
                 {
                     Console.Write("No recipes found with that tag");
                     return;
