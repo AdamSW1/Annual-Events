@@ -42,7 +42,7 @@ class Program
             AddExampleRecipes();
             while (true)
             {
-                Init();
+                Init(AuthenticationManager.Instance.CurrentUser);
             }
         }
         else
@@ -59,7 +59,7 @@ class Program
         AuthenticationManager.Instance.AddUser(new Annual_Events_User("user1", "password1", "Description 1", 25));
         AuthenticationManager.Instance.AddUser(new Annual_Events_User("user2", "password2", "Description 2", 30));
     }
-    public static void Init()
+    public static void Init(Annual_Events_User user)
     {
         string[] options = new string[]
         {
@@ -88,14 +88,15 @@ class Program
         else if (choice == options[0])
         {
             Console.WriteLine("Enter your new username:");
-            string Username = Console.ReadLine();
+            string newUsername = Console.ReadLine();
             Console.WriteLine("Enter your new password:");
-            string password = Console.ReadLine();
+            string newPassword = Console.ReadLine();
             Console.WriteLine("Enter your new description:");
-            string description = Console.ReadLine();
+            string newDescription = Console.ReadLine();
             Console.WriteLine("Enter your new age:");
-            string age  = Console.ReadLine();
-            UpdateProfile(Annual_Events_User user, string Username,string password,string description, int age);
+            int newAge  = int.Parse(Console.ReadLine());
+            Profile userProfile = new Profile();
+            userProfile.UpdateProfile(user, newUsername, newPassword, newDescription, newAge);
         }
         else if (choice == options[1])
         {
