@@ -52,6 +52,7 @@ namespace annualevents.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Preparation", x => x.PreparationID);
+                    
                 });
 
             migrationBuilder.CreateTable(
@@ -157,12 +158,14 @@ namespace annualevents.Migrations
                         name: "FK_RecipeIngredients_Ingredient_IngredientId",
                         column: x => x.IngredientId,
                         principalTable: "Ingredient",
-                        principalColumn: "IngredientId");
+                        principalColumn: "IngredientId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RecipeIngredients_Recipe_RecipeID",
                         column: x => x.RecipeID,
                         principalTable: "Recipe",
-                        principalColumn: "RecipeID");
+                        principalColumn: "RecipeID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

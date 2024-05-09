@@ -86,11 +86,17 @@ public class RecipeServices
     {
         Recipe? DbRecipe = DbContext.Recipe
                             .Where(r=>r.RecipeID == recipe.RecipeID)
+                            .Include(r => r.Tags)
+                            .Include(r => r.RecipeIngredients)
+                            .Include(r => r.Reviews)
+                            .Include(r => r.FavouritedBy)
+                            .Include(r => r.Preparation)
                             .FirstOrDefault();
 
         if(DbRecipe != null)
         {
-            DbContext.Recipe!.RemoveRange(DbRecipe);
+            DbContext.Recipe!.Remove(DbRecipe);
+            // DbContext.Recipe!.RemoveRange(DbRecipe);
             DbContext.SaveChanges();
         }
     }
