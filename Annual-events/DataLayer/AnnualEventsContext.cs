@@ -24,6 +24,9 @@ public class AnnualEventsContext : DbContext
     public virtual DbSet<Annual_Events_User> Annual_Events_User { get; set; }
     public virtual DbSet<Recipe> Recipe { get; set; }
     public virtual DbSet<Preparation> Preparation { get; set; }
+    public virtual DbSet<Ingredient> Ingredients { get; set; }
+    public virtual DbSet<RecipeTag> RecipeTags { get; set; }
+
     public string HostName { get; set; }
 
     public string Port { get; set; }
