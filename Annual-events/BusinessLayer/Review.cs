@@ -36,9 +36,9 @@ public class Review
 
     public Review(string reviewerUsername, string reviewText, int score)
     {
-        _score = score;
         _reviewerUsername = reviewerUsername;
         _reviewText = reviewText;
+        _score = score;
     }
 
     public override string ToString()

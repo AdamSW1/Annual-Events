@@ -355,6 +355,7 @@ class Program
         else if (choice == options[11])
         {
             GiveReviewToAnotherUser();
+            
         }
         else if (choice == options[12])
         {
@@ -680,9 +681,14 @@ class Program
             Console.Write("Enter your review: ");
             string reviewText = GetLongString();
 
-            // Add review to the selected recipe
-            selectedRecipe.AddReview(AuthenticationManager.Instance.CurrentUser, reviewText, reviewScore);
-
+            // selectedRecipe.AddReview(AuthenticationManager.Instance.CurrentUser, reviewText, reviewScore);
+            // Review review = new Review
+            // {
+            //     ReviewerUsername = AuthenticationManager.Instance.CurrentUser.Username,
+            //     ReviewText = reviewText,
+            //     Score = reviewScore
+            // };
+            // AnnualEventsService.Instance.AddReview(review);
             Console.WriteLine("Review added successfully!");
         }
         else
