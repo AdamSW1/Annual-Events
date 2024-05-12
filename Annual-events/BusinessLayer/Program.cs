@@ -125,7 +125,15 @@ class Program
         else if (choice == options[3])
         {
             Console.WriteLine($"\n{seperator}\n");
+            RecipeServices.Instance.GetRecipesCurrentUser(user).ForEach(
+                recipe =>
+                {
+                    Console.WriteLine($"\n{seperator}\n");
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
+                }
+                );
             Console.WriteLine(AuthenticationManager.Instance.CurrentUser.DisplayRecipes());
+
         }
         else if (choice == options[4])
         {

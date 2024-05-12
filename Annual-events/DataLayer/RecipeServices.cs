@@ -32,6 +32,13 @@ public class RecipeServices
         return DbContext.Recipe!
             .ToList();
     }
+
+    public List<Recipe> GetRecipesCurrentUser(Annual_Events_User user)
+    {
+        return DbContext.Recipe!
+            .Where(recipe => recipe.Owner.Username == user.Username)
+            .ToList();
+    }
     
     public List<Recipe> GetRecipesByOwner(Annual_Events_User owner)
     {
