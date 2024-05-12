@@ -57,5 +57,6 @@ public class RecipeManager
     public static void DeleteFavRecipe(Annual_Events_User user, Recipe recipeToDelete)
     {
         user.RemoveFromFavRecipe(recipeToDelete);
+        RecipeServices.Instance.DbContext.SaveChanges();
     }
 }

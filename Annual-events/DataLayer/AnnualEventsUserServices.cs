@@ -33,12 +33,12 @@ namespace DataLayer
 
         public void DeleteUser(Annual_Events_User user)
         {
-            var userRecipes = _dbContext.Recipe?.Where(r => r.Owner == user).ToList();
+            // var userRecipes = _dbContext.Recipe?.Where(r => r.Owner == user).ToList();
 
-            if (userRecipes != null && userRecipes.Any())
-            {
-                _dbContext.Recipe.RemoveRange(userRecipes);
-            }
+            // if (userRecipes != null && userRecipes.Any())
+            // {
+            //     _dbContext.Recipe.RemoveRange(userRecipes);
+            // }
 
             _dbContext.Annual_Events_User.Remove(user);
             _dbContext.SaveChanges();

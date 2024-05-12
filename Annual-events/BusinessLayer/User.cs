@@ -1,9 +1,5 @@
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using DataLayer;
-using Microsoft.EntityFrameworkCore;
 using RecipeInfo;
-using DataLayer;
 namespace BusinessLayer;
 public class Annual_Events_User
 {
@@ -18,7 +14,7 @@ public class Annual_Events_User
     }
 
     //[InverseProperty("FavouritedBy")]
-    private List<Recipe> _favRecipes = new List<Recipe>();
+    private List<Recipe>? _favRecipes = new List<Recipe>();
     public List<Recipe> FavRecipes
     {
         get
@@ -141,7 +137,7 @@ public class Annual_Events_User
     }
     public void RemoveFromFavRecipe(Recipe recipe)
     {
-        _favRecipes.Remove(recipe);
+        FavRecipes.Remove(recipe);
     }
 
     public void DeleteRecipe(Recipe recipe)
