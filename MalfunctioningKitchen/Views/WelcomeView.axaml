@@ -23,11 +23,18 @@
     <StackPanel HorizontalAlignment="Center"
                   VerticalAlignment="Center"
                   Spacing="25">
-        <TextBlock FontSize="18" FontWeight="Bold">Welcome</TextBlock>
+        <Panel>
+          <Rectangle Height="210" Width="150" Fill="LightGray"/>
+          <Image Margin="20" Height="200" Width="200" 
+                Source="/Assets/avalonia-logo.ico"/>
+        </Panel>
+        <TextBlock FontSize="25" FontWeight="Bold">Malfunctioning Kitchen</TextBlock>
         <Button Command="{Binding $parent[Window].DataContext.NavigateToRegister}"
+                HorizontalAlignment="Center"
                 Content="Register"
                 x:CompileBindings="False"/>
         <Button Command="{Binding $parent[Window].DataContext.NavigateToLogin}"
+                HorizontalAlignment="Center"
                 Content="Login"
                 x:CompileBindings="False"/>
     </StackPanel>
