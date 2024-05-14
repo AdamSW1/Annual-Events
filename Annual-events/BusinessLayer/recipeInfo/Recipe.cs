@@ -290,7 +290,7 @@ public class Recipe
         returnStr += "Ingredients:\n";
         foreach (var recipeIngredient in RecipeIngredients)
         {
-            returnStr += $"{recipeIngredient.Quantity} {recipeIngredient.Ingredient}\n";
+            returnStr += $"\t{recipeIngredient.Quantity} {recipeIngredient.Ingredient}\n";
         }
         returnStr += $"Preparation:\n";
         Preparation.ForEach(prepStep => returnStr += $"\t{prepStep.StepNumber} - {prepStep.Step.Trim()}\n");
