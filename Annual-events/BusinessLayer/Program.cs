@@ -671,7 +671,7 @@ class Program
         Console.Write("Enter the name of the recipe you want to review: ");
         string recipeName = GetName();
 
-        Recipe selectedRecipe = GetRecipeByName(recipeList, recipeName)!;
+        Recipe? selectedRecipe = RecipeServices.Instance.GetRecipe(recipeName);
 
         if (selectedRecipe != null)
         {
@@ -681,14 +681,9 @@ class Program
             Console.Write("Enter your review: ");
             string reviewText = GetLongString();
 
-            // selectedRecipe.AddReview(AuthenticationManager.Instance.CurrentUser, reviewText, reviewScore);
-            // Review review = new Review
-            // {
-            //     ReviewerUsername = AuthenticationManager.Instance.CurrentUser.Username,
-            //     ReviewText = reviewText,
-            //     Score = reviewScore
-            // };
-            // AnnualEventsService.Instance.AddReview(review);
+            // Add review to the selected recipe
+            selectedRecipe.AddReview(AuthenticationManager.Instance.CurrentUser, reviewText, reviewScore);
+
             Console.WriteLine("Review added successfully!");
         }
         else
