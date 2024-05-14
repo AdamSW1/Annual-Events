@@ -9,12 +9,12 @@ public class Annual_Events_User
     private List<Recipe> _recipes = new List<Recipe>();
     public List<Recipe> Recipes
     {
-        get { return _recipes; }
+        get { return RecipeServices.Instance.GetRecipesByOwner(this); }
         set { _recipes = value; }
     }
 
     //[InverseProperty("FavouritedBy")]
-    private List<Recipe> _favRecipes = new List<Recipe>();
+    private List<Recipe>? _favRecipes = new List<Recipe>();
     public List<Recipe> FavRecipes
     {
         get
@@ -149,7 +149,7 @@ public class Annual_Events_User
         string returnStr = "";
         returnStr += $"Recipes for user: {_username}\n";
 
-        foreach (var recipe in _recipes)
+        foreach (var recipe in Recipes)
         {
             returnStr += "\n";
             returnStr += recipe.DisplayRecipeInfo();

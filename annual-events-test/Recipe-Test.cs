@@ -10,13 +10,14 @@ namespace annual_events_test;
 [TestClass]
 public class RecipeTest
 {
-    private Recipe CreateExampleRecipe(Annual_Events_User cur){
+    private Recipe CreateExampleRecipe(Annual_Events_User cur)
+    {
         Ingredient flour = new("flour", 7);
         Ingredient egg = new("egg", 3);
         List<Ingredient> ingredients = new() { flour, egg };
-        List<RecipeIngredient> recipeIngredients= ingredients.Select(ingredient => new RecipeIngredient{Ingredient = ingredient,Quantity ="4"}).ToList();
+        List<RecipeIngredient> recipeIngredients = ingredients.Select(ingredient => new RecipeIngredient { Ingredient = ingredient, Quantity = "4" }).ToList();
 
-        List<RecipeTag> tags = new List<RecipeTag>(){new("cake"),new("chocolate")};
+        List<RecipeTag> tags = new List<RecipeTag>() { new("cake"), new("chocolate") };
         Recipe exampleRecipe = new("Chocolate cake",
                                             "A simple chocolate cake",
                                             120,
@@ -30,7 +31,7 @@ public class RecipeTest
                                             recipeIngredients,
                                             0,
                                             cur,
-                                            tags,new List<Review> { new("reviewer1", "review1",4)}
+                                            tags, new List<Review> { new("reviewer1", "review1", 4) }
                                             );
 
         return exampleRecipe;
@@ -75,7 +76,7 @@ public class RecipeTest
     }
 
 
-    
+
     [TestMethod]
     public void AddRecipeToFav_ValidInput_Success()
     {
@@ -112,8 +113,8 @@ public class RecipeTest
     public void AddToFavRecipeTest()
     {
         //arrange
-        Annual_Events_User user1 = new("Test","TestPass","description",20);
-        Annual_Events_User user2 = new("Test","TestPass","description",20);
+        Annual_Events_User user1 = new("Test", "TestPass", "description", 20);
+        Annual_Events_User user2 = new("Test", "TestPass", "description", 20);
         Recipe test = CreateExampleRecipe(user1);
 
         //act
@@ -129,14 +130,14 @@ public class RecipeTest
     public void RemoveFromFavRecipeTest()
     {
         //arrange
-        Annual_Events_User user1 = new("Test","TestPass","description",20);
-        Annual_Events_User user2 = new("Test","TestPass","description",20);
+        Annual_Events_User user1 = new("Test", "TestPass", "description", 20);
+        Annual_Events_User user2 = new("Test", "TestPass", "description", 20);
         Recipe test = CreateExampleRecipe(user1);
 
         //act
         user2.AddToFavRecipe(test);
         user2.RemoveFromFavRecipe(test);
-        
+
         //assert
         CollectionAssert.DoesNotContain(user2.FavRecipes, test);
 
@@ -153,14 +154,14 @@ public class RecipeTest
         string updatedDescription = "Updated Test Description";
         double updatedCookingTime = 75;
         List<Preparation> updatedPreparation = new(){
-            new Preparation(1, "do")    
+            new Preparation(1, "do")
         };
         int updatedServings = 6;
         int updatedRatings = 4;
         // Act
         // Update the recipe
         bool result = user.UpdateRecipe(test.Name, updatedRecipeName, updatedDescription, updatedCookingTime, updatedPreparation, updatedServings, updatedRatings);
-        
+
         // Assert
         // Annual_Events_User should only have 1 recipe added
         Recipe updatedRecipe = user.Recipes.FirstOrDefault(r => r.Name == updatedRecipeName)!;

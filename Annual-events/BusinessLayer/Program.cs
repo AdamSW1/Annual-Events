@@ -125,7 +125,15 @@ class Program
         else if (choice == options[3])
         {
             Console.WriteLine($"\n{seperator}\n");
+            RecipeServices.Instance.GetRecipesCurrentUser(user).ForEach(
+                recipe =>
+                {
+                    Console.WriteLine($"\n{seperator}\n");
+                    Console.WriteLine(recipe.DisplayRecipeInfo());
+                }
+                );
             Console.WriteLine(AuthenticationManager.Instance.CurrentUser.DisplayRecipes());
+
         }
         else if (choice == options[4])
         {
@@ -206,7 +214,7 @@ class Program
 
                 } while (validInput != true);                
                 Console.WriteLine(seperator);
-                List<Recipe> recipes = Search.SearchRecipesByTags(tags, RecipeServices.Instance.GetRecipes());
+                List<Recipe>? recipes = Search.SearchRecipesByTags(tags, RecipeServices.Instance.GetRecipes());
                 if (recipes is null || recipes.Count == 0)
                 {
                     Console.Write("No recipes found with that tag");
@@ -347,6 +355,7 @@ class Program
         else if (choice == options[11])
         {
             GiveReviewToAnotherUser();
+            
         }
         else if (choice == options[12])
         {
@@ -549,7 +558,7 @@ class Program
         Console.Write("New Servings: ");
         recipeToUpdate.Servings = GetInt();
 
-        RecipeServices.Instance.DbContext.SaveChanges();
+        AnnualEventsContext.Instance.SaveChanges();
         Console.WriteLine($"\nRecipe '{recipeName}' updated successfully!");
     }
 
@@ -756,21 +765,22 @@ class Program
         //check if the recipes already exist
         Recipe? checkRecipe1Exists = RecipeServices.Instance.GetRecipe(exampleRecipe.Name);
         Recipe? checkRecipe2Exists = RecipeServices.Instance.GetRecipe(exampleRecipe2.Name);
-        if (checkRecipe1Exists is null || checkRecipe2Exists is null)
+        if (checkRecipe1Exists is null)
         {
             RecipeManager.AddRecipe(exampleRecipe);
+            AnnualEventsContext.Instance.SaveChanges();
+        }
+        if (checkRecipe2Exists is null)
+        {
             RecipeManager.AddRecipe(exampleRecipe2);
             AnnualEventsContext.Instance.SaveChanges();
-            return;
         }
-        else if (exampleRecipe.Name.Equals(checkRecipe1Exists.Name)
-            || exampleRecipe2.Name.Equals(checkRecipe2Exists.Name))
-        {
-            return;
-        }
-        RecipeManager.AddRecipe(exampleRecipe);
-        RecipeManager.AddRecipe(exampleRecipe2);
-        AnnualEventsContext.Instance.SaveChanges();
+
+        return;
+        
+        // RecipeManager.AddRecipe(exampleRecipe);
+        // RecipeManager.AddRecipe(exampleRecipe2);
+        // AnnualEventsContext.Instance.SaveChanges();
         // AnnualEventsService.Instance.AddRecipe(exampleRecipe);
 
     }

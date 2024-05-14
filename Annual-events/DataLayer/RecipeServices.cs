@@ -32,6 +32,13 @@ public class RecipeServices
         return DbContext.Recipe!
             .ToList();
     }
+
+    public List<Recipe> GetRecipesCurrentUser(Annual_Events_User user)
+    {
+        return DbContext.Recipe!
+            .Where(recipe => recipe.Owner.Username == user.Username)
+            .ToList();
+    }
     
     public List<Recipe> GetRecipesByOwner(Annual_Events_User owner)
     {
@@ -86,11 +93,17 @@ public class RecipeServices
     {
         Recipe? DbRecipe = DbContext.Recipe
                             .Where(r=>r.RecipeID == recipe.RecipeID)
+                            .Include(r => r.Tags)
+                            .Include(r => r.RecipeIngredients)
+                            .Include(r => r.Reviews)
+                            .Include(r => r.FavouritedBy)
+                            .Include(r => r.Preparation)
                             .FirstOrDefault();
 
         if(DbRecipe != null)
         {
-            DbContext.Recipe!.RemoveRange(DbRecipe);
+            DbContext.Recipe!.Remove(DbRecipe);
+            // DbContext.Recipe!.RemoveRange(DbRecipe);
             DbContext.SaveChanges();
         }
     }
