@@ -627,8 +627,6 @@ class Program
         return true;
     }
 
-
-
     public static void ViewReviewsFromUserRecipes()
     {
         Console.WriteLine("Reviews from your recipes:");
@@ -776,11 +774,6 @@ class Program
         }
 
         return;
-        
-        // RecipeManager.AddRecipe(exampleRecipe);
-        // RecipeManager.AddRecipe(exampleRecipe2);
-        // AnnualEventsContext.Instance.SaveChanges();
-        // AnnualEventsService.Instance.AddRecipe(exampleRecipe);
 
     }
 

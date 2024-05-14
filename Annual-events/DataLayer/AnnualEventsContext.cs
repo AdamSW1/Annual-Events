@@ -62,10 +62,6 @@ public class AnnualEventsContext : DbContext
           $"User Id={UserName}; Password={Password}");
     }
 
-
-    // protected override void OnConfiguring(DbContextOptionsBuilder options)
-    //     => options.UseSqlite($"Data Source={DbPath}");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Recipe>()

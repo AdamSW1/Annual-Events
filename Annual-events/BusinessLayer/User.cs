@@ -5,7 +5,6 @@ public class Annual_Events_User
 {
 
     public int Annual_Events_UserId { get; set; }
-    // [InverseProperty("Owner")]
     private List<Recipe> _recipes = new List<Recipe>();
     public List<Recipe> Recipes
     {
@@ -13,7 +12,6 @@ public class Annual_Events_User
         set { _recipes = value; }
     }
 
-    //[InverseProperty("FavouritedBy")]
     private List<Recipe>? _favRecipes = new List<Recipe>();
     public List<Recipe> FavRecipes
     {
@@ -93,7 +91,6 @@ public class Annual_Events_User
         _password = password;
         _description = description;
         _age = age;
-        hashPassword(password);
     }
 
 
@@ -157,15 +154,6 @@ public class Annual_Events_User
 
         return returnStr;
     }
-
-    public void StepVerification()
-    {
-    } // optional but asks them 2 specific infos
-
-    public void hashPassword(string password)
-    {
-        // algo here
-    } // hashes their password
 
     public bool Authentication(string enteredUsername, string enteredPassword)
     {
