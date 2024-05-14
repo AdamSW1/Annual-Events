@@ -14,7 +14,7 @@ public class Annual_Events_User
     }
 
     //[InverseProperty("FavouritedBy")]
-    private List<Recipe> _favRecipes = new List<Recipe>();
+    private List<Recipe>? _favRecipes = new List<Recipe>();
     public List<Recipe> FavRecipes
     {
         get

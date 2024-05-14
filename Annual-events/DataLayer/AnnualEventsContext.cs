@@ -66,19 +66,22 @@ public class AnnualEventsContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Recipe>()
-                .HasOne(recipe => recipe.Owner)
-                .WithMany(user => user.Recipes);
+            .HasOne(recipe => recipe.Owner)
+            .WithMany(user => user.Recipes)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Annual_Events_User>()
             .HasMany(user => user.Recipes)
-            .WithOne(recipe => recipe.Owner);
+            .WithOne(recipe => recipe.Owner)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Recipe>()
-               .HasMany(recipe => recipe.FavouritedBy)
-               .WithMany(user => user.FavRecipes);
-
+            .HasMany(recipe => recipe.FavouritedBy)
+            .WithMany(user => user.FavRecipes);
+            
         modelBuilder.Entity<Annual_Events_User>()
             .HasMany(user => user.FavRecipes)
             .WithMany(recipe => recipe.FavouritedBy);
+            
     }
 }
