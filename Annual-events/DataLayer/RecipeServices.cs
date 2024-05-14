@@ -19,6 +19,12 @@ public class RecipeServices
     {
         var dbRecipe =  DbContext.Recipe
             .Where(r=>r.Name.ToLower() == name.ToLower())
+            .Include(r => r.Tags)
+            .Include(r => r.RecipeIngredients)
+            .ThenInclude(ri => ri.Ingredient)
+            .Include(r => r.Reviews)
+            .Include(r => r.FavouritedBy)
+            .Include(r => r.Preparation)
             .FirstOrDefault();
         if(dbRecipe is null)
         {
@@ -30,6 +36,12 @@ public class RecipeServices
     public List<Recipe> GetRecipes()
     {
         return DbContext.Recipe!
+            .Include(r => r.Tags)
+            .Include(r => r.RecipeIngredients)
+            .ThenInclude(ri => ri.Ingredient)
+            .Include(r => r.Reviews)
+            .Include(r => r.FavouritedBy)
+            .Include(r => r.Preparation)
             .ToList();
     }
 
@@ -37,6 +49,12 @@ public class RecipeServices
     {
         return DbContext.Recipe!
             .Where(recipe => recipe.Owner.Username == user.Username)
+            .Include(r => r.Tags)
+            .Include(r => r.RecipeIngredients)
+            .ThenInclude(ri => ri.Ingredient)
+            .Include(r => r.Reviews)
+            .Include(r => r.FavouritedBy)
+            .Include(r => r.Preparation)
             .ToList();
     }
     
@@ -44,6 +62,12 @@ public class RecipeServices
     {
         return DbContext.Recipe!
             .Where(recipe => recipe.Owner.Username == owner.Username)
+            .Include(r => r.Tags)
+            .Include(r => r.RecipeIngredients)
+            .ThenInclude(ri => ri.Ingredient)
+            .Include(r => r.Reviews)
+            .Include(r => r.FavouritedBy)
+            .Include(r => r.Preparation)
             .ToList();
     }
 
@@ -51,6 +75,12 @@ public class RecipeServices
     {
         return DbContext.Recipe!
             .Where(recipe => recipe.AverageScore == rating)
+            .Include(r => r.Tags)
+            .Include(r => r.RecipeIngredients)
+            .ThenInclude(ri => ri.Ingredient)
+            .Include(r => r.Reviews)
+            .Include(r => r.FavouritedBy)
+            .Include(r => r.Preparation)
             .ToList();
     }
 
@@ -58,6 +88,12 @@ public class RecipeServices
     {
         return DbContext.Recipe!
             .Where(recipe => recipe.Servings == servings)
+            .Include(r => r.Tags)
+            .Include(r => r.RecipeIngredients)
+            .ThenInclude(ri => ri.Ingredient)
+            .Include(r => r.Reviews)
+            .Include(r => r.FavouritedBy)
+            .Include(r => r.Preparation)
             .ToList();
     }
 
@@ -65,6 +101,12 @@ public class RecipeServices
     {
         return DbContext.Recipe!
             .Where(recipe => recipe.CookingTime >= time -3 && recipe.CookingTime <= time + 3)
+            .Include(r => r.Tags)
+            .Include(r => r.RecipeIngredients)
+            .ThenInclude(ri => ri.Ingredient)
+            .Include(r => r.Reviews)
+            .Include(r => r.FavouritedBy)
+            .Include(r => r.Preparation)
             .ToList();
     }
 
@@ -72,12 +114,24 @@ public class RecipeServices
     {
         return DbContext.Recipe!
             .Where(recipe => recipe.Favourite == favourite)
+            .Include(r => r.Tags)
+            .Include(r => r.RecipeIngredients)
+            .ThenInclude(ri => ri.Ingredient)
+            .Include(r => r.Reviews)
+            .Include(r => r.FavouritedBy)
+            .Include(r => r.Preparation)
             .ToList();
     }
     public List<Recipe> GetRecipesFavByUser(Annual_Events_User user)
     {
         return DbContext.Recipe!
             .Where(recipe => recipe.FavouritedBy!.Any(favUser => favUser.Username == user.Username))
+            .Include(r => r.Tags)
+            .Include(r => r.RecipeIngredients)
+            .ThenInclude(ri => ri.Ingredient)
+            .Include(r => r.Reviews)
+            .Include(r => r.FavouritedBy)
+            .Include(r => r.Preparation)
             .ToList();
     }
     public void AddRecipe(Recipe recipe) 

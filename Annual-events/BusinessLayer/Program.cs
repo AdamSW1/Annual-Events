@@ -671,7 +671,7 @@ class Program
         Console.Write("Enter the name of the recipe you want to review: ");
         string recipeName = GetName();
 
-        Recipe selectedRecipe = GetRecipeByName(recipeList, recipeName)!;
+        Recipe? selectedRecipe = RecipeServices.Instance.GetRecipe(recipeName);
 
         if (selectedRecipe != null)
         {
@@ -683,7 +683,6 @@ class Program
 
             // Add review to the selected recipe
             selectedRecipe.AddReview(AuthenticationManager.Instance.CurrentUser, reviewText, reviewScore);
-            RecipeServices.Instance.DbContext.SaveChanges();
 
             Console.WriteLine("Review added successfully!");
         }
