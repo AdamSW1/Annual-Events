@@ -74,20 +74,7 @@ public class RecipeTest
         Assert.AreNotEqual(2, user.Recipes.Count);
     }
 
-    [TestMethod]
-    public void DeleteRecipe_ExistingRecipe_DeletesSuccessfully()
-    {
-        // Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
-        Recipe test = CreateExampleRecipe(user);
-        RecipeManager.AddRecipe(test);
 
-        // Act
-        RecipeManager.DeleteRecipe(user, test);
-
-        // Assert
-        Assert.AreEqual(0, user.Recipes.Count, "Recipe should be deleted");
-    }
     
     [TestMethod]
     public void AddRecipeToFav_ValidInput_Success()

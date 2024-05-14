@@ -674,6 +674,7 @@ class Program
 
             // Add review to the selected recipe
             selectedRecipe.AddReview(AuthenticationManager.Instance.CurrentUser, reviewText, reviewScore);
+            RecipeServices.Instance.DbContext.SaveChanges();
 
             Console.WriteLine("Review added successfully!");
         }
@@ -845,8 +846,8 @@ class Program
                     {
                         return;
                     }
-                    stepnum++;
                     preparation.Add(new Preparation(stepnum, prep));
+                    stepnum++;
                 });
                 validInput = true;
 
