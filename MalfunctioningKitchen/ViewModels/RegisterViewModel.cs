@@ -1,4 +1,5 @@
 using System;
+using System.Drawing.Printing;
 using System.Reactive;
 using BusinessLayer;
 using ReactiveUI;
@@ -30,7 +31,7 @@ public class RegisterViewModel : ViewModelBase
     {
       if (value == null)
       {
-        throw new ArgumentNullException(nameof(Password));
+        throw new ArgumentNullException(nameof(Password) + "Joe");
       }
       else if (value.Length < 5
         || value.Length > 100)
@@ -42,6 +43,7 @@ public class RegisterViewModel : ViewModelBase
       }
 
       this.RaiseAndSetIfChanged(ref _password, value);
+      UserToRegister.Password = Password;
     }
   }
 
@@ -61,6 +63,38 @@ public class RegisterViewModel : ViewModelBase
     }
   }
 
+  private int? _age;
+  public int? Age
+  {
+    get => _age;
+    set
+    {
+      if (value < 0 || value > 200)
+      {
+        throw new ArgumentException("Must be between 0 and 200",
+          nameof(Age));
+      }
+
+      this.RaiseAndSetIfChanged(ref _age, value);
+      UserToRegister.Age = (int)Age;
+    }
+  }
+  private string? _description;
+  public string? Description
+  {
+    get => _description;
+    set
+    {
+      if (value == null)
+      {
+        value = "";
+      }
+      this.RaiseAndSetIfChanged(ref _description, value);
+      UserToRegister.Description = Description;
+    }
+
+  }
+
   private string? _errorMessage;
   public string? ErrorMessage
   {
@@ -76,6 +110,7 @@ public class RegisterViewModel : ViewModelBase
     {
       try
       {
+        Console.WriteLine(Password + "asudhias");
         AuthenticationManager.Instance.AddUser(UserToRegister);
         ErrorMessage = "";
       }

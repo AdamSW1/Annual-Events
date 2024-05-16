@@ -40,6 +40,16 @@
       <TextBox Text="{Binding ConfirmPassword}"
                 Watermark="Confirm your password"
                 PasswordChar="*"/>
+      <TextBlock Margin="0 5">
+        Age:
+      </TextBlock>
+      <TextBox Text="{Binding Age}"
+                Watermark="Enter your age"/>
+      <TextBlock Margin="0 5">
+        Description:
+      </TextBlock>
+      <TextBox Text="{Binding Description}"
+                Watermark="Enter your Description"/>
     </StackPanel>
   </DockPanel>
 </UserControl>
