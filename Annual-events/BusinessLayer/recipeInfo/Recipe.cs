@@ -12,7 +12,6 @@ public class Recipe
 
     public int RecipeID {get;set;}
 
-    //[ForeignKey("Owner")]
     public int? OwnerID {
         get{ return _owner.Annual_Events_UserId;}
         }
@@ -23,15 +22,10 @@ public class Recipe
             return _owner;
         }
         set{
-            // if(value == null){
-            //     throw new ArgumentException("Owner cant be null");
-            // }
             _owner = value;
         }
     }
 
-    //[ForeignKey("FavouritedBy")]
-    // public int? FavouritedByID {get;set;}
     private List<Annual_Events_User>? _favouritedBy = new List<Annual_Events_User>();
     public List<Annual_Events_User>? FavouritedBy
     {
@@ -257,21 +251,14 @@ public class Recipe
     {
         return HashCode.Combine(_name, _description, _owner);
     }
-    public void RateRecipe()
-    {
-        // Rate a recipe
-        throw new NotImplementedException();
-    }
 
     public void AddFavourite()
     {
         _favourite += 1;
-        //UpdateRecipe();
     }
     public void RemoveFavourite()
     {
         _favourite -= 1;
-        //UpdateRecipe();
     }
 
     public void AddFavouriteBy(Annual_Events_User user)

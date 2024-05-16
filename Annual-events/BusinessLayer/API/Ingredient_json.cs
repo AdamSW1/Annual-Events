@@ -15,20 +15,5 @@ public class Ingredient_json
     public Dictionary<string, USDPrice>? price { get; set; }
     public string? image { get; set; }
 
-
-    // extra data
-    // public string? id { get; set; }
-    // public string? country { get; set; }
-    // public string? seasonal { get; set; }
-    // public string? Category { get; set; } //cannot be accessed
-    // public string? Brand {get; set;} // cannot be accessed
-    // public string? weight { get; set;}
-    // public bool hot{ get; set; }
-    // public bool cold{ get; set; }
-    // public bool frozen{ get; set; }
-    // public string? description { get; set; }
-    // public Dictionary<string, string>? nutrition { get; set; }
-    // public string? ingredients { get; set; }
-
 }
 

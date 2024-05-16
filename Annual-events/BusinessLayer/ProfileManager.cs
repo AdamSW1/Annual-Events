@@ -19,7 +19,6 @@ class Profile// The Profile class is used to manage a Annual_Events_User
         user.Password = AnnualEventsUserServices.Instance.HashPassword(password);
         user.Description = description;
         user.Age = age;
-        // AnnualEventsUserServices.Instance.HashPassword(user.Password);
         AnnualEventsUserServices.Instance.DbContext.SaveChanges();
     }
     public void UpdatePFP() // Updates the profile picture of the user
