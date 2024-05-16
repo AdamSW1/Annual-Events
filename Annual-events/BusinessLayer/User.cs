@@ -26,8 +26,8 @@ public class Annual_Events_User
         set { _favRecipes = value; }
     }
 
-    private string _username;
-    public string Username
+    private string? _username;
+    public string? Username
     {
         get
         {
@@ -92,6 +92,8 @@ public class Annual_Events_User
         _description = description;
         _age = age;
     }
+
+    public Annual_Events_User(){}
 
 
     // override object.Equals

@@ -1,6 +1,5 @@
 using System;
 using Avalonia.Controls;
-using RecipeInfo;
 using Avalonia.Controls.Templates;
 using MalfunctioningKitchen.ViewModels;
 
