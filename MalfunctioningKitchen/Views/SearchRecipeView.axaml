@@ -1,15 +1,35 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:styles="using:MalfunctioningKitchen.Styles"
              xmlns:vm="using:MalfunctioningKitchen.ViewModels"
              x:Class="MalfunctioningKitchen.Views.SearchRecipeView"
              x:DataType="vm:SearchRecipeViewModel">
    
-  <StackPanel HorizontalAlignment="Center"
-              VerticalAlignment="Center"
-              Spacing="25">
-    <TextBlock Classes="heading" Text="Search Recipes" />
-    <TextBox Width="300" Watermark="Enter recipe name..." />
-    <Button Classes="primary" Content="Search"/>
-  </StackPanel>
+    <StackPanel HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="25">
+        <TextBlock Classes="heading" Text="Search Recipes" />
+        <TextBox Width="300" Watermark="Enter recipe name..." Text="{Binding SearchKeyword, Mode=TwoWay}" />
+        <Button Classes="search-button" Content="Search by Keyword" Command="{Binding SearchByKeywordCommand}" />
+        <Button Content="Search by Tag" Command="{Binding SearchByTagCommand}" />
+        <Button Content="Search by Time" Command="{Binding SearchByTimeCommand}" />
+        <Button Content="Search by Rating" Command="{Binding SearchByRatingCommand}" />
+        <Button Content="Search by Servings" Command="{Binding SearchByServingsCommand}" />
+        <Button Content="Search by Favorites" Command="{Binding SearchByFavoritesCommand}" />
+        <Button Content="Search by Owner" Command="{Binding SearchByOwnerCommand}" />
+        <TextBlock Text="{Binding NotificationMessage}" />
+
+        <ListBox ItemsSource="{Binding SearchedRecipes}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                        <TextBlock Text="{Binding Description}" />
+                        
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+    </StackPanel>
 </UserControl>
