@@ -1,64 +1,76 @@
 ﻿using System;
 using ReactiveUI;
+using System.Reactive;
+using System.Windows.Input;
 
-namespace MalfunctioningKitchen.ViewModels;
-
-public class MainWindowViewModel : ViewModelBase
+namespace MalfunctioningKitchen.ViewModels
 {
-  private ViewModelBase _contentViewModel;
-
-  public ViewModelBase ContentViewModel
-  {
-    get => _contentViewModel;
-    private set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
-  }
-
-  public MainWindowViewModel()
-  {
-    _contentViewModel = new WelcomeViewModel();
-  }
-
-  public void NavigateToWelcome()
-  {
-    ContentViewModel = new WelcomeViewModel();
-  }
-
-  public void NavigateToRegister()
-  {
-    RegisterViewModel viewModel = new();
-
-    viewModel.Register.Subscribe(user =>
+    public class MainWindowViewModel : ViewModelBase
     {
-      if (user != null)
-      {
-        NavigateToWelcome();
-      }
-    });
+        private ViewModelBase _contentViewModel;
 
-    ContentViewModel = viewModel;
-  }
-  
-    public void NavigateToLogin()
-    {
-        LoginViewModel viewModel = new();
-
-        viewModel.Login.Subscribe(user =>
+        public ViewModelBase ContentViewModel
         {
-            if (user != null)
+            get => _contentViewModel;
+            private set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
+        }
+
+        public ICommand NavigateToNewPageCommand { get; }
+        public MainWindowViewModel()
+        {
+            _contentViewModel = new WelcomeViewModel();
+            NavigateToNewPageCommand = ReactiveCommand.Create(NavigateToNewPage);
+        }
+
+        public void NavigateToWelcome()
+        {
+            ContentViewModel = new WelcomeViewModel();
+        }
+
+        public void NavigateToRegister()
+        {
+            RegisterViewModel viewModel = new RegisterViewModel();
+
+            viewModel.Register.Subscribe(user =>
             {
-                NavigateToLoggedIn();
-            }
-        });
+                if (user != null)
+                {
+                    NavigateToWelcome();
+                }
+            });
 
-        ContentViewModel = viewModel;
-    }
+            ContentViewModel = viewModel;
+        }
 
-    public void NavigateToLoggedIn()
-    {
-      LoggedInViewModel viewModel = new();
+        public void NavigateToLogin()
+        {
+            LoginViewModel viewModel = new LoginViewModel();
 
-      viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+            viewModel.Login.Subscribe(user =>
+            {
+                if (user != null)
+                {
+                    NavigateToLoggedIn();
+                }
+            });
 
-      ContentViewModel = viewModel;
+            ContentViewModel = viewModel;
+        }
+
+        public void NavigateToLoggedIn()
+        {
+            LoggedInViewModel viewModel = new LoggedInViewModel();
+
+            viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+
+            viewModel.NavigateToNewPageCommand.Subscribe(_ => NavigateToNewPage());
+
+            ContentViewModel = viewModel;
+        }
+
+        private void NavigateToNewPage()
+        {
+            ContentViewModel = new SearchRecipeViewModel();
+        }
     }
 }
