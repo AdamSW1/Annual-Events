@@ -3,18 +3,37 @@
              xmlns:vm="using:MalfunctioningKitchen.ViewModels"
              x:Class="MalfunctioningKitchen.Views.UpdateProfileView"
              x:DataType="vm:UpdateProfileViewModel">
-
     <StackPanel HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Spacing="25">
-        <TextBlock Text="Update Profile" Classes="heading"/>
-        
-        <TextBox Width="300" Watermark="Enter username..." Text="{Binding Username, Mode=TwoWay}" />
-        <TextBox Width="300" Watermark="Enter password..." Text="{Binding Password, Mode=TwoWay}" />
-        <TextBox Width="300" Watermark="Enter description..." Text="{Binding Description, Mode=TwoWay}" />
-        <TextBox Width="300" Watermark="Enter age..." Text="{Binding Age, Mode=TwoWay}" />
-
-        <Button Content="Update Profile" Command="{Binding UpdateProfileCommand}" />
+        <TextBlock Text="Update Profile"
+                   Classes="heading" />
+        <TextBlock Margin="0 0 0 -20">            
+            Username:
+        </TextBlock>
+        <TextBox Width="300"
+                 Watermark="Enter username..."
+                 Text="{Binding Username, Mode=TwoWay}" />
+        <TextBlock Margin="0 0 0 -20">            
+            Description:
+        </TextBlock>
+        <TextBox Width="300"
+                 Watermark="Enter description..."
+                 Text="{Binding Description, Mode=TwoWay}" />
+        <TextBlock Margin="0 0 0 -20">            
+            Age:
+        </TextBlock>
+        <TextBox Width="300"
+                 Watermark="Enter age..."
+                 Text="{Binding Age, Mode=TwoWay}" />
+        <TextBlock Margin="0 0 0 -20">            
+            Password:
+        </TextBlock>
+        <TextBox Width="300"
+                 Watermark="Enter password..."
+                 Text="{Binding Password, Mode=TwoWay}" />
+        <Button Content="Update Profile"
+                Command="{Binding UpdateProfileCommand}" />
         <TextBlock Text="{Binding NotificationMessage}" />
     </StackPanel>
 </UserControl>
