@@ -1,4 +1,3 @@
-
 using System.Reactive;
 using DataLayer;
 using BusinessLayer;
@@ -10,6 +9,9 @@ public class LoggedInViewModel : ViewModelBase{
     public string Greeting {get;}
     
     public ReactiveCommand<Unit,Unit> Logout{get;}
+    public ReactiveCommand<Unit, Unit> NavigateToSearchRecipeCommand { get; }
+
+    public ReactiveCommand<Unit, Unit> NavigateToUpdateProfileCommand{ get; }
 
     public LoggedInViewModel(){
         Logout = ReactiveCommand.Create(() =>{
@@ -17,5 +19,16 @@ public class LoggedInViewModel : ViewModelBase{
         });
 
         Greeting =$"Hello {AuthenticationManager.Instance.CurrentUser.Username}";
+
+        NavigateToSearchRecipeCommand = ReactiveCommand.Create(() =>
+        {
+            
+        });
+
+        NavigateToUpdateProfileCommand = ReactiveCommand.Create
+        (() =>
+        {
+
+        });
     }
 }

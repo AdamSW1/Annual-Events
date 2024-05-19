@@ -1,0 +1,22 @@
+/* styles.css */
+body {
+    background-color: rgb(85, 11, 11);
+}
+.heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.search-box {
+    width: 300px;
+    /* Add more styles as needed */
+}
+
+.search-button {
+    background-color: #0078D4;
+    color: white;
+    padding: 10px;
+    margin: 5px;
+    /* Add more styles as needed */
+}
