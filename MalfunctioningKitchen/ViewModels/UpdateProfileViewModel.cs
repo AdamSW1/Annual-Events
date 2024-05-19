@@ -52,7 +52,7 @@ namespace MalfunctioningKitchen.ViewModels
         }
 
         public ReactiveCommand<Unit, Unit> NavigateToSearchRecipeCommand { get; }
-        public ReactiveCommand<Unit,Unit> Logout{get;}
+        public ReactiveCommand<Unit,Unit> Return{get;}
 
         public UpdateProfileViewModel(Annual_Events_User user)
         {
@@ -65,9 +65,9 @@ namespace MalfunctioningKitchen.ViewModels
             NavigateToSearchRecipeCommand = ReactiveCommand.Create(() =>
             {
             });
-            Logout = ReactiveCommand.Create(() =>
+            Return = ReactiveCommand.Create(() =>
             {
-                AuthenticationManager.Instance.Logout();
+               
             });
         }
 

@@ -98,7 +98,7 @@ namespace MalfunctioningKitchen.ViewModels
             UpdateProfileViewModel viewModel = new UpdateProfileViewModel(currentUser);
             ContentViewModel = viewModel;
             viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
-            viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+            viewModel.Return.Subscribe(_ => NavigateToHomePage());
             
         }
         
