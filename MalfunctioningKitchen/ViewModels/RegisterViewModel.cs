@@ -87,7 +87,7 @@ public class RegisterViewModel : ViewModelBase
     {
       if (value == null)
       {
-        value = "";
+        value = " ";
       }
       this.RaiseAndSetIfChanged(ref _description, value);
       UserToRegister.Description = Description;

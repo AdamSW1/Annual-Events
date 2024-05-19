@@ -1,0 +1,22 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MalfunctioningKitchen.Views.RecipeView">
+  <StackPanel HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Spacing="25">
+          <TextBlock Text="Recipe Name" FontSize="30" TextAlignment="Center" Margin="0,0,0,5" FontWeight="Bold"/>
+          <StackPanel Orientation="Horizontal">
+          	<TextBlock Text="★★★★★" FontSize="20" TextAlignment="Right" Margin="0,0,200,0"/>
+          	<TextBlock Text="# REVIEWS" FontSize="20" TextAlignment="Left" Margin="0,0,0,0"/>
+          </StackPanel>
+          <TextBlock Text="By : {name}" FontSize="15"/>
+          <Button Command="{}" Content="Add To Favourite" Margin="0,0,0,0"/>
+          <TextBlock Text=" {Description}" FontSize="10"/>
+          <TextBlock Text="Ingredients" FontSize="15"/>
+          <TextBlock Text="Instruction" FontSize="15"/>
+          <TextBlock Text="Reviews" FontSize="15"/>
+  </StackPanel>
+</UserControl>
