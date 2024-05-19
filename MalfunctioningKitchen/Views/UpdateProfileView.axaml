@@ -3,15 +3,21 @@
              xmlns:vm="using:MalfunctioningKitchen.ViewModels"
              x:Class="MalfunctioningKitchen.Views.UpdateProfileView"
              x:DataType="vm:UpdateProfileViewModel">
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </UserControl.Styles>
 
     <Grid Background="#8B0000">
     <StackPanel HorizontalAlignment="Center">
             <Button Content="Search" Command="{Binding NavigateToSearchRecipeCommand}" VerticalAlignment="Center" Margin="10"/>
             <Button Content="RETURN" Command="{Binding Return}" VerticalAlignment="Center" Margin="10"/>
         </StackPanel>
-        <Border Background="White" CornerRadius="10" Padding="20" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border Background="#88ffffff" CornerRadius="10" Padding="20" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Spacing="15">
-                <TextBlock Text="Your Profile/Update Profile" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                <TextBlock Text="Your Profile/Update Profile" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20" Foreground="Black"/>
 
                 <TextBox Width="300" Watermark="Username" Text="{Binding Username}" />
                 <TextBox Width="300" Watermark="Password" Text="{Binding Password}" PasswordChar="*" />
