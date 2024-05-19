@@ -8,10 +8,10 @@ namespace MalfunctioningKitchen.ViewModels
 {
     public class UpdateProfileViewModel : ViewModelBase
     {
-        private string _username;
+        private string _username = AuthenticationManager.Instance.CurrentUser.Username!;
         private string _password;
-        private string _description;
-        private int _age;
+        private string _description = AuthenticationManager.Instance.CurrentUser.Description!;
+        private int _age = AuthenticationManager.Instance.CurrentUser.Age;
 
         private Annual_Events_User _user;
         public Annual_Events_User User
@@ -51,9 +51,24 @@ namespace MalfunctioningKitchen.ViewModels
             set => this.RaiseAndSetIfChanged(ref _notificationMessage, value);
         }
 
+        public ReactiveCommand<Unit, Unit> NavigateToSearchRecipeCommand { get; }
+        public ReactiveCommand<Unit,Unit> Return{get;}
+
         public UpdateProfileViewModel(Annual_Events_User user)
         {
+            User = user;
+            Username = User.Username;
+            Description = User.Description;
+            Age = user.Age;
             UpdateProfileCommand = ReactiveCommand.Create(() => UpdateProfile(user));
+
+            NavigateToSearchRecipeCommand = ReactiveCommand.Create(() =>
+            {
+            });
+            Return = ReactiveCommand.Create(() =>
+            {
+               
+            });
         }
 
         public ReactiveCommand<Unit, Unit> UpdateProfileCommand { get; }

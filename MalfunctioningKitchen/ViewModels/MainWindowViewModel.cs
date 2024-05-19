@@ -69,6 +69,7 @@ namespace MalfunctioningKitchen.ViewModels
             viewModel.NavigateToUpdateProfileCommand.Subscribe(_ => NavigateToUpdateProfile());
             viewModel.NavigateToRecipeCommand.Subscribe(_ => NavigateToRecipe());
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+            viewModel.ViewRecipeCommand.Subscribe( recipe => Console.WriteLine(recipe.Name));
             ContentViewModel = viewModel;
         }
 
@@ -97,7 +98,11 @@ namespace MalfunctioningKitchen.ViewModels
         public void NavigateToUpdateProfile()
         {
             var currentUser = AuthenticationManager.Instance.CurrentUser;
-            ContentViewModel = new UpdateProfileViewModel(currentUser);
+            UpdateProfileViewModel viewModel = new UpdateProfileViewModel(currentUser);
+            ContentViewModel = viewModel;
+            viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
+            viewModel.Return.Subscribe(_ => NavigateToHomePage());
+            
         }
 
         public void NavigateToRecipe()
