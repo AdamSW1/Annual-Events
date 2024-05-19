@@ -266,7 +266,7 @@ public class Recipe
         _favouritedBy!.Add(user);
     }
 
-    internal string DisplayRecipeInfo()
+    public string DisplayRecipeInfo()
     {
         string returnStr = "";
 
