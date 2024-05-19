@@ -53,12 +53,23 @@ namespace MalfunctioningKitchen.ViewModels
             {
                 if (user != null)
                 {
-                    NavigateToLoggedIn();
+                    NavigateToHomePage();
                 }
             });
 
             ContentViewModel = viewModel;
         }
+
+        public void NavigateToHomePage()
+        {
+            HomePageViewModel viewModel = new HomePageViewModel();
+            viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
+            viewModel.NavigateToUpdateProfileCommand.Subscribe(_ => NavigateToUpdateProfile());
+            viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+            ContentViewModel = viewModel;
+        }
+
+        
 
         public void NavigateToLoggedIn()
         {
@@ -75,7 +86,7 @@ namespace MalfunctioningKitchen.ViewModels
         public void NavigateToSearchRecipe()
         {
             SearchRecipeViewModel viewModel = new SearchRecipeViewModel();
-            viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+            viewModel.Return.Subscribe(_ => NavigateToHomePage());
             ContentViewModel = viewModel;
         }
 
