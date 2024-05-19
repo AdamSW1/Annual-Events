@@ -34,8 +34,12 @@
         <TextBox Width="300"
                  Watermark="Enter password..."
                  Text="{Binding Password, Mode=TwoWay}" />
-        <Button Content="Update Profile"
-                Command="{Binding UpdateProfileCommand}" />
-        <TextBlock Text="{Binding NotificationMessage}" />
+        <StackPanel Orientation="Horizontal"
+                    Spacing="25">
+            <Button Content="Return" Command="{Binding Return}" />
+            <Button Content="Update Profile"
+                    Command="{Binding UpdateProfileCommand}" />
+            <TextBlock Text="{Binding NotificationMessage}" />
+        </StackPanel>
     </StackPanel>
 </UserControl>

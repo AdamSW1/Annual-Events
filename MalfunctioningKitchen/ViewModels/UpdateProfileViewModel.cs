@@ -51,9 +51,15 @@ namespace MalfunctioningKitchen.ViewModels
             set => this.RaiseAndSetIfChanged(ref _notificationMessage, value);
         }
 
+        public ReactiveCommand<Unit, Unit> Return{get;}
+        
         public UpdateProfileViewModel(Annual_Events_User user)
         {
             UpdateProfileCommand = ReactiveCommand.Create(() => UpdateProfile(user));
+            Return = ReactiveCommand.Create(() =>
+            {
+
+            });
         }
 
         public ReactiveCommand<Unit, Unit> UpdateProfileCommand { get; }
