@@ -42,7 +42,7 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <Button Content="Logout" Command="{Binding Logout}" HorizontalAlignment="Center" Width="150" Background="#FF6347" Foreground="White"/>
+                <Button Content="Return" Command="{Binding Return}" HorizontalAlignment="Center" Width="150" Background="#FF6347" Foreground="White"/>
             </StackPanel>
         </Border>
     </Grid>
