@@ -13,10 +13,10 @@
             <StackPanel Spacing="15">
                 <TextBlock Text="Update Profile" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
-                <TextBox Width="300" Watermark="Username" Text="{Binding Username}" />
+                <TextBox Width="300" Watermark="Username" Text="{Binding User.Username}" />
                 <TextBox Width="300" Watermark="Password" Text="{Binding Password}" PasswordChar="*" />
-                <TextBox Width="300" Watermark="Description" Text="{Binding Description}" />
-                <TextBox Width="300" Watermark="Age" Text="{Binding Age}" />
+                <TextBox Width="300" Watermark="Description" Text="{Binding User.Description}" />
+                <TextBox Width="300" Watermark="Age" Text="{Binding User.Age}" />
 
                 <Button Content="Update Profile" Command="{Binding UpdateProfileCommand}" HorizontalAlignment="Center" Width="150"/>
                 <TextBlock Text="{Binding NotificationMessage}" Foreground="Red" HorizontalAlignment="Center"/>

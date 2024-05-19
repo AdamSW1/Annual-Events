@@ -56,6 +56,10 @@ namespace MalfunctioningKitchen.ViewModels
 
         public UpdateProfileViewModel(Annual_Events_User user)
         {
+            User = user;
+            Username = User.Username;
+            Description = User.Description;
+            Age = user.Age;
             UpdateProfileCommand = ReactiveCommand.Create(() => UpdateProfile(user));
 
             NavigateToSearchRecipeCommand = ReactiveCommand.Create(() =>
