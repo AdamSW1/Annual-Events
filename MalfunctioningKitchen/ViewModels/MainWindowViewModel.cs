@@ -96,9 +96,10 @@ namespace MalfunctioningKitchen.ViewModels
         {
             var currentUser = AuthenticationManager.Instance.CurrentUser;
             UpdateProfileViewModel viewModel = new UpdateProfileViewModel(currentUser);
-            viewModel.Return.Subscribe(_ => NavigateToHomePage());
-
             ContentViewModel = viewModel;
+            viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
+            viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+            
         }
         
     }

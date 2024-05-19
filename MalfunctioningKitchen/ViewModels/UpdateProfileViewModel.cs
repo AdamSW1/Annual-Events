@@ -51,14 +51,23 @@ namespace MalfunctioningKitchen.ViewModels
             set => this.RaiseAndSetIfChanged(ref _notificationMessage, value);
         }
 
-        public ReactiveCommand<Unit, Unit> Return{get;}
-        
+        public ReactiveCommand<Unit, Unit> NavigateToSearchRecipeCommand { get; }
+        public ReactiveCommand<Unit,Unit> Logout{get;}
+
         public UpdateProfileViewModel(Annual_Events_User user)
         {
+            User = user;
+            Username = User.Username;
+            Description = User.Description;
+            Age = user.Age;
             UpdateProfileCommand = ReactiveCommand.Create(() => UpdateProfile(user));
-            Return = ReactiveCommand.Create(() =>
-            {
 
+            NavigateToSearchRecipeCommand = ReactiveCommand.Create(() =>
+            {
+            });
+            Logout = ReactiveCommand.Create(() =>
+            {
+                AuthenticationManager.Instance.Logout();
             });
         }
 
