@@ -74,7 +74,7 @@ namespace MalfunctioningKitchen.ViewModels
         }
 
         // Other properties omitted for brevity
-        public ReactiveCommand<Unit, Unit> Logout{get;}
+        public ReactiveCommand<Unit, Unit> Return{get;}
         public ReactiveCommand<Unit, List<Recipe>> SearchByKeywordCommand { get; }
         public ReactiveCommand<Unit, List<Recipe>> SearchByTagCommand { get; }
         public ReactiveCommand<Unit, List<Recipe>> SearchByTimeCommand { get; }
@@ -86,9 +86,9 @@ namespace MalfunctioningKitchen.ViewModels
 
         public SearchRecipeViewModel()
         {
-            Logout = ReactiveCommand.Create(() =>
+            Return = ReactiveCommand.Create(() =>
             {
-                AuthenticationManager.Instance.Logout();
+
             });
             SearchByKeywordCommand = ReactiveCommand.CreateFromTask(GetRecipesByKeyword);
             SearchByTagCommand = ReactiveCommand.CreateFromTask(GetRecipesByTag);
