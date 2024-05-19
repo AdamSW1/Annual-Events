@@ -39,7 +39,8 @@
         </DockPanel>
       </SplitView.Pane>
     </SplitView>
-    <ListBox ItemsSource="{Binding Recipes}">
+    <ListBox ItemsSource="{Binding Recipes}"
+              SelectedItem="{Binding SelectedRecipe}">
       <ListBox.ItemTemplate>
         <DataTemplate>
             <StackPanel Orientation="Vertical">
@@ -54,6 +55,7 @@
                 <Run Text="Score: "/>
                 <Run Text="{Binding AverageScore}" />
               </TextBlock>
+            <Button Content="View" Command="{Binding $parent[ListBox].((vm:HomePageViewModel)DataContext).ViewRecipeCommand}"/>
             </StackPanel>
         </DataTemplate>
       </ListBox.ItemTemplate>
