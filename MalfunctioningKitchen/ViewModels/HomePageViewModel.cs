@@ -19,6 +19,9 @@ public class HomePageViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> NavigateToSearchRecipeCommand { get; }
     public ReactiveCommand<Unit, Unit> NavigateToUpdateProfileCommand { get; }
 
+    //Tempororary, ask vijay used for testing
+    public ReactiveCommand<Unit, Unit> NavigateToRecipeCommand { get; }
+
 
     public List<Recipe> Recipes
     {
@@ -34,6 +37,7 @@ public class HomePageViewModel : ViewModelBase
         }); 
         NavigateToSearchRecipeCommand = ReactiveCommand.Create(() => { });
         NavigateToUpdateProfileCommand = ReactiveCommand.Create(() => { });
+        NavigateToRecipeCommand = ReactiveCommand.Create(() => { });
     }
 
 }

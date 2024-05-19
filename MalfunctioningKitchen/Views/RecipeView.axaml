@@ -7,16 +7,26 @@
   <StackPanel HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Spacing="25">
-          <TextBlock Text="Recipe Name" FontSize="30" TextAlignment="Center" Margin="0,0,0,5" FontWeight="Bold"/>
+          <TextBlock Text="{Binding RecipeName}" FontSize="30" TextAlignment="Center" Margin="0,0,0,5" FontWeight="Bold"/>
           <StackPanel Orientation="Horizontal">
-          	<TextBlock Text="★★★★★" FontSize="20" TextAlignment="Right" Margin="0,0,200,0"/>
-          	<TextBlock Text="# REVIEWS" FontSize="20" TextAlignment="Left" Margin="0,0,0,0"/>
+          	<TextBlock Text="{Binding Stars}" FontSize="20" TextAlignment="Right" Margin="0,0,200,0"/>
+          	<TextBlock Text="{Binding ReviewCount} REVIEWS" FontSize="20" TextAlignment="Left" Margin="0,0,0,0"/>
           </StackPanel>
-          <TextBlock Text="By : {name}" FontSize="15"/>
-          <Button Command="{}" Content="Add To Favourite" Margin="0,0,0,0"/>
-          <TextBlock Text=" {Description}" FontSize="10"/>
+          <TextBlock Text="By : {Binding RecipeOwner}" FontSize="15"/>
+          <Button Command="" Content="Add To Favourite" Margin="0,0,0,0"/>
+          <!-- <TextBlock Text="{Binding Description}" FontSize="10"/> -->
+          <TextBlock Text="Desc" FontSize="10"/>
           <TextBlock Text="Ingredients" FontSize="15"/>
+          <TextBlock Text="ongredients" FontSize="15"/>
+          <!-- <TextBlock Text="{Binding Ingredients}" FontSize="10"/> -->
           <TextBlock Text="Instruction" FontSize="15"/>
+          <TextBlock Text="Instrucsadsadasdas" FontSize="10"/>
+          <!-- <TextBlock Text="{Binding Instructions}" FontSize="10"/> -->
           <TextBlock Text="Reviews" FontSize="15"/>
+          <TextBlock Text="Reviewsasudhasuihd" FontSize="10"/>
+          <!-- <TextBlock Text="{Binding Reviews}" FontSize="10"/> -->
   </StackPanel>
+  <DockPanel>
+    <Button Command="{Binding NavigateToHomePageCommand}" Content="Back" DockPanel.Dock="Bottom"/>
+  </DockPanel>
 </UserControl>

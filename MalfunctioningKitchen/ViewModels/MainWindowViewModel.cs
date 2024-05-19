@@ -18,11 +18,13 @@ namespace MalfunctioningKitchen.ViewModels
 
         public ICommand NavigateToSearchRecipeCommand { get; }
         public ICommand NavigateToUpdateProfileCommand { get; }
+        public ICommand NavigateToRecipeCommand { get; }
         public MainWindowViewModel()
         {
             _contentViewModel = new WelcomeViewModel();
             NavigateToUpdateProfileCommand = ReactiveCommand.Create(NavigateToUpdateProfile);
             NavigateToSearchRecipeCommand = ReactiveCommand.Create(NavigateToSearchRecipe);
+            NavigateToRecipeCommand = ReactiveCommand.Create(NavigateToRecipe);
         }
 
         public void NavigateToWelcome()
@@ -65,6 +67,7 @@ namespace MalfunctioningKitchen.ViewModels
             HomePageViewModel viewModel = new HomePageViewModel();
             viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
             viewModel.NavigateToUpdateProfileCommand.Subscribe(_ => NavigateToUpdateProfile());
+            viewModel.NavigateToRecipeCommand.Subscribe(_ => NavigateToRecipe());
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
             ContentViewModel = viewModel;
         }
@@ -95,6 +98,14 @@ namespace MalfunctioningKitchen.ViewModels
         {
             var currentUser = AuthenticationManager.Instance.CurrentUser;
             ContentViewModel = new UpdateProfileViewModel(currentUser);
+        }
+
+        public void NavigateToRecipe()
+        {
+            RecipeViewModel viewModel = new RecipeViewModel();
+            viewModel.NavigateToHomePageCommand.Subscribe(_ => NavigateToHomePage());
+            viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+            ContentViewModel = viewModel;
         }
         
     }
