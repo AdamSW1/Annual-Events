@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using RecipeInfo;
 namespace BusinessLayer;
 
-class Search
+public class Search
 {   
     public static List<Recipe> getRecipes()
     { //gets the recipes from the database

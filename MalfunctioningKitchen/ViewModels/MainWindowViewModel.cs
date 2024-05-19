@@ -1,64 +1,101 @@
 ﻿using System;
 using ReactiveUI;
-
-namespace MalfunctioningKitchen.ViewModels;
-
-public class MainWindowViewModel : ViewModelBase
+using System.Reactive;
+using System.Windows.Input;
+using DataLayer;
+using BusinessLayer;
+namespace MalfunctioningKitchen.ViewModels
 {
-  private ViewModelBase _contentViewModel;
-
-  public ViewModelBase ContentViewModel
-  {
-    get => _contentViewModel;
-    private set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
-  }
-
-  public MainWindowViewModel()
-  {
-    _contentViewModel = new WelcomeViewModel();
-  }
-
-  public void NavigateToWelcome()
-  {
-    ContentViewModel = new WelcomeViewModel();
-  }
-
-  public void NavigateToRegister()
-  {
-    RegisterViewModel viewModel = new();
-
-    viewModel.Register.Subscribe(user =>
+    public class MainWindowViewModel : ViewModelBase
     {
-      if (user != null)
-      {
-        NavigateToWelcome();
-      }
-    });
+        private ViewModelBase _contentViewModel;
 
-    ContentViewModel = viewModel;
-  }
-  
-    public void NavigateToLogin()
-    {
-        LoginViewModel viewModel = new();
-
-        viewModel.Login.Subscribe(user =>
+        public ViewModelBase ContentViewModel
         {
-            if (user != null)
+            get => _contentViewModel;
+            private set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
+        }
+
+        public ICommand NavigateToSearchRecipeCommand { get; }
+        public ICommand NavigateToUpdateProfileCommand { get; }
+        public MainWindowViewModel()
+        {
+            _contentViewModel = new WelcomeViewModel();
+            NavigateToUpdateProfileCommand = ReactiveCommand.Create(NavigateToUpdateProfile);
+            NavigateToSearchRecipeCommand = ReactiveCommand.Create(NavigateToSearchRecipe);
+        }
+
+        public void NavigateToWelcome()
+        {
+            ContentViewModel = new WelcomeViewModel();
+        }
+
+        public void NavigateToRegister()
+        {
+            RegisterViewModel viewModel = new RegisterViewModel();
+
+            viewModel.Register.Subscribe(user =>
             {
-                NavigateToLoggedIn();
-            }
-        });
+                if (user != null)
+                {
+                    NavigateToWelcome();
+                }
+            });
 
-        ContentViewModel = viewModel;
-    }
+            ContentViewModel = viewModel;
+        }
 
-    public void NavigateToLoggedIn()
-    {
-      LoggedInViewModel viewModel = new();
+        public void NavigateToLogin()
+        {
+            LoginViewModel viewModel = new LoginViewModel();
 
-      viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+            viewModel.Login.Subscribe(user =>
+            {
+                if (user != null)
+                {
+                    NavigateToHomePage();
+                }
+            });
 
-      ContentViewModel = viewModel;
+            ContentViewModel = viewModel;
+        }
+
+        public void NavigateToHomePage()
+        {
+            HomePageViewModel viewModel = new HomePageViewModel();
+            viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
+            viewModel.NavigateToUpdateProfileCommand.Subscribe(_ => NavigateToUpdateProfile());
+            viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+            ContentViewModel = viewModel;
+        }
+
+        
+
+        public void NavigateToLoggedIn()
+        {
+            LoggedInViewModel viewModel = new LoggedInViewModel();
+
+            viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+
+            viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
+            viewModel.NavigateToUpdateProfileCommand.Subscribe(_ => NavigateToUpdateProfile());
+
+            ContentViewModel = viewModel;
+        }
+
+        public void NavigateToSearchRecipe()
+        {
+            SearchRecipeViewModel viewModel = new SearchRecipeViewModel();
+            viewModel.Return.Subscribe(_ => NavigateToHomePage());
+            ContentViewModel = viewModel;
+        }
+
+
+        public void NavigateToUpdateProfile()
+        {
+            var currentUser = AuthenticationManager.Instance.CurrentUser;
+            ContentViewModel = new UpdateProfileViewModel(currentUser);
+        }
+        
     }
 }

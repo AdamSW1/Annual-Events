@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="using:MalfunctioningKitchen.ViewModels"
+             x:DataType="vm:HomePageViewModel"
+             x:Class="MalfunctioningKitchen.Views.HomePageView">
+  <DockPanel>
+     <StackPanel DockPanel.Dock="Top"
+                Orientation="Horizontal"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Spacing="200"
+                Background="#962D2D"
+                Margin="0 0 0 0">
+                <TextBlock
+                Text="MALFUNCTIONING KITCHEN"
+                Margin="5 0 0 0"
+                TextAlignment="Center">
+                </TextBlock>
+                <Button Content="Search" 
+                  Command="{Binding NavigateToSearchRecipeCommand}" 
+                  Margin="400 0 400 0"/>
+                <Button Content="Profile" Command="{Binding NavigateToUpdateProfileCommand}" />
+
+    </StackPanel>
+    <SplitView IsPaneOpen="True"
+                OpenPaneLength="150"
+                DisplayMode="CompactInline"
+                CompactPaneLength="48"
+                PaneBackground="#962D2D">
+      <SplitView.Pane>
+        <DockPanel LastChildFill="true">
+          <Button DockPanel.Dock="Bottom" Content="Logout"/>
+        </DockPanel>
+      </SplitView.Pane>
+    </SplitView>
+    <ListBox ItemsSource="{Binding Recipes}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+            <StackPanel Orientation="Vertical">
+              <TextBlock Text="{Binding Name}"/>
+              <TextBlock>
+                <LineBreak />
+                <Run Text="By: "/>
+                <Run Text="{Binding Owner.Username}" />
+              </TextBlock>
+              <TextBlock>
+                <LineBreak />
+                <Run Text="Score: "/>
+                <Run Text="{Binding AverageScore}" />
+              </TextBlock>
+            </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
+</UserControl>

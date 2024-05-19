@@ -1,11 +1,12 @@
-using DataLayer;using System.Net;
+using BusinessLayer;
+using System.Net;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using RecipeInfo;
 
-namespace BusinessLayer;
-class Profile// The Profile class is used to manage a Annual_Events_User
+namespace DataLayer;
+public class Profile// The Profile class is used to manage a Annual_Events_User
 {
     public Annual_Events_User Annual_Events_User { get; set; }
 
