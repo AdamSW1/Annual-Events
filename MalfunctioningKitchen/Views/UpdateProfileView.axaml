@@ -11,7 +11,7 @@
         </StackPanel>
         <Border Background="White" CornerRadius="10" Padding="20" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Spacing="15">
-                <TextBlock Text="Update Profile" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                <TextBlock Text="Your Profile/Update Profile" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
                 <TextBox Width="300" Watermark="Username" Text="{Binding User.Username}" />
                 <TextBox Width="300" Watermark="Password" Text="{Binding Password}" PasswordChar="*" />
