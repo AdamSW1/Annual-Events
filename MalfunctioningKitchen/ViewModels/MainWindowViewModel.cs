@@ -72,7 +72,7 @@ namespace MalfunctioningKitchen.ViewModels
             ContentViewModel = viewModel;
         }
 
-        private void NavigateToSearchRecipe()
+        public void NavigateToSearchRecipe()
         {
             SearchRecipeViewModel viewModel = new SearchRecipeViewModel();
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
@@ -80,7 +80,7 @@ namespace MalfunctioningKitchen.ViewModels
         }
 
 
-        private void NavigateToUpdateProfile()
+        public void NavigateToUpdateProfile()
         {
             var currentUser = AuthenticationManager.Instance.CurrentUser;
             ContentViewModel = new UpdateProfileViewModel(currentUser);
