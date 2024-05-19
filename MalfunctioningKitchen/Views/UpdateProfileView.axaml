@@ -4,17 +4,19 @@
              x:Class="MalfunctioningKitchen.Views.UpdateProfileView"
              x:DataType="vm:UpdateProfileViewModel">
 
-    <StackPanel HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Spacing="25">
-        <TextBlock Text="Update Profile" Classes="heading"/>
-        
-        <TextBox Width="300" Watermark="Enter username..." Text="{Binding Username, Mode=TwoWay}" />
-        <TextBox Width="300" Watermark="Enter password..." Text="{Binding Password, Mode=TwoWay}" />
-        <TextBox Width="300" Watermark="Enter description..." Text="{Binding Description, Mode=TwoWay}" />
-        <TextBox Width="300" Watermark="Enter age..." Text="{Binding Age, Mode=TwoWay}" />
+    <Grid Background="#8B0000">
+        <Border Background="White" CornerRadius="10" Padding="20" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Spacing="15">
+                <TextBlock Text="Update Profile" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
-        <Button Content="Update Profile" Command="{Binding UpdateProfileCommand}" />
-        <TextBlock Text="{Binding NotificationMessage}" />
-    </StackPanel>
+                <TextBox Width="300" Watermark="Username" Text="{Binding Username}" />
+                <TextBox Width="300" Watermark="Password" Text="{Binding Password}" PasswordChar="*" />
+                <TextBox Width="300" Watermark="Description" Text="{Binding Description}" />
+                <TextBox Width="300" Watermark="Age" Text="{Binding Age}" />
+
+                <Button Content="Update Profile" Command="{Binding UpdateProfileCommand}" HorizontalAlignment="Center" Width="150"/>
+                <TextBlock Text="{Binding NotificationMessage}" Foreground="Red" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+    </Grid>
 </UserControl>
