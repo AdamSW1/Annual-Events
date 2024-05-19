@@ -4,6 +4,7 @@ using System.Reactive;
 using System.Windows.Input;
 using DataLayer;
 using BusinessLayer;
+using System.Diagnostics;
 namespace MalfunctioningKitchen.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
@@ -66,7 +67,7 @@ namespace MalfunctioningKitchen.ViewModels
             viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
             viewModel.NavigateToUpdateProfileCommand.Subscribe(_ => NavigateToUpdateProfile());
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
-            viewModel.ViewRecipeCommand.Subscribe( recipe => Console.WriteLine(recipe.Name));
+            viewModel.ViewRecipeCommand.Subscribe( recipe => Debug.Write(recipe.DisplayRecipeInfo()));
             ContentViewModel = viewModel;
         }
 

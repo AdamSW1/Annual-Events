@@ -41,7 +41,12 @@ public class HomePageViewModel : ViewModelBase
         }); 
         NavigateToSearchRecipeCommand = ReactiveCommand.Create(() => { });
         NavigateToUpdateProfileCommand = ReactiveCommand.Create(() => { });
-        ViewRecipeCommand = ReactiveCommand.Create(() => { return SelectedRecipe; });
+        ViewRecipeCommand = ReactiveCommand.Create( () => { return SelectedRecipe; });
+    }
+
+    public void GetRecipe(Recipe recipe){
+        SelectedRecipe = recipe;
+        ViewRecipeCommand.Execute().Subscribe();
     }
 
 }
