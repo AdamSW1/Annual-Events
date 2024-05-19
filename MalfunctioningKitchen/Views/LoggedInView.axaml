@@ -15,6 +15,7 @@
         <Button Command="{Binding Logout}"
                 Content="Log Out"
                 x:CompileBindings="False"/>
-        <Button Content="Go to New Page" Command="{Binding NavigateToNewPageCommand}" />
+        <Button Content="Go to Search Page" Command="{Binding NavigateToSearchRecipeCommand}" />
+        <Button Content="Update Profile" Command="{Binding NavigateToUpdateProfileCommand}" />
     </StackPanel>
 </UserControl>

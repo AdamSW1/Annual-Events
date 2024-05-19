@@ -30,6 +30,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
+        <Button Content="Logout" Command="{Binding Logout}" />
     </StackPanel>
 </UserControl>

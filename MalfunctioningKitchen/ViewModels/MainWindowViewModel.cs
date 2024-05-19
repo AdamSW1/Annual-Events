@@ -2,7 +2,8 @@
 using ReactiveUI;
 using System.Reactive;
 using System.Windows.Input;
-
+using DataLayer;
+using BusinessLayer;
 namespace MalfunctioningKitchen.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
@@ -15,11 +16,13 @@ namespace MalfunctioningKitchen.ViewModels
             private set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
         }
 
-        public ICommand NavigateToNewPageCommand { get; }
+        public ICommand NavigateToSearchRecipeCommand { get; }
+        public ICommand NavigateToUpdateProfileCommand { get; }
         public MainWindowViewModel()
         {
             _contentViewModel = new WelcomeViewModel();
-            NavigateToNewPageCommand = ReactiveCommand.Create(NavigateToNewPage);
+            NavigateToUpdateProfileCommand = ReactiveCommand.Create(NavigateToUpdateProfile);
+            NavigateToSearchRecipeCommand = ReactiveCommand.Create(NavigateToSearchRecipe);
         }
 
         public void NavigateToWelcome()
@@ -63,14 +66,25 @@ namespace MalfunctioningKitchen.ViewModels
 
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
 
-            viewModel.NavigateToNewPageCommand.Subscribe(_ => NavigateToNewPage());
+            viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
+            viewModel.NavigateToUpdateProfileCommand.Subscribe(_ => NavigateToUpdateProfile());
 
             ContentViewModel = viewModel;
         }
 
-        private void NavigateToNewPage()
+        private void NavigateToSearchRecipe()
         {
-            ContentViewModel = new SearchRecipeViewModel();
+            SearchRecipeViewModel viewModel = new SearchRecipeViewModel();
+            viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+            ContentViewModel = viewModel;
         }
+
+
+        private void NavigateToUpdateProfile()
+        {
+            var currentUser = AuthenticationManager.Instance.CurrentUser;
+            ContentViewModel = new UpdateProfileViewModel(currentUser);
+        }
+        
     }
 }

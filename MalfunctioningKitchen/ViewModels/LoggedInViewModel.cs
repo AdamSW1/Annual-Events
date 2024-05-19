@@ -9,7 +9,9 @@ public class LoggedInViewModel : ViewModelBase{
     public string Greeting {get;}
     
     public ReactiveCommand<Unit,Unit> Logout{get;}
-    public ReactiveCommand<Unit, Unit> NavigateToNewPageCommand { get; }
+    public ReactiveCommand<Unit, Unit> NavigateToSearchRecipeCommand { get; }
+
+    public ReactiveCommand<Unit, Unit> NavigateToUpdateProfileCommand{ get; }
 
     public LoggedInViewModel(){
         Logout = ReactiveCommand.Create(() =>{
@@ -18,9 +20,15 @@ public class LoggedInViewModel : ViewModelBase{
 
         Greeting =$"Hello {AuthenticationManager.Instance.CurrentUser.Username}";
 
-        NavigateToNewPageCommand = ReactiveCommand.Create(() =>
+        NavigateToSearchRecipeCommand = ReactiveCommand.Create(() =>
         {
             
+        });
+
+        NavigateToUpdateProfileCommand = ReactiveCommand.Create
+        (() =>
+        {
+
         });
     }
 }
