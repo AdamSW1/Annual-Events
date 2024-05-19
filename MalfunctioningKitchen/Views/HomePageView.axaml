@@ -35,7 +35,8 @@
           <Button DockPanel.Dock="Bottom"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Bottom"
-                  Content="Logout"/>
+                  Content="Logout"
+                  Command="{Binding Logout}"/>
         </DockPanel>
       </SplitView.Pane>
     </SplitView>
