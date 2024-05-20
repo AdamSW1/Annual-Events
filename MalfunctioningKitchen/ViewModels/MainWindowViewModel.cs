@@ -17,6 +17,8 @@ namespace MalfunctioningKitchen.ViewModels
             get => _contentViewModel;
             private set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
         }
+        public delegate void previous();
+
 
         public ICommand NavigateToSearchRecipeCommand { get; }
         public ICommand NavigateToUpdateProfileCommand { get; }
@@ -26,7 +28,8 @@ namespace MalfunctioningKitchen.ViewModels
             _contentViewModel = new WelcomeViewModel();
             NavigateToUpdateProfileCommand = ReactiveCommand.Create(NavigateToUpdateProfile);
             NavigateToSearchRecipeCommand = ReactiveCommand.Create(NavigateToSearchRecipe);
-            NavigateToRecipeCommand = ReactiveCommand.Create<Recipe>(recipe => NavigateToRecipe(recipe));
+            previous nav = NavigateToHomePage;
+            NavigateToRecipeCommand = ReactiveCommand.Create<Recipe>(recipe => NavigateToRecipe(recipe,nav));
         }
 
         public void NavigateToWelcome()
@@ -70,8 +73,9 @@ namespace MalfunctioningKitchen.ViewModels
             viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
             viewModel.NavigateToUpdateProfileCommand.Subscribe(_ => NavigateToUpdateProfile());
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
-            // viewModel.ViewRecipeCommand.Subscribe(recipe => Debug.Write(recipe.DisplayRecipeInfo()));
-            viewModel.ViewRecipeCommand.Subscribe(recipe => NavigateToRecipe(recipe));
+
+            previous nav = NavigateToHomePage;
+            viewModel.ViewRecipeCommand.Subscribe(recipe => NavigateToRecipe(recipe, nav));
             ContentViewModel = viewModel;
         }
 
@@ -93,6 +97,8 @@ namespace MalfunctioningKitchen.ViewModels
         {
             SearchRecipeViewModel viewModel = new SearchRecipeViewModel();
             viewModel.Return.Subscribe(_ => NavigateToHomePage());
+            previous nav = NavigateToSearchRecipe;
+            viewModel.ViewRecipeCommand.Subscribe(recipe => NavigateToRecipe(recipe, nav));
             ContentViewModel = viewModel;
         }
 
@@ -107,10 +113,10 @@ namespace MalfunctioningKitchen.ViewModels
             
         }
 
-        public void NavigateToRecipe(Recipe recipe)
+        public void NavigateToRecipe(Recipe recipe, previous previousPage)
         {
             RecipeViewModel viewModel = new RecipeViewModel(recipe);
-            viewModel.NavigateToHomePageCommand.Subscribe(_ => NavigateToHomePage());
+            viewModel.NavigateToHomePageCommand.Subscribe(_ => previousPage());
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
             ContentViewModel = viewModel;
         }
