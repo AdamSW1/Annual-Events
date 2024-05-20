@@ -38,14 +38,16 @@
           <Button DockPanel.Dock="Bottom"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Bottom"
-                  Content="Logout"/>
+                  Content="Logout"
+                  Command="{Binding Logout}"/>
         </DockPanel>
       </SplitView.Pane>
     </SplitView>
-    <ListBox ItemsSource="{Binding Recipes}"
-              SelectedItem="{Binding SelectedRecipe}">
-      <ListBox.ItemTemplate>
+    <ItemsControl ItemsSource="{Binding Recipes}">
+      <ItemsControl.ItemTemplate>
         <DataTemplate>
+          <Button Width="200"
+                  Command="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).GetRecipe}" CommandParameter="{Binding .}">
             <StackPanel Orientation="Vertical">
               <TextBlock Text="{Binding Name}"/>
               <TextBlock>
@@ -58,10 +60,10 @@
                 <Run Text="Score: "/>
                 <Run Text="{Binding AverageScore}" />
               </TextBlock>
-            <Button Content="View" Command="{Binding $parent[ListBox].((vm:HomePageViewModel)DataContext).ViewRecipeCommand}"/>
-            </StackPanel>
+              </StackPanel>
+            </Button>
         </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
   </DockPanel>
 </UserControl>

@@ -48,4 +48,9 @@ public class HomePageViewModel : ViewModelBase
         ViewRecipeCommand = ReactiveCommand.Create(() => { return SelectedRecipe; });
     }
 
+    public void GetRecipe(Recipe recipe){
+        SelectedRecipe = recipe;
+        ViewRecipeCommand.Execute().Subscribe();
+    }
+
 }
