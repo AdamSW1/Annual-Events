@@ -1,4 +1,5 @@
 <UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:rxvm="using:ReactiveUI"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:MalfunctioningKitchen.ViewModels"
              x:Class="MalfunctioningKitchen.Views.SearchRecipeView"
@@ -11,25 +12,31 @@
                         VerticalAlignment="Center"
                         Spacing="25">
                 <TextBlock Classes="heading" Text="Search Recipes" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                
+                <!-- Text input for keyword -->
                 <TextBox Width="300" Watermark="Enter recipe name..." Text="{Binding SearchKeyword, Mode=TwoWay}" />
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
-                    <Button Classes="search-button" Content="Search by Keyword" Command="{Binding SearchByKeywordCommand}" />
-                    <Button Content="Search by Tag" Command="{Binding SearchByTagCommand}" CommandParameter="{Binding SearchKeyword}"/>
-                    <Button Content="Search by Time" Command="{Binding SearchByTimeCommand}" CommandParameter="{Binding SearchKeyword}"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
-                    <Button Content="Search by Rating" Command="{Binding SearchByRatingCommand}" CommandParameter="{Binding SearchKeyword}"/>
-                    <Button Content="Search by Servings" Command="{Binding SearchByServingsCommand}" CommandParameter="{Binding SearchKeyword}"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
-                    <Button Content="Search by Favorites" Command="{Binding SearchByFavoritesCommand}" CommandParameter="{Binding SearchKeyword}"/>
-                    <Button Content="Search by Owner" Command="{Binding SearchByOwnerCommand}" CommandParameter="{Binding SearchKeyword}"/>
-                </StackPanel>
-
-                <TextBlock Text="{Binding NotificationMessage}" Foreground="Red" HorizontalAlignment="Center"/>
+                
+                <!-- Text input for tag -->
+                <!-- <TextBox Width="300" Watermark="Enter recipe tag..." Text="{Binding TagCriteria, Mode=TwoWay}" /> -->
+                
+                <!-- Text input for time constraint -->
+                <TextBox Width="300" Watermark="Enter time constraint..." Text="{Binding TimeConstraint, Mode=TwoWay}" />
+                
+                <!-- Text input for rating -->
+                <TextBox Width="300" Watermark="Enter rating..." Text="{Binding Rating, Mode=TwoWay}" />
+                
+                <!-- Text input for servings -->
+                <TextBox Width="300" Watermark="Enter servings..." Text="{Binding Servings, Mode=TwoWay}" />
+                
+                <!-- Text input for favorite -->
+                <TextBox Width="300" Watermark="Enter favorite status..." Text="{Binding Favorite, Mode=TwoWay}" />
+                
+                <!-- Text input for owner -->
+                <TextBox Width="300" Watermark="Enter owner username..." Text="{Binding OwnerUsername, Mode=TwoWay}" />
+                
+                <Button Content="Search" Command="{Binding SearchCommand}" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                
+                <TextBlock Text="{Binding NotificationMessage}" Foreground="Red" HorizontalAlignment="Center" Margin="0,10,0,0"/>
 
                 <ListBox ItemsSource="{Binding SearchedRecipes}" Width="400" Height="200">
                     <ListBox.ItemTemplate>
@@ -46,7 +53,7 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <Button Content="Return" Command="{Binding Return}" HorizontalAlignment="Center" Width="150" Background="#FF6347" Foreground="White"/>
+                <Button Content="Return" Command="{Binding Return}" HorizontalAlignment="Center" Width="150" Background="#FF6347" Foreground="White" Margin="0,10,0,0"/>
             </StackPanel>
         </Border>
     </Grid>
