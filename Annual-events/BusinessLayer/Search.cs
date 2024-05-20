@@ -35,7 +35,8 @@ public class Search
         {
             return null;
         }
-        var searched = recipes.Where(recipe => recipe.Tags.Intersect(tags).Any()).ToList();
+
+        var searched = recipes.Where(recipe => tags.All(tag => recipe.Tags.Contains(tag))).ToList();
         Console.WriteLine($"Found {searched.Count} recipes by tags: {string.Join(", ", tags.Select(tag => tag.Tag))}");
         return searched;
     }

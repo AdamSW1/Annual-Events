@@ -50,10 +50,11 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
     }
 
     private IList<string> _selectedTags = new List<string>();
-    public IList<string> SelectedTags { 
-        get => _selectedTags; 
-        set => this.RaiseAndSetIfChanged(ref _selectedTags, value); 
-        }
+    public IList<string> SelectedTags
+    {
+        get => _selectedTags;
+        set => this.RaiseAndSetIfChanged(ref _selectedTags, value);
+    }
 
     public string TimeConstraint
     {
@@ -116,6 +117,14 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
             var servings = int.TryParse(Servings, out var serve) ? serve : (int?)null;
             var favorite = int.TryParse(Favorite, out var fav) ? fav : (int?)null;
 
+            bool hasSearchCriteria = !string.IsNullOrEmpty(SearchKeyword) || tags.Any() || timeConstraint.HasValue || rating.HasValue || servings.HasValue || favorite.HasValue || !string.IsNullOrEmpty(OwnerUsername);
+
+            if (!hasSearchCriteria)
+            {
+                NotificationMessage = "Please provide at least one search criterion.";
+                return new List<Recipe>();
+            }
+
             var searchedRecipes = Search.SearchRecipes(
                 keyword: SearchKeyword,
                 tags: tags,
@@ -129,10 +138,6 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
             if (searchedRecipes == null || !searchedRecipes.Any())
             {
                 NotificationMessage = "No recipes found matching the criteria.";
-                var allRecipes = Search.GetRecipes();
-                var ownerUsernames = allRecipes.Select(r => r.Owner?.Username).Where(username => username != null).ToList();
-                NotificationMessage += $"\nInput owner username: {OwnerUsername}";
-                NotificationMessage += $"\nAvailable owner usernames: {string.Join(", ", ownerUsernames)}";
             }
             else
             {
