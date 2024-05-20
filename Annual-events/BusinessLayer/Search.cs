@@ -12,7 +12,7 @@ public class Search
     {
         using (var dbContext = new AnnualEventsContext())
         {
-            var recipes = dbContext.Recipe.ToList();
+            var recipes = RecipeServices.Instance.GetRecipes();
             Console.WriteLine($"Retrieved {recipes.Count} recipes from the database.");
             return recipes;
         }
