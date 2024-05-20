@@ -1,6 +1,7 @@
 using System.Reactive;
 using ReactiveUI;
 using BusinessLayer;
+using DataLayer;
 using RecipeInfo;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -102,7 +103,7 @@ namespace MalfunctioningKitchen.ViewModels
 
         private async Task<List<Recipe>> GetRecipesByKeyword(string keyword)
         {
-            List<Recipe> searchResult = Search.SearchRecipesByKeyword(SearchKeyword, Search.getRecipes());
+            List<Recipe> searchResult = Search.SearchRecipesByKeyword(SearchKeyword, RecipeServices.Instance.GetRecipes());
             SearchedRecipes = searchResult;
             if (searchResult != null && searchResult.Count > 0)
             {
@@ -142,7 +143,7 @@ namespace MalfunctioningKitchen.ViewModels
         {
             if (int.TryParse(SearchKeyword, out int time))
             {
-                List<Recipe> searchResult = Search.SearchRecipesByTimeConstraint(time, Search.getRecipes());
+                List<Recipe> searchResult = Search.SearchRecipesByTimeConstraint(time, RecipeServices.Instance.GetRecipes());
                 if (searchResult != null && searchResult.Count > 0)
                 {
                     SearchedRecipes = searchResult;
@@ -166,7 +167,7 @@ namespace MalfunctioningKitchen.ViewModels
         {
             if (int.TryParse(SearchKeyword, out int ratings))
             {
-                List<Recipe> searchResult = Search.SearchRecipesByRating(ratings, Search.getRecipes());
+                List<Recipe> searchResult = Search.SearchRecipesByRating(ratings, RecipeServices.Instance.GetRecipes());
                 if (searchResult != null && searchResult.Count > 0)
                 {
                     SearchedRecipes = searchResult;
@@ -190,7 +191,7 @@ namespace MalfunctioningKitchen.ViewModels
         {
             if (int.TryParse(SearchKeyword, out int servings))
             {
-                List<Recipe> searchResult = Search.SearchRecipesByServings(servings, Search.getRecipes());
+                List<Recipe> searchResult = Search.SearchRecipesByServings(servings, RecipeServices.Instance.GetRecipes());
                 if (searchResult != null && searchResult.Count > 0)
                 {
                     SearchedRecipes = searchResult;
@@ -216,7 +217,7 @@ namespace MalfunctioningKitchen.ViewModels
             // Assuming SearchKeyword represents the favorite status as a string
             if (int.TryParse(SearchKeyword, out int favoriteStatus))
             {
-                List<Recipe> searchResult = Search.SearchRecipesInFavorites(favoriteStatus, Search.getRecipes());
+                List<Recipe> searchResult = Search.SearchRecipesInFavorites(favoriteStatus, RecipeServices.Instance.GetRecipes());
                 if (searchResult != null && searchResult.Count > 0)
                 {
                     SearchedRecipes = searchResult;
@@ -239,7 +240,7 @@ namespace MalfunctioningKitchen.ViewModels
 
         private async Task<List<Recipe>> GetRecipesByOwner(string keyword)
         {
-            List<Recipe> searchResult = Search.SearchRecipesByOwnerUsername(SearchKeyword, Search.getRecipes());
+            List<Recipe> searchResult = Search.SearchRecipesByOwnerUsername(SearchKeyword, RecipeServices.Instance.GetRecipes());
             if(searchResult != null && searchResult.Count > 0)
             {
                 SearchedRecipes = searchResult;
