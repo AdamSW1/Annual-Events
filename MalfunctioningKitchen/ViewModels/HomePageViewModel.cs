@@ -24,6 +24,9 @@ public class HomePageViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> NavigateToUpdateProfileCommand { get; }
     public ReactiveCommand<Unit, Recipe> ViewRecipeCommand { get; }
 
+    //Tempororary, ask vijay used for testing
+    public ReactiveCommand<Unit, Unit> NavigateToRecipeCommand { get; }
+
 
     public ObservableCollection<Recipe> Recipes
     {
@@ -41,7 +44,8 @@ public class HomePageViewModel : ViewModelBase
         }); 
         NavigateToSearchRecipeCommand = ReactiveCommand.Create(() => { });
         NavigateToUpdateProfileCommand = ReactiveCommand.Create(() => { });
-        ViewRecipeCommand = ReactiveCommand.Create( () => { return SelectedRecipe; });
+        ViewRecipeCommand = ReactiveCommand.Create(() => { return SelectedRecipe; });
+        NavigateToRecipeCommand = ReactiveCommand.Create(() => { });
     }
 
     public void GetRecipe(Recipe recipe){

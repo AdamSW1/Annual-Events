@@ -5,6 +5,7 @@ using System.Windows.Input;
 using DataLayer;
 using BusinessLayer;
 using System.Diagnostics;
+using RecipeInfo;
 namespace MalfunctioningKitchen.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
@@ -19,11 +20,13 @@ namespace MalfunctioningKitchen.ViewModels
 
         public ICommand NavigateToSearchRecipeCommand { get; }
         public ICommand NavigateToUpdateProfileCommand { get; }
+        public ICommand NavigateToRecipeCommand { get; }
         public MainWindowViewModel()
         {
             _contentViewModel = new WelcomeViewModel();
             NavigateToUpdateProfileCommand = ReactiveCommand.Create(NavigateToUpdateProfile);
             NavigateToSearchRecipeCommand = ReactiveCommand.Create(NavigateToSearchRecipe);
+            NavigateToRecipeCommand = ReactiveCommand.Create<Recipe>(recipe => NavigateToRecipe(recipe));
         }
 
         public void NavigateToWelcome()
@@ -67,7 +70,8 @@ namespace MalfunctioningKitchen.ViewModels
             viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
             viewModel.NavigateToUpdateProfileCommand.Subscribe(_ => NavigateToUpdateProfile());
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
-            viewModel.ViewRecipeCommand.Subscribe( recipe => Debug.Write(recipe.DisplayRecipeInfo()));
+            // viewModel.ViewRecipeCommand.Subscribe(recipe => Debug.Write(recipe.DisplayRecipeInfo()));
+            viewModel.ViewRecipeCommand.Subscribe(recipe => NavigateToRecipe(recipe));
             ContentViewModel = viewModel;
         }
 
@@ -101,6 +105,14 @@ namespace MalfunctioningKitchen.ViewModels
             viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
             viewModel.Return.Subscribe(_ => NavigateToHomePage());
             
+        }
+
+        public void NavigateToRecipe(Recipe recipe)
+        {
+            RecipeViewModel viewModel = new RecipeViewModel(recipe);
+            viewModel.NavigateToHomePageCommand.Subscribe(_ => NavigateToHomePage());
+            viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+            ContentViewModel = viewModel;
         }
         
     }
