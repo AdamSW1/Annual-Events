@@ -13,11 +13,11 @@ namespace MalfunctioningKitchen.ViewModels;
 
 public class RecipeViewModel : ViewModelBase
 {
-    private List<Recipe> _recipes = new();
-    public Recipe Recipe
+    private Recipe _arecipe = new();
+    public Recipe ARecipe
     {
-        get => _recipe;
-        set => this.RaiseAndSetIfChanged(ref _recipe, value);
+        get => _arecipe;
+        set => this.RaiseAndSetIfChanged(ref _arecipe, value);
     }
 
     private string _recipeName;
@@ -79,15 +79,15 @@ public class RecipeViewModel : ViewModelBase
     public RecipeViewModel()
     {
         //Test for 1 recipe
-        Recipe = RecipeServices.Instance.GetRecipe("Vanilla Cake");
-        RecipeName = Recipe.Name;
+        ARecipe = RecipeServices.Instance.GetRecipe("Vanilla cake");
+        RecipeName = ARecipe.Name;
         Stars = GetStars();
-        ReviewCount = Recipe.Reviews.Count;
-        RecipeOwner = Recipe.Owner.Username;
-        Description = Recipe.Description;
-        Ingredients = Recipe.RecipeIngredients;
-        Instructions = Recipe.Preparation;
-        Reviews = Recipe.Reviews;
+        ReviewCount = ARecipe.Reviews.Count;
+        RecipeOwner = ARecipe.Owner.Username;
+        Description = ARecipe.Description;
+        Ingredients = ARecipe.RecipeIngredients;
+        Instructions = ARecipe.Preparation;
+        Reviews = ARecipe.Reviews;
 
         Logout = ReactiveCommand.Create(() =>{
             AuthenticationManager.Instance.Logout();
@@ -98,7 +98,7 @@ public class RecipeViewModel : ViewModelBase
     public string GetStars()
     {
         Stars = "";
-        for (int i = 0; i < (int)Recipe.AverageScore; i++)
+        for (int i = 0; i < (int)ARecipe.AverageScore; i++)
         {
             Stars += "★";
         }

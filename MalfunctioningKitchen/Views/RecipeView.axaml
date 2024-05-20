@@ -3,6 +3,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="using:MalfunctioningKitchen.ViewModels"
+             x:DataType="vm:RecipeViewModel"
              x:Class="MalfunctioningKitchen.Views.RecipeView">
   <StackPanel HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -25,8 +27,8 @@
           <TextBlock Text="Reviews" FontSize="15"/>
           <TextBlock Text="Reviewsasudhasuihd" FontSize="10"/>
           <!-- <TextBlock Text="{Binding Reviews}" FontSize="10"/> -->
+    <DockPanel>
+      <Button Command="{Binding NavigateToHomePageCommand}" Content="Back" DockPanel.Dock="Bottom"/>
+    </DockPanel>
   </StackPanel>
-  <DockPanel>
-    <Button Command="{Binding NavigateToHomePageCommand}" Content="Back" DockPanel.Dock="Bottom"/>
-  </DockPanel>
 </UserControl>
