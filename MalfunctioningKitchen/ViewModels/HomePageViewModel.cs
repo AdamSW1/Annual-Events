@@ -23,6 +23,7 @@ public class HomePageViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> NavigateToSearchRecipeCommand { get; }
     public ReactiveCommand<Unit, Unit> NavigateToUpdateProfileCommand { get; }
     public ReactiveCommand<Unit, Recipe> ViewRecipeCommand { get; }
+    public ReactiveCommand<Unit, Unit> ViewOwnedRecipes { get; }
 
 
     public ObservableCollection<Recipe> Recipes
@@ -33,17 +34,28 @@ public class HomePageViewModel : ViewModelBase
 
     public HomePageViewModel()
     {
-        List<Recipe> allRecipes = RecipeServices.Instance.GetRecipes();
-        allRecipes.ForEach(recipe => Recipes.Add(recipe));
+        ViewAllRecipes();
 
         Logout = ReactiveCommand.Create(() =>{
             AuthenticationManager.Instance.Logout();
         }); 
         NavigateToSearchRecipeCommand = ReactiveCommand.Create(() => { });
         NavigateToUpdateProfileCommand = ReactiveCommand.Create(() => { });
+        ViewOwnedRecipes = ReactiveCommand.Create(() => { });
         ViewRecipeCommand = ReactiveCommand.Create( () => { return SelectedRecipe; });
     }
 
+    public void ViewOwnRecipes(){
+        Recipes.Clear();
+        var ownedRecipes = RecipeServices.Instance.GetRecipesByOwner(AuthenticationManager.Instance.CurrentUser);
+        ownedRecipes.ForEach(recipe => Recipes.Add(recipe));
+    }
+
+    public void ViewAllRecipes(){
+         Recipes.Clear();
+        List<Recipe> allRecipes = RecipeServices.Instance.GetRecipes();
+        allRecipes.ForEach(recipe => Recipes.Add(recipe));
+    }
     public void GetRecipe(Recipe recipe){
         SelectedRecipe = recipe;
         ViewRecipeCommand.Execute().Subscribe();
