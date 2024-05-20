@@ -59,6 +59,11 @@ public class HomePageViewModel : ViewModelBase
         List<Recipe> allRecipes = RecipeServices.Instance.GetRecipes();
         allRecipes.ForEach(recipe => Recipes.Add(recipe));
     }
+    public void ViewFavouriteRecipes() {
+        Recipes.Clear();
+        List<Recipe> FavRecipes = RecipeServices.Instance.GetRecipesFavByUser(AuthenticationManager.Instance.CurrentUser);
+        FavRecipes.ForEach(recipe => Recipes.Add(recipe));
+    }
     public void GetRecipe(Recipe recipe){
         SelectedRecipe = recipe;
         ViewRecipeCommand.Execute().Subscribe();

@@ -49,6 +49,11 @@
                   VerticalAlignment="Top"
                   Content="Your Recipes"
                   Command="{Binding ViewOwnRecipes}"/>
+          <Button DockPanel.Dock="Top"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Top"
+                  Content="Favourite Recipes"
+                  Command="{Binding ViewFavouriteRecipes}"/>
         </DockPanel>
       </SplitView.Pane>
     </SplitView>
