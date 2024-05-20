@@ -42,7 +42,7 @@ namespace MalfunctioningKitchen.ViewModels
             {
                 if (user != null)
                 {
-                    NavigateToWelcome();
+                    NavigateToLogin();
                 }
             });
 

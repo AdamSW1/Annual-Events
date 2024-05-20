@@ -32,19 +32,33 @@
                 PaneBackground="#962D2D">
       <SplitView.Pane>
         <DockPanel LastChildFill="true">
-          <Button DockPanel.Dock="Bottom" Content="Logout"/>
           <Button DockPanel.Dock="Bottom"
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Bottom"
+                   VerticalAlignment="Center"
+                   Margin="0,20"
                   Content="Logout"
                   Command="{Binding Logout}"/>
+          <Button DockPanel.Dock="Top"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center"
+                  Margin="0,200,0,50"
+                  Content="All Recipes"
+                  Command="{Binding ViewAllRecipes}"/>
+          <Button DockPanel.Dock="Top"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Top"
+                  Content="Your Recipes"
+                  Command="{Binding ViewOwnRecipes}"/>
         </DockPanel>
       </SplitView.Pane>
     </SplitView>
-    <ItemsControl ItemsSource="{Binding Recipes}">
+    <ItemsControl ItemsSource="{Binding Recipes}"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
       <ItemsControl.ItemTemplate>
         <DataTemplate>
           <Button Width="200"
+                  Margin="0 10"
                   Command="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).GetRecipe}" CommandParameter="{Binding .}">
             <StackPanel Orientation="Vertical">
               <TextBlock Text="{Binding Name}"/>

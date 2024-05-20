@@ -36,18 +36,29 @@ public class HomePageViewModel : ViewModelBase
 
     public HomePageViewModel()
     {
-        List<Recipe> allRecipes = RecipeServices.Instance.GetRecipes();
-        allRecipes.ForEach(recipe => Recipes.Add(recipe));
+        ViewAllRecipes();
 
         Logout = ReactiveCommand.Create(() =>{
             AuthenticationManager.Instance.Logout();
         }); 
         NavigateToSearchRecipeCommand = ReactiveCommand.Create(() => { });
         NavigateToUpdateProfileCommand = ReactiveCommand.Create(() => { });
-        ViewRecipeCommand = ReactiveCommand.Create(() => { return SelectedRecipe; });
+        ViewRecipeCommand = ReactiveCommand.Create( () => { return SelectedRecipe; });
         NavigateToRecipeCommand = ReactiveCommand.Create(() => { });
+
     }
 
+    public void ViewOwnRecipes(){
+        Recipes.Clear();
+        var ownedRecipes = RecipeServices.Instance.GetRecipesByOwner(AuthenticationManager.Instance.CurrentUser);
+        ownedRecipes.ForEach(recipe => Recipes.Add(recipe));
+    }
+
+    public void ViewAllRecipes(){
+         Recipes.Clear();
+        List<Recipe> allRecipes = RecipeServices.Instance.GetRecipes();
+        allRecipes.ForEach(recipe => Recipes.Add(recipe));
+    }
     public void GetRecipe(Recipe recipe){
         SelectedRecipe = recipe;
         ViewRecipeCommand.Execute().Subscribe();
