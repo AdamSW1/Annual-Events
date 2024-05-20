@@ -4,6 +4,10 @@
              xmlns:vm="using:MalfunctioningKitchen.ViewModels"
              x:Class="MalfunctioningKitchen.Views.SearchRecipeView"
              x:DataType="vm:SearchRecipeViewModel">
+    <UserControl.Resources>
+    <vm:StringToListConverter x:Key="StringToListConverter"/>
+</UserControl.Resources>
+
     <!-- Dark Red Background -->
     <Grid Background="#8B0000">
         <!-- Light red background-->
@@ -16,9 +20,9 @@
                 <!-- Text input for keyword -->
                 <TextBox Width="300" Watermark="Enter recipe name..." Text="{Binding SearchKeyword, Mode=TwoWay}" />
                 
-                <!-- Text input for tag -->
-                <!-- <TextBox Width="300" Watermark="Enter recipe tag..." Text="{Binding TagCriteria, Mode=TwoWay}" /> -->
-                
+                <!-- Text input for tags -->
+                <TextBox Width="300" Watermark="Enter recipe tags (comma separated)..." Text="{Binding TagCriteria, Mode=TwoWay, Converter={StaticResource StringToListConverter}}" />
+
                 <!-- Text input for time constraint -->
                 <TextBox Width="300" Watermark="Enter time constraint..." Text="{Binding TimeConstraint, Mode=TwoWay}" />
                 

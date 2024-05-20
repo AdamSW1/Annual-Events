@@ -2,16 +2,19 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using RecipeInfo;
 using DataLayer;
+using System.Linq;
 
 namespace BusinessLayer
 {
     public class Search
     {
         public static List<Recipe> GetRecipes()
-        { 
+        {
             using (var dbContext = new AnnualEventsContext())
             {
-                return dbContext.Recipe.ToList();
+                var recipes = dbContext.Recipe.ToList();
+                Console.WriteLine($"Retrieved {recipes.Count} recipes from the database.");
+                return recipes;
             }
         }
 
@@ -20,8 +23,9 @@ namespace BusinessLayer
         {
             string escaped = Regex.Escape(keyword);
             var reg = new Regex(escaped, RegexOptions.IgnoreCase);
-            var searched = recipes.Where(recipe => reg.IsMatch(recipe.Name) || reg.IsMatch(recipe.Description) || recipe.Preparation.Any(x => reg.IsMatch(x.Step)));
-            return searched.ToList();
+            var searched = recipes.Where(recipe => reg.IsMatch(recipe.Name) || reg.IsMatch(recipe.Description) || recipe.Preparation.Any(x => reg.IsMatch(x.Step))).ToList();
+            Console.WriteLine($"Found {searched.Count} recipes by keyword: {keyword}");
+            return searched;
         }
 
         // Search recipes by tags
@@ -31,48 +35,53 @@ namespace BusinessLayer
             {
                 return null;
             }
-            var searched = recipes.Where(recipe => recipe.Tags.Intersect(tags).Any());
-            return searched.ToList();
+            var searched = recipes.Where(recipe => recipe.Tags.Intersect(tags).Any()).ToList();
+            Console.WriteLine($"Found {searched.Count} recipes by tags: {string.Join(", ", tags.Select(tag => tag.Tag))}");
+            return searched;
         }
 
-         public static List<Recipe> SearchRecipesByTimeConstraint(int time, List<Recipe> recipes)
+        public static List<Recipe> SearchRecipesByTimeConstraint(int time, List<Recipe> recipes)
         {
-            var searched = recipes.Where(recipe => recipe.CookingTime >= time - 3 && recipe.CookingTime <= time + 3);
-            return searched.ToList();
+            var searched = recipes.Where(recipe => recipe.CookingTime >= time - 3 && recipe.CookingTime <= time + 3).ToList();
+            Console.WriteLine($"Found {searched.Count} recipes by time constraint: {time}");
+            return searched;
         }
 
         // Search recipes by rating
         public static List<Recipe> SearchRecipesByRating(int rating, List<Recipe> recipes)
         {
-            var searched = recipes.Where(recipe => recipe.AverageScore == rating);
-            return searched.ToList();
+            var searched = recipes.Where(recipe => recipe.AverageScore == rating).ToList();
+            Console.WriteLine($"Found {searched.Count} recipes by rating: {rating}");
+            return searched;
         }
 
         // Search recipes by servings constraint
         public static List<Recipe> SearchRecipesByServings(int servings, List<Recipe> recipes)
         {
-            var searched = recipes.Where(recipe => recipe.Servings == servings);
-            return searched.ToList();
+            var searched = recipes.Where(recipe => recipe.Servings == servings).ToList();
+            Console.WriteLine($"Found {searched.Count} recipes by servings: {servings}");
+            return searched;
         }
 
         // Search recipes in favorites
         public static List<Recipe> SearchRecipesInFavorites(int favourite, List<Recipe> recipes)
         {
-            var searched = recipes.Where(recipe => recipe.Favourite == favourite);
-            return searched.ToList();
+            var searched = recipes.Where(recipe => recipe.Favourite == favourite).ToList();
+            Console.WriteLine($"Found {searched.Count} recipes by favorite: {favourite}");
+            return searched;
         }
 
         // Search recipes by owner username
         public static List<Recipe> SearchRecipesByOwnerUsername(string ownerUsername, List<Recipe> recipes)
         {
-            var searched = recipes.Where(recipe => recipe.Owner.Username == ownerUsername);
+            var searched = recipes.Where(recipe => recipe.Owner.Username != null && recipe.Owner.Username.Equals(ownerUsername, StringComparison.OrdinalIgnoreCase));
             return searched.ToList();
         }
 
         // Example of chaining search queries
-        public List<Recipe> SearchRecipes(string keyword, List<Recipe> recipes, List<RecipeTag> tags, int time, int rating, int servings, int favourite, string ownerUsername)
+        public static List<Recipe> SearchRecipes(string keyword = null, List<RecipeTag> tags = null, int? time = null, int? rating = null, int? servings = null, int? favourite = null, string ownerUsername = null)
         {
-            List<Recipe> searchedRecipes = recipes;
+            List<Recipe> searchedRecipes = GetRecipes();
 
             if (!string.IsNullOrEmpty(keyword))
             {
@@ -84,24 +93,24 @@ namespace BusinessLayer
                 searchedRecipes = SearchRecipesByTags(tags, searchedRecipes);
             }
 
-            if (time > 0)
+            if (time.HasValue)
             {
-                searchedRecipes = SearchRecipesByTimeConstraint(time, searchedRecipes);
+                searchedRecipes = SearchRecipesByTimeConstraint(time.Value, searchedRecipes);
             }
 
-            if (rating > 0)
+            if (rating.HasValue)
             {
-                searchedRecipes = SearchRecipesByRating(rating, searchedRecipes);
+                searchedRecipes = SearchRecipesByRating(rating.Value, searchedRecipes);
             }
 
-            if (servings > 0)
+            if (servings.HasValue)
             {
-                searchedRecipes = SearchRecipesByServings(servings, searchedRecipes);
+                searchedRecipes = SearchRecipesByServings(servings.Value, searchedRecipes);
             }
 
-            if (favourite > 0)
+            if (favourite.HasValue)
             {
-                searchedRecipes = SearchRecipesInFavorites(favourite, searchedRecipes);
+                searchedRecipes = SearchRecipesInFavorites(favourite.Value, searchedRecipes);
             }
 
             if (!string.IsNullOrEmpty(ownerUsername))
@@ -109,8 +118,8 @@ namespace BusinessLayer
                 searchedRecipes = SearchRecipesByOwnerUsername(ownerUsername, searchedRecipes);
             }
 
+            Console.WriteLine($"Total recipes found: {searchedRecipes.Count}");
             return searchedRecipes;
         }
-
     }
 }

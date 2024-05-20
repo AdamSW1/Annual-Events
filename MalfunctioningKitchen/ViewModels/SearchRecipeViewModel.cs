@@ -5,6 +5,8 @@ using RecipeInfo;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using System;
+using System.Reactive.Linq;
 
 namespace MalfunctioningKitchen.ViewModels
 {
@@ -13,10 +15,10 @@ namespace MalfunctioningKitchen.ViewModels
         private string _notificationMessage;
         private string _searchKeyword;
         private List<string> _tagCriteria;
-        private int _timeConstraint;
-        private int _rating;
-        private int _servings;
-        private int _favorite;
+        private string _timeConstraint;
+        private string _rating;
+        private string _servings;
+        private string _favorite;
         private string _ownerUsername;
         private List<Recipe> _searchedRecipes;
 
@@ -38,31 +40,31 @@ namespace MalfunctioningKitchen.ViewModels
             set => this.RaiseAndSetIfChanged(ref _searchKeyword, value);
         }
 
-        // public List<string> TagCriteria
-        // {
-        //     get => _tagCriteria;
-        //     set => this.RaiseAndSetIfChanged(ref _tagCriteria, value);
-        // }
+        public List<string> TagCriteria
+        {
+            get => _tagCriteria;
+            set => this.RaiseAndSetIfChanged(ref _tagCriteria, value);
+        }
 
-        public int TimeConstraint
+        public string TimeConstraint
         {
             get => _timeConstraint;
             set => this.RaiseAndSetIfChanged(ref _timeConstraint, value);
         }
 
-        public int Rating
+        public string Rating
         {
             get => _rating;
             set => this.RaiseAndSetIfChanged(ref _rating, value);
         }
 
-        public int Servings
+        public string Servings
         {
             get => _servings;
             set => this.RaiseAndSetIfChanged(ref _servings, value);
         }
 
-        public int Favorite
+        public string Favorite
         {
             get => _favorite;
             set => this.RaiseAndSetIfChanged(ref _favorite, value);
@@ -81,25 +83,55 @@ namespace MalfunctioningKitchen.ViewModels
         {
             Return = ReactiveCommand.Create(() =>
             {
-
+                // Implementation for Return command
             });
 
             SearchCommand = ReactiveCommand.CreateFromTask(ExecuteSearch);
+            _tagCriteria = new List<string>();
+            _searchedRecipes = new List<Recipe>();
         }
 
         private async Task<List<Recipe>> ExecuteSearch()
         {
-            var searchedRecipes = Search.SearchRecipes(
-                keyword: SearchKeyword,
-                // tags: TagCriteria,
-                time: TimeConstraint,
-                rating: Rating,
-                servings: Servings,
-                favourite: Favorite,
-                ownerUsername: OwnerUsername
-            );
+            try
+            {
+                List<RecipeTag> tags = _tagCriteria.Select(tag => new RecipeTag(tag)).ToList();
 
-            SearchedRecipes = searchedRecipes;
+                var timeConstraint = int.TryParse(TimeConstraint, out var time) ? time : (int?)null;
+                var rating = int.TryParse(Rating, out var rate) ? rate : (int?)null;
+                var servings = int.TryParse(Servings, out var serve) ? serve : (int?)null;
+                var favorite = int.TryParse(Favorite, out var fav) ? fav : (int?)null;
+
+                var searchedRecipes = Search.SearchRecipes(
+                    keyword: SearchKeyword,
+                    tags: tags,
+                    time: timeConstraint,
+                    rating: rating,
+                    servings: servings,
+                    favourite: favorite,
+                    ownerUsername: OwnerUsername
+                );
+
+                if (searchedRecipes == null || !searchedRecipes.Any())
+                {
+                    NotificationMessage = "No recipes found matching the criteria.";
+                    var allRecipes = Search.GetRecipes();
+                    var ownerUsernames = allRecipes.Select(r => r.Owner?.Username).Where(username => username != null).ToList();
+                    NotificationMessage += $"\nInput owner username: {OwnerUsername}";
+                    NotificationMessage += $"\nAvailable owner usernames: {string.Join(", ", ownerUsernames)}";
+                }
+                else
+                {
+                    SearchedRecipes = searchedRecipes;
+                    NotificationMessage = $"{searchedRecipes.Count} recipes found.";
+                }
+
+                // SearchedRecipes = searchedRecipes;
+            }
+            catch (Exception ex)
+            {
+                NotificationMessage = $"Error during search: {ex.Message}";
+            }
 
             return SearchedRecipes;
         }
