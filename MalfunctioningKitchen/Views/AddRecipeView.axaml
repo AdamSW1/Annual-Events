@@ -4,6 +4,80 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              xmlns:vm="using:MalfunctioningKitchen.ViewModels"
-             x:DataType="vm:RecipeViewModel"
+             x:DataType="vm:AddRecipeViewModel"
              x:Class="MalfunctioningKitchen.Views.AddRecipeView">
+  <DockPanel>
+         <StackPanel DockPanel.Dock="Top"
+                Orientation="Horizontal"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Spacing="200"
+                Background="#962D2D"
+                Margin="0 0 0 0">
+                <TextBlock
+                Text="MALFUNCTIONING KITCHEN"
+                Margin="5 0 0 0"
+                TextAlignment="Center">
+                </TextBlock>
+                <Button Content="Back" 
+                  Command="{Binding NavigateToHomePageCommand}" 
+                  Margin="250 0 250 0"/>
+                <Button Content="Logout"
+                Command="{Binding Logout}"
+                Margin="200,0,200,0"/>
+        </StackPanel>
+          <ScrollViewer>
+            <StackPanel HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Background="#9e5252"
+                      Margin="0,200,0,200">
+                <TextBlock Text="Create Recipe" FontSize="30" TextAlignment="Center" Margin="0,0,0,5" FontWeight="Bold"/>
+                <TextBlock Margin="0 5">
+                  Recipe Name:
+                </TextBlock>
+                <TextBox Text="{Binding RecipeName}"
+                          Watermark="Enter Recipe Name"/>
+                <TextBlock Margin="0 5">
+                  Description:
+                </TextBlock>
+                <TextBox Text="{Binding Description}"
+                          Watermark="Enter Description"/>
+                <TextBlock Margin="0 5">
+                  Cooking Time (in minutes):
+                </TextBlock>
+                <NumericUpDown Value="{Binding CookingTime}"
+                               Minimum="0"
+                               FormatString="0.00"
+                               AllowSpin="True"/>
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Margin="0 5">
+                    Preperation Steps:
+                  </TextBlock>
+                  <Button Content="Add Step"
+                          Command="{Binding AddStep}"/>
+                </StackPanel>
+                <TextBlock Margin="0.5">
+                  Servings:
+                </TextBlock>
+                <NumericUpDown Value="{Binding Servings}"
+                               Minimum="0"
+                               FormatString="0.00"
+                               AllowSpin="True"/>
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Margin="0 5">
+                    Ingredients:
+                  </TextBlock>
+                  <TextBox Text="{Binding Ingredients}"
+                            Watermark="Enter Ingredients"/>
+                  <TextBox Text="{Binding IngredientWeightAmount}"
+                            Watermark="Enter Weight Amount e.g(2g/0.5$)"/>
+                  <NumericUpDown Value="IngredientPrice"
+                                  Minimum="0"
+                                  FormatString="0.00"
+                                  AllowSpin="True"/>
+                  <Button Content="Add Ingredient" Command="{Binding AddIngredient}"/>
+                </StackPanel>
+            </StackPanel>
+          </ScrollViewer>
+  </DockPanel>
 </UserControl>

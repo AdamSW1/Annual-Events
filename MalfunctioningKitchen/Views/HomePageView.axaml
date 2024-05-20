@@ -32,12 +32,16 @@
                 PaneBackground="#962D2D">
       <SplitView.Pane>
         <DockPanel LastChildFill="true">
-          <Button DockPanel.Dock="Bottom" Content="Logout"/>
           <Button DockPanel.Dock="Bottom"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Bottom"
                   Content="Logout"
                   Command="{Binding Logout}"/>
+          <Button DockPanel.Dock="Bottom"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Bottom"
+                  Content="Add Recipe"
+                  Command="{Binding NavigateToAddRecipeCommand}"/>
         </DockPanel>
       </SplitView.Pane>
     </SplitView>
