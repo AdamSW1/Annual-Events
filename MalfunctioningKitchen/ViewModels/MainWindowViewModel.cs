@@ -29,7 +29,7 @@ namespace MalfunctioningKitchen.ViewModels
             NavigateToUpdateProfileCommand = ReactiveCommand.Create(NavigateToUpdateProfile);
             NavigateToSearchRecipeCommand = ReactiveCommand.Create(NavigateToSearchRecipe);
             previous nav = NavigateToHomePage;
-            NavigateToRecipeCommand = ReactiveCommand.Create<Recipe>(recipe => NavigateToRecipe(recipe,nav));
+            NavigateToRecipeCommand = ReactiveCommand.Create<Recipe>(recipe => NavigateToRecipe(recipe, nav));
         }
 
         public void NavigateToWelcome()
@@ -39,7 +39,7 @@ namespace MalfunctioningKitchen.ViewModels
 
         public void NavigateToRegister()
         {
-            RegisterViewModel viewModel = new RegisterViewModel();
+            RegisterViewModel viewModel = new();
 
             viewModel.Register.Subscribe(user =>
             {
@@ -54,7 +54,7 @@ namespace MalfunctioningKitchen.ViewModels
 
         public void NavigateToLogin()
         {
-            LoginViewModel viewModel = new LoginViewModel();
+            LoginViewModel viewModel = new();
 
             viewModel.Login.Subscribe(user =>
             {
@@ -69,7 +69,7 @@ namespace MalfunctioningKitchen.ViewModels
 
         public void NavigateToHomePage()
         {
-            HomePageViewModel viewModel = new HomePageViewModel();
+            HomePageViewModel viewModel = new();
             viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
             viewModel.NavigateToUpdateProfileCommand.Subscribe(_ => NavigateToUpdateProfile());
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
@@ -79,11 +79,11 @@ namespace MalfunctioningKitchen.ViewModels
             ContentViewModel = viewModel;
         }
 
-        
+
 
         public void NavigateToLoggedIn()
         {
-            LoggedInViewModel viewModel = new LoggedInViewModel();
+            LoggedInViewModel viewModel = new();
 
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
 
@@ -95,7 +95,7 @@ namespace MalfunctioningKitchen.ViewModels
 
         public void NavigateToSearchRecipe()
         {
-            SearchRecipeViewModel viewModel = new SearchRecipeViewModel();
+            SearchRecipeViewModel viewModel = new();
             viewModel.Return.Subscribe(_ => NavigateToHomePage());
             previous nav = NavigateToSearchRecipe;
             viewModel.ViewRecipeCommand.Subscribe(recipe => NavigateToRecipe(recipe, nav));
@@ -106,20 +106,20 @@ namespace MalfunctioningKitchen.ViewModels
         public void NavigateToUpdateProfile()
         {
             var currentUser = AuthenticationManager.Instance.CurrentUser;
-            UpdateProfileViewModel viewModel = new UpdateProfileViewModel(currentUser);
+            UpdateProfileViewModel viewModel = new(currentUser);
             ContentViewModel = viewModel;
             viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
             viewModel.Return.Subscribe(_ => NavigateToHomePage());
-            
+
         }
 
         public void NavigateToRecipe(Recipe recipe, previous previousPage)
         {
-            RecipeViewModel viewModel = new RecipeViewModel(recipe);
+            RecipeViewModel viewModel = new(recipe);
             viewModel.NavigateToHomePageCommand.Subscribe(_ => previousPage());
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
             ContentViewModel = viewModel;
         }
-        
+
     }
 }
