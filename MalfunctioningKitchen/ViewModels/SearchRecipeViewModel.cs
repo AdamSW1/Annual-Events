@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 using System.Linq;
 using System;
 using System.Reactive.Linq;
+using System.Collections.ObjectModel;
+using Avalonia.Controls;
+using System.ComponentModel;
 
 namespace MalfunctioningKitchen.ViewModels;
 
-public class SearchRecipeViewModel : ViewModelBase
+public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
 {
     private string _notificationMessage;
     private string _searchKeyword;
@@ -45,6 +48,12 @@ public class SearchRecipeViewModel : ViewModelBase
         get => _tagCriteria;
         set => this.RaiseAndSetIfChanged(ref _tagCriteria, value);
     }
+
+    private IList<string> _selectedTags = new List<string>();
+    public IList<string> SelectedTags { 
+        get => _selectedTags; 
+        set => this.RaiseAndSetIfChanged(ref _selectedTags, value); 
+        }
 
     public string TimeConstraint
     {
@@ -88,6 +97,11 @@ public class SearchRecipeViewModel : ViewModelBase
 
         SearchCommand = ReactiveCommand.CreateFromTask(ExecuteSearch);
         _tagCriteria = new List<string>();
+        foreach (var tag in Enum.GetValues(typeof(RecipeTags)))
+        {
+            TagCriteria.Add(tag.ToString()!);
+        }
+
         _searchedRecipes = new List<Recipe>();
     }
 
@@ -95,7 +109,7 @@ public class SearchRecipeViewModel : ViewModelBase
     {
         try
         {
-            List<RecipeTag> tags = _tagCriteria.Select(tag => new RecipeTag(tag)).ToList();
+            List<RecipeTag> tags = SelectedTags.Select(tag => new RecipeTag(tag)).ToList();
 
             var timeConstraint = int.TryParse(TimeConstraint, out var time) ? time : (int?)null;
             var rating = int.TryParse(Rating, out var rate) ? rate : (int?)null;
