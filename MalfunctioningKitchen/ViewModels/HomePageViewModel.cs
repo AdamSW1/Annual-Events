@@ -25,6 +25,9 @@ public class HomePageViewModel : ViewModelBase
     public ReactiveCommand<Unit, Recipe> ViewRecipeCommand { get; }
     public ReactiveCommand<Unit, Unit> ViewOwnedRecipes { get; }
 
+    //Tempororary, ask vijay used for testing
+    public ReactiveCommand<Unit, Unit> NavigateToRecipeCommand { get; }
+
 
     public ObservableCollection<Recipe> Recipes
     {
@@ -43,6 +46,8 @@ public class HomePageViewModel : ViewModelBase
         NavigateToUpdateProfileCommand = ReactiveCommand.Create(() => { });
         ViewOwnedRecipes = ReactiveCommand.Create(() => { });
         ViewRecipeCommand = ReactiveCommand.Create( () => { return SelectedRecipe; });
+        NavigateToRecipeCommand = ReactiveCommand.Create(() => { });
+
     }
 
     public void ViewOwnRecipes(){

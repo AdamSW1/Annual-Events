@@ -4,253 +4,136 @@ using BusinessLayer;
 using RecipeInfo;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Windows;
-namespace MalfunctioningKitchen.ViewModels
+using System.Linq;
+using System;
+using System.Reactive.Linq;
+
+namespace MalfunctioningKitchen.ViewModels;
+
+public class SearchRecipeViewModel : ViewModelBase
 {
-    public class SearchRecipeViewModel : ViewModelBase
+    private string _notificationMessage;
+    private string _searchKeyword;
+    private List<string> _tagCriteria;
+    private string _timeConstraint;
+    private string _rating;
+    private string _servings;
+    private string _favorite;
+    private string _ownerUsername;
+    private List<Recipe> _searchedRecipes;
+
+    public string NotificationMessage
     {
-        private string _notificationMessage;
+        get => _notificationMessage;
+        set => this.RaiseAndSetIfChanged(ref _notificationMessage, value);
+    }
 
-        public string NotificationMessage
-        {
-            get => _notificationMessage;
-            set => this.RaiseAndSetIfChanged(ref _notificationMessage, value);
-        }
-        private string _searchKeyword;
-        private List<RecipeTag> _tagCriteria;
-        private int _timeConstraint;
-        private int _rating;
-        private int _servings;
-        private int _favorite;
-        private string _ownerUsername;
+    public List<Recipe> SearchedRecipes
+    {
+        get => _searchedRecipes;
+        set => this.RaiseAndSetIfChanged(ref _searchedRecipes, value);
+    }
 
-        private List<Recipe> _searchedRecipes;
+    public string SearchKeyword
+    {
+        get => _searchKeyword;
+        set => this.RaiseAndSetIfChanged(ref _searchKeyword, value);
+    }
 
-        public List<Recipe> SearchedRecipes
-        {
-            get => _searchedRecipes;
-            set => this.RaiseAndSetIfChanged(ref _searchedRecipes, value);
-        }
-        
-        public string SearchKeyword
-        {
-            get => _searchKeyword;
-            set => this.RaiseAndSetIfChanged(ref _searchKeyword, value);
-        }
-        public List<RecipeTag> TagCriteria
-        {
-            get => _tagCriteria;
-            set => this.RaiseAndSetIfChanged(ref _tagCriteria, value);
-        }
+    public List<string> TagCriteria
+    {
+        get => _tagCriteria;
+        set => this.RaiseAndSetIfChanged(ref _tagCriteria, value);
+    }
 
-        public int TimeConstraint
-        {
-            get => _timeConstraint;
-            set => this.RaiseAndSetIfChanged(ref _timeConstraint, value);
-        }
+    public string TimeConstraint
+    {
+        get => _timeConstraint;
+        set => this.RaiseAndSetIfChanged(ref _timeConstraint, value);
+    }
 
-        public int Rating
-        {
-            get => _rating;
-            set => this.RaiseAndSetIfChanged(ref _rating, value);
-        }
+    public string Rating
+    {
+        get => _rating;
+        set => this.RaiseAndSetIfChanged(ref _rating, value);
+    }
 
-        public int Servings
-        {
-            get => _servings;
-            set => this.RaiseAndSetIfChanged(ref _servings, value);
-        }
+    public string Servings
+    {
+        get => _servings;
+        set => this.RaiseAndSetIfChanged(ref _servings, value);
+    }
 
-        public int Favorite
-        {
-            get => _favorite;
-            set => this.RaiseAndSetIfChanged(ref _favorite, value);
-        }
+    public string Favorite
+    {
+        get => _favorite;
+        set => this.RaiseAndSetIfChanged(ref _favorite, value);
+    }
 
-        public string OwnerUsername
-        {
-            get => _ownerUsername;
-            set => this.RaiseAndSetIfChanged(ref _ownerUsername, value);
-        }
+    public string OwnerUsername
+    {
+        get => _ownerUsername;
+        set => this.RaiseAndSetIfChanged(ref _ownerUsername, value);
+    }
 
-        // Other properties omitted for brevity
-        public ReactiveCommand<Unit, Unit> Return{get;}
-        public ReactiveCommand<string, List<Recipe>> SearchByKeywordCommand { get; }
-        public ReactiveCommand<string, List<Recipe>> SearchByTagCommand { get; }
-        public ReactiveCommand<string, List<Recipe>> SearchByTimeCommand { get; }
-        public ReactiveCommand<string, List<Recipe>> SearchByRatingCommand { get; }
-        public ReactiveCommand<string, List<Recipe>> SearchByServingsCommand { get; }
-        public ReactiveCommand<string, List<Recipe>> SearchByFavoritesCommand { get; }
-        public ReactiveCommand<string, List<Recipe>> SearchByOwnerCommand { get; }
+    public ReactiveCommand<Unit, Unit> Return { get; }
+    public ReactiveCommand<Unit, List<Recipe>> SearchCommand { get; }
 
-        public SearchRecipeViewModel()
+    public SearchRecipeViewModel()
+    {
+        Return = ReactiveCommand.Create(() =>
         {
-            Return = ReactiveCommand.Create(() =>
+            // Implementation for Return command
+        });
+
+        SearchCommand = ReactiveCommand.CreateFromTask(ExecuteSearch);
+        _tagCriteria = new List<string>();
+        _searchedRecipes = new List<Recipe>();
+    }
+
+    private async Task<List<Recipe>> ExecuteSearch()
+    {
+        try
+        {
+            List<RecipeTag> tags = _tagCriteria.Select(tag => new RecipeTag(tag)).ToList();
+
+            var timeConstraint = int.TryParse(TimeConstraint, out var time) ? time : (int?)null;
+            var rating = int.TryParse(Rating, out var rate) ? rate : (int?)null;
+            var servings = int.TryParse(Servings, out var serve) ? serve : (int?)null;
+            var favorite = int.TryParse(Favorite, out var fav) ? fav : (int?)null;
+
+            var searchedRecipes = Search.SearchRecipes(
+                keyword: SearchKeyword,
+                tags: tags,
+                time: timeConstraint,
+                rating: rating,
+                servings: servings,
+                favourite: favorite,
+                ownerUsername: OwnerUsername
+            );
+
+            if (searchedRecipes == null || !searchedRecipes.Any())
             {
-
-            });
-            SearchByKeywordCommand = ReactiveCommand.CreateFromTask<string, List<Recipe>>(GetRecipesByKeyword);
-            SearchByTagCommand = ReactiveCommand.CreateFromTask<string, List<Recipe>>(GetRecipesByTag);
-            SearchByTimeCommand = ReactiveCommand.CreateFromTask<string, List<Recipe>>(GetRecipesByTime);
-            SearchByRatingCommand = ReactiveCommand.CreateFromTask<string, List<Recipe>>(GetRecipesByRating);
-            SearchByServingsCommand = ReactiveCommand.CreateFromTask<string, List<Recipe>>(GetRecipesByServings);
-            SearchByFavoritesCommand = ReactiveCommand.CreateFromTask<string, List<Recipe>>(GetRecipesInFavorites);
-            SearchByOwnerCommand = ReactiveCommand.CreateFromTask<string, List<Recipe>>(GetRecipesByOwner);
-
-            // ShowAllRecipesCommand = ReactiveCommand.CreateFromTask(GetAllRecipes);
-        }
-
-        private async Task<List<Recipe>> GetRecipesByKeyword(string keyword)
-        {
-            List<Recipe> searchResult = Search.SearchRecipesByKeyword(SearchKeyword, Search.getRecipes());
-            SearchedRecipes = searchResult;
-            if (searchResult != null && searchResult.Count > 0)
-            {
-                // Search successful, update SearchedRecipes with the search result
-                SearchedRecipes = searchResult;
-                // Print a success message
-                NotificationMessage = "Search successful!";
+                NotificationMessage = "No recipes found matching the criteria.";
+                var allRecipes = Search.GetRecipes();
+                var ownerUsernames = allRecipes.Select(r => r.Owner?.Username).Where(username => username != null).ToList();
+                NotificationMessage += $"\nInput owner username: {OwnerUsername}";
+                NotificationMessage += $"\nAvailable owner usernames: {string.Join(", ", ownerUsernames)}";
             }
             else
             {
-                // Search failed, clear SearchedRecipes
-                SearchedRecipes.Clear();
-                // Print a failure message
-                NotificationMessage = "No recipes found matching the keyword.";
+                SearchedRecipes = searchedRecipes;
+                NotificationMessage = $"{searchedRecipes.Count} recipes found.";
             }
-            return SearchedRecipes;
-        }
 
-        private async Task<List<Recipe>> GetRecipesByTag(string keyword)
+            // SearchedRecipes = searchedRecipes;
+        }
+        catch (Exception ex)
         {
-            // List<Recipe> searchResult = Search.SearchRecipesByTags(SearchKeyword, Search.getRecipes());
-            // if (searchResult != null && searchResult.Count > 0)
-            // {
-            //     SearchedRecipes = searchResult;
-            //     NotificationMessage = "Search successful!";
-            // }
-            // else
-            // {
-            //     SearchedRecipes.Clear();
-            //     NotificationMessage = "No recipes found matching the tag.";
-            // }
-            // return SearchedRecipes;
-            return null;
+            NotificationMessage = $"Error during search: {ex.Message}";
         }
 
-        private async Task<List<Recipe>> GetRecipesByTime(string keyword)
-        {
-            if (int.TryParse(SearchKeyword, out int time))
-            {
-                List<Recipe> searchResult = Search.SearchRecipesByTimeConstraint(time, Search.getRecipes());
-                if (searchResult != null && searchResult.Count > 0)
-                {
-                    SearchedRecipes = searchResult;
-                    NotificationMessage = "Search successful!";
-                }
-                else
-                {
-                    SearchedRecipes.Clear();
-                    NotificationMessage = "No recipes found matching the Servings.";
-                }
-            }
-            else
-            {
-                SearchedRecipes.Clear();
-                NotificationMessage = "No recipes found matching the time constraint.";
-            }
-            return SearchedRecipes;
-        }
-
-        private async Task<List<Recipe>> GetRecipesByRating(string keyword)
-        {
-            if (int.TryParse(SearchKeyword, out int ratings))
-            {
-                List<Recipe> searchResult = Search.SearchRecipesByRating(ratings, Search.getRecipes());
-                if (searchResult != null && searchResult.Count > 0)
-                {
-                    SearchedRecipes = searchResult;
-                    NotificationMessage = "Search successful!";
-                }
-                else
-                {
-                    SearchedRecipes.Clear();
-                    NotificationMessage = "No recipes found matching the Servings.";
-                }
-            }
-            else
-            {
-                SearchedRecipes.Clear();
-                NotificationMessage = "No recipes found matching the Rating.";
-            }
-            return SearchedRecipes;
-        }
-
-        private async Task<List<Recipe>> GetRecipesByServings(string keyword)
-        {
-            if (int.TryParse(SearchKeyword, out int servings))
-            {
-                List<Recipe> searchResult = Search.SearchRecipesByServings(servings, Search.getRecipes());
-                if (searchResult != null && searchResult.Count > 0)
-                {
-                    SearchedRecipes = searchResult;
-                    NotificationMessage = "Search successful!";
-                }
-                else
-                {
-                    SearchedRecipes.Clear();
-                    NotificationMessage = "No recipes found matching the Servings.";
-                }
-            }
-            else
-            {
-                NotificationMessage = "Invalid input for servings.";
-            }
-
-            return SearchedRecipes;
-        }
-
-
-        private async Task<List<Recipe>> GetRecipesInFavorites(string keyword)
-        {
-            // Assuming SearchKeyword represents the favorite status as a string
-            if (int.TryParse(SearchKeyword, out int favoriteStatus))
-            {
-                List<Recipe> searchResult = Search.SearchRecipesInFavorites(favoriteStatus, Search.getRecipes());
-                if (searchResult != null && searchResult.Count > 0)
-                {
-                    SearchedRecipes = searchResult;
-                    NotificationMessage = "Search successful!";
-                }
-                else
-                {
-                    SearchedRecipes.Clear();
-                    NotificationMessage = "No recipes found.";
-                }
-            }
-            else
-            {
-                NotificationMessage = "Invalid input for favorite status.";
-            }
-
-            return SearchedRecipes;
-        }
-
-
-        private async Task<List<Recipe>> GetRecipesByOwner(string keyword)
-        {
-            List<Recipe> searchResult = Search.SearchRecipesByOwnerUsername(SearchKeyword, Search.getRecipes());
-            if(searchResult != null && searchResult.Count > 0)
-            {
-                SearchedRecipes = searchResult;
-                NotificationMessage = "Search successful!";
-            }
-            else
-            {
-                SearchedRecipes.Clear();
-                NotificationMessage = "No recipes found matching this Owner.";
-            }
-            return SearchedRecipes;
-        }
+        return SearchedRecipes;
     }
 }
+
