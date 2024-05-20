@@ -3,9 +3,10 @@
              xmlns:vm="using:MalfunctioningKitchen.ViewModels"
              x:Class="MalfunctioningKitchen.Views.SearchRecipeView"
              x:DataType="vm:SearchRecipeViewModel">
-
-    <Grid Background="#8B0000"> <!-- Dark Red Background -->
-        <Border Background="White" CornerRadius="10" Padding="20" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <!-- Dark Red Background -->
+    <Grid Background="#8B0000">
+        <!-- Light red background-->
+        <Border Background="#88ffffff" CornerRadius="10" Padding="20" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Spacing="25">
@@ -14,18 +15,18 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
                     <Button Classes="search-button" Content="Search by Keyword" Command="{Binding SearchByKeywordCommand}" />
-                    <Button Content="Search by Tag" Command="{Binding SearchByTagCommand}" />
-                    <Button Content="Search by Time" Command="{Binding SearchByTimeCommand}" />
+                    <Button Content="Search by Tag" Command="{Binding SearchByTagCommand}" CommandParameter="{Binding SearchKeyword}"/>
+                    <Button Content="Search by Time" Command="{Binding SearchByTimeCommand}" CommandParameter="{Binding SearchKeyword}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
-                    <Button Content="Search by Rating" Command="{Binding SearchByRatingCommand}" />
-                    <Button Content="Search by Servings" Command="{Binding SearchByServingsCommand}" />
+                    <Button Content="Search by Rating" Command="{Binding SearchByRatingCommand}" CommandParameter="{Binding SearchKeyword}"/>
+                    <Button Content="Search by Servings" Command="{Binding SearchByServingsCommand}" CommandParameter="{Binding SearchKeyword}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
-                    <Button Content="Search by Favorites" Command="{Binding SearchByFavoritesCommand}" />
-                    <Button Content="Search by Owner" Command="{Binding SearchByOwnerCommand}" />
+                    <Button Content="Search by Favorites" Command="{Binding SearchByFavoritesCommand}" CommandParameter="{Binding SearchKeyword}"/>
+                    <Button Content="Search by Owner" Command="{Binding SearchByOwnerCommand}" CommandParameter="{Binding SearchKeyword}"/>
                 </StackPanel>
 
                 <TextBlock Text="{Binding NotificationMessage}" Foreground="Red" HorizontalAlignment="Center"/>
@@ -33,15 +34,18 @@
                 <ListBox ItemsSource="{Binding SearchedRecipes}" Width="400" Height="200">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10" Margin="5">
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16"/>
-                                    <TextBlock Text="{Binding Description}" TextWrapping="Wrap"/>
-                                </StackPanel>
-                            </Border>
+                            <Button HorizontalContentAlignment="Stretch">
+                                <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10" Margin="5">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16"/>
+                                        <TextBlock Text="{Binding Description}" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Border>
+                            </Button>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+
                 <Button Content="Return" Command="{Binding Return}" HorizontalAlignment="Center" Width="150" Background="#FF6347" Foreground="White"/>
             </StackPanel>
         </Border>

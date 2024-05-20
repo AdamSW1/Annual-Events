@@ -3,13 +3,17 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using RecipeInfo;
+using DataLayer;
 namespace BusinessLayer;
 
 public class Search
 {   
     public static List<Recipe> getRecipes()
-    { //gets the recipes from the database
-        throw new NotImplementedException();
+    { 
+        using (var dbContext = new AnnualEventsContext())
+        {
+            return dbContext.Recipe.ToList();
+        }
     }
     // Search recipes by keyword
     public static List<Recipe> SearchRecipesByKeyword(string keyword,List<Recipe> Recipes)
