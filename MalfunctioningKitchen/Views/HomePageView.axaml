@@ -33,8 +33,6 @@
       <SplitView.Pane>
         <DockPanel LastChildFill="true">
           <Button DockPanel.Dock="Bottom" Content="Logout"/>
-                <!-- Temporary code used for testing -->
-                <Button Content="View Recipe" Command="{Binding NavigateToRecipeCommand}"/>
           <Button DockPanel.Dock="Bottom"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Bottom"

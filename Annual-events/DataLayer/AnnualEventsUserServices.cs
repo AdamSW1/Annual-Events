@@ -52,10 +52,30 @@ namespace DataLayer
 
         public void AddFavRecipes(Recipe favRecipe)
         {
-            _dbContext.Recipe.Add(favRecipe);
+            var recipeToadd = _dbContext.Recipe
+            .Include(r => r.Tags)
+            .Include(r => r.RecipeIngredients)
+                .ThenInclude(ri => ri.Ingredient)
+            .Include(r => r.Reviews)
+            .Include(r => r.FavouritedBy)
+            .Include(r => r.Preparation)
+            .FirstOrDefault();
+
+            if (recipeToadd == null)
+            {
+            return;
+            }
+            bool isFavorited = _dbContext.Annual_Events_User
+            .Any(u => u.FavRecipes.Contains(favRecipe));
+
+            if (isFavorited)
+            {
+            return;
+            }
+            favRecipe!.AddFavourite();
+            RecipeManager.AddToFavRecipe(AuthenticationManager.Instance.CurrentUser,recipeToadd);
             _dbContext.SaveChanges();
         }
-
         public Annual_Events_User GetUserByUsername(string username)
         {
             // Retrieve the user by username
