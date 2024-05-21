@@ -53,6 +53,8 @@
                   <TextBlock Margin="0 5">
                     Preperation Steps:
                   </TextBlock>
+                  <TextBox Text="{Binding Instruction}"
+                            Watermark="Enter Step Details"/>
                   <Button Content="Add Step"
                           Command="{Binding AddStep}"/>
                 </StackPanel>
@@ -67,10 +69,12 @@
                   <TextBlock Margin="0 5">
                     Ingredients:
                   </TextBlock>
-                  <TextBox Text="{Binding Ingredients}"
+                  <TextBox Text="{Binding IngredientName}"
                             Watermark="Enter Ingredients"/>
-                  <TextBox Text="{Binding IngredientWeightAmount}"
-                            Watermark="Enter Weight Amount e.g(2g/0.5$)"/>
+                  <NumericUpDown Value="Quantity"
+                                  Minimum="0"
+                                  FormatString="0.00"
+                                  AllowSpin="True"/>
                   <NumericUpDown Value="IngredientPrice"
                                   Minimum="0"
                                   FormatString="0.00"
@@ -78,6 +82,7 @@
                   <Button Content="Add Ingredient" Command="{Binding AddIngredient}"/>
                 </StackPanel>
             </StackPanel>
+            <Button Command="{Binding CreateRecipe}" Content="Create Recipe" Margin="0,0,0,0" Foreground="LightGray"/>
           </ScrollViewer>
   </DockPanel>
 </UserControl>
