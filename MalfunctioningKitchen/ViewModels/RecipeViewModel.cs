@@ -176,7 +176,7 @@ public class RecipeViewModel : ViewModelBase
         string reviews = "";
         foreach (var review in Recipe.Reviews)
         {
-            reviews += review.ReviewerUsername + "\n";
+            reviews += review.ReviewerUsername + ": " + review.ReviewText + "\n";
         }
         if (reviews == "")
         {
