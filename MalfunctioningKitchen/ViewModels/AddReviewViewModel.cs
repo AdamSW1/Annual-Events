@@ -51,17 +51,30 @@ public class AddReviewViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _errorMessage, value);
     }
 
+    public ReactiveCommand<Unit, Unit> AddReviewCommand { get; }
     public ReactiveCommand<Unit, Unit> Logout { get; }
     public ReactiveCommand<Unit, Unit> NavigateToHomePageCommand { get; }
 
-    public AddReviewViewModel() 
+    public AddReviewViewModel(Recipe recipe) 
     {
-        Logout = ReactiveCommand.Create(() =>
-        {
-            AuthenticationManager.Instance.Logout();
-        });
-
         NavigateToHomePageCommand = ReactiveCommand.Create(() => { });
+        AddReviewCommand = ReactiveCommand.Create( () => AddReview(recipe));
+    }
+
+    public void AddReview(Recipe recipe) 
+    {
+         try
+            { 
+                _reviewerUsername = AuthenticationManager.Instance.CurrentUser.Username;
+                Review review = new Review(_reviewerUsername, _reviewText, _score);
+                review.Recipe = recipe;
+                AnnualEventsService.Instance.AddReview(review);
+                ErrorMessage = "Added review successfully!";
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = $"Failed to add review: {ex}";
+            }
     }
 
 }

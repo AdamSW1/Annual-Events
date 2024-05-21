@@ -120,6 +120,14 @@ namespace MalfunctioningKitchen.ViewModels
             RecipeViewModel viewModel = new(recipe);
             viewModel.NavigateToHomePageCommand.Subscribe(_ => previousPage());
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+            viewModel.NavigateToAddReviewCommand.Subscribe(_ => NavigateToAddReview(recipe, previousPage));
+            ContentViewModel = viewModel;
+        }
+
+        public void NavigateToAddReview(Recipe recipe, previous previousPage) 
+        {
+            AddReviewViewModel viewModel = new(recipe);
+            viewModel.NavigateToHomePageCommand.Subscribe(_ => previousPage());
             ContentViewModel = viewModel;
         }
         
