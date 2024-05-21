@@ -38,6 +38,11 @@
                    Margin="0,20"
                   Content="Logout"
                   Command="{Binding Logout}"/>
+          <Button DockPanel.Dock="Bottom"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Bottom"
+                  Content="Create New Recipe"
+                  Command="{Binding NavigateToAddRecipeCommand}"/>
           <Button DockPanel.Dock="Top"
                   VerticalAlignment="Center"
                   HorizontalAlignment="Center"
