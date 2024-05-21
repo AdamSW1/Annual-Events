@@ -9,6 +9,7 @@ using DataLayer;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using System;
+using System.Linq;
 namespace MalfunctioningKitchen.ViewModels;
 
 public class RecipeViewModel : ViewModelBase
@@ -90,9 +91,17 @@ public class RecipeViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _tags, value);
     }
 
+    private bool _faved;
+    public bool Faved{
+        get => _faved;
+        set => this.RaiseAndSetIfChanged(ref _faved, value);
+    }
+
     public ReactiveCommand<Unit, Unit> Logout { get; }
     public ReactiveCommand<Unit, Unit> NavigateToHomePageCommand { get; }
     public ReactiveCommand<Unit, Unit> AddFav { get; }
+    public ReactiveCommand<Unit, Unit> RemoveFav { get; }
+
 
     public RecipeViewModel(Recipe recipe)
     {
@@ -118,7 +127,15 @@ public class RecipeViewModel : ViewModelBase
         AddFav = ReactiveCommand.Create(() =>
         {
             AnnualEventsUserServices.Instance.AddFavRecipes(Recipe);
+            Faved = true;
         });
+        RemoveFav = ReactiveCommand.Create(() =>
+        {
+            AnnualEventsUserServices.Instance.RemoveFavRecipes(Recipe);
+            Faved = false;
+        });
+
+        Faved = AuthenticationManager.Instance.CurrentUser.FavRecipes.Contains(recipe);
     }
 
     private string GetIngredients()
