@@ -3,6 +3,28 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="using:MalfunctioningKitchen.ViewModels"
+             x:DataType="vm:AddReviewViewModel"
              x:Class="MalfunctioningKitchen.Views.AddReviewView">
-  Welcome to Avalonia!
+  <DockPanel>
+        <StackPanel DockPanel.Dock="Top"
+                  Orientation="Horizontal"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Spacing="200"
+                  Background="#962D2D"
+                  Margin="0 0 0 0">
+                  <TextBlock
+                  Text="MALFUNCTIONING KITCHEN"
+                  Margin="5 0 0 0"
+                  TextAlignment="Center">
+                  </TextBlock>
+                  <Button Content="Back" 
+                    Command="{Binding NavigateToHomePageCommand}" 
+                    Margin="250 0 250 0"/>
+                  <Button Content="Logout"
+                  Command="{Binding Logout}"
+                  Margin="200,0,200,0"/>
+              </StackPanel>
+  </DockPanel>
 </UserControl>
