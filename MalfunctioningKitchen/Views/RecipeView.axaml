@@ -59,6 +59,7 @@
               <TextBlock Text="{Binding Instructions}" FontSize="10"/>
               <TextBlock Text="Reviews: " FontSize="15"/>
               <TextBlock Text="{Binding Reviews}" FontSize="10"/>
+              <Button Command="{Binding NavigateToAddReview}" Content="Add a Review" Margin="0,0,0,0" Foreground="LightGray"/>
               <Button Command="{Binding AddFav}" Content="Add To Favourite" Margin="0,0,0,0" Foreground="LightGray"/>
       </StackPanel>
     </ScrollViewer>

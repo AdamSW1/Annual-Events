@@ -115,6 +115,7 @@ public class RecipeViewModel : ViewModelBase
             AuthenticationManager.Instance.Logout();
         });
         NavigateToHomePageCommand = ReactiveCommand.Create(() => { });
+        NavigateToHomePageCommand = ReactiveCommand.Create( () => { });
         AddFav = ReactiveCommand.Create(() =>
         {
             AnnualEventsUserServices.Instance.AddFavRecipes(Recipe);
