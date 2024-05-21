@@ -16,7 +16,8 @@ public class HomePageViewModel : ViewModelBase
 {
     private ObservableCollection<Recipe> _recipes = new();
     private Recipe _selectedRecipe = new();
-    public Recipe SelectedRecipe{
+    public Recipe SelectedRecipe
+    {
         get => _selectedRecipe;
         set => _selectedRecipe = value;
     }
@@ -38,34 +39,39 @@ public class HomePageViewModel : ViewModelBase
     {
         ViewAllRecipes();
 
-        Logout = ReactiveCommand.Create(() =>{
+        Logout = ReactiveCommand.Create(() =>
+        {
             AuthenticationManager.Instance.Logout();
-        }); 
+        });
         NavigateToSearchRecipeCommand = ReactiveCommand.Create(() => { });
         NavigateToUpdateProfileCommand = ReactiveCommand.Create(() => { });
-        ViewRecipeCommand = ReactiveCommand.Create( () => { return SelectedRecipe; });
+        ViewRecipeCommand = ReactiveCommand.Create(() => { return SelectedRecipe; });
         NavigateToRecipeCommand = ReactiveCommand.Create(() => { });
         NavigateToAddRecipeCommand = ReactiveCommand.Create(() => { });
 
     }
 
-    public void ViewOwnRecipes(){
+    public void ViewOwnRecipes()
+    {
         Recipes.Clear();
         var ownedRecipes = RecipeServices.Instance.GetRecipesByOwner(AuthenticationManager.Instance.CurrentUser);
         ownedRecipes.ForEach(recipe => Recipes.Add(recipe));
     }
 
-    public void ViewAllRecipes(){
-         Recipes.Clear();
+    public void ViewAllRecipes()
+    {
+        Recipes.Clear();
         List<Recipe> allRecipes = RecipeServices.Instance.GetRecipes();
         allRecipes.ForEach(recipe => Recipes.Add(recipe));
     }
-    public void ViewFavouriteRecipes() {
+    public void ViewFavouriteRecipes()
+    {
         Recipes.Clear();
         List<Recipe> FavRecipes = RecipeServices.Instance.GetRecipesFavByUser(AuthenticationManager.Instance.CurrentUser);
         FavRecipes.ForEach(recipe => Recipes.Add(recipe));
     }
-    public void GetRecipe(Recipe recipe){
+    public void GetRecipe(Recipe recipe)
+    {
         SelectedRecipe = recipe;
         ViewRecipeCommand.Execute().Subscribe();
     }

@@ -41,7 +41,7 @@
           <Button DockPanel.Dock="Bottom"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Bottom"
-                  Content="Create Recipe"
+                  Content="Create New Recipe"
                   Command="{Binding NavigateToAddRecipeCommand}"/>
           <Button DockPanel.Dock="Top"
                   VerticalAlignment="Center"

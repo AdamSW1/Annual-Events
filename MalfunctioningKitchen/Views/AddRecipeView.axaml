@@ -7,82 +7,87 @@
              x:DataType="vm:AddRecipeViewModel"
              x:Class="MalfunctioningKitchen.Views.AddRecipeView">
   <DockPanel>
-         <StackPanel DockPanel.Dock="Top"
-                Orientation="Horizontal"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Spacing="200"
-                Background="#962D2D"
-                Margin="0 0 0 0">
-                <TextBlock
-                Text="MALFUNCTIONING KITCHEN"
-                Margin="5 0 0 0"
-                TextAlignment="Center">
-                </TextBlock>
-                <Button Content="Back" 
-                  Command="{Binding NavigateToHomePageCommand}" 
-                  Margin="250 0 250 0"/>
-                <Button Content="Logout"
-                Command="{Binding Logout}"
-                Margin="200,0,200,0"/>
-        </StackPanel>
+          <StackPanel DockPanel.Dock="Top"
+                  Orientation="Horizontal"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Spacing="200"
+                  Background="#962D2D"
+                  Margin="0 0 0 0">
+                  <TextBlock
+                  Text="MALFUNCTIONING KITCHEN"
+                  Margin="5 0 0 0"
+                  TextAlignment="Center">
+                  </TextBlock>
+                  <Button Content="Back" 
+                    Command="{Binding NavigateToHomePageCommand}" 
+                    Margin="250 0 250 0"/>
+                  <Button Content="Logout"
+                  Command="{Binding Logout}"
+                  Margin="200,0,200,0"/>
+              </StackPanel>
           <ScrollViewer>
-            <StackPanel HorizontalAlignment="Center"
+            <StackPanel>
+                  <TextBlock DockPanel.Dock="Bottom"
+                      Text="{Binding ErrorMessage}"/>
+                  <StackPanel HorizontalAlignment="Center"
                       VerticalAlignment="Center"
                       Background="#9e5252"
                       Margin="0,200,0,200">
-                <TextBlock Text="Create Recipe" FontSize="30" TextAlignment="Center" Margin="0,0,0,5" FontWeight="Bold"/>
-                <TextBlock Margin="0 5">
-                  Recipe Name:
-                </TextBlock>
-                <TextBox Text="{Binding RecipeName}"
-                          Watermark="Enter Recipe Name"/>
-                <TextBlock Margin="0 5">
-                  Description:
-                </TextBlock>
-                <TextBox Text="{Binding Description}"
+                        <TextBlock Text="Create Recipe" FontSize="30" TextAlignment="Center" Margin="0,0,0,5" FontWeight="Bold"/>
+                        <TextBlock Text="Recipe Name: " Margin="0 5"/>
+                        <TextBox Text="{Binding RecipeName}"
+                                Watermark="Enter Recipe Name"/>
+                        <TextBlock Text="Description: " Margin="0 5"/>
+                  <TextBox Text="{Binding Description}"
                           Watermark="Enter Description"/>
-                <TextBlock Margin="0 5">
-                  Cooking Time (in minutes):
-                </TextBlock>
-                <NumericUpDown Value="{Binding CookingTime}"
+                  <TextBlock Text="Cooking Time (in minutes): " Margin="0 5"/>
+                  <NumericUpDown Value="{Binding CookingTime}"
                                Minimum="0"
                                FormatString="0.00"
                                AllowSpin="True"/>
-                <StackPanel Orientation="Horizontal">
-                  <TextBlock Margin="0 5">
-                    Preperation Steps:
-                  </TextBlock>
-                  <TextBox Text="{Binding Instruction}"
-                            Watermark="Enter Step Details"/>
-                  <Button Content="Add Step"
-                          Command="{Binding AddStep}"/>
-                </StackPanel>
-                <TextBlock Margin="0.5">
-                  Servings:
-                </TextBlock>
-                <NumericUpDown Value="{Binding Servings}"
-                               Minimum="0"
-                               FormatString="0.00"
-                               AllowSpin="True"/>
-                <StackPanel Orientation="Horizontal">
-                  <TextBlock Margin="0 5">
-                    Ingredients:
-                  </TextBlock>
-                  <TextBox Text="{Binding IngredientName}"
-                            Watermark="Enter Ingredients"/>
-                  <NumericUpDown Value="Quantity"
+                  <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Preperation Steps: " Margin="0 5"/>
+                    <TextBox Text="{Binding Instruction}"
+                              Watermark="Enter Step Details"/>
+                    <Button Content="Add Step"
+                            Command="{Binding AddStep}"/>
+                  </StackPanel>
+                    <TextBlock Text="Servings: " Margin="0.5"/>
+                    <NumericUpDown Value="{Binding Servings}"
                                   Minimum="0"
                                   FormatString="0.00"
                                   AllowSpin="True"/>
-                  <NumericUpDown Value="IngredientPrice"
-                                  Minimum="0"
-                                  FormatString="0.00"
-                                  AllowSpin="True"/>
-                  <Button Content="Add Ingredient" Command="{Binding AddIngredient}"/>
+                  <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Ingredients: " Margin="0 5"/>
+                        <TextBox Text="{Binding IngredientName}"
+                                  Watermark="Enter Ingredients"/>
+                        <TextBlock Text="Quantity: " Margin="0 5"/>
+                        <NumericUpDown Value="{Binding Quantity}"
+                                        Minimum="0"
+                                        AllowSpin="True"/>
+                        <TextBlock Text="Price: " Margin="0 5"/>
+                        <NumericUpDown Value="{Binding Price}"
+                                        Minimum="0"
+                                        FormatString="0.00"
+                                        AllowSpin="True"/>
+                        <Button Content="Add Ingredient" Command="{Binding AddIngredient}"/>
+                    </StackPanel> 
+                  <ListBox ItemsSource="{Binding AllTags}"
+                          SelectionMode="Multiple"
+                          SelectedItems="{Binding SelectedTags}"
+                          SelectionChanged="OnSelectionChanged">
+                          <ListBox.ItemTemplate>
+                              <DataTemplate>
+                                  <CheckBox IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}">
+                                      <TextBlock Text="{Binding .}"/>
+                                  </CheckBox>
+                              </DataTemplate>
+                          </ListBox.ItemTemplate>
+                  </ListBox>
                 </StackPanel>
-            </StackPanel>
-            <Button Command="{Binding CreateRecipe}" Content="Create Recipe" Margin="0,0,0,0" Foreground="LightGray"/>
-          </ScrollViewer>
+                <Button Command="{Binding CreateRecipe}" Content="Create Recipe" Margin="0,0,0,0" Foreground="LightGray"/>
+                </StackPanel>
+            </ScrollViewer>
   </DockPanel>
 </UserControl>
