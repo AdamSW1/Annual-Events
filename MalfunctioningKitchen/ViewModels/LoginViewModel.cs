@@ -8,7 +8,8 @@ using BusinessLayer;
 
 namespace MalfunctioningKitchen.ViewModels;
 
-public class LoginViewModel : ViewModelBase{
+public class LoginViewModel : ViewModelBase
+{
 
     private string? _username;
     public string? Username
@@ -28,16 +29,17 @@ public class LoginViewModel : ViewModelBase{
     public string? ErrorMessage
     {
         get => _errorMessage;
-        set => this.RaiseAndSetIfChanged(ref _errorMessage,value);
+        set => this.RaiseAndSetIfChanged(ref _errorMessage, value);
     }
 
-    public ReactiveCommand<Unit, Annual_Events_User?> Login {get;}
+    public ReactiveCommand<Unit, Annual_Events_User?> Login { get; }
 
-    public LoginViewModel(){
+    public LoginViewModel()
+    {
         IObservable<bool> areBothFilledIn = this.WhenAnyValue(
             LoginViewModel => LoginViewModel.Username,
             LoginViewModel => LoginViewModel.Password,
-            (username, password) => 
+            (username, password) =>
                 !(string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
         );
 
@@ -45,11 +47,12 @@ public class LoginViewModel : ViewModelBase{
         {
             Annual_Events_User? loggedIn = null;
 
-            if(AuthenticationManager.Instance.Login(Username!, Password!)){
+            if (AuthenticationManager.Instance.Login(Username!, Password!))
+            {
                 loggedIn = AuthenticationManager.Instance.CurrentUser;
             }
 
-            if(loggedIn == null)
+            if (loggedIn == null)
             {
                 ErrorMessage = "Invalid username or password";
             }

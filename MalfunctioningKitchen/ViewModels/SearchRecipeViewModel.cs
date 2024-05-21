@@ -102,6 +102,8 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
         {
             // Implementation for Return command
         });
+        ViewRecipeCommand = ReactiveCommand.Create( () => { return SelectedRecipe; });
+
 
         SearchCommand = ReactiveCommand.CreateFromTask(ExecuteSearch);
         ViewRecipeCommand = ReactiveCommand.Create(() => SelectedRecipe);

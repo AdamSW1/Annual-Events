@@ -5,24 +5,27 @@ using ReactiveUI;
 
 namespace MalfunctioningKitchen.ViewModels;
 
-public class LoggedInViewModel : ViewModelBase{
-    public string Greeting {get;}
-    
-    public ReactiveCommand<Unit,Unit> Logout{get;}
+public class LoggedInViewModel : ViewModelBase
+{
+    public string Greeting { get; }
+
+    public ReactiveCommand<Unit, Unit> Logout { get; }
     public ReactiveCommand<Unit, Unit> NavigateToSearchRecipeCommand { get; }
 
-    public ReactiveCommand<Unit, Unit> NavigateToUpdateProfileCommand{ get; }
+    public ReactiveCommand<Unit, Unit> NavigateToUpdateProfileCommand { get; }
 
-    public LoggedInViewModel(){
-        Logout = ReactiveCommand.Create(() =>{
+    public LoggedInViewModel()
+    {
+        Logout = ReactiveCommand.Create(() =>
+        {
             AuthenticationManager.Instance.Logout();
         });
 
-        Greeting =$"Hello {AuthenticationManager.Instance.CurrentUser.Username}";
+        Greeting = $"Hello {AuthenticationManager.Instance.CurrentUser.Username}";
 
         NavigateToSearchRecipeCommand = ReactiveCommand.Create(() =>
         {
-            
+
         });
 
         NavigateToUpdateProfileCommand = ReactiveCommand.Create
