@@ -3,6 +3,7 @@ using System;
 using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 
@@ -11,9 +12,11 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace annual_events.Migrations
 {
     [DbContext(typeof(AnnualEventsContext))]
-    partial class AnnualEventsContextModelSnapshot : ModelSnapshot
+    [Migration("20240521202447_profilepicture")]
+    partial class profilepicture
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,6 +60,7 @@ namespace annual_events.Migrations
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<byte[]>("ProfilePicture")
+                        .IsRequired()
                         .HasColumnType("RAW(2000)");
 
                     b.Property<string>("Username")
