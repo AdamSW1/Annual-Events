@@ -25,6 +25,12 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
     private string _ownerUsername;
     private List<Recipe> _searchedRecipes;
 
+    private Recipe _selectedRecipe = new();
+    public Recipe SelectedRecipe{
+        get => _selectedRecipe;
+        set => _selectedRecipe = value;
+    }
+
     public string NotificationMessage
     {
         get => _notificationMessage;
@@ -88,6 +94,7 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
 
     public ReactiveCommand<Unit, Unit> Return { get; }
     public ReactiveCommand<Unit, List<Recipe>> SearchCommand { get; }
+    public ReactiveCommand<Unit, Recipe> ViewRecipeCommand { get; }
 
     public SearchRecipeViewModel()
     {
@@ -97,6 +104,8 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
         });
 
         SearchCommand = ReactiveCommand.CreateFromTask(ExecuteSearch);
+        ViewRecipeCommand = ReactiveCommand.Create(() => SelectedRecipe);
+
         _tagCriteria = new List<string>();
         foreach (var tag in Enum.GetValues(typeof(RecipeTags)))
         {
@@ -154,5 +163,12 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
 
         return SearchedRecipes;
     }
+
+    public void GetRecipe(Recipe recipe)
+    {
+        SelectedRecipe = recipe;
+        ViewRecipeCommand.Execute().Subscribe();
+    }
+
 }
 

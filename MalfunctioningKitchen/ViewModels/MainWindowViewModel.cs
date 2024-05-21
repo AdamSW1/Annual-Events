@@ -93,6 +93,7 @@ namespace MalfunctioningKitchen.ViewModels
         {
             SearchRecipeViewModel viewModel = new SearchRecipeViewModel();
             viewModel.Return.Subscribe(_ => NavigateToHomePage());
+            viewModel.ViewRecipeCommand.Subscribe(recipe => NavigateToRecipe(recipe));
             ContentViewModel = viewModel;
         }
 
