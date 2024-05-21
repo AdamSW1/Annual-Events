@@ -23,6 +23,7 @@ namespace MalfunctioningKitchen.ViewModels
         public ICommand NavigateToSearchRecipeCommand { get; }
         public ICommand NavigateToUpdateProfileCommand { get; }
         public ICommand NavigateToRecipeCommand { get; }
+        public ICommand NavigateToAddRecipeCommand { get; }
         public MainWindowViewModel()
         {
             _contentViewModel = new WelcomeViewModel();
@@ -73,9 +74,10 @@ namespace MalfunctioningKitchen.ViewModels
             viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
             viewModel.NavigateToUpdateProfileCommand.Subscribe(_ => NavigateToUpdateProfile());
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
-
+            // viewModel.ViewRecipeCommand.Subscribe(recipe => Debug.Write(recipe.DisplayRecipeInfo()));
             previous nav = NavigateToHomePage;
             viewModel.ViewRecipeCommand.Subscribe(recipe => NavigateToRecipe(recipe, nav));
+            viewModel.NavigateToAddRecipeCommand.Subscribe(_ => NavigateToAddRecipe());
             ContentViewModel = viewModel;
         }
 
@@ -118,6 +120,15 @@ namespace MalfunctioningKitchen.ViewModels
             RecipeViewModel viewModel = new(recipe);
             viewModel.NavigateToHomePageCommand.Subscribe(_ => previousPage());
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+            ContentViewModel = viewModel;
+        }
+        
+        public void NavigateToAddRecipe()
+        {
+            AddRecipeViewModel viewModel = new AddRecipeViewModel();
+            viewModel.NavigateToHomePageCommand.Subscribe(_ => NavigateToHomePage());
+            viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+            viewModel.CreateRecipe.Subscribe(_ => NavigateToHomePage());    
             ContentViewModel = viewModel;
         }
 

@@ -9,6 +9,7 @@ using DataLayer;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using System;
+using System.Security.Cryptography;
 namespace MalfunctioningKitchen.ViewModels;
 
 public class HomePageViewModel : ViewModelBase
@@ -24,9 +25,8 @@ public class HomePageViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> NavigateToSearchRecipeCommand { get; }
     public ReactiveCommand<Unit, Unit> NavigateToUpdateProfileCommand { get; }
     public ReactiveCommand<Unit, Recipe> ViewRecipeCommand { get; }
-
-    //Tempororary, ask vijay used for testing
     public ReactiveCommand<Unit, Unit> NavigateToRecipeCommand { get; }
+    public ReactiveCommand<Unit, Unit> NavigateToAddRecipeCommand { get; }
 
 
     public ObservableCollection<Recipe> Recipes
@@ -47,6 +47,7 @@ public class HomePageViewModel : ViewModelBase
         NavigateToUpdateProfileCommand = ReactiveCommand.Create(() => { });
         ViewRecipeCommand = ReactiveCommand.Create(() => { return SelectedRecipe; });
         NavigateToRecipeCommand = ReactiveCommand.Create(() => { });
+        NavigateToAddRecipeCommand = ReactiveCommand.Create(() => { });
 
     }
 
