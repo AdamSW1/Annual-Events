@@ -160,9 +160,9 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
         }
         catch (Exception ex)
         {
+            SearchedRecipes.Clear();
             NotificationMessage = $"Error during search: {ex.Message}";
         }
-
         return SearchedRecipes;
     }
 
