@@ -85,8 +85,17 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
         set => this.RaiseAndSetIfChanged(ref _ownerUsername, value);
     }
 
+    private Recipe _selectedRecipe = new();
+    public Recipe SelectedRecipe{
+        get => _selectedRecipe;
+        set => _selectedRecipe = value;
+    }
+
     public ReactiveCommand<Unit, Unit> Return { get; }
     public ReactiveCommand<Unit, List<Recipe>> SearchCommand { get; }
+    public ReactiveCommand<Unit, Recipe> ViewRecipeCommand { get; }
+
+
 
     public SearchRecipeViewModel()
     {
@@ -94,6 +103,8 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
         {
             // Implementation for Return command
         });
+        ViewRecipeCommand = ReactiveCommand.Create( () => { return SelectedRecipe; });
+
 
         SearchCommand = ReactiveCommand.CreateFromTask(ExecuteSearch);
         _tagCriteria = new List<string>();
@@ -148,6 +159,11 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
         }
 
         return SearchedRecipes;
+    }
+
+    public void GetRecipe(Recipe recipe){
+        SelectedRecipe = recipe;
+        ViewRecipeCommand.Execute().Subscribe();
     }
 }
 
