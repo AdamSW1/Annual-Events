@@ -15,6 +15,9 @@ namespace MalfunctioningKitchen.ViewModels;
 public class HomePageViewModel : ViewModelBase
 {
     private ObservableCollection<Recipe> _recipes = new();
+
+    private ObservableCollection<Review> _reviews = new();
+    
     private Recipe _selectedRecipe = new();
     public Recipe SelectedRecipe
     {
@@ -27,12 +30,19 @@ public class HomePageViewModel : ViewModelBase
     public ReactiveCommand<Unit, Recipe> ViewRecipeCommand { get; }
     public ReactiveCommand<Unit, Unit> NavigateToRecipeCommand { get; }
     public ReactiveCommand<Unit, Unit> NavigateToAddRecipeCommand { get; }
+    public ReactiveCommand<Unit, Unit> ViewReviewCommand { get; }
 
 
     public ObservableCollection<Recipe> Recipes
     {
         get => this._recipes;
         set => this.RaiseAndSetIfChanged(ref _recipes, value);
+    }
+
+    public ObservableCollection<Review> Reviews
+    {
+        get => this._reviews;
+        set => this.RaiseAndSetIfChanged(ref _reviews, value);
     }
 
     public HomePageViewModel()
@@ -54,6 +64,7 @@ public class HomePageViewModel : ViewModelBase
     public void ViewOwnRecipes()
     {
         Recipes.Clear();
+        Reviews.Clear();
         var ownedRecipes = RecipeServices.Instance.GetRecipesByOwner(AuthenticationManager.Instance.CurrentUser);
         ownedRecipes.ForEach(recipe => Recipes.Add(recipe));
     }
@@ -61,14 +72,22 @@ public class HomePageViewModel : ViewModelBase
     public void ViewAllRecipes()
     {
         Recipes.Clear();
+        Reviews.Clear();
         List<Recipe> allRecipes = RecipeServices.Instance.GetRecipes();
         allRecipes.ForEach(recipe => Recipes.Add(recipe));
     }
     public void ViewFavouriteRecipes()
     {
         Recipes.Clear();
+        Reviews.Clear();
         List<Recipe> FavRecipes = RecipeServices.Instance.GetRecipesFavByUser(AuthenticationManager.Instance.CurrentUser);
         FavRecipes.ForEach(recipe => Recipes.Add(recipe));
+    }
+    public void ViewYourReviews() 
+    {
+        Recipes.Clear();
+        List<Review> reviews = AnnualEventsService.Instance.GetReviewsForUser(AuthenticationManager.Instance.CurrentUser);
+        reviews.ForEach(review => Reviews.Add(review));
     }
     public void GetRecipe(Recipe recipe)
     {

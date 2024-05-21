@@ -59,6 +59,11 @@
                   VerticalAlignment="Top"
                   Content="Favourite Recipes"
                   Command="{Binding ViewFavouriteRecipes}"/>
+          <Button DockPanel.Dock="Top"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Top"
+                  Content="Your Reviews"
+                  Command="{Binding ViewYourReviews}"/>
         </DockPanel>
       </SplitView.Pane>
     </SplitView>
@@ -84,6 +89,27 @@
               </TextBlock>
               </StackPanel>
             </Button>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    <ItemsControl ItemsSource="{Binding Reviews}"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding ReviewText}"/>
+              <TextBlock>
+                <LineBreak />
+                <Run Text="By: "/>
+                <Run Text="{Binding ReviewerUsername}" />
+              </TextBlock>
+              <TextBlock>
+                <LineBreak />
+                <Run Text="Score: "/>
+                <Run Text="{Binding Score}" />
+              </TextBlock>
+              </StackPanel>
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
