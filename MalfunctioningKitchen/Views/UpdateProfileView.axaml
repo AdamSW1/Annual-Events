@@ -14,6 +14,7 @@
     <StackPanel HorizontalAlignment="Center">
             <Button Content="Search" Command="{Binding NavigateToSearchRecipeCommand}" VerticalAlignment="Center" Margin="10"/>
             <Button Content="RETURN" Command="{Binding Return}" VerticalAlignment="Center" Margin="10"/>
+            <Button Content="DELETE" Command="{Binding DeleteUserCommand}" VerticalAlignment="Center" Margin="10"/>
         </StackPanel>
         <Border Background="#88ffffff" CornerRadius="10" Padding="20" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Spacing="15">

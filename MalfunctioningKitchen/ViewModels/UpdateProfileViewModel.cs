@@ -53,7 +53,8 @@ namespace MalfunctioningKitchen.ViewModels
 
         public ReactiveCommand<Unit, Unit> NavigateToSearchRecipeCommand { get; }
         public ReactiveCommand<Unit,Unit> Return{get;}
-
+        public ReactiveCommand<Unit, Unit> DeleteUserCommand { get; }
+        public ReactiveCommand<Unit, Unit> UpdateProfileCommand { get; }
         public UpdateProfileViewModel(Annual_Events_User user)
         {
             User = user;
@@ -69,9 +70,8 @@ namespace MalfunctioningKitchen.ViewModels
             {
                
             });
+            DeleteUserCommand = ReactiveCommand.Create(() => DeleteUser());
         }
-
-        public ReactiveCommand<Unit, Unit> UpdateProfileCommand { get; }
 
         private void UpdateProfile(Annual_Events_User user)
         {
@@ -85,6 +85,18 @@ namespace MalfunctioningKitchen.ViewModels
             catch (Exception ex)
             {
                 NotificationMessage = $"Failed to update profile: {ex}";
+            }
+        }
+
+        private void DeleteUser()
+        {
+            try {
+                AnnualEventsUserServices.Instance.DeleteUser(AuthenticationManager.Instance.CurrentUser);
+                AuthenticationManager.Instance.Logout();
+            }
+            catch (Exception ex)
+            {
+                NotificationMessage = $"Failed to delete your account: {ex}";
             }
         }
     }
