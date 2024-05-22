@@ -26,6 +26,7 @@ namespace MalfunctioningKitchen.ViewModels
         public ICommand NavigateToUpdateProfileCommand { get; }
         public ICommand NavigateToRecipeCommand { get; }
         public ICommand NavigateToAddRecipeCommand { get; }
+        public ICommand Edit { get; }
         public MainWindowViewModel()
         {
             _contentViewModel = new WelcomeViewModel();
@@ -78,7 +79,7 @@ namespace MalfunctioningKitchen.ViewModels
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
             previous nav = NavigateToHomePage;
             viewModel.ViewRecipeCommand.Subscribe(recipe => NavigateToRecipe(recipe, nav));
-            viewModel.NavigateToAddRecipeCommand.Subscribe(_ => NavigateToAddRecipe());
+            viewModel.NavigateToAddRecipeCommand.Subscribe(_ => NavigateToAddRecipe(null,"Create"));
             ContentViewModel = viewModel;
         }
 
@@ -130,6 +131,7 @@ namespace MalfunctioningKitchen.ViewModels
             
             viewModel.NavigateToHomePageCommand.Subscribe(_ => previous());
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
+            viewModel.Edit.Subscribe(_ => NavigateToAddRecipe(recipe,"Edit"));
             viewModel.NavigateToAddReviewCommand.Subscribe(_ => NavigateToAddReview(recipe, previous));
             ContentViewModel = viewModel;
         }
@@ -141,14 +143,13 @@ namespace MalfunctioningKitchen.ViewModels
             ContentViewModel = viewModel;
         }
         
-        public void NavigateToAddRecipe()
+        public void NavigateToAddRecipe(Recipe recipe,string typeParentPage)
         {
-            AddRecipeViewModel viewModel = new AddRecipeViewModel();
+            AddRecipeViewModel viewModel = new AddRecipeViewModel(recipe,typeParentPage);
             viewModel.NavigateToHomePageCommand.Subscribe(_ => NavigateToHomePage());
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
             viewModel.CreateRecipe.Subscribe(_ => NavigateToHomePage());    
             ContentViewModel = viewModel;
         }
-
     }
 }

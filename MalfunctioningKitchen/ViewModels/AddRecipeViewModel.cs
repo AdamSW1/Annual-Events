@@ -18,19 +18,50 @@ public class AddRecipeViewModel : ViewModelBase
     public string? RecipeName
     {
         get => _recipeName;
-        set => this.RaiseAndSetIfChanged(ref _recipeName, value);
+        set 
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentException("Recipe name cannot be empty.");
+            }
+            else
+            {
+                this.RaiseAndSetIfChanged(ref _recipeName, value);
+            }     
+        }      
     }
     private string? _description;
     public string? Description
     {
         get => _description;
-        set => this.RaiseAndSetIfChanged(ref _description, value);
+        set
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentException("Description cannot be empty.");
+            }
+            else
+            {
+                this.RaiseAndSetIfChanged(ref _description, value);
+            }
+        
+        }
     }
     private double _cookingTime;
     public double CookingTime
     {
         get => _cookingTime;
-        set => this.RaiseAndSetIfChanged(ref _cookingTime, value);
+        set
+        {
+            if (value == 0)
+            {
+                throw new ArgumentException("Cooking time cannot be 0.");
+            }
+            else
+            {
+                this.RaiseAndSetIfChanged(ref _cookingTime, value);
+            }
+        }
     }
     private string? _instruction;
     public string? Instruction
@@ -49,7 +80,18 @@ public class AddRecipeViewModel : ViewModelBase
     public double Servings
     {
         get => _servings;
-        set => this.RaiseAndSetIfChanged(ref _servings, value);
+        set
+        {
+            if (value == 0)
+            {
+                throw new ArgumentException("Servings cannot be 0.");
+            }
+            else
+            {
+                this.RaiseAndSetIfChanged(ref _servings, value);
+            }
+        
+        }
     }
     private string _ingredientName;
     public string IngredientName
@@ -98,19 +140,25 @@ public class AddRecipeViewModel : ViewModelBase
         get => _reviews;
         set => this.RaiseAndSetIfChanged(ref _reviews, value);
     }
-  private string? _errorMessage;
-  public string? ErrorMessage
-  {
-    get => _errorMessage;
-    set => this.RaiseAndSetIfChanged(ref _errorMessage, value);
-  }
+    private string? _title = "Create Recipe";
+    public string? Title
+    {
+        get => _title;
+        set => this.RaiseAndSetIfChanged(ref _title, value);
+    }
+    private string? _errorMessage;
+    public string? ErrorMessage
+    {
+        get => _errorMessage;
+        set => this.RaiseAndSetIfChanged(ref _errorMessage, value);
+    }
     public ReactiveCommand<Unit,Unit> AddIngredient {get;}
     public ReactiveCommand<Unit,Unit> AddStep {get;}
     public ReactiveCommand<Unit, Unit> Logout { get; }
     public ReactiveCommand<Unit, Unit> NavigateToHomePageCommand { get; }
     public ReactiveCommand<Unit, Unit> CreateRecipe { get; }
 
-    public AddRecipeViewModel()
+    public AddRecipeViewModel(Recipe recipe, string typeParentPage)
     {
         //Logout command
         Logout = ReactiveCommand.Create(() =>
@@ -142,24 +190,53 @@ public class AddRecipeViewModel : ViewModelBase
         {
             try
             {
-            List<RecipeTag> tags = SelectedTags.Select(tag => new RecipeTag(tag)).ToList();
-            Recipe recipe = new Recipe(_recipeName, _description, _cookingTime, _preparations, (int)_servings, _recipeIngredientList, 0, AuthenticationManager.Instance.CurrentUser, tags, _reviews);
-            RecipeManager.AddRecipe(recipe);
-            ErrorMessage = "";
+                if (typeParentPage.Equals("Edit"))
+                { 
+                    List<RecipeTag> tags = SelectedTags.Select(tag => new RecipeTag(tag)).ToList();
+                    recipe.Name = _recipeName;
+                    recipe.Description = _description;
+                    recipe.CookingTime = _cookingTime;
+                    recipe.Preparation = _preparations;
+                    recipe.Servings = (int)_servings;
+                    recipe.RecipeIngredients = _recipeIngredientList;
+                    recipe.Owner = AuthenticationManager.Instance.CurrentUser;
+                    recipe.Tags = tags;
+                    recipe.Reviews = _reviews;
+                    RecipeServices.Instance.DbContext.SaveChanges();
+                }
+                else
+                {
+                    List<RecipeTag> tags = SelectedTags.Select(tag => new RecipeTag(tag)).ToList();
+                    Recipe recipe = new Recipe(_recipeName, _description, _cookingTime, _preparations, (int)_servings, _recipeIngredientList, 0, AuthenticationManager.Instance.CurrentUser, tags, _reviews);
+                    RecipeManager.AddRecipe(recipe);
+                }
+                ErrorMessage = "";
             }
             catch (ArgumentException exc)
             {
-            ErrorMessage = exc.Message;
+                ErrorMessage = exc.Message;
             }
             catch (NullReferenceException exc)
             {
-            ErrorMessage = exc.Message;
+                ErrorMessage = exc.Message;
             }
             catch (Exception exc)
             {
-            ErrorMessage = "An error occurred while creating the recipe.";
+                ErrorMessage = "An error occurred while creating the recipe.";
             }
         }, areFilledIn);
+        if (typeParentPage != null && typeParentPage.Equals("Edit"))
+        {
+            _recipeName = recipe.Name;
+            _description = recipe.Description;
+            _cookingTime = recipe.CookingTime;
+            _preparations = recipe.Preparation;
+            _servings = recipe.Servings;
+            _recipeIngredientList = recipe.RecipeIngredients;
+            _reviews = recipe.Reviews;
+            _selectedTags = recipe.Tags.Select(tag => tag.Tag.ToString()).ToList();
+            _title = "Edit Recipe";
+        }
     }
 
     private IObservable<bool> CheckFilledIn()
