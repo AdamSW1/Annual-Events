@@ -24,13 +24,21 @@ public class HomePageViewModel : ViewModelBase
         get => _selectedRecipe;
         set => _selectedRecipe = value;
     }
+
+    private Review _selectedReview;
+    public Review SelectedReview 
+    {
+        get => _selectedReview;
+        set => _selectedReview = value;
+    }
+
     public ReactiveCommand<Unit, Unit> Logout { get; }
     public ReactiveCommand<Unit, Unit> NavigateToSearchRecipeCommand { get; }
     public ReactiveCommand<Unit, Unit> NavigateToUpdateProfileCommand { get; }
     public ReactiveCommand<Unit, Recipe> ViewRecipeCommand { get; }
     public ReactiveCommand<Unit, Unit> NavigateToRecipeCommand { get; }
     public ReactiveCommand<Unit, Unit> NavigateToAddRecipeCommand { get; }
-    public ReactiveCommand<Unit, Unit> ViewReviewCommand { get; }
+    public ReactiveCommand<Unit, Review> DeleteReviewCommand { get; }
 
 
     public ObservableCollection<Recipe> Recipes
@@ -58,6 +66,7 @@ public class HomePageViewModel : ViewModelBase
         ViewRecipeCommand = ReactiveCommand.Create(() => { return SelectedRecipe; });
         NavigateToRecipeCommand = ReactiveCommand.Create(() => { });
         NavigateToAddRecipeCommand = ReactiveCommand.Create(() => { });
+        DeleteReviewCommand = ReactiveCommand.Create( () => { return SelectedReview; });
 
     }
 
@@ -86,13 +95,25 @@ public class HomePageViewModel : ViewModelBase
     public void ViewYourReviews() 
     {
         Recipes.Clear();
+        Reviews.Clear();
         List<Review> reviews = AnnualEventsService.Instance.GetReviewsForUser(AuthenticationManager.Instance.CurrentUser);
         reviews.ForEach(review => Reviews.Add(review));
+    }
+
+    public void DeleteReview() 
+    {
+        AnnualEventsService.Instance.DeleteReview(SelectedReview);
+        ViewYourReviews();
     }
     public void GetRecipe(Recipe recipe)
     {
         SelectedRecipe = recipe;
         ViewRecipeCommand.Execute().Subscribe();
+    }
+    public void GetReview(Review review) 
+    {
+        SelectedReview = review;
+        DeleteReview();
     }
 
 }
