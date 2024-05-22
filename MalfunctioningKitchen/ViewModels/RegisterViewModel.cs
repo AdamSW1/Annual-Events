@@ -36,10 +36,6 @@ public class RegisterViewModel : ViewModelBase
       else if (value.Length < 5
         || value.Length > 100)
       {
-        throw new ArgumentException($"Must be at least " +
-          $"5 and at most " +
-          $"100 characters long",
-          nameof(Password));
       }
 
       this.RaiseAndSetIfChanged(ref _password, value);

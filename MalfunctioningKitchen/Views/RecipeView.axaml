@@ -48,7 +48,6 @@
                   <TextBlock Text="By: " FontSize="15"/>
                   <TextBlock Text="{Binding RecipeOwner}" FontSize="15"/>
                 </StackPanel>
-              </StackPanel>
               <StackPanel Orientation="Horizontal">
                 <TextBlock Text="By: " FontSize="15"/>
                 <TextBlock Text="{Binding RecipeOwner}" FontSize="15"/>
@@ -73,6 +72,7 @@
               <Button Command="{Binding RemoveFav}" Content="Remove Favourite" Margin="0,0,0,0" Foreground="LightGray" IsVisible="{Binding Faved}"/>
               <Button Command="{Binding AddFav}" Content="Add To  Favourite" Margin="0,0,0,0" Foreground="LightGray" IsVisible="{Binding !Faved}"/>
       </StackPanel>
+      </DockPanel>
     </ScrollViewer>
   </DockPanel>
 </UserControl>
