@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace annual_events.Migrations
 {
     [DbContext(typeof(AnnualEventsContext))]
-    [Migration("20240514191748_initialCreate")]
-    partial class initialCreate
+    [Migration("20240522012656_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,8 +59,11 @@ namespace annual_events.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
+                    b.Property<byte[]>("ProfilePicture")
+                        .HasMaxLength(3000)
+                        .HasColumnType("BLOB");
+
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("Annual_Events_UserId");

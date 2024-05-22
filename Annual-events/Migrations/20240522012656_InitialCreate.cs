@@ -5,7 +5,7 @@
 namespace annual_events.Migrations
 {
     /// <inheritdoc />
-    public partial class initialCreate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,10 +16,11 @@ namespace annual_events.Migrations
                 {
                     Annual_Events_UserId = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    Username = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    Username = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true),
                     Password = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     Description = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    Age = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                    Age = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    ProfilePicture = table.Column<byte[]>(type: "BLOB", maxLength: 3000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -162,9 +163,7 @@ namespace annual_events.Migrations
                         name: "FK_RecipeIngredients_Recipe_RecipeID",
                         column: x => x.RecipeID,
                         principalTable: "Recipe",
-                        principalColumn: "RecipeID",
-                        onDelete: ReferentialAction.Cascade);
-
+                        principalColumn: "RecipeID");
                 });
 
             migrationBuilder.CreateTable(
