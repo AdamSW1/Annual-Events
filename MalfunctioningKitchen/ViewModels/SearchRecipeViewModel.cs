@@ -24,6 +24,7 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
     private string _favorite;
     private string _ownerUsername;
     private List<Recipe> _searchedRecipes;
+    private string _ingredient;
 
     private Recipe _selectedRecipe = new();
     public Recipe SelectedRecipe{
@@ -92,6 +93,12 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
         set => this.RaiseAndSetIfChanged(ref _ownerUsername, value);
     }
 
+    public string Ingredient
+    {
+        get => _ingredient;
+        set => this.RaiseAndSetIfChanged(ref _ingredient, value);
+    }
+
     public ReactiveCommand<Unit, Unit> Return { get; }
     public ReactiveCommand<Unit, List<Recipe>> SearchCommand { get; }
     public ReactiveCommand<Unit, Recipe> ViewRecipeCommand { get; }
@@ -128,7 +135,7 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
             var servings = int.TryParse(Servings, out var serve) ? serve : (int?)null;
             var favorite = int.TryParse(Favorite, out var fav) ? fav : (int?)null;
 
-            bool hasSearchCriteria = !string.IsNullOrEmpty(SearchKeyword) || tags.Any() || timeConstraint.HasValue || rating.HasValue || servings.HasValue || favorite.HasValue || !string.IsNullOrEmpty(OwnerUsername);
+            bool hasSearchCriteria = !string.IsNullOrEmpty(SearchKeyword) || tags.Any() || timeConstraint.HasValue || rating.HasValue || servings.HasValue || favorite.HasValue || !string.IsNullOrEmpty(OwnerUsername) || !string.IsNullOrEmpty(Ingredient);
 
             if (!hasSearchCriteria)
             {
@@ -143,11 +150,13 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
                 rating: rating,
                 servings: servings,
                 favourite: favorite,
-                ownerUsername: OwnerUsername
+                ownerUsername: OwnerUsername,
+                ingredient: Ingredient
             );
 
-            if (searchedRecipes == null || !searchedRecipes.Any())
+            if (SearchedRecipes == null || !searchedRecipes.Any())
             {
+                searchedRecipes.Clear();
                 NotificationMessage = "No recipes found matching the criteria.";
             }
             else
