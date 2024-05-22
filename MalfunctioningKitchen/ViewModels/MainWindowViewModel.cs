@@ -123,6 +123,7 @@ namespace MalfunctioningKitchen.ViewModels
             ContentViewModel = viewModel;
             viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
             viewModel.Return.Subscribe(_ => NavigateToHomePage());
+            viewModel.DeleteUserCommand.Subscribe(_ => NavigateToLogin());
         }
 
 
