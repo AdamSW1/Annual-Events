@@ -110,8 +110,17 @@ namespace DataLayer
             return user;
         }
 
+        private static readonly RandomNumberGenerator rng = new RNGCryptoServiceProvider();
+
         public string HashPassword(string password)
         {
+            var salt = new byte[16];
+            rng.GetBytes(salt);
+
+            // Concatenate the salt with the password
+            byte[] combined = new byte[Encoding.UTF8.GetBytes(password).Length + salt.Length];
+            Buffer.BlockCopy(Encoding.UTF8.GetBytes(password), 0, combined, 0, Encoding.UTF8.GetBytes(password).Length);
+            Buffer.BlockCopy(salt, 0, combined, Encoding.UTF8.GetBytes(password).Length, salt.Length);
             using (var sha256 = SHA256.Create())
             {
                 // Compute hash from the password

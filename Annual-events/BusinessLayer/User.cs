@@ -82,26 +82,28 @@ public class Annual_Events_User
             _age = value;
         }
     }
-    private byte[]? _profile_picture; // (GUI) store images in database??
-    // public byte[]? ProfilePicture
-    // {
-    //     get
-    //     {
-    //         return _profile_picture;
-    //     }
-    //     set
-    //     {
-    //         _profile_picture = value;
-    //     }
-    // }
+    private byte[]? _profilePicture; // (GUI) store images in database??
+    public byte[]? ProfilePicture
+    {
+        get
+        {
+            return _profilePicture;
+        }
+        set
+        {
+            _profilePicture = new byte[32];
+        }
+    }
+
 
     // constructor 
-    public Annual_Events_User(string username, string password, string description, int age)
+    public Annual_Events_User(string username, string password, string description, int age, byte[] profilePicture)
     {
         _username = username;
         _password = password;
         _description = description;
         _age = age;
+        _profilePicture = profilePicture;
     }
 
     public Annual_Events_User(){}

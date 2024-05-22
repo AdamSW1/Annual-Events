@@ -58,8 +58,9 @@ class Program
         {
             return;
         }
-        AuthenticationManager.Instance.AddUser(new Annual_Events_User("user1", "password1", "Description 1", 25));
-        AuthenticationManager.Instance.AddUser(new Annual_Events_User("user2", "password2", "Description 2", 30));
+        var nothing = new byte[] {};
+        AuthenticationManager.Instance.AddUser(new Annual_Events_User("user1", "password1", "Description 1", 25, nothing));
+        AuthenticationManager.Instance.AddUser(new Annual_Events_User("user2", "password2", "Description 2", 30, nothing));
     }
     public static void Init(Annual_Events_User user)
     {
@@ -451,7 +452,7 @@ class Program
             description = " ";
         }
 
-        Annual_Events_User newUser = new(username, password, description, age);
+        Annual_Events_User newUser = new(username, password, description, age, null);
         AuthenticationManager.Instance.AddUser(newUser);
 
         return (username, password);

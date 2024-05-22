@@ -56,8 +56,11 @@ namespace annual_events.Migrations
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
+                    b.Property<byte[]>("ProfilePicture")
+                        .HasMaxLength(3000)
+                        .HasColumnType("BLOB");
+
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("Annual_Events_UserId");

@@ -104,6 +104,7 @@ public class RecipeViewModel : ViewModelBase
 
     public ReactiveCommand<Unit, Unit> Logout { get; }
     public ReactiveCommand<Unit, Unit> NavigateToHomePageCommand { get; }
+    public ReactiveCommand<Unit, Unit> NavigateToAddReviewCommand { get; }
     public ReactiveCommand<Unit, Unit> AddFav { get; }
     public ReactiveCommand<Unit, Unit> RemoveFav { get; }
     public ReactiveCommand<Unit, Unit> Edit { get; }
@@ -133,6 +134,7 @@ public class RecipeViewModel : ViewModelBase
             AuthenticationManager.Instance.Logout();
         });
         NavigateToHomePageCommand = ReactiveCommand.Create(() => { });
+        NavigateToAddReviewCommand = ReactiveCommand.Create(() => { });
         AddFav = ReactiveCommand.Create(() =>
         {
             AnnualEventsUserServices.Instance.AddFavRecipes(Recipe);
@@ -189,7 +191,7 @@ public class RecipeViewModel : ViewModelBase
         string reviews = "";
         foreach (var review in Recipe.Reviews)
         {
-            reviews += review.ReviewerUsername + "\n";
+            reviews += review.ReviewerUsername + ": " + review.ReviewText + "\n";
         }
         if (reviews == "")
         {

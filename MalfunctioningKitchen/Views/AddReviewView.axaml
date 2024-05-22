@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="using:MalfunctioningKitchen.ViewModels"
+             x:DataType="vm:AddReviewViewModel"
+             x:Class="MalfunctioningKitchen.Views.AddReviewView">
+   <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </UserControl.Styles>
+   <Grid Background="#8B0000">
+    <StackPanel HorizontalAlignment="Center">
+            <Button Content="Back" Command="{Binding NavigateToHomePageCommand}" VerticalAlignment="Center" Margin="10"/>
+        </StackPanel>
+        <Border Background="#88ffffff" CornerRadius="10" Padding="20" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Spacing="15">
+                <TextBlock Text="Add a Review" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20" Foreground="Black"/>
+
+                <NumericUpDown Value="{Binding Score}" Minimum="0" Maximum="5" FormatString="0" AllowSpin="True"/>
+                <TextBox Width="300" Watermark="Review" Text="{Binding ReviewText}" TextWrapping="Wrap" AcceptsReturn="True"/>
+
+                <Button Content="Submit" Command="{Binding AddReviewCommand}" HorizontalAlignment="Center" Width="150"/>
+                <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
