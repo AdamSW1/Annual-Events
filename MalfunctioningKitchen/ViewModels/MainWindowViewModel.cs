@@ -129,7 +129,7 @@ namespace MalfunctioningKitchen.ViewModels
             
             viewModel.NavigateToHomePageCommand.Subscribe(_ => previous());
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
-            viewModel.NavigateToAddReviewCommand.Subscribe(_ => NavigateToAddReview(recipe, previousPage));
+            viewModel.NavigateToAddReviewCommand.Subscribe(_ => NavigateToAddReview(recipe, previous));
             ContentViewModel = viewModel;
         }
 

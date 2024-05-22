@@ -97,7 +97,10 @@
                   VerticalAlignment="Center">
       <ItemsControl.ItemTemplate>
         <DataTemplate>
-            <StackPanel Orientation="Horizontal">
+        <Button Width="200"
+                  Margin="0 10"
+                  Command="{Binding}" CommandParameter="{Binding}">
+            <StackPanel Orientation="Vertical">
               <TextBlock Text="{Binding ReviewText}"/>
               <TextBlock>
                 <LineBreak />
@@ -110,6 +113,7 @@
                 <Run Text="{Binding Score}" />
               </TextBlock>
               </StackPanel>
+        </Button>
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
