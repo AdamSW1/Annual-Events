@@ -70,11 +70,14 @@ namespace MalfunctioningKitchen.ViewModels
         }
 
         public ReactiveCommand<Unit, Unit> NavigateToSearchRecipeCommand { get; }
-        public ReactiveCommand<Unit, Unit> Return { get; }
+        public ReactiveCommand<Unit,Unit> Return{get;}
+        public ReactiveCommand<Unit, Unit> DeleteUserCommand { get; }
+        public ReactiveCommand<Unit, Unit> UpdateProfileCommand { get; }
         public ReactiveCommand<Window, Task<byte[]>> SelectImage { get; }
         public ReactiveCommand<Unit, Unit> ClearImage { get; }
 
 
+>>>>>>> MalfunctioningKitchen/ViewModels/UpdateProfileViewModel.cs
         public UpdateProfileViewModel(Annual_Events_User user)
         {
             User = user;
@@ -85,6 +88,7 @@ namespace MalfunctioningKitchen.ViewModels
 
             NavigateToSearchRecipeCommand = ReactiveCommand.Create(() => { });
             Return = ReactiveCommand.Create(() => { });
+            DeleteUserCommand = ReactiveCommand.Create(() => DeleteUser());
 
             if (user.ProfilePicture != null){
                 using (var ms = new MemoryStream(user.ProfilePicture))
@@ -131,16 +135,11 @@ namespace MalfunctioningKitchen.ViewModels
                 // (`ImageDisplayed` in this case) that is bound to the Image in the view.
                 ImageDisplayed = new(new MemoryStream(imageData));
             });
-
             ClearImage = ReactiveCommand.Create(() =>
             {
                 ImageDisplayed = PLACEHOLDER;
             });
-
-
         }
-
-        public ReactiveCommand<Unit, Unit> UpdateProfileCommand { get; }
 
         private void UpdateProfile(Annual_Events_User user)
         {
@@ -153,6 +152,18 @@ namespace MalfunctioningKitchen.ViewModels
             catch (Exception ex)
             {
                 NotificationMessage = $"Failed to update profile: {ex}";
+            }
+        }
+
+        private void DeleteUser()
+        {
+            try {
+                AnnualEventsUserServices.Instance.DeleteUser(AuthenticationManager.Instance.CurrentUser);
+                AuthenticationManager.Instance.Logout();
+            }
+            catch (Exception ex)
+            {
+                NotificationMessage = $"Failed to delete your account: {ex}";
             }
         }
     }
