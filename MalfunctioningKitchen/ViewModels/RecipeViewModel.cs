@@ -108,7 +108,7 @@ public class RecipeViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> AddFav { get; }
     public ReactiveCommand<Unit, Unit> RemoveFav { get; }
     public ReactiveCommand<Unit, Unit> Edit { get; }
-    // <Button Command="{Binding Edit}" IsVisible="{Binding Visible}" Content="EditRecipe"/>
+    public ReactiveCommand<Unit, Unit> Delete { get; }
 
 
     public RecipeViewModel(Recipe recipe)
@@ -146,6 +146,7 @@ public class RecipeViewModel : ViewModelBase
             Faved = false;
         });
         Edit = ReactiveCommand.Create(() => {});
+        Delete = ReactiveCommand.Create(() => {});
 
         Faved = AuthenticationManager.Instance.CurrentUser.FavRecipes.Contains(recipe);
     }
