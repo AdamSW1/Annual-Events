@@ -30,6 +30,7 @@
       <DockPanel>
           <StackPanel>
             <Button Command="{Binding Edit}" IsVisible="{Binding Visible}" Content="EditRecipe"/>
+            <Button Command="{Binding Delete}" IsVisible="{Binding Visible}" Content="DeleteRecipe"/>
           </StackPanel>
           <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center"
