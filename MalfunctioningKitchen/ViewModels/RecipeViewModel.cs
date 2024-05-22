@@ -96,12 +96,19 @@ public class RecipeViewModel : ViewModelBase
         get => _faved;
         set => this.RaiseAndSetIfChanged(ref _faved, value);
     }
+    private bool _visible;
+    public bool Visible{
+        get => _visible;
+        set => this.RaiseAndSetIfChanged(ref _visible, value);
+    }
 
     public ReactiveCommand<Unit, Unit> Logout { get; }
     public ReactiveCommand<Unit, Unit> NavigateToHomePageCommand { get; }
     public ReactiveCommand<Unit, Unit> NavigateToAddReviewCommand { get; }
     public ReactiveCommand<Unit, Unit> AddFav { get; }
     public ReactiveCommand<Unit, Unit> RemoveFav { get; }
+    public ReactiveCommand<Unit, Unit> Edit { get; }
+    // <Button Command="{Binding Edit}" IsVisible="{Binding Visible}" Content="EditRecipe"/>
 
 
     public RecipeViewModel(Recipe recipe)
@@ -120,6 +127,8 @@ public class RecipeViewModel : ViewModelBase
         Servings = Recipe.Servings;
         Tags = GetTags();
 
+        Visible = IsVisible(recipe);
+
         Logout = ReactiveCommand.Create(() =>
         {
             AuthenticationManager.Instance.Logout();
@@ -136,8 +145,14 @@ public class RecipeViewModel : ViewModelBase
             AnnualEventsUserServices.Instance.RemoveFavRecipes(Recipe);
             Faved = false;
         });
+        Edit = ReactiveCommand.Create(() => {});
 
         Faved = AuthenticationManager.Instance.CurrentUser.FavRecipes.Contains(recipe);
+    }
+
+    private bool IsVisible(Recipe recipe)
+    {
+        return recipe.Owner.Username == AuthenticationManager.Instance.CurrentUser.Username;
     }
 
     private string GetIngredients()
