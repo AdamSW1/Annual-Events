@@ -82,5 +82,7 @@ public class AnnualEventsContext : DbContext
             .HasMany(user => user.FavRecipes)
             .WithMany(recipe => recipe.FavouritedBy);
 
+        modelBuilder.Entity<Annual_Events_User>()
+            .Property(user => user.ProfilePicture).HasMaxLength(3_000);
     }
 }
