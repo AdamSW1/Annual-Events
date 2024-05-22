@@ -51,13 +51,15 @@ public class AddReviewViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _errorMessage, value);
     }
 
+
+
     public ReactiveCommand<Unit, Unit> AddReviewCommand { get; }
     public ReactiveCommand<Unit, Unit> Logout { get; }
-    public ReactiveCommand<Unit, Unit> NavigateToHomePageCommand { get; }
+    public ReactiveCommand<Unit, Unit> Back { get; }
 
     public AddReviewViewModel(Recipe recipe) 
     {
-        NavigateToHomePageCommand = ReactiveCommand.Create(() => { });
+        Back = ReactiveCommand.Create(() => { });
         AddReviewCommand = ReactiveCommand.Create( () => AddReview(recipe));
     }
 
@@ -65,7 +67,7 @@ public class AddReviewViewModel : ViewModelBase
     {
          try
             { 
-                _reviewerUsername = AuthenticationManager.Instance.CurrentUser.Username;
+                _reviewerUsername = AuthenticationManager.Instance.CurrentUser.Username!;
                 Review review = new Review(_reviewerUsername, _reviewText, _score);
                 review.Recipe = recipe;
                 AnnualEventsService.Instance.AddReview(review);

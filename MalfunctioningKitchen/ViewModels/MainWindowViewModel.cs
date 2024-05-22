@@ -18,6 +18,7 @@ namespace MalfunctioningKitchen.ViewModels
             private set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
         }
         public delegate void previous();
+        public delegate void previousRecipe(Recipe recipe, previous prev);
 
         public ViewModelBase previousPage = new();
 
@@ -26,6 +27,7 @@ namespace MalfunctioningKitchen.ViewModels
         public ICommand NavigateToRecipeCommand { get; }
         public ICommand NavigateToAddRecipeCommand { get; }
         public ICommand Edit { get; }
+        public ICommand Delete { get; }
         public MainWindowViewModel()
         {
             _contentViewModel = new WelcomeViewModel();
@@ -133,13 +135,17 @@ namespace MalfunctioningKitchen.ViewModels
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
             viewModel.Edit.Subscribe(_ => NavigateToAddRecipe(recipe,"Edit"));
             viewModel.NavigateToAddReviewCommand.Subscribe(_ => NavigateToAddReview(recipe, previous));
+            viewModel.Delete.Subscribe(_ => {
+                RecipeServices.Instance.DeleteRecipe(recipe);
+                NavigateToHomePage();
+            });
             ContentViewModel = viewModel;
         }
 
-        public void NavigateToAddReview(Recipe recipe, previous previousPage) 
+        public void NavigateToAddReview(Recipe recipe, previous previous) 
         {
             AddReviewViewModel viewModel = new(recipe);
-            viewModel.NavigateToHomePageCommand.Subscribe(_ => previousPage());
+            viewModel.Back.Subscribe(_ => NavigateToRecipe(recipe,previous));
             ContentViewModel = viewModel;
         }
         

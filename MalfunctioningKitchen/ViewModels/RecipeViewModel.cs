@@ -102,13 +102,19 @@ public class RecipeViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _visible, value);
     }
 
+    private bool _userIsOwner;
+    public bool UserIsOwner{
+        get => _userIsOwner;
+        set => this.RaiseAndSetIfChanged(ref _userIsOwner,value);
+    }
+
     public ReactiveCommand<Unit, Unit> Logout { get; }
     public ReactiveCommand<Unit, Unit> NavigateToHomePageCommand { get; }
     public ReactiveCommand<Unit, Unit> NavigateToAddReviewCommand { get; }
     public ReactiveCommand<Unit, Unit> AddFav { get; }
     public ReactiveCommand<Unit, Unit> RemoveFav { get; }
     public ReactiveCommand<Unit, Unit> Edit { get; }
-    // <Button Command="{Binding Edit}" IsVisible="{Binding Visible}" Content="EditRecipe"/>
+    public ReactiveCommand<Unit, Unit> Delete { get; }
 
 
     public RecipeViewModel(Recipe recipe)
@@ -146,8 +152,15 @@ public class RecipeViewModel : ViewModelBase
             Faved = false;
         });
         Edit = ReactiveCommand.Create(() => {});
+        Delete = ReactiveCommand.Create(() => {});
 
+        // check if the recipe is already favourited by the current user
+        // to decided whetehr to show the 'add' or 'remove' favourite button
         Faved = AuthenticationManager.Instance.CurrentUser.FavRecipes.Contains(recipe);
+
+        // check if the current user owns the recipe to hide the add review button
+        UserIsOwner = Recipe.Owner.Equals(AuthenticationManager.Instance.CurrentUser);
+
     }
 
     private bool IsVisible(Recipe recipe)
