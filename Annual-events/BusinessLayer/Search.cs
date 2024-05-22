@@ -79,8 +79,18 @@ public class Search
         return searched.ToList();
     }
 
+    // Search by Ingredients
+
+    public static List<Recipe> SearchRecipeByIngredient(string ingredient, List<Recipe> recipes)
+    {
+        var searched = recipes
+            .Where(recipe => recipe.RecipeIngredients
+            .Any(ri => ri.Ingredient != null && ri.Ingredient.Name.Equals(ingredient, StringComparison.OrdinalIgnoreCase))).ToList();
+        return searched.ToList();
+    }
+
     // Example of chaining search queries
-    public static List<Recipe> SearchRecipes(string keyword = null, List<RecipeTag> tags = null, int? time = null, int? rating = null, int? servings = null, int? favourite = null, string ownerUsername = null)
+    public static List<Recipe> SearchRecipes(string keyword = null, List<RecipeTag> tags = null, int? time = null, int? rating = null, int? servings = null, int? favourite = null, string ownerUsername = null, string ingredient = null)
     {
         List<Recipe> searchedRecipes = GetRecipes();
 
@@ -117,6 +127,11 @@ public class Search
         if (!string.IsNullOrEmpty(ownerUsername))
         {
             searchedRecipes = SearchRecipesByOwnerUsername(ownerUsername, searchedRecipes);
+        }
+
+        if (!string.IsNullOrEmpty(ingredient))
+        {
+            searchedRecipes = SearchRecipeByIngredient(ingredient, searchedRecipes);
         }
 
         Console.WriteLine($"Total recipes found: {searchedRecipes.Count}");
