@@ -26,6 +26,9 @@ namespace MalfunctioningKitchen.ViewModels
             set => this.RaiseAndSetIfChanged(ref _user, value);
         }
 
+        public Profile profile = new Profile();
+
+
         public string Username
         {
             get => _username;
@@ -58,7 +61,7 @@ namespace MalfunctioningKitchen.ViewModels
         }
         private static readonly Bitmap PLACEHOLDER =
             // This shows an example of loading an image from the assets directory.
-            new(AssetLoader.Open(new Uri("avares://Demo/Assets/Default_pfp.jpg")));
+            new(AssetLoader.Open(new Uri("avares://MalfunctioningKitchen/Assets/Default_pfp.jpg")));
         private Bitmap _imageDisplayed = PLACEHOLDER;
         public Bitmap ImageDisplayed
         {
@@ -82,6 +85,13 @@ namespace MalfunctioningKitchen.ViewModels
 
             NavigateToSearchRecipeCommand = ReactiveCommand.Create(() => { });
             Return = ReactiveCommand.Create(() => { });
+
+            if (user.ProfilePicture != null){
+                using (var ms = new MemoryStream(user.ProfilePicture))
+                {
+                    ImageDisplayed = new Bitmap(ms);
+                }
+            }
 
             SelectImage = ReactiveCommand.Create(async (Window window) =>
             {
@@ -108,7 +118,7 @@ namespace MalfunctioningKitchen.ViewModels
 
                 // Here I could save the image into a user object:
                 // myUser.ProfilePicture = image;
-
+                profile.UpdatePFP(image);
                 return image;
             });
 
@@ -136,7 +146,6 @@ namespace MalfunctioningKitchen.ViewModels
         {
             try
             {
-                var profile = new Profile();
                 User = user;
                 profile.UpdateProfile(User, Username, Password, Description, Age);
                 NotificationMessage = "Profile updated successfully!";
