@@ -140,12 +140,18 @@ public class AddRecipeViewModel : ViewModelBase
         get => _reviews;
         set => this.RaiseAndSetIfChanged(ref _reviews, value);
     }
-  private string? _errorMessage;
-  public string? ErrorMessage
-  {
-    get => _errorMessage;
-    set => this.RaiseAndSetIfChanged(ref _errorMessage, value);
-  }
+    private string? _title = "Create Recipe";
+    public string? Title
+    {
+        get => _title;
+        set => this.RaiseAndSetIfChanged(ref _title, value);
+    }
+    private string? _errorMessage;
+    public string? ErrorMessage
+    {
+        get => _errorMessage;
+        set => this.RaiseAndSetIfChanged(ref _errorMessage, value);
+    }
     public ReactiveCommand<Unit,Unit> AddIngredient {get;}
     public ReactiveCommand<Unit,Unit> AddStep {get;}
     public ReactiveCommand<Unit, Unit> Logout { get; }
@@ -229,6 +235,7 @@ public class AddRecipeViewModel : ViewModelBase
             _recipeIngredientList = recipe.RecipeIngredients;
             _reviews = recipe.Reviews;
             _selectedTags = recipe.Tags.Select(tag => tag.Tag.ToString()).ToList();
+            _title = "Edit Recipe";
         }
     }
 
