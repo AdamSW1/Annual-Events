@@ -27,41 +27,46 @@
                 Margin="200,0,200,0"/>
           </StackPanel>
     <ScrollViewer>
-      <StackPanel HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Background="#9e5252"
-                Margin="0,200,0,200">
-              <TextBlock Text="{Binding RecipeName}" FontSize="30" TextAlignment="Center" Margin="0,0,0,5" FontWeight="Bold"/>
-              <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Stars}" FontSize="20" TextAlignment="Right" Foreground="Yellow"/>
+      <DockPanel>
+        <StackPanel>
+          <Button Command="{Binding Edit}" IsVisible="{Binding Visible}" Content="EditRecipe"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Background="#9e5252"
+                  Margin="0,200,0,200">
+                <TextBlock Text="{Binding RecipeName}" FontSize="30" TextAlignment="Center" Margin="0,0,0,5" FontWeight="Bold"/>
                 <StackPanel Orientation="Horizontal">
-                  <TextBlock Text="{Binding ReviewCount}" FontSize="20" TextAlignment="Left" Margin="0,0,0,0"/>
-                  <TextBlock Text="Reviews" FontSize="20" TextAlignment="Left" Margin="0,0,0,0"/>
+                  <TextBlock Text="{Binding Stars}" FontSize="20" TextAlignment="Right" Foreground="Yellow"/>
+                  <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding ReviewCount}" FontSize="20" TextAlignment="Left" Margin="0,0,0,0"/>
+                    <TextBlock Text="Reviews" FontSize="20" TextAlignment="Left" Margin="0,0,0,0"/>
+                  </StackPanel>
                 </StackPanel>
-              </StackPanel>
-              <StackPanel Orientation="Horizontal">
-                <TextBlock Text="By: " FontSize="15"/>
-                <TextBlock Text="{Binding RecipeOwner}" FontSize="15"/>
-              </StackPanel>
-              <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Desc:" FontSize="10"/>
-                <TextBlock Text="{Binding Description}" FontSize="10"/>
-              </StackPanel>
-              <TextBlock Text="Tags" FontSize="15"/>
-              <TextBlock Text="{Binding Tags}" FontSize="10"/>
-              <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Cooking Time: " FontSize="15"/>
-                <TextBlock Text="{Binding CookingTime}" FontSize="15"/>
-              </StackPanel>
-              <TextBlock Text="Ingredients" FontSize="15"/>
-              <TextBlock Text="{Binding Ingredients}" FontSize="15"/>
-              <TextBlock Text="Instruction" FontSize="15"/>
-              <TextBlock Text="{Binding Instructions}" FontSize="10"/>
-              <TextBlock Text="Reviews: " FontSize="15"/>
-              <TextBlock Text="{Binding Reviews}" FontSize="10"/>
-              <Button Command="{Binding RemoveFav}" Content="Remove Favourite" Margin="0,0,0,0" Foreground="LightGray" IsVisible="{Binding Faved}"/>
-              <Button Command="{Binding AddFav}" Content="Add To  Favourite" Margin="0,0,0,0" Foreground="LightGray" IsVisible="{Binding !Faved}"/>
-      </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="By: " FontSize="15"/>
+                  <TextBlock Text="{Binding RecipeOwner}" FontSize="15"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Desc:" FontSize="10"/>
+                  <TextBlock Text="{Binding Description}" FontSize="10"/>
+                </StackPanel>
+                <TextBlock Text="Tags" FontSize="15"/>
+                <TextBlock Text="{Binding Tags}" FontSize="10"/>
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="Cooking Time: " FontSize="15"/>
+                  <TextBlock Text="{Binding CookingTime}" FontSize="15"/>
+                </StackPanel>
+                <TextBlock Text="Ingredients" FontSize="15"/>
+                <TextBlock Text="{Binding Ingredients}" FontSize="15"/>
+                <TextBlock Text="Instruction" FontSize="15"/>
+                <TextBlock Text="{Binding Instructions}" FontSize="10"/>
+                <TextBlock Text="Reviews: " FontSize="15"/>
+                <TextBlock Text="{Binding Reviews}" FontSize="10"/>
+                <Button Command="{Binding RemoveFav}" Content="Remove Favourite" Margin="0,0,0,0" Foreground="LightGray" IsVisible="{Binding Faved}"/>
+                <Button Command="{Binding AddFav}" Content="Add To  Favourite" Margin="0,0,0,0" Foreground="LightGray" IsVisible="{Binding !Faved}"/>
+        </StackPanel>
+      </DockPanel>
     </ScrollViewer>
   </DockPanel>
 </UserControl>

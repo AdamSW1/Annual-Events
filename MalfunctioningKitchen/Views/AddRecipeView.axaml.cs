@@ -8,7 +8,7 @@ namespace MalfunctioningKitchen.Views;
 
 public partial class AddRecipeView : UserControl
 {
-    private AddRecipeViewModel ViewModel {get;set;} = new();
+    private AddRecipeViewModel ViewModel {get;set;} = new(null,null);
     public AddRecipeView()
     {
         InitializeComponent();

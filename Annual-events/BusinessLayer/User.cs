@@ -82,7 +82,18 @@ public class Annual_Events_User
             _age = value;
         }
     }
-    private byte[]? profile_picture; // (GUI) store images in database??
+    private byte[]? _profile_picture; // (GUI) store images in database??
+    // public byte[]? ProfilePicture
+    // {
+    //     get
+    //     {
+    //         return _profile_picture;
+    //     }
+    //     set
+    //     {
+    //         _profile_picture = value;
+    //     }
+    // }
 
     // constructor 
     public Annual_Events_User(string username, string password, string description, int age)
