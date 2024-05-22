@@ -14,7 +14,7 @@
     </UserControl.Styles>
    <Grid Background="#8B0000">
     <StackPanel HorizontalAlignment="Center">
-            <Button Content="Back" Command="{Binding NavigateToHomePageCommand}" VerticalAlignment="Center" Margin="10"/>
+            <Button Content="Back" Command="{Binding Back}" VerticalAlignment="Center" Margin="10"/>
         </StackPanel>
         <Border Background="#88ffffff" CornerRadius="10" Padding="20" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Spacing="15">
