@@ -59,7 +59,7 @@
               <TextBlock Text="{Binding Instructions}" FontSize="10"/>
               <TextBlock Text="Reviews: " FontSize="15"/>
               <TextBlock Text="{Binding Reviews}" FontSize="10"/>
-              <Button Command="{Binding NavigateToAddReviewCommand}" Content="Add a Review" Margin="0,0,0,0" Foreground="LightGray"/>
+              <Button Command="{Binding NavigateToAddReviewCommand}" Content="Add a Review" Margin="0,0,0,0" Foreground="LightGray" IsVisible="{Binding !UserIsOwner}" />
               <Button Command="{Binding RemoveFav}" Content="Remove Favourite" Margin="0,0,0,0" Foreground="LightGray" IsVisible="{Binding Faved}"/>
               <Button Command="{Binding AddFav}" Content="Add To  Favourite" Margin="0,0,0,0" Foreground="LightGray" IsVisible="{Binding !Faved}"/>
       </StackPanel>
