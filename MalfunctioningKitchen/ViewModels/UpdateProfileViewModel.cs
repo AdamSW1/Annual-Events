@@ -77,7 +77,6 @@ namespace MalfunctioningKitchen.ViewModels
         public ReactiveCommand<Unit, Unit> ClearImage { get; }
 
 
->>>>>>> MalfunctioningKitchen/ViewModels/UpdateProfileViewModel.cs
         public UpdateProfileViewModel(Annual_Events_User user)
         {
             User = user;
