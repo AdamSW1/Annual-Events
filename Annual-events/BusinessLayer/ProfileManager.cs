@@ -22,10 +22,11 @@ public class Profile// The Profile class is used to manage a Annual_Events_User
         user.Age = age;
         AnnualEventsUserServices.Instance.DbContext.SaveChanges();
     }
-    public void UpdatePFP() // Updates the profile picture of the user
+    public void UpdatePFP(byte[] pfp) // Updates the profile picture of the user
     {
-        //Avalonian
-        throw new NotImplementedException();
+        BusinessLayer.AuthenticationManager.Instance.CurrentUser.ProfilePicture = pfp;
+        AnnualEventsUserServices.Instance.DbContext.SaveChanges();
+        
     }
     public void UpdateDescription(string _description) // Updates the description of the user
     {

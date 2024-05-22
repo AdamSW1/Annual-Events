@@ -7,24 +7,33 @@
              x:DataType="vm:HomePageViewModel"
              x:Class="MalfunctioningKitchen.Views.HomePageView">
   <DockPanel>
-     <StackPanel DockPanel.Dock="Top"
-                Orientation="Horizontal"
+     <Grid DockPanel.Dock="Top"
                 HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Spacing="200"
+                VerticalAlignment="Center"
                 Background="#962D2D"
-                Margin="0 0 0 0">
+                Margin="0 0 0 0"
+                RowDefinitions="Auto">
                 <TextBlock
                 Text="MALFUNCTIONING KITCHEN"
-                Margin="5 0 0 0"
-                TextAlignment="Center">
+                Margin="10 0 0 0"
+                TextAlignment="Center"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontWeight="DemiBold"
+                LetterSpacing="1">
                 </TextBlock>
                 <Button Content="Search" 
                   Command="{Binding NavigateToSearchRecipeCommand}" 
-                  Margin="400 0 400 0"/>
-                <Button Content="Profile" Command="{Binding NavigateToUpdateProfileCommand}" />
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"/>
+                <Button 
+                  Content="Profile" 
+                  Command="{Binding NavigateToUpdateProfileCommand}" 
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Center"
+                  Margin="0 0 10 0"/>
 
-    </StackPanel>
+    </Grid>
     <SplitView IsPaneOpen="True"
                 OpenPaneLength="150"
                 DisplayMode="CompactInline"

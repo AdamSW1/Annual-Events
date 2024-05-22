@@ -91,7 +91,7 @@ public class Annual_Events_User
         }
         set
         {
-            _profilePicture = new byte[32];
+            _profilePicture = value;
         }
     }
 
