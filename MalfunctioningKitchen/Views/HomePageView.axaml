@@ -68,6 +68,11 @@
                   VerticalAlignment="Top"
                   Content="Favourite Recipes"
                   Command="{Binding ViewFavouriteRecipes}"/>
+          <Button DockPanel.Dock="Top"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Top"
+                  Content="Your Reviews"
+                  Command="{Binding ViewYourReviews}"/>
         </DockPanel>
       </SplitView.Pane>
     </SplitView>
@@ -96,5 +101,40 @@
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <ItemsControl ItemsSource="{Binding Reviews}"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+        <StackPanel>
+        <Button Width="200"
+                  Margin="0 10"
+                  Command="{Binding}">
+            <StackPanel Orientation="Vertical">
+              <TextBlock Text="{Binding ReviewText}"/>
+              <TextBlock>
+                <LineBreak />
+                <Run Text="By: "/>
+                <Run Text="{Binding ReviewerUsername}" />
+              </TextBlock>
+              <TextBlock>
+                <LineBreak />
+                <Run Text="Score: "/>
+                <Run Text="{Binding Score}" />
+              </TextBlock>
+              </StackPanel>
+        </Button>
+        <Button Width="200" 
+                Margin= "0 10" 
+                Command="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).GetReview}"
+                CommandParameter="{Binding .}">
+        <TextBlock Text="Delete Review"/>
+        </Button>
+        </StackPanel>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    </ScrollViewer>
   </DockPanel>
 </UserControl>
