@@ -210,19 +210,19 @@ public class AddRecipeViewModel : ViewModelBase
                     Recipe recipe = new Recipe(_recipeName, _description, _cookingTime, _preparations, (int)_servings, _recipeIngredientList, 0, AuthenticationManager.Instance.CurrentUser, tags, _reviews);
                     RecipeManager.AddRecipe(recipe);
                 }
-            ErrorMessage = "";
+                ErrorMessage = "";
             }
             catch (ArgumentException exc)
             {
-            ErrorMessage = exc.Message;
+                ErrorMessage = exc.Message;
             }
             catch (NullReferenceException exc)
             {
-            ErrorMessage = exc.Message;
+                ErrorMessage = exc.Message;
             }
             catch (Exception exc)
             {
-            ErrorMessage = "An error occurred while creating the recipe.";
+                ErrorMessage = "An error occurred while creating the recipe.";
             }
         }, areFilledIn);
         if (typeParentPage != null && typeParentPage.Equals("Edit"))

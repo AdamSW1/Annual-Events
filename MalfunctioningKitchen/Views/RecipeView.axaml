@@ -43,7 +43,6 @@
                       <TextBlock Text="Reviews" FontSize="20" TextAlignment="Left" Margin="0,0,0,0"/>
                     </StackPanel>
                   </StackPanel>
-                </StackPanel>
                 <StackPanel Orientation="Horizontal">
                   <TextBlock Text="By: " FontSize="15"/>
                   <TextBlock Text="{Binding RecipeOwner}" FontSize="15"/>
