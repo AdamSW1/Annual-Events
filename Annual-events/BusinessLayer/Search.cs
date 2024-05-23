@@ -72,6 +72,12 @@ public class Search
         return searched;
     }
 
+    public static List<Recipe> SearchRecipesFavorited(List<Recipe> recipes)
+    {
+        List<Recipe> searched = AuthenticationManager.Instance.CurrentUser.FavRecipes.Intersect(recipes).ToList();
+        return searched;
+    }
+
     // Search recipes by owner username
     public static List<Recipe> SearchRecipesByOwnerUsername(string ownerUsername, List<Recipe> recipes)
     {
@@ -90,51 +96,57 @@ public class Search
     }
 
     // Example of chaining search queries
-    public static List<Recipe> SearchRecipes(string keyword = null, List<RecipeTag> tags = null, int? time = null, int? rating = null, int? servings = null, int? favourite = null, string ownerUsername = null, string ingredient = null)
+    public static List<Recipe>? SearchRecipes(string? keyword = null, List<RecipeTag>? tags = null, int? time = null, int? rating = null, int? servings = null, bool? favourite = null, string? ownerUsername = null, string? ingredient = null)
     {
         List<Recipe> searchedRecipes = GetRecipes();
 
-        if (!string.IsNullOrEmpty(keyword))
+        //checking favourites first as it eleminates the most amount of recipes
+        if (searchedRecipes is not null && favourite is not null && favourite == true)
+        {
+            searchedRecipes = SearchRecipesFavorited(searchedRecipes);
+        }
+
+        //immediately return if no recipes are found in favourites
+        if(searchedRecipes is not null && searchedRecipes.Count == 0)
+        {
+            return null;
+        }
+
+        if (searchedRecipes is not null && !string.IsNullOrEmpty(keyword))
         {
             searchedRecipes = SearchRecipesByKeyword(keyword, searchedRecipes);
         }
 
-        if (tags != null && tags.Any())
+        if (searchedRecipes is not null && tags != null && tags.Any())
         {
-            searchedRecipes = SearchRecipesByTags(tags, searchedRecipes);
+            searchedRecipes = SearchRecipesByTags(tags, searchedRecipes)!;
         }
 
-        if (time.HasValue)
+        if (searchedRecipes is not null && time.HasValue)
         {
             searchedRecipes = SearchRecipesByTimeConstraint(time.Value, searchedRecipes);
         }
 
-        if (rating.HasValue)
+        if (searchedRecipes is not null && rating.HasValue)
         {
             searchedRecipes = SearchRecipesByRating(rating.Value, searchedRecipes);
         }
 
-        if (servings.HasValue)
+        if (searchedRecipes is not null && servings.HasValue)
         {
             searchedRecipes = SearchRecipesByServings(servings.Value, searchedRecipes);
         }
 
-        if (favourite.HasValue)
-        {
-            searchedRecipes = SearchRecipesInFavorites(favourite.Value, searchedRecipes);
-        }
-
-        if (!string.IsNullOrEmpty(ownerUsername))
+        if (searchedRecipes is not null && !string.IsNullOrEmpty(ownerUsername))
         {
             searchedRecipes = SearchRecipesByOwnerUsername(ownerUsername, searchedRecipes);
         }
 
-        if (!string.IsNullOrEmpty(ingredient))
+        if (searchedRecipes is not null && !string.IsNullOrEmpty(ingredient))
         {
             searchedRecipes = SearchRecipeByIngredient(ingredient, searchedRecipes);
         }
 
-        Console.WriteLine($"Total recipes found: {searchedRecipes.Count}");
         return searchedRecipes;
     }
 }

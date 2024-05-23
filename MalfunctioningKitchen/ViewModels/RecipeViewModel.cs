@@ -194,7 +194,7 @@ public class RecipeViewModel : ViewModelBase
         }
         if (Stars == "")
         {
-            Stars = "No reviews yet";
+            Stars = string.Empty;
         }
         return Stars;
 
