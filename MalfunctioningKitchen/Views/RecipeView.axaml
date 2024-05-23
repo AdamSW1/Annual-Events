@@ -22,15 +22,15 @@
                 <Button Content="Back" 
                   Command="{Binding NavigateToHomePageCommand}" 
                   Margin="250 0 250 0"/>
-                <Button Content="Logout"
-                Command="{Binding Logout}"
-                Margin="200,0,200,0"/>
           </StackPanel>
     <ScrollViewer>
       <DockPanel>
-          <StackPanel>
-            <Button Command="{Binding Edit}" IsVisible="{Binding Visible}" Content="EditRecipe"/>
-            <Button Command="{Binding Delete}" IsVisible="{Binding Visible}" Content="DeleteRecipe"/>
+          <StackPanel Orientation="Horizontal" 
+                      DockPanel.Dock="Top" 
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center">
+            <Button Command="{Binding Edit}" IsVisible="{Binding Visible}" Content="Edit Recipe"/>
+            <Button Command="{Binding Delete}" IsVisible="{Binding Visible}" Content="Delete Recipe"/>
           </StackPanel>
           <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -47,10 +47,6 @@
                 <StackPanel Orientation="Horizontal">
                   <TextBlock Text="By: " FontSize="15"/>
                   <TextBlock Text="{Binding RecipeOwner}" FontSize="15"/>
-              </StackPanel>
-              <StackPanel Orientation="Horizontal">
-                <TextBlock Text="By: " FontSize="15"/>
-                <TextBlock Text="{Binding RecipeOwner}" FontSize="15"/>
               </StackPanel>
               <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Desc:" FontSize="10"/>
