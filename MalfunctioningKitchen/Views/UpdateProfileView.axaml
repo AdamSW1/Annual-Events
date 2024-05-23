@@ -24,10 +24,12 @@
                     <Button Command="{Binding SelectImage}"
                         CommandParameter="{Binding $parent[Window]}"
                         Content="Select Image"
-                        x:CompileBindings="False"/>
+                        x:CompileBindings="False"
+                        HorizontalAlignment="Center"/>
                     <Button Command="{Binding ClearImage}"
                         Content="ClearImage"
-                        x:CompileBindings="False"/>
+                        x:CompileBindings="False"
+                        HorizontalAlignment="Center"/>
                 <TextBox Width="300" Watermark="Username" Text="{Binding Username}" />
                 <TextBox Width="300" Watermark="Password" Text="{Binding Password}" PasswordChar="*" />
                 <TextBox Width="300" Watermark="Description" Text="{Binding Description}" TextWrapping="Wrap" AcceptsReturn="True"/>
