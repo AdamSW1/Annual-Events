@@ -72,6 +72,12 @@ public class Search
         return searched;
     }
 
+    public static List<Recipe> SearchRecipesFavorited(List<Recipe> recipes)
+    {
+        List<Recipe> searched = AuthenticationManager.Instance.CurrentUser.FavRecipes.Intersect(recipes).ToList();
+        return searched;
+    }
+
     // Search recipes by owner username
     public static List<Recipe> SearchRecipesByOwnerUsername(string ownerUsername, List<Recipe> recipes)
     {
@@ -90,7 +96,7 @@ public class Search
     }
 
     // Example of chaining search queries
-    public static List<Recipe> SearchRecipes(string keyword = null, List<RecipeTag> tags = null, int? time = null, int? rating = null, int? servings = null, int? favourite = null, string ownerUsername = null, string ingredient = null)
+    public static List<Recipe> SearchRecipes(string keyword = null, List<RecipeTag> tags = null, int? time = null, int? rating = null, int? servings = null, int? favourite = null, string ownerUsername = null, string ingredient = null, List<Recipe> recipes = null)
     {
         List<Recipe> searchedRecipes = GetRecipes();
 
@@ -132,6 +138,11 @@ public class Search
         if (!string.IsNullOrEmpty(ingredient))
         {
             searchedRecipes = SearchRecipeByIngredient(ingredient, searchedRecipes);
+        }
+
+        if (recipes.Count > 0)
+        {
+            searchedRecipes = SearchRecipesFavorited(recipes);
         }
 
         Console.WriteLine($"Total recipes found: {searchedRecipes.Count}");
