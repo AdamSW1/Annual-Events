@@ -14,12 +14,38 @@ public class Profile// The Profile class is used to manage a Annual_Events_User
     {
     }
      // Updates the profile of a user
-    public void UpdateProfile(Annual_Events_User user, string Username,string password,string description, int age)
+    public void UpdateProfile(Annual_Events_User user, string username, string description, int age = 0, string password = null)
     {
-        user.Username = Username;
-        user.Password = AnnualEventsUserServices.Instance.HashPassword(password);
-        user.Description = description;
-        user.Age = age;
+        if (!string.IsNullOrEmpty(username))
+        {
+            user.Username = username;
+        }
+
+        if (!string.IsNullOrEmpty(password))
+        {
+            user.Password = AnnualEventsUserServices.Instance.HashPassword(password);
+        }
+
+        if (string.IsNullOrEmpty(password))
+        {
+            user.Password = BusinessLayer.AuthenticationManager.Instance.CurrentUser.Password;
+        }
+
+        if (description != null)
+        {
+            user.Description = description;
+        }
+
+        if (age > 0)
+        {
+            user.Age = age;
+        }
+
+        // user.Username = Username;
+        // user.Password = AnnualEventsUserServices.Instance.HashPassword(password);
+        // user.Description = description;
+        // user.Age = age;
+        
         AnnualEventsUserServices.Instance.DbContext.SaveChanges();
     }
     public void UpdatePFP(byte[] pfp) // Updates the profile picture of the user

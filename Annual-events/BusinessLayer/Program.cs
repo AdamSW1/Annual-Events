@@ -100,7 +100,7 @@ class Program
             Console.WriteLine("Enter your new age:");
             int newAge = int.Parse(Console.ReadLine() ?? "");
             Profile userProfile = new Profile();
-            userProfile.UpdateProfile(user, newUsername, newPassword, newDescription, newAge);
+            userProfile.UpdateProfile(user, newUsername, newDescription, newAge, newPassword);
         }
         else if (choice == options[1])
         {
