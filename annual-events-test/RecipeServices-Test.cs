@@ -91,7 +91,7 @@ public class RecipeServicesTest
     public void Get_All_Recipes()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -119,7 +119,7 @@ public class RecipeServicesTest
     public void Get_All_Recipes_When_Null()
     {
         //Arrange 
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>();
         var data = data_list.AsQueryable();
         //context
@@ -142,7 +142,7 @@ public class RecipeServicesTest
     public void Get_Recipe_By_Name()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -169,7 +169,7 @@ public class RecipeServicesTest
     public void Get_Recipe_By_Name_When_No_Recipe_By_Given_Name()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -196,7 +196,7 @@ public class RecipeServicesTest
     public void Get_Recipes_By_Rating()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -225,7 +225,7 @@ public class RecipeServicesTest
     public void Get_Recipe_By_Rating_When_No_Recipe_By_Given_Rating()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -254,7 +254,7 @@ public class RecipeServicesTest
     public void Get_recipes_By_Servings()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -282,7 +282,7 @@ public class RecipeServicesTest
     public void Get_recipes_By_Servings_When_No_Recipe_By_Given_Servings()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -309,7 +309,7 @@ public class RecipeServicesTest
     public void Get_Recipes_By_Time_Constraint()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -336,7 +336,7 @@ public class RecipeServicesTest
     public void Get_Recipes_By_Time_Constraint_When_No_Give_Time_Constraint()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -363,7 +363,7 @@ public class RecipeServicesTest
     public void Get_Recipe_By_Favourites_Count()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -390,7 +390,7 @@ public class RecipeServicesTest
     public void Get_Recipe_By_Favourites_Count_When_No_Given_Favourite_Count()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -418,7 +418,7 @@ public class RecipeServicesTest
     public void Add_Recipe()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -443,7 +443,7 @@ public class RecipeServicesTest
     // public Recipe AddFavRecipe(Annual_Events_User user)
     // {
     //     //Arrange
-    //     var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+    //     var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
     //     var data_list = new List<Recipe>
     //     {
     //         CreateExampleRecipe(user),
@@ -469,7 +469,7 @@ public class RecipeServicesTest
     public void Delete_Recipe()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -501,7 +501,7 @@ public class RecipeServicesTest
     public void Get_Recipe_Tag()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -528,7 +528,7 @@ public class RecipeServicesTest
     public void Get_Ingredient()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -571,8 +571,8 @@ public class RecipeServicesTest
     {
         //Arrange
         var user = new List<Annual_Events_User>
-        { new Annual_Events_User ("testUser", "password", "Test user", 30),
-          new Annual_Events_User ("testUser2", "password", "Test user2", 40)
+        { new Annual_Events_User ("testUser", "password", "Test user", 30,null),
+          new Annual_Events_User ("testUser2", "password", "Test user2", 40,null)
         };
         var data_list = new List<Recipe>
         {

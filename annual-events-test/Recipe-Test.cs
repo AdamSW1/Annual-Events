@@ -48,7 +48,7 @@ public class RecipeTest
     public void AddRecipe_ValidInput_Success()
     {
         // Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         Recipe test = CreateExampleRecipe(user);
 
         // Act
@@ -63,7 +63,7 @@ public class RecipeTest
     public void AddRecipe_IncorrectRecipeAmount_Success()
     {
         // Arrange
-        var user = new Annual_Events_User("testUser2", "password2", "Test user 2", 30);
+        var user = new Annual_Events_User("testUser2", "password2", "Test user 2", 30,null);
         Recipe test = CreateExampleRecipe(user);
 
         // Act
@@ -81,7 +81,7 @@ public class RecipeTest
     public void AddRecipeToFav_ValidInput_Success()
     {
         // Arrange
-        Annual_Events_User user = new("testUser", "password", "Test user", 30);
+        Annual_Events_User user = new("testUser", "password", "Test user", 30,null);
         Recipe test = CreateExampleRecipe(user);
 
         // Act
@@ -96,7 +96,7 @@ public class RecipeTest
     public void AddFavRecipe_IncorrectFavRecipeAmount_Success()
     {
         // Arrange
-        var user = new Annual_Events_User("testUser2", "password2", "Test user 2", 30);
+        var user = new Annual_Events_User("testUser2", "password2", "Test user 2", 30,null);
         Recipe test = CreateExampleRecipe(user);
 
         // Act
@@ -113,8 +113,8 @@ public class RecipeTest
     public void AddToFavRecipeTest()
     {
         //arrange
-        Annual_Events_User user1 = new("Test", "TestPass", "description", 20);
-        Annual_Events_User user2 = new("Test", "TestPass", "description", 20);
+        Annual_Events_User user1 = new("Test", "TestPass", "description", 20,null);
+        Annual_Events_User user2 = new("Test", "TestPass", "description", 20,null);
         Recipe test = CreateExampleRecipe(user1);
 
         //act
@@ -130,8 +130,8 @@ public class RecipeTest
     public void RemoveFromFavRecipeTest()
     {
         //arrange
-        Annual_Events_User user1 = new("Test", "TestPass", "description", 20);
-        Annual_Events_User user2 = new("Test", "TestPass", "description", 20);
+        Annual_Events_User user1 = new("Test", "TestPass", "description", 20,null);
+        Annual_Events_User user2 = new("Test", "TestPass", "description", 20,null);
         Recipe test = CreateExampleRecipe(user1);
 
         //act
@@ -147,7 +147,7 @@ public class RecipeTest
     public void UpdateRecipe_WithExistingRecipe_Success()
     {
         // Arrange
-        var user = new Annual_Events_User("testUser2", "password2", "Test user 2", 30);
+        var user = new Annual_Events_User("testUser2", "password2", "Test user 2", 30,null);
         Recipe test = CreateExampleRecipe(user);
         user.AddRecipe(test);
         string updatedRecipeName = "Updated Test Recipe";
@@ -178,7 +178,7 @@ public class RecipeTest
     public void UpdateRecipe_WithNonExistingRecipe_Success()
     {
         // Arrange
-        var user = new Annual_Events_User("testUser2", "password2", "Test user 2", 30);
+        var user = new Annual_Events_User("testUser2", "password2", "Test user 2", 30,null);
         Recipe test = CreateExampleRecipe(user);
         user.AddRecipe(test);
         string updatedRecipeName = "Updated Test Recipe";

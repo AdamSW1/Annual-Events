@@ -32,7 +32,7 @@ public class SearchServicesTest
     public void SearchRecipesByKeywordTest() 
     {
         // Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -62,7 +62,7 @@ public class SearchServicesTest
     public void SearchRecipesByTagsTest() 
     {
         // Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -94,7 +94,7 @@ public class SearchServicesTest
     public void SearchRecipesByTimeConstraintTest() 
     {
         // Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -124,7 +124,7 @@ public class SearchServicesTest
     public void SearchRecipesByRatingTest() 
     {
         // Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -154,7 +154,7 @@ public class SearchServicesTest
     public void SearchRecipesByServingsTest() 
     {
         // Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -184,7 +184,7 @@ public class SearchServicesTest
     public void SearchRecipesInFavouritesTest() 
     {
         // Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),
@@ -214,7 +214,7 @@ public class SearchServicesTest
     public void SearchRecipesByOwnerUsernameTest() 
     {
         // Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         var data_list = new List<Recipe>
         {
             CreateExampleRecipe(user),

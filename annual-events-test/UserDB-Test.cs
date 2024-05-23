@@ -35,7 +35,7 @@ namespace DataLayer.Tests
             var username = "Testing";
             var password = "Password";
             var hashedPassword = HashPassword(password);
-            var user = new Annual_Events_User(username, hashedPassword, "Test test test", 5);
+            var user = new Annual_Events_User(username, hashedPassword, "Test test test", 5,null);
 
             var mockContext = new Mock<AnnualEventsContext>();
             var mockSet = new Mock<DbSet<Annual_Events_User>>();
@@ -55,7 +55,7 @@ namespace DataLayer.Tests
         {
             // Arrange
             string username = "Testing";
-            var user = new Annual_Events_User(username, "HashedPassword", "Test user", 30);
+            var user = new Annual_Events_User(username, "HashedPassword", "Test user", 30,null);
 
             var userList = new List<Annual_Events_User> { user };
 
@@ -107,7 +107,7 @@ namespace DataLayer.Tests
             var storedHashedPassword = HashPassword(password);
 
             // Create a mock user in the database
-            var mockUser = new Annual_Events_User(username, storedHashedPassword, "Test test test", 5);
+            var mockUser = new Annual_Events_User(username, storedHashedPassword, "Test test test", 5,null);
             var userList = new List<Annual_Events_User> { mockUser };
 
             var mockSet = new Mock<DbSet<Annual_Events_User>>();
@@ -134,7 +134,7 @@ namespace DataLayer.Tests
             var incorrectPassword = "IncorrectPassword";
 
             // Create a mock user with correct password
-            var mockUser = new Annual_Events_User(username, HashPassword(correctPassword), "Test test test", 5);
+            var mockUser = new Annual_Events_User(username, HashPassword(correctPassword), "Test test test", 5,null);
             var userList = new List<Annual_Events_User> { mockUser };
 
             var mockSet = new Mock<DbSet<Annual_Events_User>>();
@@ -156,7 +156,7 @@ namespace DataLayer.Tests
         public void DeleteUser_WhenCalled_ShouldDeleteUserFromDatabase()
         {
             // Arrange
-            var user = new Annual_Events_User("Testing", "Password", "Test test test", 5);
+            var user = new Annual_Events_User("Testing", "Password", "Test test test", 5,null);
 
             var mockSet = new Mock<DbSet<Annual_Events_User>>();
             var mockContext = new Mock<AnnualEventsContext>();
