@@ -493,7 +493,7 @@ public class RecipeServicesTest
         var del_recipe = service.GetRecipe("Chocolate cake");
         service.DeleteRecipe(del_recipe);
         //Assert
-        mockSet.Verify(mock => mock.RemoveRange(It.IsAny<Recipe>()), Times.Once());
+        mockSet.Verify(mock => mock.Remove(It.IsAny<Recipe>()), Times.Once());
         mockContext.Verify(mock => mock.SaveChanges(), Times.Once());
     }
     //Test the method GetRecipeTag

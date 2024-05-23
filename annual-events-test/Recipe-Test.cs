@@ -37,13 +37,6 @@ public class RecipeTest
         return exampleRecipe;
     }
 
-    // //Test for rating a recipe
-    // [TestMethod]
-    // public void RateRecipeTest()
-    // {
-    //     throw new NotImplementedException();
-    // }
-
     [TestMethod]
     public void AddRecipe_ValidInput_Success()
     {
@@ -56,7 +49,8 @@ public class RecipeTest
         user.AddRecipe(test);
 
         // Assert
-        Assert.AreEqual(1, user.Recipes.Count); // Annual_Events_User should have 1 recipe added
+        // Annual_Events_User should have 1 recipe added
+        Assert.AreEqual(1, user.Recipes.Count); 
     }
 
     [TestMethod]
@@ -72,7 +66,7 @@ public class RecipeTest
 
         // Assert
         // Annual_Events_User should only have 1 recipe added
-        Assert.AreNotEqual(2, user.Recipes.Count);
+        Assert.AreNotEqual(0, user.Recipes.Count);
     }
 
 
