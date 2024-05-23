@@ -89,11 +89,9 @@ namespace MalfunctioningKitchen.ViewModels
             Return = ReactiveCommand.Create(() => { });
             DeleteUserCommand = ReactiveCommand.Create(() => DeleteUser());
 
-            if (user.ProfilePicture != null){
-                using (var ms = new MemoryStream(user.ProfilePicture))
-                {
-                    ImageDisplayed = new Bitmap(ms);
-                }
+            if (user.ProfilePicture != null && user.ProfilePicture.Length != 0 ){
+                using var ms = new MemoryStream(user.ProfilePicture);
+                ImageDisplayed = new Bitmap(ms);
             }
 
             SelectImage = ReactiveCommand.Create(async (Window window) =>
@@ -137,6 +135,7 @@ namespace MalfunctioningKitchen.ViewModels
             ClearImage = ReactiveCommand.Create(() =>
             {
                 ImageDisplayed = PLACEHOLDER;
+                profile.UpdatePFP(new byte[0]);
             });
         }
 

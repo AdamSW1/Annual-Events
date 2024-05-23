@@ -1,7 +1,8 @@
 using System;
-using System.Drawing.Printing;
+using System.IO;
 using System.Reactive;
 using BusinessLayer;
+using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
 
 namespace MalfunctioningKitchen.ViewModels;
@@ -17,10 +18,7 @@ public class RegisterViewModel : ViewModelBase
   public string? Name
   {
     get => UserToRegister.Username;
-    set =>
-      // if this throws an exception (i.e. value is invalid), the exception's
-      // message is shown in the GUI.
-      UserToRegister.Username = value;
+    set => UserToRegister.Username = value;
   }
 
   private string? _password;
@@ -33,9 +31,9 @@ public class RegisterViewModel : ViewModelBase
       {
         throw new ArgumentNullException(nameof(Password) + "Joe");
       }
-      else if (value.Length < 5
-        || value.Length > 100)
+      else if (value.Length < 5 || value.Length > 100)
       {
+        throw new InvalidDataException("Password must be between 5 and 100 characters");
       }
 
       this.RaiseAndSetIfChanged(ref _password, value);
@@ -111,9 +109,15 @@ public class RegisterViewModel : ViewModelBase
         ErrorMessage = "";
       }
       catch (Exception exc)
-      when (exc is ArgumentException || exc is NullReferenceException)
+      when (exc is ArgumentException || exc is NullReferenceException || exc is DbUpdateException)
       {
-        ErrorMessage = exc.Message;
+        // check if thrown exception is due to a user already ahving the input username
+        if(exc is DbUpdateException && exc.InnerException!.Message.Contains("Annual_Events_User_Username")){
+          ErrorMessage = "Username must be unique";
+        }
+        else{
+          ErrorMessage = exc.Message;
+        }
         return null;
       }
 

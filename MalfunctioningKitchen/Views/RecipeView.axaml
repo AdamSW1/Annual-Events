@@ -47,7 +47,7 @@
                 <StackPanel Orientation="Horizontal">
                   <TextBlock Text="By: " FontSize="15"/>
                   <TextBlock Text="{Binding RecipeOwner}" FontSize="15"/>
-                </StackPanel>
+              </StackPanel>
               <StackPanel Orientation="Horizontal">
                 <TextBlock Text="By: " FontSize="15"/>
                 <TextBlock Text="{Binding RecipeOwner}" FontSize="15"/>

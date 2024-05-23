@@ -32,6 +32,14 @@ public class HomePageViewModel : ViewModelBase
         set => _selectedReview = value;
     }
 
+    public bool _viewingReviews;
+
+    private bool ViewingReviews
+    {
+        get => _viewingReviews;
+        set => this.RaiseAndSetIfChanged(ref _viewingReviews, value);
+    }
+
     public ReactiveCommand<Unit, Unit> Logout { get; }
     public ReactiveCommand<Unit, Unit> NavigateToSearchRecipeCommand { get; }
     public ReactiveCommand<Unit, Unit> NavigateToUpdateProfileCommand { get; }
@@ -67,11 +75,12 @@ public class HomePageViewModel : ViewModelBase
         NavigateToRecipeCommand = ReactiveCommand.Create(() => { });
         NavigateToAddRecipeCommand = ReactiveCommand.Create(() => { });
         DeleteReviewCommand = ReactiveCommand.Create( () => { return SelectedReview; });
-
+        ViewingReviews = false;
     }
 
     public void ViewOwnRecipes()
     {
+        ViewingReviews = false;
         Recipes.Clear();
         Reviews.Clear();
         var ownedRecipes = RecipeServices.Instance.GetRecipesByOwner(AuthenticationManager.Instance.CurrentUser);
@@ -80,6 +89,7 @@ public class HomePageViewModel : ViewModelBase
 
     public void ViewAllRecipes()
     {
+        ViewingReviews = false;
         Recipes.Clear();
         Reviews.Clear();
         List<Recipe> allRecipes = RecipeServices.Instance.GetRecipes();
@@ -94,6 +104,7 @@ public class HomePageViewModel : ViewModelBase
     }
     public void ViewYourReviews() 
     {
+        ViewingReviews = true;
         Recipes.Clear();
         Reviews.Clear();
         List<Review> reviews = AnnualEventsService.Instance.GetReviewsForUser(AuthenticationManager.Instance.CurrentUser);

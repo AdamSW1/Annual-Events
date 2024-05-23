@@ -35,9 +35,8 @@
 
     </Grid>
     <SplitView IsPaneOpen="True"
-                OpenPaneLength="150"
+                OpenPaneLength="200"
                 DisplayMode="CompactInline"
-                CompactPaneLength="48"
                 PaneBackground="#962D2D">
       <SplitView.Pane>
         <DockPanel LastChildFill="true">
@@ -61,11 +60,13 @@
           <Button DockPanel.Dock="Top"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Top"
+                  Margin="0,0,0,20"
                   Content="Your Recipes"
                   Command="{Binding ViewOwnRecipes}"/>
           <Button DockPanel.Dock="Top"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Top"
+                  Margin="0,0,0,20"
                   Content="Favourite Recipes"
                   Command="{Binding ViewFavouriteRecipes}"/>
           <Button DockPanel.Dock="Top"
@@ -76,65 +77,68 @@
         </DockPanel>
       </SplitView.Pane>
     </SplitView>
-    <ItemsControl ItemsSource="{Binding Recipes}"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center">
-      <ItemsControl.ItemTemplate>
-        <DataTemplate>
-          <Button Width="200"
-                  Margin="0 10"
-                  Command="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).GetRecipe}" CommandParameter="{Binding .}">
-            <StackPanel Orientation="Vertical">
-              <TextBlock Text="{Binding Name}"/>
-              <TextBlock>
-                <LineBreak />
-                <Run Text="By: "/>
-                <Run Text="{Binding Owner.Username}" />
-              </TextBlock>
-              <TextBlock>
-                <LineBreak />
-                <Run Text="Score: "/>
-                <Run Text="{Binding AverageScore}" />
-              </TextBlock>
-              </StackPanel>
-            </Button>
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ItemsControl>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-    <ItemsControl ItemsSource="{Binding Reviews}"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center">
-      <ItemsControl.ItemTemplate>
-        <DataTemplate>
-        <StackPanel>
-        <Button Width="200"
-                  Margin="0 10"
-                  Command="{Binding}">
-            <StackPanel Orientation="Vertical">
-              <TextBlock Text="{Binding ReviewText}"/>
-              <TextBlock>
-                <LineBreak />
-                <Run Text="By: "/>
-                <Run Text="{Binding ReviewerUsername}" />
-              </TextBlock>
-              <TextBlock>
-                <LineBreak />
-                <Run Text="Score: "/>
-                <Run Text="{Binding Score}" />
-              </TextBlock>
-              </StackPanel>
-        </Button>
-        <Button Width="200" 
-                Margin= "0 10" 
-                Command="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).GetReview}"
-                CommandParameter="{Binding .}">
-        <TextBlock Text="Delete Review"/>
-        </Button>
-        </StackPanel>
+      <StackPanel VerticalAlignment="Center">
+        <ItemsControl ItemsSource="{Binding Recipes}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Button Width="200"
+                      Margin="0 10"
+                      Command="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).GetRecipe}" CommandParameter="{Binding .}">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                  <TextBlock Text="{Binding Name}"/>
+                  <TextBlock>
+                    <LineBreak />
+                    <Run Text="By: "/>
+                    <Run Text="{Binding Owner.Username}" />
+                  </TextBlock>
+                  <TextBlock>
+                    <LineBreak />
+                    <Run Text="Score: "/>
+                    <Run Text="{Binding AverageScore}" />
+                  </TextBlock>
+                  </StackPanel>
+                </Button>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      <ItemsControl ItemsSource="{Binding Reviews}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    IsVisible="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).ViewingReviews}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+          <StackPanel>
+            <Button Width="200"
+                      Margin="0 10"
+                      Command="{Binding}">
+                  <StackPanel Orientation="Vertical">
+                  <TextBlock Text="{Binding ReviewText}"/>
+                  <TextBlock>
+                    <LineBreak />
+                    <Run Text="By: "/>
+                    <Run Text="{Binding ReviewerUsername}" />
+                  </TextBlock>
+                  <TextBlock>
+                    <LineBreak />
+                    <Run Text="Score: "/>
+                    <Run Text="{Binding Score}" />
+                  </TextBlock>
+                  </StackPanel>
+            </Button>
+            <Button Width="200" 
+                    Margin= "0 10" 
+                    Command="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).GetReview}"
+                    CommandParameter="{Binding .}">
+            <TextBlock Text="Delete Review"/>
+            </Button>
+          </StackPanel>
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
+    </StackPanel>
     </ScrollViewer>
   </DockPanel>
 </UserControl>
