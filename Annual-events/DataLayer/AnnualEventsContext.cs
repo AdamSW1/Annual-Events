@@ -84,5 +84,9 @@ public class AnnualEventsContext : DbContext
 
         modelBuilder.Entity<Annual_Events_User>()
             .Property(user => user.ProfilePicture).HasMaxLength(3_000);
+
+        modelBuilder.Entity<Annual_Events_User>()
+            .HasIndex(user => user.Username).IsUnique();
+
     }
 }
