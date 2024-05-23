@@ -33,8 +33,13 @@
                     <!-- Text input for servings -->
                     <TextBox Width="300" Watermark="Enter servings..." Text="{Binding Servings, Mode=TwoWay}" />
                     
-                    <!-- Text input for favorite -->
-                    <TextBox Width="300" Watermark="Enter favorite status..." Text="{Binding Favorite, Mode=TwoWay}" />
+                    <!-- Text checkbox for favorite -->
+                    <CheckBox 
+                            HorizontalAlignment="Stretch"
+                            Width="300"
+                            Content="Favourited" 
+                            IsChecked="{Binding Favorite}"
+                            IsThreeState="False"/>
                     
                     <!-- Text input for owner -->
                     <TextBox Width="300" Watermark="Enter owner username..." Text="{Binding OwnerUsername, Mode=TwoWay}" />

@@ -21,13 +21,14 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
     private string _timeConstraint;
     private string _rating;
     private string _servings;
-    private string _favorite;
+    private bool _favorite = false;
     private string _ownerUsername;
     private List<Recipe> _searchedRecipes;
     private string _ingredient;
 
     private Recipe _selectedRecipe = new();
-    public Recipe SelectedRecipe{
+    public Recipe SelectedRecipe
+    {
         get => _selectedRecipe;
         set => _selectedRecipe = value;
     }
@@ -81,7 +82,7 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
         set => this.RaiseAndSetIfChanged(ref _servings, value);
     }
 
-    public string Favorite
+    public bool Favorite
     {
         get => _favorite;
         set => this.RaiseAndSetIfChanged(ref _favorite, value);
@@ -109,7 +110,7 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
         {
             // Implementation for Return command
         });
-        ViewRecipeCommand = ReactiveCommand.Create( () => { return SelectedRecipe; });
+        ViewRecipeCommand = ReactiveCommand.Create(() => { return SelectedRecipe; });
 
 
         SearchCommand = ReactiveCommand.CreateFromTask(ExecuteSearch);
@@ -133,46 +134,44 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
             var timeConstraint = int.TryParse(TimeConstraint, out var time) ? time : (int?)null;
             var rating = int.TryParse(Rating, out var rate) ? rate : (int?)null;
             var servings = int.TryParse(Servings, out var serve) ? serve : (int?)null;
-            var favorite = int.TryParse(Favorite, out var fav) ? fav : (int?)null;
 
-            bool hasSearchCriteria = !string.IsNullOrEmpty(SearchKeyword) || tags.Any() || timeConstraint.HasValue || rating.HasValue || servings.HasValue || favorite.HasValue || !string.IsNullOrEmpty(OwnerUsername) || !string.IsNullOrEmpty(Ingredient);
+            bool hasSearchCriteria = !string.IsNullOrEmpty(SearchKeyword) || tags.Any() || timeConstraint.HasValue || rating.HasValue || servings.HasValue || Favorite || !string.IsNullOrEmpty(OwnerUsername) || !string.IsNullOrEmpty(Ingredient);
 
             if (!hasSearchCriteria)
             {
-                NotificationMessage = "Please provide at least one search criterion.";
+                NotificationMessage = "Please provide at least one search criteria.";
                 return new List<Recipe>();
             }
 
-            var searchedRecipes = Search.SearchRecipes(
+            SearchedRecipes = Search.SearchRecipes(
                 keyword: SearchKeyword,
                 tags: tags,
                 time: timeConstraint,
                 rating: rating,
                 servings: servings,
-                favourite: favorite,
+                favourite: Favorite,
                 ownerUsername: OwnerUsername,
                 ingredient: Ingredient
             );
 
-            if (SearchedRecipes == null || !searchedRecipes.Any())
+            if (SearchedRecipes == null || SearchedRecipes.Count == 0)
             {
-                searchedRecipes.Clear();
                 NotificationMessage = "No recipes found matching the criteria.";
             }
             else
             {
-                SearchedRecipes = searchedRecipes;
-                NotificationMessage = $"{searchedRecipes.Count} recipes found.";
+                NotificationMessage = $"{SearchedRecipes.Count} recipes found.";
             }
-
-            // SearchedRecipes = searchedRecipes;
         }
         catch (Exception ex)
         {
-            SearchedRecipes.Clear();
+            if (SearchedRecipes.Count != 0){
+                SearchedRecipes.Clear();
+            }
             NotificationMessage = $"Error during search: {ex.Message}";
         }
-        return SearchedRecipes;
+
+        return SearchedRecipes!;
     }
 
     public void GetRecipe(Recipe recipe)
