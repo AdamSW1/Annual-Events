@@ -33,14 +33,20 @@
                   <StackPanel HorizontalAlignment="Center"
                       VerticalAlignment="Center"
                       Background="#9e5252"
-                      Margin="0,200,0,200">
-                        <TextBlock Text="{Binding Title}" FontSize="30" TextAlignment="Center" Margin="0,0,0,5" FontWeight="Bold"/>
+                      Margin="0,0,0,0">
+                        <TextBlock  Text="{Binding Title}" 
+                                    FontSize="30" 
+                                    TextAlignment="Center" 
+                                    Margin="0,0,0,5" 
+                                    FontWeight="Bold"/>
                         <TextBlock Text="Recipe Name: " Margin="0 5"/>
                         <TextBox Text="{Binding RecipeName}"
                                 Watermark="Enter Recipe Name"/>
                         <TextBlock Text="Description: " Margin="0 5"/>
-                  <TextBox Text="{Binding Description}"
-                          Watermark="Enter Description"/>
+                  <TextBox  Text="{Binding Description}"
+                            Watermark="Enter Description"
+                            TextWrapping="Wrap" 
+                            AcceptsReturn="True"/>
                   <TextBlock Text="Cooking Time (in minutes): " Margin="0 5"/>
                   <NumericUpDown Value="{Binding CookingTime}"
                                Minimum="0"
@@ -86,7 +92,13 @@
                           </ListBox.ItemTemplate>
                   </ListBox>
                 </StackPanel>
-                <Button Command="{Binding CreateRecipe}" Content="Create Recipe" Margin="0,0,0,0" Foreground="LightGray"/>
+                <Button 
+                        Command="{Binding CreateRecipe}" 
+                        Content="Create Recipe" 
+                        Margin="0,10,0,10" 
+                        Foreground="LightGray"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
                 </StackPanel>
             </ScrollViewer>
   </DockPanel>
