@@ -15,16 +15,16 @@ namespace MalfunctioningKitchen.ViewModels;
 
 public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
 {
-    private string _notificationMessage;
-    private string _searchKeyword;
+    private string? _notificationMessage;
+    private string? _searchKeyword;
     private List<string> _tagCriteria;
-    private string _timeConstraint;
-    private string _rating;
-    private string _servings;
+    private string? _timeConstraint;
+    private string? _rating;
+    private string? _servings;
     private bool _favorite = false;
-    private string _ownerUsername;
-    private List<Recipe> _searchedRecipes;
-    private string _ingredient;
+    private string? _ownerUsername;
+    private List<Recipe>? _searchedRecipes;
+    private string? _ingredient;
 
     private Recipe _selectedRecipe = new();
     public Recipe SelectedRecipe
@@ -33,19 +33,19 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
         set => _selectedRecipe = value;
     }
 
-    public string NotificationMessage
+    public string? NotificationMessage
     {
         get => _notificationMessage;
         set => this.RaiseAndSetIfChanged(ref _notificationMessage, value);
     }
 
-    public List<Recipe> SearchedRecipes
+    public List<Recipe>? SearchedRecipes
     {
         get => _searchedRecipes;
         set => this.RaiseAndSetIfChanged(ref _searchedRecipes, value);
     }
 
-    public string SearchKeyword
+    public string? SearchKeyword
     {
         get => _searchKeyword;
         set => this.RaiseAndSetIfChanged(ref _searchKeyword, value);
@@ -64,19 +64,19 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
         set => this.RaiseAndSetIfChanged(ref _selectedTags, value);
     }
 
-    public string TimeConstraint
+    public string? TimeConstraint
     {
         get => _timeConstraint;
         set => this.RaiseAndSetIfChanged(ref _timeConstraint, value);
     }
 
-    public string Rating
+    public string? Rating
     {
         get => _rating;
         set => this.RaiseAndSetIfChanged(ref _rating, value);
     }
 
-    public string Servings
+    public string? Servings
     {
         get => _servings;
         set => this.RaiseAndSetIfChanged(ref _servings, value);
@@ -88,13 +88,13 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
         set => this.RaiseAndSetIfChanged(ref _favorite, value);
     }
 
-    public string OwnerUsername
+    public string? OwnerUsername
     {
         get => _ownerUsername;
         set => this.RaiseAndSetIfChanged(ref _ownerUsername, value);
     }
 
-    public string Ingredient
+    public string? Ingredient
     {
         get => _ingredient;
         set => this.RaiseAndSetIfChanged(ref _ingredient, value);
@@ -144,14 +144,14 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
             }
 
             SearchedRecipes = Search.SearchRecipes(
-                keyword: SearchKeyword,
+                keyword: SearchKeyword!,
                 tags: tags,
                 time: timeConstraint,
                 rating: rating,
                 servings: servings,
                 favourite: Favorite,
-                ownerUsername: OwnerUsername,
-                ingredient: Ingredient
+                ownerUsername: OwnerUsername!,
+                ingredient: Ingredient!
             );
 
             if (SearchedRecipes == null || SearchedRecipes.Count == 0)
@@ -165,7 +165,7 @@ public class SearchRecipeViewModel : ViewModelBase, INotifyPropertyChanged
         }
         catch (Exception ex)
         {
-            if (SearchedRecipes.Count != 0){
+            if (SearchedRecipes!.Count != 0){
                 SearchedRecipes.Clear();
             }
             NotificationMessage = $"Error during search: {ex.Message}";
