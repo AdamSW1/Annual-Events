@@ -54,8 +54,8 @@ public class Annual_Events_User
             _password = value;
         }
     }
-    private string _description;
-    public string Description
+    private string? _description;
+    public string? Description
     {
         get
         {
