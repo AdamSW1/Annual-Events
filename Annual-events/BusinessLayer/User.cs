@@ -8,10 +8,9 @@ public class Annual_Events_User
     private List<Recipe> _recipes = new List<Recipe>();
     public List<Recipe> Recipes
     {
-        get { return RecipeServices.Instance.GetRecipesByOwner(this); }
+        get { return _recipes; }
         set { _recipes = value; }
     }
-
     private List<Recipe>? _favRecipes = new List<Recipe>();
     public List<Recipe> FavRecipes
     {

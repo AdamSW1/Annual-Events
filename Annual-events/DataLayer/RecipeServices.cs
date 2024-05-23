@@ -157,7 +157,6 @@ public class RecipeServices
         if(DbRecipe != null)
         {
             DbContext.Recipe!.Remove(DbRecipe);
-            // DbContext.Recipe!.RemoveRange(DbRecipe);
             DbContext.SaveChanges();
         }
     }
