@@ -41,11 +41,11 @@ namespace DataLayer
                 .Include(u => u.Recipes)
                     .ThenInclude(r => r.Tags)
                 .Include(u => u.Recipes)
-                    .ThenInclude(r => r.Reviews) 
+                    .ThenInclude(r => r.Reviews)
                 .Include(u => u.FavRecipes)
                 .FirstOrDefault();
-            
-            
+
+
             _dbContext.Annual_Events_User.Remove(user);
             _dbContext.SaveChanges();
         }
@@ -63,17 +63,17 @@ namespace DataLayer
 
             if (recipeToadd == null)
             {
-            return;
+                return;
             }
             bool isFavorited = _dbContext.Annual_Events_User
             .Any(u => u.FavRecipes.Contains(favRecipe));
 
             if (isFavorited)
             {
-            return;
+                return;
             }
             favRecipe!.AddFavourite();
-            RecipeManager.AddToFavRecipe(AuthenticationManager.Instance.CurrentUser,recipeToadd);
+            RecipeManager.AddToFavRecipe(AuthenticationManager.Instance.CurrentUser, recipeToadd);
             _dbContext.SaveChanges();
         }
         public void RemoveFavRecipes(Recipe favRecipe)
@@ -89,7 +89,7 @@ namespace DataLayer
 
             if (recipeToadd == null)
             {
-            return;
+                return;
             }
             bool isFavorited = _dbContext.Annual_Events_User
             .Any(u => u.FavRecipes.Contains(favRecipe));
@@ -99,7 +99,7 @@ namespace DataLayer
                 return;
             }
             favRecipe.RemoveFavourite();
-            RecipeManager.DeleteFavRecipe(AuthenticationManager.Instance.CurrentUser,recipeToadd);
+            RecipeManager.DeleteFavRecipe(AuthenticationManager.Instance.CurrentUser, recipeToadd);
             _dbContext.SaveChanges();
         }
         public Annual_Events_User GetUserByUsername(string username)
@@ -114,24 +114,30 @@ namespace DataLayer
 
         public string HashPassword(string password)
         {
-            var salt = new byte[16];
+            // Generate a random salt
+            byte[] salt = new byte[16];
             rng.GetBytes(salt);
 
-            // Concatenate the salt with the password
-            byte[] combined = new byte[Encoding.UTF8.GetBytes(password).Length + salt.Length];
-            Buffer.BlockCopy(Encoding.UTF8.GetBytes(password), 0, combined, 0, Encoding.UTF8.GetBytes(password).Length);
-            Buffer.BlockCopy(salt, 0, combined, Encoding.UTF8.GetBytes(password).Length, salt.Length);
+            // Create an array to hold the salt and password
+            byte[] combined = new byte[salt.Length + Encoding.UTF8.GetBytes(password).Length];
+            Buffer.BlockCopy(salt, 0, combined, 0, salt.Length);
+            Buffer.BlockCopy(Encoding.UTF8.GetBytes(password), 0, combined, salt.Length, Encoding.UTF8.GetBytes(password).Length);
+
+            // Compute the hash
             using (var sha256 = SHA256.Create())
             {
-                // Compute hash from the password
-                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                byte[] hashedBytes = sha256.ComputeHash(combined);
 
-                // Convert hashed bytes to string
-                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+                // Combine the salt and hash
+                byte[] hashWithSalt = new byte[salt.Length + hashedBytes.Length];
+                Buffer.BlockCopy(salt, 0, hashWithSalt, 0, salt.Length);
+                Buffer.BlockCopy(hashedBytes, 0, hashWithSalt, salt.Length, hashedBytes.Length);
+
+                // Convert to base64 string for storage
+                return Convert.ToBase64String(hashWithSalt);
             }
         }
 
-        // Method to verify user login
         public bool VerifyLogin(string username, string password)
         {
             // Retrieve the user by username
@@ -150,22 +156,38 @@ namespace DataLayer
             return VerifyPassword(password, storedHashedPassword);
         }
 
-        // Method to compare hashed password with provided password
         public bool VerifyPassword(string inputPassword, string storedHashedPassword)
         {
+            // Convert the stored hashed password from base64
+            byte[] hashWithSalt = Convert.FromBase64String(storedHashedPassword);
+
+            // Extract the salt from the stored hash
+            byte[] salt = new byte[16];
+            Buffer.BlockCopy(hashWithSalt, 0, salt, 0, salt.Length);
+
+            // Combine the input password with the extracted salt
+            byte[] combined = new byte[salt.Length + Encoding.UTF8.GetBytes(inputPassword).Length];
+            Buffer.BlockCopy(salt, 0, combined, 0, salt.Length);
+            Buffer.BlockCopy(Encoding.UTF8.GetBytes(inputPassword), 0, combined, salt.Length, Encoding.UTF8.GetBytes(inputPassword).Length);
+
+            // Compute the hash of the input password with the salt
             using (var sha256 = SHA256.Create())
             {
-                // Compute hash from the input password
-                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(inputPassword));
+                byte[] hashedBytes = sha256.ComputeHash(combined);
 
-                // Convert hashed bytes to string
-                string hashedInputPassword = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+                // Compare the hashes
+                for (int i = 0; i < hashedBytes.Length; i++)
+                {
+                    if (hashedBytes[i] != hashWithSalt[salt.Length + i])
+                    {
+                        return false;
+                    }
+                }
 
-                // Compare the hashed input password with the stored hashed password
-                return hashedInputPassword == storedHashedPassword;
+                return true;
             }
         }
-        
+
 
     }
 }

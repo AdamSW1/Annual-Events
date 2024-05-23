@@ -144,12 +144,16 @@ namespace MalfunctioningKitchen.ViewModels
             try
             {
                 User = user;
-                profile.UpdateProfile(User, Username, Password, Description, Age);
+                if (string.IsNullOrEmpty(user.Description))
+                {
+                    user.Description = " ";
+                }
+                profile.UpdateProfile(User, Username, Description, Age, Password);
                 NotificationMessage = "Profile updated successfully!";
             }
             catch (Exception ex)
             {
-                NotificationMessage = $"Failed to update profile: {ex}";
+                NotificationMessage = $"Failed to update profile. {ex}";
             }
         }
 

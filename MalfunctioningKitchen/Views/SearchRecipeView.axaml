@@ -39,6 +39,9 @@
                     <!-- Text input for owner -->
                     <TextBox Width="300" Watermark="Enter owner username..." Text="{Binding OwnerUsername, Mode=TwoWay}" />
                     
+                    <!-- Text input for ingredient -->
+                    <TextBox Width="300" Watermark="Enter ingredient..." Text="{Binding Ingredient, Mode=TwoWay}" />
+                    
                     <ListBox ItemsSource="{Binding TagCriteria}"
                             SelectionMode="Multiple"
                             SelectedItems="{Binding SelectedTags}"
