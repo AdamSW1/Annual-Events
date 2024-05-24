@@ -23,7 +23,14 @@ public class Profile// The Profile class is used to manage a Annual_Events_User
 
         if (!string.IsNullOrEmpty(password))
         {
-            user.Password = AnnualEventsUserServices.Instance.HashPassword(password);
+            if (password.Length >= 5)
+            {
+                user.Password = AnnualEventsUserServices.Instance.HashPassword(password);
+            }
+            else
+            {
+                throw new ArgumentException("Password must be at least 5 characters long.");
+            }
         }
 
         if (string.IsNullOrEmpty(password))
@@ -40,11 +47,6 @@ public class Profile// The Profile class is used to manage a Annual_Events_User
         {
             user.Age = age;
         }
-
-        // user.Username = Username;
-        // user.Password = AnnualEventsUserServices.Instance.HashPassword(password);
-        // user.Description = description;
-        // user.Age = age;
         
         AnnualEventsUserServices.Instance.DbContext.SaveChanges();
     }
