@@ -10,6 +10,9 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using System;
 using System.Security.Cryptography;
+using System.Linq;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using HarfBuzzSharp;
 namespace MalfunctioningKitchen.ViewModels;
 
 public class HomePageViewModel : ViewModelBase
@@ -17,7 +20,7 @@ public class HomePageViewModel : ViewModelBase
     private ObservableCollection<Recipe> _recipes = new();
 
     private ObservableCollection<Review> _reviews = new();
-    
+
     private Recipe _selectedRecipe = new();
     public Recipe SelectedRecipe
     {
@@ -26,18 +29,25 @@ public class HomePageViewModel : ViewModelBase
     }
 
     private Review _selectedReview;
-    public Review SelectedReview 
+    public Review SelectedReview
     {
         get => _selectedReview;
         set => _selectedReview = value;
     }
 
-    public bool _viewingReviews;
+    private bool _viewingReviews;
 
-    private bool ViewingReviews
+    public bool ViewingReviews
     {
         get => _viewingReviews;
         set => this.RaiseAndSetIfChanged(ref _viewingReviews, value);
+    }
+
+    private string _pageMessage;
+
+    public string PageMessage{
+        get => _pageMessage;
+        set => this.RaiseAndSetIfChanged(ref _pageMessage,value);
     }
 
     public ReactiveCommand<Unit, Unit> Logout { get; }
@@ -63,7 +73,7 @@ public class HomePageViewModel : ViewModelBase
 
     public HomePageViewModel()
     {
-        ViewAllRecipes();
+        ViewRecommendedRecipes();
 
         Logout = ReactiveCommand.Create(() =>
         {
@@ -74,7 +84,7 @@ public class HomePageViewModel : ViewModelBase
         ViewRecipeCommand = ReactiveCommand.Create(() => { return SelectedRecipe; });
         NavigateToRecipeCommand = ReactiveCommand.Create(() => { });
         NavigateToAddRecipeCommand = ReactiveCommand.Create(() => { });
-        DeleteReviewCommand = ReactiveCommand.Create( () => { return SelectedReview; });
+        DeleteReviewCommand = ReactiveCommand.Create(() => { return SelectedReview; });
         ViewingReviews = false;
     }
 
@@ -84,34 +94,86 @@ public class HomePageViewModel : ViewModelBase
         Recipes.Clear();
         Reviews.Clear();
         var ownedRecipes = RecipeServices.Instance.GetRecipesByOwner(AuthenticationManager.Instance.CurrentUser);
+        if(ownedRecipes.Count != 0){
+            PageMessage = "Your Recipes";
+        }
+        else{
+            PageMessage = "No recipes Written";
+        }
         ownedRecipes.ForEach(recipe => Recipes.Add(recipe));
     }
 
-    public void ViewAllRecipes()
+    public void ViewRecommendedRecipes()
     {
         ViewingReviews = false;
         Recipes.Clear();
         Reviews.Clear();
         List<Recipe> allRecipes = RecipeServices.Instance.GetRecipes();
-        allRecipes.ForEach(recipe => Recipes.Add(recipe));
+        var userRecipes = AuthenticationManager.Instance.CurrentUser.Recipes;
+        List<Recipe> recommendedRecipes = new List<Recipe>();
+        List<RecipeTag> recommendedTags = new List<RecipeTag>();
+        // Gets recipes in all recipes whose tags match any of the tags in the current user's recipes
+        // and werent written by the current user
+        allRecipes.ForEach(recipe =>
+        {
+            if( recipe.Owner == AuthenticationManager.Instance.CurrentUser){
+                return;
+            }
+            if(recipe.Tags.Any(tag => allRecipes.Any(userRecipe => userRecipe.Tags.Any(t => {
+                //if tag matches, add it to the list of recommended tags to show the user
+                // and return true
+                if(t.Equals(tag)){
+                    if(!recommendedTags.Contains(tag)){
+                        recommendedTags.Add(t);
+                    }
+                    return true;
+                }
+                return false;
+            }
+            )))){
+                recommendedRecipes.Add(recipe);
+            }        
+        });
+        if(recommendedRecipes.Count != 0){
+            PageMessage ="Your recommended recipes based on tags:\n";
+            PageMessage += string.Join(",", recommendedTags);
+        }
+        else{
+            PageMessage = "No Recipes To Recommend";
+        }
+
+        recommendedRecipes.ForEach(recipe => Recipes.Add(recipe));
     }
     public void ViewFavouriteRecipes()
     {
         Recipes.Clear();
         Reviews.Clear();
         List<Recipe> FavRecipes = RecipeServices.Instance.GetRecipesFavByUser(AuthenticationManager.Instance.CurrentUser);
+
+        if( FavRecipes.Count == 0 ){
+            PageMessage ="No favourited recipes";
+        }
+        else{
+            PageMessage ="Your Favourite Recipes";
+        }
         FavRecipes.ForEach(recipe => Recipes.Add(recipe));
     }
-    public void ViewYourReviews() 
+    public void ViewYourReviews()
     {
         ViewingReviews = true;
         Recipes.Clear();
         Reviews.Clear();
         List<Review> reviews = AnnualEventsService.Instance.GetReviewsForUser(AuthenticationManager.Instance.CurrentUser);
+        if( reviews.Count == 0 ){
+            PageMessage ="No reviews";
+        }
+        else{
+            PageMessage = "Your Reviews";
+        }
         reviews.ForEach(review => Reviews.Add(review));
     }
 
-    public void DeleteReview() 
+    public void DeleteReview()
     {
         AnnualEventsService.Instance.DeleteReview(SelectedReview);
         ViewYourReviews();
@@ -121,7 +183,7 @@ public class HomePageViewModel : ViewModelBase
         SelectedRecipe = recipe;
         ViewRecipeCommand.Execute().Subscribe();
     }
-    public void GetReview(Review review) 
+    public void GetReview(Review review)
     {
         SelectedReview = review;
         DeleteReview();
