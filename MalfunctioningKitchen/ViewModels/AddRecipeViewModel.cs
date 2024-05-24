@@ -15,8 +15,8 @@ namespace MalfunctioningKitchen.ViewModels;
 
 public class AddRecipeViewModel : ViewModelBase
 {
-    private string? _recipeName;
-    public string? RecipeName
+    private string _recipeName;
+    public string RecipeName
     {
         get => _recipeName;
         set 
@@ -31,8 +31,8 @@ public class AddRecipeViewModel : ViewModelBase
             }     
         }      
     }
-    private string? _description;
-    public string? Description
+    private string _description;
+    public string Description
     {
         get => _description;
         set
@@ -100,8 +100,8 @@ public class AddRecipeViewModel : ViewModelBase
         
         }
     }
-    private string? _ingredientName;
-    public string? IngredientName
+    private string _ingredientName;
+    public string IngredientName
     {
         get => _ingredientName;
         set => this.RaiseAndSetIfChanged(ref _ingredientName, value);
@@ -118,8 +118,8 @@ public class AddRecipeViewModel : ViewModelBase
         get => _price;
         set => this.RaiseAndSetIfChanged(ref _price, value);
     }
-    private List<Ingredient>? _ingredientList;
-    public List<Ingredient>? IngredientList
+    private List<Ingredient> _ingredientList;
+    public List<Ingredient> IngredientList
     {
         get => _ingredientList;
         set => this.RaiseAndSetIfChanged(ref _ingredientList, value);
