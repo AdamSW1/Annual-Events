@@ -154,8 +154,7 @@ namespace MalfunctioningKitchen.ViewModels
         {
             AddRecipeViewModel viewModel = new AddRecipeViewModel(recipe,typeParentPage);
             viewModel.NavigateToHomePageCommand.Subscribe(_ => NavigateToHomePage());
-            viewModel.Logout.Subscribe(_ => NavigateToWelcome());
-            viewModel.CreateRecipe.Subscribe(_ => NavigateToHomePage());    
+            viewModel.Logout.Subscribe(_ => NavigateToWelcome());    
             ContentViewModel = viewModel;
         }
     }
