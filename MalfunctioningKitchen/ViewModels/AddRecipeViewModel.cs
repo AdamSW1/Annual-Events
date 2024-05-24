@@ -31,8 +31,8 @@ public class AddRecipeViewModel : ViewModelBase
             }     
         }      
     }
-    private string? _description;
-    public string? Description
+    private string _description;
+    public string Description
     {
         get => _description;
         set
@@ -264,13 +264,13 @@ public class AddRecipeViewModel : ViewModelBase
                 }
                 ErrorMessage = "";
             }
-            catch (ArgumentException exc)
+            catch (ArgumentException)
             {
-                ErrorMessage = exc.Message;
+                ErrorMessage = "Argument related error while creating the recipe";
             }
-            catch (NullReferenceException exc)
+            catch (NullReferenceException)
             {
-                ErrorMessage = exc.Message;
+                ErrorMessage = "Null reference error while making a recipe";
             }
             catch (Exception)
             {

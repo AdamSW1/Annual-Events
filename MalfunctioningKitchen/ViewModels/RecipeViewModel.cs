@@ -47,8 +47,8 @@ public class RecipeViewModel : ViewModelBase
         get => _recipeOwner;
         set => this.RaiseAndSetIfChanged(ref _recipeOwner, value);
     }
-    private string _description;
-    public string Description
+    private string? _description;
+    public string? Description
     {
         get => _description;
         set => this.RaiseAndSetIfChanged(ref _description, value);

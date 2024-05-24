@@ -15,7 +15,7 @@ namespace MalfunctioningKitchen.ViewModels
     public class UpdateProfileViewModel : ViewModelBase
     {
         private string _username = AuthenticationManager.Instance.CurrentUser.Username!;
-        private string _password;
+        private string? _password;
         private string _description = AuthenticationManager.Instance.CurrentUser.Description!;
         private int _age = AuthenticationManager.Instance.CurrentUser.Age;
 
@@ -35,7 +35,7 @@ namespace MalfunctioningKitchen.ViewModels
             set => this.RaiseAndSetIfChanged(ref _username, value);
         }
 
-        public string Password
+        public string? Password
         {
             get => _password;
             set => this.RaiseAndSetIfChanged(ref _password, value);

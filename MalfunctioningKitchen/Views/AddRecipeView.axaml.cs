@@ -2,6 +2,9 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using BusinessLayer;
+using DataLayer;
+using RecipeInfo;
 using MalfunctioningKitchen.ViewModels;
 
 namespace MalfunctioningKitchen.Views;
