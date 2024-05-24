@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using System;
 using System.Linq;
+using System.Windows.Input;
 namespace MalfunctioningKitchen.ViewModels;
 
 public class AddRecipeViewModel : ViewModelBase
@@ -75,7 +76,13 @@ public class AddRecipeViewModel : ViewModelBase
         get => _preparations;
         set => this.RaiseAndSetIfChanged(ref _preparations, value);
     }
-    private int stepNum = 1;
+    private ObservableCollection<Preparation> _preparationList = new();
+    public ObservableCollection<Preparation> PreparationList
+    {
+        get => _preparationList;
+        set => this.RaiseAndSetIfChanged(ref _preparationList, value);
+    }
+    private int stepNum = 0;
     private double _servings;
     public double Servings
     {
@@ -118,6 +125,7 @@ public class AddRecipeViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _ingredientList, value);
     }
     private List<RecipeIngredient>? _recipeIngredientList = new List<RecipeIngredient>();
+    
     public List<RecipeIngredient>? RecipeIngredientList
     {
         get => _recipeIngredientList;
@@ -157,6 +165,7 @@ public class AddRecipeViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> Logout { get; }
     public ReactiveCommand<Unit, Unit> NavigateToHomePageCommand { get; }
     public ReactiveCommand<Unit, Unit> CreateRecipe { get; }
+    public ICommand RemoveStepCommand { get; }
 
     public AddRecipeViewModel(Recipe recipe, string typeParentPage)
     {
@@ -170,7 +179,11 @@ public class AddRecipeViewModel : ViewModelBase
         //Add step command to add preparation steps to the recipe
         AddStep = ReactiveCommand.Create(() =>
         {
-            AddStepToInstructions("Step " + (_preparations.Count + 1) + ":" + _instruction);
+            AddStepToInstructions(_instruction);
+        });
+        RemoveStepCommand = ReactiveCommand.Create((string idex) =>
+        {
+            RemoveStep(idex);
         });
         //Add ingredient command to add ingredients to the recipe
         AddIngredient = ReactiveCommand.Create(() =>
@@ -236,6 +249,12 @@ public class AddRecipeViewModel : ViewModelBase
             _reviews = recipe.Reviews;
             _selectedTags = recipe.Tags.Select(tag => tag.Tag.ToString()).ToList();
             _title = "Edit Recipe";
+            _preparationList = new ObservableCollection<Preparation>();
+            for (int i = 0; i < _preparations.Count; i++)
+            {
+                PreparationList.Add(new Preparation(stepNum,"Step " + (i + 1) + ":" + _preparations[i].Step));
+                stepNum++;  
+            }
         }
     }
 
@@ -259,8 +278,41 @@ public class AddRecipeViewModel : ViewModelBase
         {
             _preparations = new List<Preparation>();
         }
+        if (instruction == null || instruction.Equals(""))
+        {
+            throw new ArgumentException("Instruction cannot be empty.");
+        }
         _preparations.Add(new Preparation(stepNum, instruction));
+        PreparationList.Clear();
+        for (int i = 0; i < Preparations.Count; i++)
+        {
+            var step = Preparations[i];
+            if (step.Step.Contains("Step"))
+            {
+                step.Step = step.Step.Split(":")[1];
+            }
+            PreparationList.Add(new Preparation(i, "Step " + (i + 1) + ":" + step.Step));
+        }
         stepNum++;
+    }
+    private void RemoveStep(string index)
+    {
+        var idx = Int32.Parse(index);
+        if (_preparations.Count > 0)
+        {
+            _preparations.RemoveAt(idx);
+            PreparationList.Clear();
+            for (int i = 0; i < Preparations.Count; i++)
+            {
+                var step = Preparations[i];
+                if (step.Step.Contains("Step"))
+                {
+                    step.Step = step.Step.Split(":")[1];
+                }
+                PreparationList.Add(new Preparation(i, "Step " + (i + 1) + ":" + step.Step));
+            }
+            stepNum--;
+        }
     }
 
     public void AddIngredientToList(string name,int quantity, double price)

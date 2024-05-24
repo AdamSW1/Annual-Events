@@ -58,6 +58,20 @@
                               Watermark="Enter Step Details"/>
                     <Button Content="Add Step"
                             Command="{Binding AddStep}"/>
+                    <ItemsControl ItemsSource="{Binding PreparationList}"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center">
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Step}" Foreground="Yellow" />
+                            <Button Content="Remove Step"
+                                    Command="{Binding $parent[ItemsControl].((vm:AddRecipeViewModel)DataContext).RemoveStepCommand}"
+                                    CommandParameter="{Binding StepNumber, StringFormat=\{0\}}"/>
+                          </StackPanel>
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                   </StackPanel>
                     <TextBlock Text="Servings: " Margin="0.5"/>
                     <NumericUpDown Value="{Binding Servings}"
