@@ -39,7 +39,7 @@ public class Ingredient{
         get{
             Ingredient_json? ingredient = JsonParser.GetIngredient(_name);
             if (ingredient == null){
-                return $"_price";
+                return $" {Price}$";
             }
             return ingredient.price?["usd"].formatted ?? $"{Price}";
         }
