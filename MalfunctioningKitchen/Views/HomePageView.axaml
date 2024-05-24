@@ -55,8 +55,8 @@
                   VerticalAlignment="Center"
                   HorizontalAlignment="Center"
                   Margin="0,200,0,50"
-                  Content="All Recipes"
-                  Command="{Binding ViewAllRecipes}"/>
+                  Content="Recommended Recipes"
+                  Command="{Binding ViewRecommendedRecipes}"/>
           <Button DockPanel.Dock="Top"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Top"
@@ -79,6 +79,13 @@
     </SplitView>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
       <StackPanel VerticalAlignment="Center">
+        <TextBlock
+                  HorizontalAlignment="Center"
+                  LetterSpacing="1"
+                  FontSize="20"
+                  FontWeight="DemiBold"
+                  Margin="0,0,0,20"
+                  Text="{Binding PageMessage}"/>
         <ItemsControl ItemsSource="{Binding Recipes}"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center">
