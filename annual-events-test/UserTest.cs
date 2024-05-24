@@ -13,7 +13,7 @@ public class UserTest
     public void AddRecipeTest_addingOneRecipe()
     {
         //arrange
-        Annual_Events_User user = new("Test","TestPass","description",20);
+        Annual_Events_User user = new("Test","TestPass","description",20,null);
         Recipe test = CreateExampleRecipe(user); 
         
         //act
@@ -28,7 +28,7 @@ public class UserTest
     public void AuthenticationTest()
     {
         //arrange
-        Annual_Events_User user = new("Test","TestPass","description",20);
+        Annual_Events_User user = new("Test","TestPass","description",20,null);
         string name = "Test";
         string password = "TestPass";
         //act

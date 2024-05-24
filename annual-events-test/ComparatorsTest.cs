@@ -89,7 +89,7 @@ public class ComparatorsTest
                                             8,
                                             recipeIngredients,
                                             0,
-                                            new Annual_Events_User("cookielover123", "234", "nbdfnjgbd", 16),
+                                            new Annual_Events_User("cookielover123", "234", "nbdfnjgbd", 16,null),
                                             tags,
                                             new List<Review> { new("reviewer1", "review1",5)}
                                             );
@@ -106,7 +106,7 @@ public class ComparatorsTest
                                             6,
                                             recipeIngredients,
                                             0,
-                                            new Annual_Events_User("hello1234", "678", "ngjveuiwsnhg", 24),
+                                            new Annual_Events_User("hello1234", "678", "ngjveuiwsnhg", 24,null),
                                             tags,
                                             new List<Review> { new("reviewer1", "review1",4)}
                                             );

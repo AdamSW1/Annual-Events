@@ -116,7 +116,7 @@ public class AuthenticationManagerTest
     public void GetAllRecipesFromAllUsers_NoUsers_ReturnsEmptyList()
     {
         //Arrange
-        var user = new Annual_Events_User("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User("testUser", "password", "Test user", 30,null);
         user = null;
         var data_list = new List<Recipe>
         {

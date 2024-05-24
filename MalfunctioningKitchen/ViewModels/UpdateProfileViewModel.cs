@@ -144,9 +144,10 @@ namespace MalfunctioningKitchen.ViewModels
             try
             {
                 User = user;
-                if (string.IsNullOrEmpty(user.Description))
+                if (!string.IsNullOrEmpty(Password) && Password.Length < 5)
                 {
-                    user.Description = " ";
+                    NotificationMessage = "Your password can't be below 5 characters.";
+                    return;
                 }
                 profile.UpdateProfile(User, Username, Description, Age, Password);
                 NotificationMessage = "Profile updated successfully!";

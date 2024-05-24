@@ -11,12 +11,12 @@ public class ProfileTests
     public void UpdatePasswordTest()
     {
         // Arrange
-        var user = new Annual_Events_User ("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User ("testUser", "password", "Test user", 30, null);
 
         var newPassword = "newPassword";
         Profile profile = new Profile();
         // Act
-        profile.UpdateProfile(user,user.Username,newPassword,user.Description,user.Age);
+        profile.UpdateProfile(user,user.Username,user.Description,user.Age,newPassword);
         // Assert
         Assert.IsTrue(AnnualEventsUserServices.Instance.VerifyPassword(newPassword,user.Password));
     }
@@ -33,11 +33,11 @@ public class ProfileTests
     public void UpdateDescriptionTest()
     {
         // Arrange
-        var user = new Annual_Events_User ("testUser", "password", "Test user", 30);
+        var user = new Annual_Events_User ("testUser", "password", "Test user", 30,null);
         var newdesc = "newPassword";
         Profile profile = new Profile();
         // Act
-        profile.UpdateProfile(user,user.Username,user.Password,newdesc,user.Age);
+        profile.UpdateProfile(user,user.Username,newdesc,user.Age,user.Password);
         // Assert
         Assert.AreEqual(newdesc, user.Description);
     }

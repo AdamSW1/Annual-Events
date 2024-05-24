@@ -10,12 +10,13 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using System;
 using System.Linq;
+using System.Windows.Input;
 namespace MalfunctioningKitchen.ViewModels;
 
 public class AddRecipeViewModel : ViewModelBase
 {
-    private string? _recipeName;
-    public string? RecipeName
+    private string _recipeName;
+    public string RecipeName
     {
         get => _recipeName;
         set 
@@ -75,7 +76,13 @@ public class AddRecipeViewModel : ViewModelBase
         get => _preparations;
         set => this.RaiseAndSetIfChanged(ref _preparations, value);
     }
-    private int stepNum = 1;
+    private ObservableCollection<Preparation> _preparationList = new();
+    public ObservableCollection<Preparation> PreparationList
+    {
+        get => _preparationList;
+        set => this.RaiseAndSetIfChanged(ref _preparationList, value);
+    }
+    private int stepNum = 0;
     private double _servings;
     public double Servings
     {
@@ -99,8 +106,8 @@ public class AddRecipeViewModel : ViewModelBase
         get => _ingredientName;
         set => this.RaiseAndSetIfChanged(ref _ingredientName, value);
     }
-    private double _quantity;
-    public double Quantity
+    private string _quantity;
+    public string Quantity
     {
         get => _quantity;
         set => this.RaiseAndSetIfChanged(ref _quantity, value);
@@ -118,10 +125,18 @@ public class AddRecipeViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _ingredientList, value);
     }
     private List<RecipeIngredient>? _recipeIngredientList = new List<RecipeIngredient>();
+    
     public List<RecipeIngredient>? RecipeIngredientList
     {
         get => _recipeIngredientList;
         set => this.RaiseAndSetIfChanged(ref _recipeIngredientList, value);
+    }
+
+    private ObservableCollection<RecipeIngredient> _recipeIngredientListObs = new();
+    public ObservableCollection<RecipeIngredient> RecipeIngredientListObs
+    {
+        get => _recipeIngredientListObs;
+        set => this.RaiseAndSetIfChanged(ref _recipeIngredientListObs, value);
     }
     private List<string> _allTags;
     public List<string> AllTags
@@ -157,6 +172,8 @@ public class AddRecipeViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> Logout { get; }
     public ReactiveCommand<Unit, Unit> NavigateToHomePageCommand { get; }
     public ReactiveCommand<Unit, Unit> CreateRecipe { get; }
+    public ICommand RemoveStepCommand { get; }
+    public ICommand RemoveIngredientCommand { get; }
 
     public AddRecipeViewModel(Recipe recipe, string typeParentPage)
     {
@@ -170,12 +187,20 @@ public class AddRecipeViewModel : ViewModelBase
         //Add step command to add preparation steps to the recipe
         AddStep = ReactiveCommand.Create(() =>
         {
-            AddStepToInstructions("Step " + (_preparations.Count + 1) + ":" + _instruction);
+            AddStepToInstructions(_instruction);
+        });
+        RemoveStepCommand = ReactiveCommand.Create((string idex) =>
+        {
+            RemoveStep(idex);
         });
         //Add ingredient command to add ingredients to the recipe
         AddIngredient = ReactiveCommand.Create(() =>
         {
-            AddIngredientToList(_ingredientName, (int)_quantity, _price);
+            AddIngredientToList(_ingredientName, _quantity, _price);
+        });
+        RemoveIngredientCommand = ReactiveCommand.Create((Object obj) =>
+        {
+            RemoveIngredient(obj);
         });
         //Add all tags to the list of tags
         _allTags = new List<string>();
@@ -192,9 +217,20 @@ public class AddRecipeViewModel : ViewModelBase
             {
                 if (typeParentPage.Equals("Edit"))
                 { 
-                    List<RecipeTag> tags = SelectedTags.Select(tag => new RecipeTag(tag)).ToList();
-                    recipe.Name = _recipeName;
-                    recipe.Description = _description;
+                    List<RecipeTag> tags = SelectedTags.Select(tag =>
+                    {
+                        RecipeTag? existingTag = RecipeServices.Instance.GetRecipeTag(tag);
+                        if (existingTag != null)
+                        {
+                            return existingTag;
+                        }
+                        else
+                        {
+                            return new RecipeTag(tag);
+                        }
+                    }).ToList();
+                    recipe.Name = _recipeName!;
+                    recipe.Description = _description!;
                     recipe.CookingTime = _cookingTime;
                     recipe.Preparation = _preparations;
                     recipe.Servings = (int)_servings;
@@ -206,7 +242,18 @@ public class AddRecipeViewModel : ViewModelBase
                 }
                 else
                 {
-                    List<RecipeTag> tags = SelectedTags.Select(tag => new RecipeTag(tag)).ToList();
+                    List<RecipeTag> tags = SelectedTags.Select(tag =>
+                    {
+                        RecipeTag? existingTag = RecipeServices.Instance.GetRecipeTag(tag);
+                        if (existingTag != null)
+                        {
+                            return existingTag;
+                        }
+                        else
+                        {
+                            return new RecipeTag(tag);
+                        }
+                    }).ToList();
                     Recipe recipe = new Recipe(_recipeName, _description, _cookingTime, _preparations, (int)_servings, _recipeIngredientList, 0, AuthenticationManager.Instance.CurrentUser, tags, _reviews);
                     RecipeManager.AddRecipe(recipe);
                 }
@@ -236,6 +283,14 @@ public class AddRecipeViewModel : ViewModelBase
             _reviews = recipe.Reviews;
             _selectedTags = recipe.Tags.Select(tag => tag.Tag.ToString()).ToList();
             _title = "Edit Recipe";
+            _preparationList = new ObservableCollection<Preparation>();
+            for (int i = 0; i < _preparations.Count; i++)
+            {
+                PreparationList.Add(new Preparation(stepNum,"Step " + (i + 1) + ":" + _preparations[i].Step));
+                stepNum++;  
+            }
+            _recipeIngredientListObs = new ObservableCollection<RecipeIngredient>();
+            _recipeIngredientList.ForEach(ingredient => RecipeIngredientListObs.Add(ingredient));
         }
     }
 
@@ -259,11 +314,62 @@ public class AddRecipeViewModel : ViewModelBase
         {
             _preparations = new List<Preparation>();
         }
+        if (instruction == null || instruction.Equals(""))
+        {
+            throw new ArgumentException("Instruction cannot be empty.");
+        }
         _preparations.Add(new Preparation(stepNum, instruction));
+        PreparationList.Clear();
+        for (int i = 0; i < Preparations.Count; i++)
+        {
+            var step = Preparations[i];
+            if (step.Step.Contains("Step"))
+            {
+                step.Step = step.Step.Split(":")[1];
+            }
+            PreparationList.Add(new Preparation(i, "Step " + (i + 1) + ":" + step.Step));
+        }
         stepNum++;
     }
+    private void RemoveStep(string index)
+    {
+        var idx = Int32.Parse(index);
+        if (_preparations.Count > 0)
+        {
+            _preparations.RemoveAt(idx);
+            PreparationList.Clear();
+            for (int i = 0; i < Preparations.Count; i++)
+            {
+                var step = Preparations[i];
+                if (step.Step.Contains("Step"))
+                {
+                    step.Step = step.Step.Split(":")[1];
+                }
+                PreparationList.Add(new Preparation(i, "Step " + (i + 1) + ":" + step.Step));
+            }
+            stepNum--;
+        }
+    }
 
-    public void AddIngredientToList(string name,int quantity, double price)
+    private void RemoveIngredient(Object obj)
+    {
+        var idx = RecipeIngredientListObs.IndexOf((RecipeIngredient)obj);
+        if (idx == -1)
+        {
+            return;
+        }
+        if (_recipeIngredientList.Count > 0)
+        {
+            _recipeIngredientList.RemoveAt(idx);
+            RecipeIngredientListObs.Clear();
+            for (int i = 0; i < RecipeIngredientList.Count; i++)
+            {
+                RecipeIngredientListObs.Add(RecipeIngredientList[i]);
+            }
+        }
+    }
+
+    public void AddIngredientToList(string name,string quantity, double price)
     {
         if (_ingredientList == null)
         {
@@ -274,6 +380,11 @@ public class AddRecipeViewModel : ViewModelBase
             _recipeIngredientList = new List<RecipeIngredient>();
         }
         _ingredientList.Add(new Ingredient(_ingredientName, _price));
-        _recipeIngredientList.Add(new RecipeIngredient { Ingredient = new Ingredient(name, price), Quantity = quantity.ToString()});
+        _recipeIngredientList.Add(new RecipeIngredient { Ingredient = new Ingredient(name, price), Quantity = quantity});
+        RecipeIngredientListObs.Clear();
+        for (int i = 0; i < RecipeIngredientList.Count; i++)
+        {
+            RecipeIngredientListObs.Add(RecipeIngredientList[i]);
+        }
     }
 }

@@ -60,8 +60,10 @@
               </StackPanel>
               <TextBlock Text="Ingredients" FontSize="15"/>
               <TextBlock Text="{Binding Ingredients}" FontSize="15"/>
+              <!-- Add text box based on amount of items -->
               <TextBlock Text="Instruction" FontSize="15"/>
               <TextBlock Text="{Binding Instructions}" FontSize="10"/>
+              <!-- Add text bod based on amount of items -->
               <TextBlock Text="Reviews: " FontSize="15"/>
               <TextBlock Text="{Binding Reviews}" FontSize="10"/>
               <Button Command="{Binding NavigateToAddReviewCommand}" Content="Add a Review" Margin="0,0,0,0" Foreground="LightGray" IsVisible="{Binding !UserIsOwner}" />
