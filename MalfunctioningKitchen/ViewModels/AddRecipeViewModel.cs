@@ -239,6 +239,7 @@ public class AddRecipeViewModel : ViewModelBase
                     recipe.Tags = tags;
                     recipe.Reviews = _reviews;
                     RecipeServices.Instance.DbContext.SaveChanges();
+                    NavigateToHomePageCommand.Execute().Subscribe();
                 }
                 else
                 {
@@ -256,6 +257,9 @@ public class AddRecipeViewModel : ViewModelBase
                     }).ToList();
                     Recipe recipe = new Recipe(_recipeName, _description, _cookingTime, _preparations, (int)_servings, _recipeIngredientList, 0, AuthenticationManager.Instance.CurrentUser, tags, _reviews);
                     RecipeManager.AddRecipe(recipe);
+                    NavigateToHomePageCommand.Execute().Subscribe();
+                    
+
                 }
                 ErrorMessage = "";
             }
@@ -269,7 +273,7 @@ public class AddRecipeViewModel : ViewModelBase
             }
             catch (Exception exc)
             {
-                ErrorMessage = "An error occurred while creating the recipe.";
+                ErrorMessage = "Could not create recipe if any fields are empty!";
             }
         }, areFilledIn);
         if (typeParentPage != null && typeParentPage.Equals("Edit"))
