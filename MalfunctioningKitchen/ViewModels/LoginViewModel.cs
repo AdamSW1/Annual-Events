@@ -1,7 +1,5 @@
 using System;
 using System.Reactive;
-
-
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ReactiveUI;
 using BusinessLayer;

@@ -14,8 +14,8 @@ namespace MalfunctioningKitchen.ViewModels;
 
 public class AddRecipeViewModel : ViewModelBase
 {
-    private string _recipeName;
-    public string RecipeName
+    private string? _recipeName;
+    public string? RecipeName
     {
         get => _recipeName;
         set 
@@ -93,8 +93,8 @@ public class AddRecipeViewModel : ViewModelBase
         
         }
     }
-    private string _ingredientName;
-    public string IngredientName
+    private string? _ingredientName;
+    public string? IngredientName
     {
         get => _ingredientName;
         set => this.RaiseAndSetIfChanged(ref _ingredientName, value);
@@ -111,8 +111,8 @@ public class AddRecipeViewModel : ViewModelBase
         get => _price;
         set => this.RaiseAndSetIfChanged(ref _price, value);
     }
-    private List<Ingredient> _ingredientList;
-    public List<Ingredient> IngredientList
+    private List<Ingredient>? _ingredientList;
+    public List<Ingredient>? IngredientList
     {
         get => _ingredientList;
         set => this.RaiseAndSetIfChanged(ref _ingredientList, value);
@@ -207,20 +207,20 @@ public class AddRecipeViewModel : ViewModelBase
                 else
                 {
                     List<RecipeTag> tags = SelectedTags.Select(tag => new RecipeTag(tag)).ToList();
-                    Recipe recipe = new Recipe(_recipeName, _description, _cookingTime, _preparations, (int)_servings, _recipeIngredientList, 0, AuthenticationManager.Instance.CurrentUser, tags, _reviews);
+                    Recipe recipe = new Recipe(_recipeName!, _description!, _cookingTime, _preparations!, (int)_servings, _recipeIngredientList!, 0, AuthenticationManager.Instance.CurrentUser, tags!, _reviews!);
                     RecipeManager.AddRecipe(recipe);
                 }
                 ErrorMessage = "";
             }
-            catch (ArgumentException exc)
+            catch (ArgumentException)
             {
-                ErrorMessage = exc.Message;
+                ErrorMessage = "Argument related error while creating the recipe";
             }
-            catch (NullReferenceException exc)
+            catch (NullReferenceException)
             {
-                ErrorMessage = exc.Message;
+                ErrorMessage = "Null reference error while making a recipe";
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 ErrorMessage = "An error occurred while creating the recipe.";
             }
@@ -263,8 +263,12 @@ public class AddRecipeViewModel : ViewModelBase
         stepNum++;
     }
 
-    public void AddIngredientToList(string name,int quantity, double price)
+    public void AddIngredientToList(string? name,int quantity, double price)
     {
+        if (string.IsNullOrEmpty(name))
+        {
+            throw new ArgumentException("Ingredient name cannot be empty.");
+        }
         if (_ingredientList == null)
         {
             _ingredientList = new List<Ingredient>();
@@ -273,7 +277,7 @@ public class AddRecipeViewModel : ViewModelBase
         {
             _recipeIngredientList = new List<RecipeIngredient>();
         }
-        _ingredientList.Add(new Ingredient(_ingredientName, _price));
-        _recipeIngredientList.Add(new RecipeIngredient { Ingredient = new Ingredient(name, price), Quantity = quantity.ToString()});
+        _ingredientList.Add(new Ingredient(_ingredientName!, _price));
+        _recipeIngredientList.Add(new RecipeIngredient { Ingredient = new Ingredient(name!, price), Quantity = quantity.ToString()});
     }
 }

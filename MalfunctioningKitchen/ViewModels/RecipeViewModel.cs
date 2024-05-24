@@ -21,15 +21,15 @@ public class RecipeViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _recipe, value);
     }
 
-    private string _recipeName;
-    public string RecipeName
+    private string? _recipeName;
+    public string? RecipeName
     {
         get => _recipeName;
         set => this.RaiseAndSetIfChanged(ref _recipeName, value);
     }
 
-    private string _stars;
-    public string Stars
+    private string? _stars;
+    public string? Stars
     {
         get => _stars;
         set => this.RaiseAndSetIfChanged(ref _stars, value);
@@ -41,32 +41,32 @@ public class RecipeViewModel : ViewModelBase
         get => _reviewCount;
         set => this.RaiseAndSetIfChanged(ref _reviewCount, value);
     }
-    private string _recipeOwner;
-    public string RecipeOwner
+    private string? _recipeOwner;
+    public string? RecipeOwner
     {
         get => _recipeOwner;
         set => this.RaiseAndSetIfChanged(ref _recipeOwner, value);
     }
-    private string _description;
-    public string Description
+    private string? _description;
+    public string? Description
     {
         get => _description;
         set => this.RaiseAndSetIfChanged(ref _description, value);
     }
-    private string _ingredients;
-    public string Ingredients
+    private string? _ingredients;
+    public string? Ingredients
     {
         get => _ingredients;
         set => this.RaiseAndSetIfChanged(ref _ingredients, value);
     }
-    private string _instructions;
-    public string Instructions
+    private string? _instructions;
+    public string? Instructions
     {
         get => _instructions;
         set => this.RaiseAndSetIfChanged(ref _instructions, value);
     }
-    private string _reviews;
-    public string Reviews
+    private string? _reviews;
+    public string? Reviews
     {
         get => _reviews;
         set => this.RaiseAndSetIfChanged(ref _reviews, value);
@@ -84,8 +84,8 @@ public class RecipeViewModel : ViewModelBase
         get => _servings;
         set => this.RaiseAndSetIfChanged(ref _servings, value);
     }
-    public string _tags;
-    public string Tags
+    public string? _tags;
+    public string? Tags
     {
         get => _tags;
         set => this.RaiseAndSetIfChanged(ref _tags, value);

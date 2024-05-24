@@ -2,13 +2,16 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using BusinessLayer;
+using DataLayer;
+using RecipeInfo;
 using MalfunctioningKitchen.ViewModels;
 
 namespace MalfunctioningKitchen.Views;
 
 public partial class AddRecipeView : UserControl
 {
-    private AddRecipeViewModel ViewModel {get;set;} = new(null,null);
+    private AddRecipeViewModel ViewModel {get;set;} = new AddRecipeViewModel(new Recipe(), "TypeParentPage");
     public AddRecipeView()
     {
         InitializeComponent();
@@ -21,6 +24,9 @@ public partial class AddRecipeView : UserControl
     private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var listSelectedItems = ((ListBox)sender).SelectedItems;
-        ViewModel.SelectedTags = listSelectedItems.Cast<string>().ToList();
+        if (listSelectedItems != null)
+        {
+            ViewModel.SelectedTags = listSelectedItems.Cast<string>().ToList();
+        }
     }
 }
