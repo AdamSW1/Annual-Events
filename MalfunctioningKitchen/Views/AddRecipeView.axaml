@@ -58,20 +58,6 @@
                               Watermark="Enter Step Details"/>
                     <Button Content="Add Step"
                             Command="{Binding AddStep}"/>
-                    <ItemsControl ItemsSource="{Binding PreparationList}"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center">
-                      <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                          <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Step}" Foreground="Yellow" />
-                            <Button Content="Remove Step"
-                                    Command="{Binding $parent[ItemsControl].((vm:AddRecipeViewModel)DataContext).RemoveStepCommand}"
-                                    CommandParameter="{Binding StepNumber, StringFormat=\{0\}}"/>
-                          </StackPanel>
-                        </DataTemplate>
-                      </ItemsControl.ItemTemplate>
-                    </ItemsControl>
                   </StackPanel>
                     <TextBlock Text="Servings: " Margin="0.5"/>
                     <NumericUpDown Value="{Binding Servings}"
@@ -82,32 +68,16 @@
                         <TextBlock Text="Ingredients: " Margin="0 5"/>
                         <TextBox Text="{Binding IngredientName}"
                                   Watermark="Enter Ingredients"/>
-                        <TextBox Text="{Binding Quantity}"
-                                        Watermark="Quantity: "/>
+                        <TextBlock Text="Quantity: " Margin="0 5"/>
+                        <NumericUpDown Value="{Binding Quantity}"
+                                        Minimum="0"
+                                        AllowSpin="True"/>
                         <TextBlock Text="Price: " Margin="0 5"/>
                         <NumericUpDown Value="{Binding Price}"
                                         Minimum="0"
                                         FormatString="0.00"
                                         AllowSpin="True"/>
                         <Button Content="Add Ingredient" Command="{Binding AddIngredient}"/>
-                    <ItemsControl ItemsSource="{Binding RecipeIngredientListObs}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
-                      <ItemsControl.ItemTemplate>
-                      <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Quantity}" Foreground="Yellow" />
-                        <TextBlock Text=" " Foreground="Yellow" />
-                        <TextBlock Text="{Binding Ingredient.Name}" Foreground="Yellow" />
-                        <TextBlock Text=" at " Foreground="Yellow" />
-                        <TextBlock Text="{Binding Ingredient.FormattedPrice, StringFormat='{}{0:C}'}" Foreground="Yellow" />
-                        <Button Content="Remove Ingredient"
-                            Command="{Binding $parent[ItemsControl].((vm:AddRecipeViewModel)DataContext).RemoveIngredientCommand}"
-                            CommandParameter="{Binding .}"/>
-                        </StackPanel>
-                      </DataTemplate>
-                      </ItemsControl.ItemTemplate>
-                    </ItemsControl>
                     </StackPanel> 
                   <ListBox ItemsSource="{Binding AllTags}"
                           SelectionMode="Multiple"
