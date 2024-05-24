@@ -14,8 +14,8 @@ namespace MalfunctioningKitchen.ViewModels;
 
 public class AddRecipeViewModel : ViewModelBase
 {
-    private string? _recipeName;
-    public string? RecipeName
+    private string _recipeName;
+    public string RecipeName
     {
         get => _recipeName;
         set 
