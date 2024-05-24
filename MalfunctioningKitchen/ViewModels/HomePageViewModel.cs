@@ -110,33 +110,26 @@ public class HomePageViewModel : ViewModelBase
         Reviews.Clear();
         List<Recipe> allRecipes = RecipeServices.Instance.GetRecipes();
         var userRecipes = AuthenticationManager.Instance.CurrentUser.Recipes;
-        List<Recipe> recommendedRecipes = new List<Recipe>();
-        List<RecipeTag> recommendedTags = new List<RecipeTag>();
+        List<RecipeTag> recommendedTags = new();
         // Gets recipes in all recipes whose tags match any of the tags in the current user's recipes
         // and werent written by the current user
-        allRecipes.ForEach(recipe =>
-        {
-            if( recipe.Owner == AuthenticationManager.Instance.CurrentUser){
-                return;
-            }
-            if(recipe.Tags.Any(tag => allRecipes.Any(userRecipe => userRecipe.Tags.Any(t => {
-                //if tag matches, add it to the list of recommended tags to show the user
-                // and return true
-                if(t.Equals(tag)){
-                    if(!recommendedTags.Contains(tag)){
-                        recommendedTags.Add(t);
-                    }
-                    return true;
-                }
-                return false;
-            }
-            )))){
-                recommendedRecipes.Add(recipe);
-            }        
+        List<RecipeTag> userTags = userRecipes.SelectMany(recipe => recipe.Tags).Distinct().ToList();
+
+        List<Recipe>? recommendedRecipes = Search.SearchRecipesByTags(
+            userTags,
+            allRecipes.Where(recipe => 
+                recipe.Owner != AuthenticationManager.Instance.CurrentUser)
+            .ToList());
+        
+        recommendedRecipes ??= new();
+
+        recommendedRecipes.ForEach(recipe =>{
+            recommendedTags = recipe.Tags.Intersect(userTags).ToList();
         });
+
         if(recommendedRecipes.Count != 0){
             PageMessage ="Your recommended recipes based on tags:\n";
-            PageMessage += string.Join(",", recommendedTags);
+            PageMessage += string.Join(", ", recommendedTags);
         }
         else{
             PageMessage = "No Recipes To Recommend";
