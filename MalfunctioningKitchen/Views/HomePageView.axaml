@@ -1,151 +1,171 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             xmlns:vm="using:MalfunctioningKitchen.ViewModels"
-             x:DataType="vm:HomePageViewModel"
-             x:Class="MalfunctioningKitchen.Views.HomePageView">
-  <DockPanel>
-     <Grid DockPanel.Dock="Top"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Center"
-                Background="#962D2D"
-                Margin="0 0 0 0"
-                RowDefinitions="Auto">
-                <TextBlock
-                Text="MALFUNCTIONING KITCHEN"
-                Margin="10 0 0 0"
-                TextAlignment="Center"
+﻿<UserControl
+    x:Class="MalfunctioningKitchen.Views.HomePageView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:MalfunctioningKitchen.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:HomePageViewModel"
+    mc:Ignorable="d">
+    <DockPanel>
+        <Grid
+            Margin="0,0,0,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            Background="#962D2D"
+            DockPanel.Dock="Top"
+            RowDefinitions="Auto">
+            <TextBlock
+                Margin="10,0,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 FontWeight="DemiBold"
-                LetterSpacing="1">
-                </TextBlock>
-                <Button Content="Search" 
-                  Command="{Binding NavigateToSearchRecipeCommand}" 
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center"/>
-                <Button 
-                  Content="Profile" 
-                  Command="{Binding NavigateToUpdateProfileCommand}" 
-                  HorizontalAlignment="Right"
-                  VerticalAlignment="Center"
-                  Margin="0 0 10 0"/>
+                LetterSpacing="1"
+                Text="MALFUNCTIONING KITCHEN"
+                TextAlignment="Center" />
+            <Button
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Command="{Binding NavigateToSearchRecipeCommand}"
+                Content="Search" />
+            <Button
+                Margin="0,0,10,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Command="{Binding NavigateToUpdateProfileCommand}"
+                Content="Profile" />
 
-    </Grid>
-    <SplitView IsPaneOpen="True"
-                OpenPaneLength="200"
-                DisplayMode="CompactInline"
-                PaneBackground="#962D2D">
-      <SplitView.Pane>
-        <DockPanel LastChildFill="true">
-          <Button DockPanel.Dock="Bottom"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Margin="0,20"
-                  Content="Logout"
-                  Command="{Binding Logout}"/>
-          <Button DockPanel.Dock="Bottom"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Bottom"
-                  Content="Create New Recipe"
-                  Command="{Binding NavigateToAddRecipeCommand}"/>
-          <Button DockPanel.Dock="Top"
-                  VerticalAlignment="Center"
-                  HorizontalAlignment="Center"
-                  Margin="0,200,0,50"
-                  Content="Recommended Recipes"
-                  Command="{Binding ViewRecommendedRecipes}"/>
-          <Button DockPanel.Dock="Top"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Top"
-                  Margin="0,0,0,20"
-                  Content="Your Recipes"
-                  Command="{Binding ViewOwnRecipes}"/>
-          <Button DockPanel.Dock="Top"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Top"
-                  Margin="0,0,0,20"
-                  Content="Favourite Recipes"
-                  Command="{Binding ViewFavouriteRecipes}"/>
-          <Button DockPanel.Dock="Top"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Top"
-                  Content="Your Reviews"
-                  Command="{Binding ViewYourReviews}"/>
-        </DockPanel>
-      </SplitView.Pane>
-    </SplitView>
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-      <StackPanel VerticalAlignment="Center">
-        <TextBlock
-                  HorizontalAlignment="Center"
-                  LetterSpacing="1"
-                  FontSize="20"
-                  FontWeight="DemiBold"
-                  Margin="0,0,0,20"
-                  Text="{Binding PageMessage}"/>
-        <ItemsControl ItemsSource="{Binding Recipes}"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Center">
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <Button Width="200"
-                      Margin="0 10"
-                      Command="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).GetRecipe}" CommandParameter="{Binding .}">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                  <TextBlock Text="{Binding Name}"/>
-                  <TextBlock>
-                    <LineBreak />
-                    <Run Text="By: "/>
-                    <Run Text="{Binding Owner.Username}" />
-                  </TextBlock>
-                  <TextBlock>
-                    <LineBreak />
-                    <Run Text="Score: "/>
-                    <Run Text="{Binding AverageScore}" />
-                  </TextBlock>
-                  </StackPanel>
-                </Button>
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-      <ItemsControl ItemsSource="{Binding Reviews}"
+        </Grid>
+        <SplitView
+            DisplayMode="CompactInline"
+            IsPaneOpen="True"
+            OpenPaneLength="200"
+            PaneBackground="#962D2D">
+            <SplitView.Pane>
+                <DockPanel LastChildFill="true">
+                    <Button
+                        Margin="0,20"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding Logout}"
+                        Content="Logout"
+                        DockPanel.Dock="Bottom" />
+                    <Button
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding NavigateToAddRecipeCommand}"
+                        Content="Create New Recipe"
+                        DockPanel.Dock="Bottom" />
+                    <Button
+                        Margin="0,200,0,50"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding ViewRecommendedRecipes}"
+                        Content="Recommended Recipes"
+                        DockPanel.Dock="Top" />
+                    <Button
+                        Margin="0,0,0,20"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Command="{Binding ViewOwnRecipes}"
+                        Content="Your Recipes"
+                        DockPanel.Dock="Top" />
+                    <Button
+                        Margin="0,0,0,20"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Command="{Binding ViewFavouriteRecipes}"
+                        Content="Favourite Recipes"
+                        DockPanel.Dock="Top" />
+                    <Button
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Command="{Binding ViewYourReviews}"
+                        Content="Your Reviews"
+                        DockPanel.Dock="Top" />
+                </DockPanel>
+            </SplitView.Pane>
+        </SplitView>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock
+                    Margin="0,0,0,20"
+                    HorizontalAlignment="Center"
+                    FontSize="20"
+                    FontWeight="DemiBold"
+                    LetterSpacing="1"
+                    Text="{Binding PageMessage}" />
+                <ItemsControl
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    IsVisible="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).ViewingReviews}">
-        <ItemsControl.ItemTemplate>
-          <DataTemplate>
-          <StackPanel>
-            <Button Width="200"
-                      Margin="0 10"
-                      Command="{Binding}">
-                  <StackPanel Orientation="Vertical">
-                  <TextBlock Text="{Binding ReviewText}"/>
-                  <TextBlock>
-                    <LineBreak />
-                    <Run Text="By: "/>
-                    <Run Text="{Binding ReviewerUsername}" />
-                  </TextBlock>
-                  <TextBlock>
-                    <LineBreak />
-                    <Run Text="Score: "/>
-                    <Run Text="{Binding Score}" />
-                  </TextBlock>
-                  </StackPanel>
-            </Button>
-            <Button Width="200" 
-                    Margin= "0 10" 
-                    Command="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).GetReview}"
-                    CommandParameter="{Binding .}">
-            <TextBlock Text="Delete Review"/>
-            </Button>
-          </StackPanel>
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ItemsControl>
-    </StackPanel>
-    </ScrollViewer>
-  </DockPanel>
+                    ItemsSource="{Binding Recipes}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button
+                                Width="200"
+                                Margin="0,10"
+                                Command="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).GetRecipe}"
+                                CommandParameter="{Binding .}">
+                                <StackPanel
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock>
+                                        <LineBreak />
+                                        <Run Text="By: " />
+                                        <Run Text="{Binding Owner.Username}" />
+                                    </TextBlock>
+                                    <TextBlock>
+                                        <LineBreak />
+                                        <Run Text="Score: " />
+                                        <Run Text="{Binding AverageScore}" />
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    IsVisible="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).ViewingReviews}"
+                    ItemsSource="{Binding Reviews}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Button
+                                    Width="200"
+                                    Margin="0,10"
+                                    Command="{Binding}">
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding ReviewText}" />
+                                        <TextBlock>
+                                            <LineBreak />
+                                            <Run Text="By: " />
+                                            <Run Text="{Binding ReviewerUsername}" />
+                                        </TextBlock>
+                                        <TextBlock>
+                                            <LineBreak />
+                                            <Run Text="Score: " />
+                                            <Run Text="{Binding Score}" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <Button
+                                    Width="200"
+                                    Margin="0,10"
+                                    Command="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).GetReview}"
+                                    CommandParameter="{Binding .}">
+                                    <TextBlock Text="Delete Review" />
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
 </UserControl>

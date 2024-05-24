@@ -1,78 +1,132 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:rxvm="using:ReactiveUI"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:vm="using:MalfunctioningKitchen.ViewModels"
-             x:Class="MalfunctioningKitchen.Views.SearchRecipeView"
-             x:DataType="vm:SearchRecipeViewModel">
+﻿<UserControl
+    x:Class="MalfunctioningKitchen.Views.SearchRecipeView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:rxvm="using:ReactiveUI"
+    xmlns:vm="using:MalfunctioningKitchen.ViewModels"
+    x:DataType="vm:SearchRecipeViewModel">
     <UserControl.Resources>
-    <vm:StringToListConverter x:Key="StringToListConverter"/>
-</UserControl.Resources>
+        <vm:StringToListConverter x:Key="StringToListConverter" />
+    </UserControl.Resources>
 
-    <!-- Dark Red Background -->
+    <!--  Dark Red Background  -->
     <Grid Background="#8B0000">
-        <!-- Light red background-->
-        <Border Background="#88ffffff" CornerRadius="10" Padding="20" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <!--  Light red background  -->
+        <Border
+            Margin="20"
+            Padding="20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="#88ffffff"
+            CornerRadius="10">
             <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                <StackPanel HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Spacing="25">
-                    <TextBlock Classes="heading" Text="Search Recipes" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
-                    
-                    <!-- checkbox for favorite -->
-                    <CheckBox 
-                            HorizontalAlignment="Stretch"
-                            Width="300"
-                            Content="Favourited" 
-                            IsChecked="{Binding Favorite}"
-                            IsThreeState="False"/>
-                            
-                    <!-- Text input for keyword -->
-                    <TextBox Width="300" Watermark="Enter recipe name..." Text="{Binding SearchKeyword, Mode=TwoWay}" />
-                    
-                    <!-- Text input for tags -->
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="25">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        Classes="heading"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        Text="Search Recipes" />
+
+                    <!--  checkbox for favorite  -->
+                    <CheckBox
+                        Width="300"
+                        HorizontalAlignment="Stretch"
+                        Content="Favourited"
+                        IsChecked="{Binding Favorite}"
+                        IsThreeState="False" />
+
+                    <!--  Text input for keyword  -->
+                    <TextBox
+                        Width="300"
+                        Text="{Binding SearchKeyword, Mode=TwoWay}"
+                        Watermark="Enter recipe name..." />
+
+                    <!--  Text input for tags  -->
                     <!-- <TextBox Width="300" Watermark="Enter recipe tags (comma separated)..." Text="{Binding TagCriteria, Mode=TwoWay, Converter={StaticResource StringToListConverter}}" /> -->
 
-                    <!-- Text input for time constraint -->
-                    <TextBox Width="300" Watermark="Enter time constraint..." Text="{Binding TimeConstraint, Mode=TwoWay}" />
-                    
-                    <!-- Text input for rating -->
-                    <TextBox Width="300" Watermark="Enter rating..." Text="{Binding Rating, Mode=TwoWay}" />
-                    
-                    <!-- Text input for servings -->
-                    <TextBox Width="300" Watermark="Enter servings..." Text="{Binding Servings, Mode=TwoWay}" />
-                    
-                    
-                    <!-- Text input for owner -->
-                    <TextBox Width="300" Watermark="Enter owner username..." Text="{Binding OwnerUsername, Mode=TwoWay}" />
-                    
-                    <!-- Text input for ingredient -->
-                    <TextBox Width="300" Watermark="Enter ingredient..." Text="{Binding Ingredient, Mode=TwoWay}" />
-                    
-                    <ListBox ItemsSource="{Binding TagCriteria}"
-                            SelectionMode="Multiple"
-                            SelectedItems="{Binding SelectedTags}"
-                            SelectionChanged="OnSelectionChanged">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}">
-                                        <TextBlock Text="{Binding .}"/>
-                                    </CheckBox>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                    </ListBox>
+                    <!--  Text input for time constraint  -->
+                    <TextBox
+                        Width="300"
+                        Text="{Binding TimeConstraint, Mode=TwoWay}"
+                        Watermark="Enter time constraint..." />
 
-                    <Button Content="Search" Command="{Binding SearchCommand}" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-                    
-                    <TextBlock Text="{Binding NotificationMessage}" Foreground="Red" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                    <!--  Text input for rating  -->
+                    <TextBox
+                        Width="300"
+                        Text="{Binding Rating, Mode=TwoWay}"
+                        Watermark="Enter rating..." />
 
-                    <ListBox ItemsSource="{Binding SearchedRecipes}" Width="400" Height="200">
+                    <!--  Text input for servings  -->
+                    <TextBox
+                        Width="300"
+                        Text="{Binding Servings, Mode=TwoWay}"
+                        Watermark="Enter servings..." />
+
+
+                    <!--  Text input for owner  -->
+                    <TextBox
+                        Width="300"
+                        Text="{Binding OwnerUsername, Mode=TwoWay}"
+                        Watermark="Enter owner username..." />
+
+                    <!--  Text input for ingredient  -->
+                    <TextBox
+                        Width="300"
+                        Text="{Binding Ingredient, Mode=TwoWay}"
+                        Watermark="Enter ingredient..." />
+
+                    <ListBox
+                        ItemsSource="{Binding TagCriteria}"
+                        SelectedItems="{Binding SelectedTags}"
+                        SelectionChanged="OnSelectionChanged"
+                        SelectionMode="Multiple">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Button HorizontalContentAlignment="Stretch" Command="{Binding $parent[ItemsControl].((vm:SearchRecipeViewModel)DataContext).GetRecipe}" CommandParameter="{Binding .}">
-                                    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10" Margin="5">
+                                <CheckBox IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}">
+                                    <TextBlock Text="{Binding .}" />
+                                </CheckBox>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Button
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        Command="{Binding SearchCommand}"
+                        Content="Search" />
+
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        Foreground="Red"
+                        Text="{Binding NotificationMessage}" />
+
+                    <ListBox
+                        Width="400"
+                        Height="200"
+                        ItemsSource="{Binding SearchedRecipes}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Button
+                                    HorizontalContentAlignment="Stretch"
+                                    Command="{Binding $parent[ItemsControl].((vm:SearchRecipeViewModel)DataContext).GetRecipe}"
+                                    CommandParameter="{Binding .}">
+                                    <Border
+                                        Margin="5"
+                                        Padding="10"
+                                        BorderBrush="Gray"
+                                        BorderThickness="1"
+                                        CornerRadius="5">
                                         <StackPanel>
-                                            <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16"/>
-                                            <TextBlock Text="{Binding Description}" TextWrapping="Wrap"/>
+                                            <TextBlock
+                                                FontSize="16"
+                                                FontWeight="Bold"
+                                                Text="{Binding Name}" />
+                                            <TextBlock Text="{Binding Description}" TextWrapping="Wrap" />
                                         </StackPanel>
                                     </Border>
                                 </Button>
@@ -80,7 +134,14 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <Button Content="Return" Command="{Binding Return}" HorizontalAlignment="Center" Width="150" Background="#FF6347" Foreground="White" Margin="0,10,0,0"/>
+                    <Button
+                        Width="150"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        Background="#FF6347"
+                        Command="{Binding Return}"
+                        Content="Return"
+                        Foreground="White" />
                 </StackPanel>
             </ScrollViewer>
         </Border>
