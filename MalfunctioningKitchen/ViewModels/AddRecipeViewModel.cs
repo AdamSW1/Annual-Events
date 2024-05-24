@@ -131,6 +131,13 @@ public class AddRecipeViewModel : ViewModelBase
         get => _recipeIngredientList;
         set => this.RaiseAndSetIfChanged(ref _recipeIngredientList, value);
     }
+
+    private ObservableCollection<RecipeIngredient> _recipeIngredientListObs = new();
+    public ObservableCollection<RecipeIngredient> RecipeIngredientListObs
+    {
+        get => _recipeIngredientListObs;
+        set => this.RaiseAndSetIfChanged(ref _recipeIngredientListObs, value);
+    }
     private List<string> _allTags;
     public List<string> AllTags
     {
@@ -166,6 +173,7 @@ public class AddRecipeViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> NavigateToHomePageCommand { get; }
     public ReactiveCommand<Unit, Unit> CreateRecipe { get; }
     public ICommand RemoveStepCommand { get; }
+    public ICommand RemoveIngredientCommand { get; }
 
     public AddRecipeViewModel(Recipe recipe, string typeParentPage)
     {
@@ -189,6 +197,10 @@ public class AddRecipeViewModel : ViewModelBase
         AddIngredient = ReactiveCommand.Create(() =>
         {
             AddIngredientToList(_ingredientName, (int)_quantity, _price);
+        });
+        RemoveIngredientCommand = ReactiveCommand.Create((Object obj) =>
+        {
+            RemoveIngredient(obj);
         });
         //Add all tags to the list of tags
         _allTags = new List<string>();
@@ -255,6 +267,8 @@ public class AddRecipeViewModel : ViewModelBase
                 PreparationList.Add(new Preparation(stepNum,"Step " + (i + 1) + ":" + _preparations[i].Step));
                 stepNum++;  
             }
+            _recipeIngredientListObs = new ObservableCollection<RecipeIngredient>();
+            _recipeIngredientList.ForEach(ingredient => RecipeIngredientListObs.Add(ingredient));
         }
     }
 
@@ -315,6 +329,24 @@ public class AddRecipeViewModel : ViewModelBase
         }
     }
 
+    private void RemoveIngredient(Object obj)
+    {
+        var idx = RecipeIngredientListObs.IndexOf((RecipeIngredient)obj);
+        if (idx == -1)
+        {
+            return;
+        }
+        if (_recipeIngredientList.Count > 0)
+        {
+            _recipeIngredientList.RemoveAt(idx);
+            RecipeIngredientListObs.Clear();
+            for (int i = 0; i < RecipeIngredientList.Count; i++)
+            {
+                RecipeIngredientListObs.Add(RecipeIngredientList[i]);
+            }
+        }
+    }
+
     public void AddIngredientToList(string name,int quantity, double price)
     {
         if (_ingredientList == null)
@@ -327,5 +359,10 @@ public class AddRecipeViewModel : ViewModelBase
         }
         _ingredientList.Add(new Ingredient(_ingredientName, _price));
         _recipeIngredientList.Add(new RecipeIngredient { Ingredient = new Ingredient(name, price), Quantity = quantity.ToString()});
+        RecipeIngredientListObs.Clear();
+        for (int i = 0; i < RecipeIngredientList.Count; i++)
+        {
+            RecipeIngredientListObs.Add(RecipeIngredientList[i]);
+        }
     }
 }
