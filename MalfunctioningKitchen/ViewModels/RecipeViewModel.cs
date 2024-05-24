@@ -124,7 +124,7 @@ public class RecipeViewModel : ViewModelBase
         RecipeName = Recipe.Name;
         Stars = GetStars();
         ReviewCount = Recipe.Reviews.Count;
-        RecipeOwner = Recipe.Owner.Username;
+        RecipeOwner = Recipe.Owner.Username!;
         Description = Recipe.Description;
         Ingredients = GetIngredients();
         Instructions = GetPreparation();

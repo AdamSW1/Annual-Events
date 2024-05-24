@@ -22,7 +22,7 @@ namespace MalfunctioningKitchen.Views
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listSelectedItems = ((ListBox)sender).SelectedItems;
-            ViewModel.SelectedTags = listSelectedItems.Cast<String>().ToList();
+            ViewModel.SelectedTags = listSelectedItems!.Cast<String>().ToList();
         }
 
     }

@@ -8,7 +8,7 @@ namespace MalfunctioningKitchen.Views;
 
 public partial class AddRecipeView : UserControl
 {
-    private AddRecipeViewModel ViewModel {get;set;} = new(null,null);
+    private AddRecipeViewModel ViewModel {get;set;} = new(null!,null!);
     public AddRecipeView()
     {
         InitializeComponent();
@@ -22,6 +22,6 @@ public partial class AddRecipeView : UserControl
     private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var listSelectedItems = ((ListBox)sender).SelectedItems;
-        ViewModel.SelectedTags = listSelectedItems.Cast<string>().ToList();
+        ViewModel.SelectedTags = listSelectedItems!.Cast<string>().ToList();
     }
 }

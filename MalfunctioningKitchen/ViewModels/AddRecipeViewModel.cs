@@ -144,8 +144,8 @@ public class AddRecipeViewModel : ViewModelBase
         get => _allTags;
         set => this.RaiseAndSetIfChanged(ref _allTags, value);
     }
-    private IList<string> _selectedTags = new List<string>();
-    public IList<string> SelectedTags { 
+    private IList<string>? _selectedTags = new List<string>();
+    public IList<string>? SelectedTags { 
         get => _selectedTags; 
         set => this.RaiseAndSetIfChanged(ref _selectedTags, value); 
         }
@@ -174,7 +174,7 @@ public class AddRecipeViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> CreateRecipe { get; }
     public ICommand RemoveStepCommand { get; }
     public ICommand RemoveIngredientCommand { get; }
-
+    
     public AddRecipeViewModel(Recipe recipe, string typeParentPage)
     {
         //Logout command
@@ -187,7 +187,7 @@ public class AddRecipeViewModel : ViewModelBase
         //Add step command to add preparation steps to the recipe
         AddStep = ReactiveCommand.Create(() =>
         {
-            AddStepToInstructions(_instruction);
+            AddStepToInstructions(_instruction!);
         });
         RemoveStepCommand = ReactiveCommand.Create((string idex) =>
         {
@@ -196,7 +196,7 @@ public class AddRecipeViewModel : ViewModelBase
         //Add ingredient command to add ingredients to the recipe
         AddIngredient = ReactiveCommand.Create(() =>
         {
-            AddIngredientToList(_ingredientName, _quantity, _price);
+            AddIngredientToList(_ingredientName!, _quantity!, _price);
         });
         RemoveIngredientCommand = ReactiveCommand.Create((Object obj) =>
         {
@@ -217,7 +217,7 @@ public class AddRecipeViewModel : ViewModelBase
             {
                 if (typeParentPage.Equals("Edit"))
                 { 
-                    List<RecipeTag> tags = SelectedTags.Select(tag =>
+                    List<RecipeTag>? tags = SelectedTags!.Select(tag =>
                     {
                         RecipeTag? existingTag = RecipeServices.Instance.GetRecipeTag(tag);
                         if (existingTag != null)
@@ -239,10 +239,11 @@ public class AddRecipeViewModel : ViewModelBase
                     recipe.Tags = tags;
                     recipe.Reviews = _reviews;
                     RecipeServices.Instance.DbContext.SaveChanges();
+                    NavigateToHomePageCommand.Execute().Subscribe();
                 }
                 else
                 {
-                    List<RecipeTag> tags = SelectedTags.Select(tag =>
+                    List<RecipeTag> tags = SelectedTags!.Select(tag =>
                     {
                         RecipeTag? existingTag = RecipeServices.Instance.GetRecipeTag(tag);
                         if (existingTag != null)
@@ -254,8 +255,12 @@ public class AddRecipeViewModel : ViewModelBase
                             return new RecipeTag(tag);
                         }
                     }).ToList();
-                    Recipe recipe = new Recipe(_recipeName, _description, _cookingTime, _preparations, (int)_servings, _recipeIngredientList, 0, AuthenticationManager.Instance.CurrentUser, tags, _reviews);
+                    //If any fields are null, it will catch the exception and not let you proceed
+                    Recipe recipe = new Recipe(_recipeName!, _description!, _cookingTime, _preparations, (int)_servings, _recipeIngredientList, 0, AuthenticationManager.Instance.CurrentUser, tags, _reviews);
                     RecipeManager.AddRecipe(recipe);
+                    NavigateToHomePageCommand.Execute().Subscribe();
+                    
+
                 }
                 ErrorMessage = "";
             }
@@ -267,9 +272,9 @@ public class AddRecipeViewModel : ViewModelBase
             {
                 ErrorMessage = exc.Message;
             }
-            catch (Exception exc)
+            catch (Exception)
             {
-                ErrorMessage = "An error occurred while creating the recipe.";
+                ErrorMessage = "Could not create recipe if any fields are empty!";
             }
         }, areFilledIn);
         if (typeParentPage != null && typeParentPage.Equals("Edit"))
@@ -281,7 +286,7 @@ public class AddRecipeViewModel : ViewModelBase
             _servings = recipe.Servings;
             _recipeIngredientList = recipe.RecipeIngredients;
             _reviews = recipe.Reviews;
-            _selectedTags = recipe.Tags.Select(tag => tag.Tag.ToString()).ToList();
+            _selectedTags = recipe.Tags.Select(tag => tag.Tag!.ToString()).ToList();
             _title = "Edit Recipe";
             _preparationList = new ObservableCollection<Preparation>();
             for (int i = 0; i < _preparations.Count; i++)
@@ -320,7 +325,7 @@ public class AddRecipeViewModel : ViewModelBase
         }
         _preparations.Add(new Preparation(stepNum, instruction));
         PreparationList.Clear();
-        for (int i = 0; i < Preparations.Count; i++)
+        for (int i = 0; i < Preparations!.Count; i++)
         {
             var step = Preparations[i];
             if (step.Step.Contains("Step"))
@@ -334,11 +339,11 @@ public class AddRecipeViewModel : ViewModelBase
     private void RemoveStep(string index)
     {
         var idx = Int32.Parse(index);
-        if (_preparations.Count > 0)
+        if (_preparations!.Count > 0) //You are not gonna see the button if there are no preparation
         {
             _preparations.RemoveAt(idx);
             PreparationList.Clear();
-            for (int i = 0; i < Preparations.Count; i++)
+            for (int i = 0; i < Preparations!.Count; i++)
             {
                 var step = Preparations[i];
                 if (step.Step.Contains("Step"))
@@ -358,11 +363,11 @@ public class AddRecipeViewModel : ViewModelBase
         {
             return;
         }
-        if (_recipeIngredientList.Count > 0)
+        if (_recipeIngredientList!.Count > 0) //You are not gonna see the button if there are no ingredients
         {
             _recipeIngredientList.RemoveAt(idx);
             RecipeIngredientListObs.Clear();
-            for (int i = 0; i < RecipeIngredientList.Count; i++)
+            for (int i = 0; i < RecipeIngredientList!.Count; i++)
             {
                 RecipeIngredientListObs.Add(RecipeIngredientList[i]);
             }
@@ -371,6 +376,14 @@ public class AddRecipeViewModel : ViewModelBase
 
     public void AddIngredientToList(string name,string quantity, double price)
     {
+        if (string.IsNullOrEmpty(name))
+        {
+            throw new ArgumentException("Ingredient name cannot be empty.");
+        }
+        else if (string.IsNullOrEmpty(quantity))
+        {
+            throw new ArgumentException("Quantity cannot be empty.");
+        }
         if (_ingredientList == null)
         {
             _ingredientList = new List<Ingredient>();
@@ -382,7 +395,7 @@ public class AddRecipeViewModel : ViewModelBase
         _ingredientList.Add(new Ingredient(_ingredientName, _price));
         _recipeIngredientList.Add(new RecipeIngredient { Ingredient = new Ingredient(name, price), Quantity = quantity});
         RecipeIngredientListObs.Clear();
-        for (int i = 0; i < RecipeIngredientList.Count; i++)
+        for (int i = 0; i < RecipeIngredientList!.Count; i++)
         {
             RecipeIngredientListObs.Add(RecipeIngredientList[i]);
         }
