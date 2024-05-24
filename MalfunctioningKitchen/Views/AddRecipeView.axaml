@@ -1,135 +1,145 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             xmlns:vm="using:MalfunctioningKitchen.ViewModels"
-             x:DataType="vm:AddRecipeViewModel"
-             x:Class="MalfunctioningKitchen.Views.AddRecipeView">
-  <DockPanel>
-          <StackPanel DockPanel.Dock="Top"
-                  Orientation="Horizontal"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch"
-                  Spacing="200"
-                  Background="#962D2D"
-                  Margin="0 0 0 0">
-                  <TextBlock
-                  Text="MALFUNCTIONING KITCHEN"
-                  Margin="5 0 0 0"
-                  TextAlignment="Center">
-                  </TextBlock>
-                  <Button Content="Back" 
-                    Command="{Binding NavigateToHomePageCommand}" 
-                    Margin="250 0 250 0"/>
-                  <Button Content="Logout"
-                  Command="{Binding Logout}"
-                  Margin="200,0,200,0"/>
-              </StackPanel>
-          <ScrollViewer>
+﻿<UserControl
+    x:Class="MalfunctioningKitchen.Views.AddRecipeView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:MalfunctioningKitchen.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:AddRecipeViewModel"
+    mc:Ignorable="d">
+    <DockPanel>
+        <StackPanel
+            Margin="0,0,0,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Background="#962D2D"
+            DockPanel.Dock="Top"
+            Orientation="Horizontal"
+            Spacing="200">
+            <TextBlock
+                Margin="5,0,0,0"
+                Text="MALFUNCTIONING KITCHEN"
+                TextAlignment="Center" />
+            <Button
+                Margin="250,0,250,0"
+                Command="{Binding NavigateToHomePageCommand}"
+                Content="Back" />
+            <Button
+                Margin="200,0,200,0"
+                Command="{Binding Logout}"
+                Content="Logout" />
+        </StackPanel>
+        <ScrollViewer>
             <StackPanel>
-                  <TextBlock DockPanel.Dock="Bottom"
-                      Text="{Binding ErrorMessage}"/>
-                  <StackPanel HorizontalAlignment="Center"
-                      VerticalAlignment="Center"
-                      Background="#9e5252"
-                      Margin="0,0,0,0">
-                        <TextBlock  Text="{Binding Title}" 
-                                    FontSize="30" 
-                                    TextAlignment="Center" 
-                                    Margin="0,0,0,5" 
-                                    FontWeight="Bold"/>
-                        <TextBlock Text="Recipe Name: " Margin="0 5"/>
-                        <TextBox Text="{Binding RecipeName}"
-                                Watermark="Enter Recipe Name"/>
-                        <TextBlock Text="Description: " Margin="0 5"/>
-                  <TextBox  Text="{Binding Description}"
-                            Watermark="Enter Description"
-                            TextWrapping="Wrap" 
-                            AcceptsReturn="True"/>
-                  <TextBlock Text="Cooking Time (in minutes): " Margin="0 5"/>
-                  <NumericUpDown Value="{Binding CookingTime}"
-                               Minimum="0"
-                               FormatString="0.00"
-                               AllowSpin="True"/>
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Preperation Steps: " Margin="0 5"/>
-                    <TextBox Text="{Binding Instruction}"
-                              Watermark="Enter Step Details"/>
-                    <Button Content="Add Step"
-                            Command="{Binding AddStep}"/>
-                    <ItemsControl ItemsSource="{Binding PreparationList}"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center">
-                      <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                          <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Step}" Foreground="Yellow" />
-                            <Button Content="Remove Step"
-                                    Command="{Binding $parent[ItemsControl].((vm:AddRecipeViewModel)DataContext).RemoveStepCommand}"
-                                    CommandParameter="{Binding StepNumber, StringFormat=\{0\}}"/>
-                          </StackPanel>
-                        </DataTemplate>
-                      </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                  </StackPanel>
-                    <TextBlock Text="Servings: " Margin="0.5"/>
-                    <NumericUpDown Value="{Binding Servings}"
-                                  Minimum="0"
-                                  FormatString="0.00"
-                                  AllowSpin="True"/>
-                  <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Ingredients: " Margin="0 5"/>
-                        <TextBox Text="{Binding IngredientName}"
-                                  Watermark="Enter Ingredients"/>
-                        <TextBox Text="{Binding Quantity}"
-                                        Watermark="Quantity: "/>
-                        <TextBlock Text="Price: " Margin="0 5"/>
-                        <NumericUpDown Value="{Binding Price}"
-                                        Minimum="0"
-                                        FormatString="0.00"
-                                        AllowSpin="True"/>
-                        <Button Content="Add Ingredient" Command="{Binding AddIngredient}"/>
-                    <ItemsControl ItemsSource="{Binding RecipeIngredientListObs}"
+                <TextBlock DockPanel.Dock="Bottom" Text="{Binding ErrorMessage}" />
+                <StackPanel
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="#9e5252">
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        FontSize="30"
+                        FontWeight="Bold"
+                        Text="{Binding Title}"
+                        TextAlignment="Center" />
+                    <TextBlock Margin="0,5" Text="Recipe Name: " />
+                    <TextBox Text="{Binding RecipeName}" Watermark="Enter Recipe Name" />
+                    <TextBlock Margin="0,5" Text="Description: " />
+                    <TextBox
+                        AcceptsReturn="True"
+                        Text="{Binding Description}"
+                        TextWrapping="Wrap"
+                        Watermark="Enter Description" />
+                    <TextBlock Margin="0,5" Text="Cooking Time (in minutes): " />
+                    <NumericUpDown
+                        AllowSpin="True"
+                        FormatString="0.00"
+                        Minimum="0"
+                        Value="{Binding CookingTime}" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="0,5" Text="Preperation Steps: " />
+                        <TextBox Text="{Binding Instruction}" Watermark="Enter Step Details" />
+                        <Button Command="{Binding AddStep}" Content="Add Step" />
+                        <ItemsControl
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
-                      <ItemsControl.ItemTemplate>
-                      <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Quantity}" Foreground="Yellow" />
-                        <TextBlock Text=" " Foreground="Yellow" />
-                        <TextBlock Text="{Binding Ingredient.Name}" Foreground="Yellow" />
-                        <TextBlock Text=" at " Foreground="Yellow" />
-                        <TextBlock Text="{Binding Ingredient.FormattedPrice, StringFormat='{}{0:C}'}" Foreground="Yellow" />
-                        <Button Content="Remove Ingredient"
-                            Command="{Binding $parent[ItemsControl].((vm:AddRecipeViewModel)DataContext).RemoveIngredientCommand}"
-                            CommandParameter="{Binding .}"/>
-                        </StackPanel>
-                      </DataTemplate>
-                      </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    </StackPanel> 
-                  <ListBox ItemsSource="{Binding AllTags}"
-                          SelectionMode="Multiple"
-                          SelectedItems="{Binding SelectedTags}"
-                          SelectionChanged="OnSelectionChanged">
-                          <ListBox.ItemTemplate>
-                              <DataTemplate>
-                                  <CheckBox IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}">
-                                      <TextBlock Text="{Binding .}"/>
-                                  </CheckBox>
-                              </DataTemplate>
-                          </ListBox.ItemTemplate>
-                  </ListBox>
+                            VerticalAlignment="Center"
+                            ItemsSource="{Binding PreparationList}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Foreground="Yellow" Text="{Binding Step}" />
+                                        <Button
+                                            Command="{Binding $parent[ItemsControl].((vm:AddRecipeViewModel)DataContext).RemoveStepCommand}"
+                                            CommandParameter="{Binding StepNumber, StringFormat=\{0\}}"
+                                            Content="Remove Step" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                    <TextBlock Margin="0.5" Text="Servings: " />
+                    <NumericUpDown
+                        AllowSpin="True"
+                        FormatString="0.00"
+                        Minimum="0"
+                        Value="{Binding Servings}" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="0,5" Text="Ingredients: " />
+                        <TextBox Text="{Binding IngredientName}" Watermark="Enter Ingredients" />
+                        <TextBox Text="{Binding Quantity}" Watermark="Quantity: " />
+                        <TextBlock Margin="0,5" Text="Price: " />
+                        <NumericUpDown
+                            AllowSpin="True"
+                            FormatString="0.00"
+                            Minimum="0"
+                            Value="{Binding Price}" />
+                        <Button Command="{Binding AddIngredient}" Content="Add Ingredient" />
+                        <ItemsControl
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            ItemsSource="{Binding RecipeIngredientListObs}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Foreground="Yellow" Text="{Binding Quantity}" />
+                                        <TextBlock Foreground="Yellow" Text=" " />
+                                        <TextBlock Foreground="Yellow" Text="{Binding Ingredient.Name}" />
+                                        <TextBlock Foreground="Yellow" Text=" at " />
+                                        <TextBlock Foreground="Yellow" Text="{Binding Ingredient.FormattedPrice, StringFormat='{}{0:C}'}" />
+                                        <Button
+                                            Command="{Binding $parent[ItemsControl].((vm:AddRecipeViewModel)DataContext).RemoveIngredientCommand}"
+                                            CommandParameter="{Binding .}"
+                                            Content="Remove Ingredient" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                    <ListBox
+                        ItemsSource="{Binding AllTags}"
+                        SelectedItems="{Binding SelectedTags}"
+                        SelectionChanged="OnSelectionChanged"
+                        SelectionMode="Multiple">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}">
+                                    <TextBlock Text="{Binding .}" />
+                                </CheckBox>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </StackPanel>
-                <Button 
-                        Command="{Binding CreateRecipe}" 
-                        Content="Create Recipe" 
-                        Margin="0,10,0,10" 
-                        Foreground="LightGray"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
-                </StackPanel>
-            </ScrollViewer>
-  </DockPanel>
+                <Button
+                    Margin="0,10,0,10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Command="{Binding CreateRecipe}"
+                    Content="Create Recipe"
+                    Foreground="LightGray" />
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
 </UserControl>
