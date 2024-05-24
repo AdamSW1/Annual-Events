@@ -82,10 +82,8 @@
                         <TextBlock Text="Ingredients: " Margin="0 5"/>
                         <TextBox Text="{Binding IngredientName}"
                                   Watermark="Enter Ingredients"/>
-                        <TextBlock Text="Quantity: " Margin="0 5"/>
-                        <NumericUpDown Value="{Binding Quantity}"
-                                        Minimum="0"
-                                        AllowSpin="True"/>
+                        <TextBox Text="{Binding Quantity}"
+                                        Watermark="Quantity: "/>
                         <TextBlock Text="Price: " Margin="0 5"/>
                         <NumericUpDown Value="{Binding Price}"
                                         Minimum="0"
