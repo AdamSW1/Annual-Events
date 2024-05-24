@@ -11,11 +11,7 @@ namespace MalfunctioningKitchen.Views;
 
 public partial class AddRecipeView : UserControl
 {
-<<<<<<< HEAD
-    private AddRecipeViewModel ViewModel {get;set;} = new AddRecipeViewModel(new Recipe(), "TypeParentPage");
-=======
     private AddRecipeViewModel ViewModel {get;set;} = new(null!,null!);
->>>>>>> 3c56fc70222f3d41a7e8d61f175a8447cef80261
     public AddRecipeView()
     {
         InitializeComponent();

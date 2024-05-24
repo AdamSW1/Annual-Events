@@ -380,13 +380,10 @@ public class AddRecipeViewModel : ViewModelBase
         {
             throw new ArgumentException("Ingredient name cannot be empty.");
         }
-<<<<<<< HEAD
-=======
         else if (string.IsNullOrEmpty(quantity))
         {
             throw new ArgumentException("Quantity cannot be empty.");
         }
->>>>>>> 3c56fc70222f3d41a7e8d61f175a8447cef80261
         if (_ingredientList == null)
         {
             _ingredientList = new List<Ingredient>();
