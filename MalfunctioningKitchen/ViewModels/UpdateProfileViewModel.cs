@@ -61,7 +61,7 @@ namespace MalfunctioningKitchen.ViewModels
         }
         private static readonly Bitmap PLACEHOLDER =
             // This shows an example of loading an image from the assets directory.
-            new(AssetLoader.Open(new Uri("avares://MalfunctioningKitchen/Assets/Default_pfp.jpg")));
+            new(AssetLoader.Open(new Uri("avares://MalfunctioningKitchen/Assets/Default_pfp.jpeg")));
         private Bitmap _imageDisplayed = PLACEHOLDER;
         public Bitmap ImageDisplayed
         {

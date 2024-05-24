@@ -1,45 +1,92 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:vm="using:MalfunctioningKitchen.ViewModels"
-             x:Class="MalfunctioningKitchen.Views.UpdateProfileView"
-             x:DataType="vm:UpdateProfileViewModel">
+﻿<UserControl
+    x:Class="MalfunctioningKitchen.Views.UpdateProfileView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="using:MalfunctioningKitchen.ViewModels"
+    x:DataType="vm:UpdateProfileViewModel">
     <UserControl.Styles>
         <Style Selector="Button">
-            <Setter Property="Background" Value="Black"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Black" />
+            <Setter Property="Foreground" Value="White" />
         </Style>
     </UserControl.Styles>
     <ScrollViewer>
-    <Grid Background="#8B0000">
-        <StackPanel HorizontalAlignment="Center">
-            <Button Content="RETURN" Command="{Binding Return}" VerticalAlignment="Center" Margin="10"/>
-        </StackPanel>
-        <Border Background="#88ffffff" CornerRadius="10" Padding="20" Margin="20, 45, 30, 20" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Spacing="15">
-                <TextBlock Text="Your Profile/Update Profile" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20" Foreground="Black"/>
-                <!-- https://docs.avaloniaui.net/docs/guides/data-binding/how-to-bind-image-files -->
-                    <Image Source="{Binding ImageDisplayed}"
-                           Width="200"
-                           Height="200"/> 
-                    <Button Command="{Binding SelectImage}"
-                        CommandParameter="{Binding $parent[Window]}"
-                        Content="Select Image"
-                        x:CompileBindings="False"
-                        HorizontalAlignment="Center"/>
-                    <Button Command="{Binding ClearImage}"
-                        Content="ClearImage"
-                        x:CompileBindings="False"
-                        HorizontalAlignment="Center"/>
-                <TextBox Width="300" Watermark="Username" Text="{Binding Username}" />
-                <TextBox Width="300" Watermark="Password" Text="{Binding Password}" PasswordChar="*" />
-                <TextBox Width="300" Watermark="Description" Text="{Binding Description}" TextWrapping="Wrap" AcceptsReturn="True"/>
-                <TextBox Width="300" Watermark="Age" Text="{Binding Age}" />
-
-                <Button Content="Update Profile" Command="{Binding UpdateProfileCommand}" HorizontalAlignment="Center" Width="150"/>
-                <Button Content="DELETE" Command="{Binding DeleteUserCommand}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
-                <TextBlock Text="{Binding NotificationMessage}" Foreground="Red" HorizontalAlignment="Center"/>
+        <Grid Background="#8B0000">
+            <StackPanel HorizontalAlignment="Center">
+                <Button
+                    Margin="10"
+                    VerticalAlignment="Center"
+                    Command="{Binding Return}"
+                    Content="RETURN" />
             </StackPanel>
-        </Border>
-    </Grid>
+            <Border
+                Margin="20,45,30,20"
+                Padding="20"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="#88ffffff"
+                CornerRadius="10">
+                <StackPanel Spacing="15">
+                    <TextBlock
+                        Margin="0,0,0,20"
+                        HorizontalAlignment="Center"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        Foreground="Black"
+                        Text="Your Profile/Update Profile" />
+                    <!--  https://docs.avaloniaui.net/docs/guides/data-binding/how-to-bind-image-files  -->
+                    <Image
+                        Width="200"
+                        Height="200"
+                        Source="{Binding ImageDisplayed}" />
+                    <Button
+                        HorizontalAlignment="Center"
+                        x:CompileBindings="False"
+                        Command="{Binding SelectImage}"
+                        CommandParameter="{Binding $parent[Window]}"
+                        Content="Select Image" />
+                    <Button
+                        HorizontalAlignment="Center"
+                        x:CompileBindings="False"
+                        Command="{Binding ClearImage}"
+                        Content="ClearImage" />
+                    <TextBox
+                        Width="300"
+                        Text="{Binding Username}"
+                        Watermark="Username" />
+                    <TextBox
+                        Width="300"
+                        PasswordChar="*"
+                        Text="{Binding Password}"
+                        Watermark="Password" />
+                    <TextBox
+                        Width="300"
+                        AcceptsReturn="True"
+                        Text="{Binding Description}"
+                        TextWrapping="Wrap"
+                        Watermark="Description" />
+                    <TextBox
+                        Width="300"
+                        Text="{Binding Age}"
+                        Watermark="Age" />
+
+                    <Button
+                        Width="150"
+                        HorizontalAlignment="Center"
+                        Command="{Binding UpdateProfileCommand}"
+                        Content="Update Profile" />
+                    <Button
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding DeleteUserCommand}"
+                        Content="DELETE" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        Foreground="Red"
+                        Text="{Binding NotificationMessage}" />
+                </StackPanel>
+            </Border>
+        </Grid>
     </ScrollViewer>
 </UserControl>

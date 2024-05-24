@@ -1,41 +1,51 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:MalfunctioningKitchen.ViewModels"
-             x:DataType="vm:WelcomeViewModel"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="MalfunctioningKitchen.Views.WelcomeView">
-  <DockPanel>
-    <DataGrid DockPanel.Dock="Left"
-              ItemsSource="{Binding Users}"
-              IsReadOnly="True"
-              GridLinesVisibility="All"
-              CanUserReorderColumns="True"
-              CanUserResizeColumns="True"
-              BorderThickness="1"
-              BorderBrush="Gray">
-      <DataGrid.Columns>
-        <DataGridTextColumn Header="Username" Binding="{Binding Username}"/>
-        <DataGridTextColumn Header = "Description" Binding="{Binding Description}"/>
-      </DataGrid.Columns>
-    </DataGrid>
-    <StackPanel HorizontalAlignment="Center"
-                  VerticalAlignment="Center"
-                  Spacing="25">
-        <Panel>
-          <Image Margin="20" Height="200" Width="200" 
-                Source="/Assets/avalonia-logo.ico"/>
-        </Panel>
-        <TextBlock FontSize="25" FontWeight="Bold">Malfunctioning Kitchen</TextBlock>
-        <Button Command="{Binding $parent[Window].DataContext.NavigateToRegister}"
+﻿<UserControl
+    x:Class="MalfunctioningKitchen.Views.WelcomeView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:MalfunctioningKitchen.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:WelcomeViewModel"
+    mc:Ignorable="d">
+    <DockPanel>
+        <DataGrid
+            BorderBrush="Gray"
+            BorderThickness="1"
+            CanUserReorderColumns="True"
+            CanUserResizeColumns="True"
+            DockPanel.Dock="Left"
+            GridLinesVisibility="All"
+            IsReadOnly="True"
+            ItemsSource="{Binding Users}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Username}" Header="Username" />
+                <DataGridTextColumn Binding="{Binding Description}" Header="Description" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Spacing="25">
+            <Panel>
+                <Image
+                    Width="200"
+                    Height="200"
+                    Margin="20"
+                    Source="/Assets/avalonia-logo.ico" />
+            </Panel>
+            <TextBlock FontSize="25" FontWeight="Bold">Malfunctioning Kitchen</TextBlock>
+            <Button
                 HorizontalAlignment="Center"
-                Content="Register"
-                x:CompileBindings="False"/>
-        <Button Command="{Binding $parent[Window].DataContext.NavigateToLogin}"
+                x:CompileBindings="False"
+                Command="{Binding $parent[Window].DataContext.NavigateToRegister}"
+                Content="Register" />
+            <Button
                 HorizontalAlignment="Center"
-                Content="Login"
-                x:CompileBindings="False"/>
-    </StackPanel>
-  </DockPanel>
+                x:CompileBindings="False"
+                Command="{Binding $parent[Window].DataContext.NavigateToLogin}"
+                Content="Login" />
+        </StackPanel>
+    </DockPanel>
 </UserControl>

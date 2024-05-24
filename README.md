@@ -47,6 +47,11 @@ For this we'll implement the following features
 - dotnet ef migrations add InitialLibrary
 - dotnet ef database update
 
+## Running
+When the program app is run (avalonia or the POCs) for the first time 2 example users are made  
+user 1 has 2 recipes, it's password is 'password1'
+user 2 has 0 recipes, it's password is 'password2'
+
 ## Agreements
     Procedures to ensure code functionality
         ensure that any code runs without errors I.E. pressing the run/debug should work and not crash the program
