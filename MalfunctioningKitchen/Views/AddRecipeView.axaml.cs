@@ -15,6 +15,7 @@ public partial class AddRecipeView : UserControl
     public AddRecipeView()
     {
         InitializeComponent();
+        DataContext = ViewModel;
     }
     private void InitializeComponent()
     {
