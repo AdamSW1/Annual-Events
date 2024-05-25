@@ -192,7 +192,15 @@ public class AddRecipeViewModel : ViewModelBase
         });
         RemoveStepCommand = ReactiveCommand.Create((string idex) =>
         {
-            RemoveStep(idex);
+            if (typeParentPage.Equals("Edit"))
+            {
+                RemoveStep(idex,recipe);
+            }
+            else
+            {
+                Recipe recp = null;
+                RemoveStep(idex,recp);
+            }
         });
         //Add ingredient command to add ingredients to the recipe
         AddIngredient = ReactiveCommand.Create(() =>
@@ -343,11 +351,15 @@ public class AddRecipeViewModel : ViewModelBase
         }
         stepNum++;
     }
-    private void RemoveStep(string index)
+    private void RemoveStep(string index,Recipe recipe)
     {
         var idx = Int32.Parse(index);
         if (_preparations!.Count > 0) //You are not gonna see the button if there are no preparation
         {
+            if (recipe != null)
+            {
+                AnnualEventsService.Instance.RemovePreparation(AnnualEventsService.Instance.GetPreparation(recipe.Preparation[idx].PreparationID));
+            }
             _preparations.RemoveAt(idx);
             PreparationList.Clear();
             for (int i = 0; i < Preparations!.Count; i++)
