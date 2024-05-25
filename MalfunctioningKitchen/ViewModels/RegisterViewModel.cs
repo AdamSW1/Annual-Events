@@ -37,7 +37,7 @@ public class RegisterViewModel : ViewModelBase
       }
 
       this.RaiseAndSetIfChanged(ref _password, value);
-      UserToRegister.Password = Password;
+      UserToRegister.Password = value;
     }
   }
 
@@ -70,7 +70,10 @@ public class RegisterViewModel : ViewModelBase
       }
 
       this.RaiseAndSetIfChanged(ref _age, value);
-      UserToRegister.Age = (int)Age;
+      if (value.HasValue)
+      {
+        UserToRegister.Age = (int)value;
+      }
     }
   }
   private string? _description;

@@ -80,7 +80,7 @@ namespace MalfunctioningKitchen.ViewModels
             viewModel.Logout.Subscribe(_ => NavigateToWelcome());
             previous nav = NavigateToHomePage;
             viewModel.ViewRecipeCommand.Subscribe(recipe => NavigateToRecipe(recipe, nav));
-            viewModel.NavigateToAddRecipeCommand.Subscribe(_ => NavigateToAddRecipe(null,"Create"));
+            viewModel.NavigateToAddRecipeCommand.Subscribe(_ => NavigateToAddRecipe(null!,"Create"));
             ContentViewModel = viewModel;
         }
 
