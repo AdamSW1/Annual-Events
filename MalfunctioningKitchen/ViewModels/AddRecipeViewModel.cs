@@ -256,7 +256,11 @@ public class AddRecipeViewModel : ViewModelBase
                         }
                     }).ToList();
                     //If any fields are null, it will catch the exception and not let you proceed
-                    Recipe recipe = new Recipe(_recipeName!, _description!, _cookingTime, _preparations, (int)_servings, _recipeIngredientList, 0, AuthenticationManager.Instance.CurrentUser, tags, _reviews);
+                    if (Reviews == null)
+                    {
+                        Reviews = new List<Review>();
+                    }
+                    Recipe recipe = new Recipe(_recipeName!, _description!, _cookingTime, _preparations, (int)_servings, _recipeIngredientList, 0, AuthenticationManager.Instance.CurrentUser, tags, Reviews);
                     RecipeManager.AddRecipe(recipe);
                     NavigateToHomePageCommand.Execute().Subscribe();
                     
