@@ -34,7 +34,7 @@ public class Annual_Events_User
         }
         set
         {
-            if (!Utils.CheckName(value))
+            if (value != null && !Utils.CheckName(value))
             {
                 throw new ArgumentException("Invalid name");
             }

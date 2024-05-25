@@ -452,7 +452,7 @@ class Program
             description = " ";
         }
 
-        Annual_Events_User newUser = new(username, password, description, age, null);
+        Annual_Events_User newUser = new(username, password, description, age, null!);
         AuthenticationManager.Instance.AddUser(newUser);
 
         return (username, password);
