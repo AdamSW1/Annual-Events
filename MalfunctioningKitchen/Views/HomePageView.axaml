@@ -29,13 +29,15 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Command="{Binding NavigateToSearchRecipeCommand}"
-                Content="Search" />
+                Content="Search"
+                Cursor="Hand" />
             <Button
                 Margin="0,0,10,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Command="{Binding NavigateToUpdateProfileCommand}"
-                Content="Profile" />
+                Content="Profile"
+                Cursor="Hand" />
 
         </Grid>
         <SplitView
@@ -51,12 +53,14 @@
                         VerticalAlignment="Center"
                         Command="{Binding Logout}"
                         Content="Logout"
+                        Cursor="Hand"
                         DockPanel.Dock="Bottom" />
                     <Button
                         HorizontalAlignment="Center"
                         VerticalAlignment="Bottom"
                         Command="{Binding NavigateToAddRecipeCommand}"
                         Content="Create New Recipe"
+                        Cursor="Hand"
                         DockPanel.Dock="Bottom" />
                     <Button
                         Margin="0,200,0,50"
@@ -64,6 +68,7 @@
                         VerticalAlignment="Center"
                         Command="{Binding ViewRecommendedRecipes}"
                         Content="Recommended Recipes"
+                        Cursor="Hand"
                         DockPanel.Dock="Top" />
                     <Button
                         Margin="0,0,0,20"
@@ -71,6 +76,7 @@
                         VerticalAlignment="Top"
                         Command="{Binding ViewOwnRecipes}"
                         Content="Your Recipes"
+                        Cursor="Hand"
                         DockPanel.Dock="Top" />
                     <Button
                         Margin="0,0,0,20"
@@ -78,12 +84,14 @@
                         VerticalAlignment="Top"
                         Command="{Binding ViewFavouriteRecipes}"
                         Content="Favourite Recipes"
+                        Cursor="Hand"
                         DockPanel.Dock="Top" />
                     <Button
                         HorizontalAlignment="Center"
                         VerticalAlignment="Top"
                         Command="{Binding ViewYourReviews}"
                         Content="Your Reviews"
+                        Cursor="Hand"
                         DockPanel.Dock="Top" />
                 </DockPanel>
             </SplitView.Pane>
@@ -107,7 +115,8 @@
                                 Width="200"
                                 Margin="0,10"
                                 Command="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).GetRecipe}"
-                                CommandParameter="{Binding .}">
+                                CommandParameter="{Binding .}"
+                                Cursor="Hand">
                                 <StackPanel
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
@@ -139,7 +148,8 @@
                                 <Button
                                     Width="200"
                                     Margin="0,10"
-                                    Command="{Binding}">
+                                    Command="{Binding}"
+                                    Cursor="Hand">
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock Text="{Binding ReviewText}" />
                                         <TextBlock>
@@ -158,7 +168,8 @@
                                     Width="200"
                                     Margin="0,10"
                                     Command="{Binding $parent[ItemsControl].((vm:HomePageViewModel)DataContext).GetReview}"
-                                    CommandParameter="{Binding .}">
+                                    CommandParameter="{Binding .}"
+                                    Cursor="Hand">
                                     <TextBlock Text="Delete Review" />
                                 </Button>
                             </StackPanel>

@@ -27,7 +27,8 @@
             <Button
                 Margin="250,0,250,0"
                 Command="{Binding NavigateToHomePageCommand}"
-                Content="Back" />
+                Content="Back"
+                Cursor="Hand" />
         </StackPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <DockPanel Width="800">
@@ -39,10 +40,12 @@
                     <Button
                         Command="{Binding Edit}"
                         Content="Edit Recipe"
+                        Cursor="Hand"
                         IsVisible="{Binding Visible}" />
                     <Button
                         Command="{Binding Delete}"
                         Content="Delete Recipe"
+                        Cursor="Hand"
                         IsVisible="{Binding Visible}" />
                 </StackPanel>
                 <StackPanel
@@ -122,6 +125,7 @@
                         Background="#962D2D"
                         Command="{Binding NavigateToAddReviewCommand}"
                         Content="Add a Review"
+                        Cursor="Hand"
                         Foreground="White"
                         IsVisible="{Binding !UserIsOwner}" />
                     <Button
@@ -129,6 +133,7 @@
                         Background="#962D2D"
                         Command="{Binding RemoveFav}"
                         Content="Remove Favourite"
+                        Cursor="Hand"
                         Foreground="White"
                         IsVisible="{Binding Faved}" />
                     <Button
@@ -136,6 +141,7 @@
                         Background="#962D2D"
                         Command="{Binding AddFav}"
                         Content="Add To Favourite"
+                        Cursor="Hand"
                         Foreground="White"
                         IsVisible="{Binding !Faved}" />
                 </StackPanel>

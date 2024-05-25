@@ -40,12 +40,14 @@
                 HorizontalAlignment="Center"
                 x:CompileBindings="False"
                 Command="{Binding $parent[Window].DataContext.NavigateToRegister}"
-                Content="Register" />
+                Content="Register"
+                Cursor="Hand" />
             <Button
                 HorizontalAlignment="Center"
                 x:CompileBindings="False"
                 Command="{Binding $parent[Window].DataContext.NavigateToLogin}"
-                Content="Login" />
+                Content="Login"
+                Cursor="Hand" />
         </StackPanel>
     </DockPanel>
 </UserControl>

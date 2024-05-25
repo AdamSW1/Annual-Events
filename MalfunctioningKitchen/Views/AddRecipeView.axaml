@@ -10,7 +10,7 @@
     x:DataType="vm:AddRecipeViewModel"
     mc:Ignorable="d">
     <UserControl.Background>
-        <SolidColorBrush Color="#80FF0000" /> 
+        <SolidColorBrush Color="#80FF0000" />
         <!--  Translucent light red  -->
     </UserControl.Background>
 
@@ -36,6 +36,7 @@
                 Command="{Binding CreateRecipe}"
                 Content="{Binding Title}"
                 CornerRadius="5"
+                Cursor="Hand"
                 FontSize="16"
                 FontWeight="Bold"
                 Foreground="White" />
@@ -46,6 +47,7 @@
                 BorderThickness="0"
                 Command="{Binding NavigateToHomePageCommand}"
                 Content="Back"
+                Cursor="Hand"
                 Foreground="White" />
             <Button
                 Margin="20,0"
@@ -53,6 +55,7 @@
                 BorderThickness="0"
                 Command="{Binding Logout}"
                 Content="Logout"
+                Cursor="Hand"
                 Foreground="White" />
 
         </StackPanel>
@@ -99,7 +102,8 @@
                         <Button
                             Margin="0,5,0,0"
                             Command="{Binding AddStep}"
-                            Content="Add Step" />
+                            Content="Add Step"
+                            Cursor="Hand" />
                         <ItemsControl
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -111,7 +115,8 @@
                                         <Button
                                             Command="{Binding $parent[ItemsControl].((vm:AddRecipeViewModel)DataContext).RemoveStepCommand}"
                                             CommandParameter="{Binding StepNumber, StringFormat=\{0\}}"
-                                            Content="Remove Step" />
+                                            Content="Remove Step"
+                                            Cursor="Hand" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -130,7 +135,10 @@
                             FormatString="0.00"
                             Minimum="0"
                             Value="{Binding Price}" />
-                        <Button Command="{Binding AddIngredient}" Content="Add Ingredient" />
+                        <Button
+                            Command="{Binding AddIngredient}"
+                            Content="Add Ingredient"
+                            Cursor="Hand" />
                         <ItemsControl
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -146,7 +154,8 @@
                                         <Button
                                             Command="{Binding $parent[ItemsControl].((vm:AddRecipeViewModel)DataContext).RemoveIngredientCommand}"
                                             CommandParameter="{Binding .}"
-                                            Content="Remove Ingredient" />
+                                            Content="Remove Ingredient"
+                                            Cursor="Hand" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -174,7 +183,7 @@
                         SelectionMode="Multiple">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}">
+                                <CheckBox Cursor="Hand" IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}">
                                     <TextBlock Text="{Binding .}" />
                                 </CheckBox>
                             </DataTemplate>
