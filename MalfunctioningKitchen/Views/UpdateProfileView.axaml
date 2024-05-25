@@ -17,7 +17,8 @@
                     Margin="10"
                     VerticalAlignment="Center"
                     Command="{Binding Return}"
-                    Content="RETURN" />
+                    Content="RETURN"
+                    Cursor="Hand" />
             </StackPanel>
             <Border
                 Margin="20,45,30,20"
@@ -44,12 +45,14 @@
                         x:CompileBindings="False"
                         Command="{Binding SelectImage}"
                         CommandParameter="{Binding $parent[Window]}"
-                        Content="Select Image" />
+                        Content="Select Image"
+                        Cursor="Hand" />
                     <Button
                         HorizontalAlignment="Center"
                         x:CompileBindings="False"
                         Command="{Binding ClearImage}"
-                        Content="ClearImage" />
+                        Content="ClearImage"
+                        Cursor="Hand" />
                     <TextBox
                         Width="300"
                         Text="{Binding Username}"
@@ -74,13 +77,15 @@
                         Width="150"
                         HorizontalAlignment="Center"
                         Command="{Binding UpdateProfileCommand}"
-                        Content="Update Profile" />
+                        Content="Update Profile"
+                        Cursor="Hand" />
                     <Button
                         Margin="10"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Command="{Binding DeleteUserCommand}"
-                        Content="DELETE" />
+                        Content="DELETE"
+                        Cursor="Hand" />
                     <TextBlock
                         HorizontalAlignment="Center"
                         Foreground="Red"

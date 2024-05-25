@@ -84,20 +84,6 @@ namespace MalfunctioningKitchen.ViewModels
             ContentViewModel = viewModel;
         }
 
-
-
-        public void NavigateToLoggedIn()
-        {
-            LoggedInViewModel viewModel = new();
-
-            viewModel.Logout.Subscribe(_ => NavigateToWelcome());
-
-            viewModel.NavigateToSearchRecipeCommand.Subscribe(_ => NavigateToSearchRecipe());
-            viewModel.NavigateToUpdateProfileCommand.Subscribe(_ => NavigateToUpdateProfile());
-
-            ContentViewModel = viewModel;
-        }
-
         public void NavigateToSearchRecipe()
         {
             SearchRecipeViewModel viewModel = new();

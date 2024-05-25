@@ -36,6 +36,7 @@
                         Width="300"
                         HorizontalAlignment="Stretch"
                         Content="Favourited"
+                        Cursor="Hand"
                         IsChecked="{Binding Favorite}"
                         IsThreeState="False" />
 
@@ -44,9 +45,6 @@
                         Width="300"
                         Text="{Binding SearchKeyword, Mode=TwoWay}"
                         Watermark="Enter recipe name..." />
-
-                    <!--  Text input for tags  -->
-                    <!-- <TextBox Width="300" Watermark="Enter recipe tags (comma separated)..." Text="{Binding TagCriteria, Mode=TwoWay, Converter={StaticResource StringToListConverter}}" /> -->
 
                     <!--  Text input for time constraint  -->
                     <TextBox
@@ -86,7 +84,7 @@
                         SelectionMode="Multiple">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}">
+                                <CheckBox Cursor="Hand" IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}">
                                     <TextBlock Text="{Binding .}" />
                                 </CheckBox>
                             </DataTemplate>
@@ -97,7 +95,8 @@
                         Margin="0,10,0,0"
                         HorizontalAlignment="Center"
                         Command="{Binding SearchCommand}"
-                        Content="Search" />
+                        Content="Search"
+                        Cursor="Hand" />
 
                     <TextBlock
                         Margin="0,10,0,0"
@@ -114,7 +113,8 @@
                                 <Button
                                     HorizontalContentAlignment="Stretch"
                                     Command="{Binding $parent[ItemsControl].((vm:SearchRecipeViewModel)DataContext).GetRecipe}"
-                                    CommandParameter="{Binding .}">
+                                    CommandParameter="{Binding .}"
+                                    Cursor="Hand">
                                     <Border
                                         Margin="5"
                                         Padding="10"
@@ -141,6 +141,7 @@
                         Background="#FF6347"
                         Command="{Binding Return}"
                         Content="Return"
+                        Cursor="Hand"
                         Foreground="White" />
                 </StackPanel>
             </ScrollViewer>
