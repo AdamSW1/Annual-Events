@@ -14,7 +14,7 @@ public class Profile// The Profile class is used to manage a Annual_Events_User
     {
     }
      // Updates the profile of a user
-    public void UpdateProfile(Annual_Events_User user, string username, string description, int age = 0, string password = null)
+    public void UpdateProfile(Annual_Events_User user, string username, string description, int age = 0, string password = null!)
     {
         if (!string.IsNullOrEmpty(username))
         {
@@ -58,7 +58,7 @@ public class Profile// The Profile class is used to manage a Annual_Events_User
     }
     public void UpdateDescription(string _description) // Updates the description of the user
     {
-        var user = AnnualEventsUserServices.Instance.GetUserByUsername(Annual_Events_User.Username);
+        var user = AnnualEventsUserServices.Instance.GetUserByUsername(Annual_Events_User.Username!);
         user.Description = _description;
         AnnualEventsUserServices.Instance.DbContext.SaveChanges();
     }

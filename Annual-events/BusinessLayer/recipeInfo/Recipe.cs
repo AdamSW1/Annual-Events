@@ -290,7 +290,8 @@ public class Recipe
 
     public void AddReview(Annual_Events_User reviewer, string reviewText,int score)
     {
-        Review review = new(reviewer.Username, reviewText,score);
+        string reviewerUsername = reviewer?.Username ?? string.Empty;
+        Review review = new(reviewerUsername, reviewText, score);
         Reviews.Add(review);
         AnnualEventsContext.Instance.SaveChanges();
     }

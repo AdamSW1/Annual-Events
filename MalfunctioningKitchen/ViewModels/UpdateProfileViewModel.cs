@@ -80,8 +80,8 @@ namespace MalfunctioningKitchen.ViewModels
         public UpdateProfileViewModel(Annual_Events_User user)
         {
             User = user;
-            Username = User.Username;
-            Description = User.Description;
+            Username = User.Username!;
+            Description = User.Description!;
             Age = user.Age;
             UpdateProfileCommand = ReactiveCommand.Create(() => UpdateProfile(user));
 
@@ -149,7 +149,7 @@ namespace MalfunctioningKitchen.ViewModels
                     NotificationMessage = "Your password can't be below 5 characters.";
                     return;
                 }
-                profile.UpdateProfile(User, Username, Description, Age, Password);
+                profile.UpdateProfile(User, Username, Description, Age, Password!);
                 NotificationMessage = "Profile updated successfully!";
             }
             catch (Exception ex)
