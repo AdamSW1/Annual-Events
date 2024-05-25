@@ -19,11 +19,13 @@
             <Button
                 x:CompileBindings="False"
                 Command="{Binding $parent[Window].DataContext.NavigateToWelcome}"
-                Content="Cancel" />
+                Content="Cancel"
+                Cursor="Hand" />
             <Button
                 x:CompileBindings="False"
                 Command="{Binding Register}"
-                Content="Register" />
+                Content="Register"
+                Cursor="Hand" />
         </StackPanel>
         <TextBlock DockPanel.Dock="Bottom" Text="{Binding ErrorMessage}" />
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">

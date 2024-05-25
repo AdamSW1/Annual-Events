@@ -19,12 +19,14 @@
             <Button
                 x:CompileBindings="False"
                 Command="{Binding $parent[Window].DataContext.NavigateToWelcome}"
-                Content="Cancel" />
+                Content="Cancel"
+                Cursor="Hand" />
 
             <Button
                 x:CompileBindings="False"
                 Command="{Binding Login}"
-                Content="Login" />
+                Content="Login"
+                Cursor="Hand" />
         </StackPanel>
 
         <TextBlock DockPanel.Dock="Bottom" Text="{Binding ErrorMessage}" />

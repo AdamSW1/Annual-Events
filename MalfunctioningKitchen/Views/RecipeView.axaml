@@ -1,74 +1,149 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             xmlns:vm="using:MalfunctioningKitchen.ViewModels"
-             x:DataType="vm:RecipeViewModel"
-             x:Class="MalfunctioningKitchen.Views.RecipeView">
+﻿<UserControl
+    x:Class="MalfunctioningKitchen.Views.RecipeView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:MalfunctioningKitchen.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:RecipeViewModel"
+    mc:Ignorable="d">
     <DockPanel Background="White">
-        <StackPanel DockPanel.Dock="Top"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Spacing="200"
-                    Background="#962D2D"
-                    Margin="0 0 0 0">
-            <TextBlock Text="MALFUNCTIONING KITCHEN"
-                       Margin="5 0 0 0"
-                       TextAlignment="Center"
-                       FontSize="24"
-                       Foreground="White">
-            </TextBlock>
-            <Button Content="Back" 
-                    Command="{Binding NavigateToHomePageCommand}" 
-                    Margin="250 0 250 0"/>
+        <StackPanel
+            Margin="0,0,0,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Background="#962D2D"
+            DockPanel.Dock="Top"
+            Orientation="Horizontal"
+            Spacing="200">
+            <TextBlock
+                Margin="5,0,0,0"
+                FontSize="24"
+                Foreground="White"
+                Text="MALFUNCTIONING KITCHEN"
+                TextAlignment="Center" />
+            <Button
+                Margin="250,0,250,0"
+                Command="{Binding NavigateToHomePageCommand}"
+                Content="Back"
+                Cursor="Hand" />
         </StackPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <DockPanel Width="800">
-                <StackPanel Orientation="Horizontal" 
-                            DockPanel.Dock="Top" 
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
-                    <Button Command="{Binding Edit}" IsVisible="{Binding Visible}" Content="Edit Recipe"/>
-                    <Button Command="{Binding Delete}" IsVisible="{Binding Visible}" Content="Delete Recipe"/>
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Top"
+                    Orientation="Horizontal">
+                    <Button
+                        Command="{Binding Edit}"
+                        Content="Edit Recipe"
+                        Cursor="Hand"
+                        IsVisible="{Binding Visible}" />
+                    <Button
+                        Command="{Binding Delete}"
+                        Content="Delete Recipe"
+                        Cursor="Hand"
+                        IsVisible="{Binding Visible}" />
                 </StackPanel>
-                <StackPanel HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Background="#F4E1E1"
-                            Margin="20"
-                            >
-                    <TextBlock Text="{Binding RecipeName}" FontSize="36" TextAlignment="Center" FontWeight="Bold" Margin="0,0,0,10"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                        <TextBlock Text="{Binding Stars}" FontSize="28" TextAlignment="Right" Foreground="Yellow"/>
-                        <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
-                            <TextBlock Text="{Binding ReviewCount}" FontSize="28" TextAlignment="Left"/>
-                            <TextBlock Text=" Reviews" FontSize="28" TextAlignment="Left"/>
+                <StackPanel
+                    Margin="20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="#F4E1E1">
+                    <TextBlock
+                        Margin="0,0,0,10"
+                        FontSize="36"
+                        FontWeight="Bold"
+                        Text="{Binding RecipeName}"
+                        TextAlignment="Center" />
+                    <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+                        <TextBlock
+                            FontSize="28"
+                            Foreground="Yellow"
+                            Text="{Binding Stars}"
+                            TextAlignment="Right" />
+                        <StackPanel Margin="10,0,0,0" Orientation="Horizontal">
+                            <TextBlock
+                                FontSize="28"
+                                Text="{Binding ReviewCount}"
+                                TextAlignment="Left" />
+                            <TextBlock
+                                FontSize="28"
+                                Text=" Reviews"
+                                TextAlignment="Left" />
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                        <TextBlock Text="By: " FontSize="20"/>
-                        <TextBlock Text="{Binding RecipeOwner}" FontSize="20"/>
+                    <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+                        <TextBlock FontSize="20" Text="By: " />
+                        <TextBlock FontSize="20" Text="{Binding RecipeOwner}" />
                     </StackPanel>
-                    <TextBlock Text="Description:" FontSize="20" Margin="0,0,0,5"/>
-                    <TextBlock Text="{Binding Description}" FontSize="16" TextWrapping="Wrap"/>
-                    <TextBlock Text="Tags" FontSize="20" Margin="0,10,0,5"/>
-                    <TextBlock Text="{Binding Tags}" FontSize="16"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,10,0,5">
-                        <TextBlock Text="Cooking Time: " FontSize="20"/>
-                        <TextBlock Text="{Binding CookingTime}" FontSize="20"/>
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        FontSize="20"
+                        Text="Description:" />
+                    <TextBlock
+                        FontSize="16"
+                        Text="{Binding Description}"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Margin="0,10,0,5"
+                        FontSize="20"
+                        Text="Tags" />
+                    <TextBlock FontSize="16" Text="{Binding Tags}" />
+                    <StackPanel Margin="0,10,0,5" Orientation="Horizontal">
+                        <TextBlock FontSize="20" Text="Cooking Time: " />
+                        <TextBlock FontSize="20" Text="{Binding CookingTime}" />
                     </StackPanel>
-                    <TextBlock Text="Ingredients" FontSize="20" Margin="0,10,0,5"/>
-                    <TextBlock Text="{Binding Ingredients}" FontSize="16"/>
-                    <!-- Add text box based on amount of items -->
-                    <TextBlock Text="Instructions" FontSize="20" Margin="0,10,0,5"/>
-                    <TextBlock Text="{Binding Instructions}" FontSize="16" TextWrapping="Wrap"/>
-                    <!-- Add text bod based on amount of items -->
-                    <TextBlock Text="Reviews: " FontSize="20" Margin="0,10,0,5"/>
-                    <TextBlock Text="{Binding Reviews}" FontSize="16" TextWrapping="Wrap"/>
-                    <Button Command="{Binding NavigateToAddReviewCommand}" Content="Add a Review" Margin="0,20,0,0" Foreground="White" Background="#962D2D" IsVisible="{Binding !UserIsOwner}" />
-                    <Button Command="{Binding RemoveFav}" Content="Remove Favourite" Margin="0,10,0,0" Foreground="White" Background="#962D2D" IsVisible="{Binding Faved}"/>
-                    <Button Command="{Binding AddFav}" Content="Add To Favourite" Margin="0,10,0,0" Foreground="White" Background="#962D2D" IsVisible="{Binding !Faved}"/>
+                    <TextBlock
+                        Margin="0,10,0,5"
+                        FontSize="20"
+                        Text="Ingredients" />
+                    <TextBlock FontSize="16" Text="{Binding Ingredients}" />
+                    <!--  Add text box based on amount of items  -->
+                    <TextBlock
+                        Margin="0,10,0,5"
+                        FontSize="20"
+                        Text="Instructions" />
+                    <TextBlock
+                        FontSize="16"
+                        Text="{Binding Instructions}"
+                        TextWrapping="Wrap" />
+                    <!--  Add text bod based on amount of items  -->
+                    <TextBlock
+                        Margin="0,10,0,5"
+                        FontSize="20"
+                        Text="Reviews: " />
+                    <TextBlock
+                        FontSize="16"
+                        Text="{Binding Reviews}"
+                        TextWrapping="Wrap" />
+                    <Button
+                        Margin="0,20,0,0"
+                        Background="#962D2D"
+                        Command="{Binding NavigateToAddReviewCommand}"
+                        Content="Add a Review"
+                        Cursor="Hand"
+                        Foreground="White"
+                        IsVisible="{Binding !UserIsOwner}" />
+                    <Button
+                        Margin="0,10,0,0"
+                        Background="#962D2D"
+                        Command="{Binding RemoveFav}"
+                        Content="Remove Favourite"
+                        Cursor="Hand"
+                        Foreground="White"
+                        IsVisible="{Binding Faved}" />
+                    <Button
+                        Margin="0,10,0,0"
+                        Background="#962D2D"
+                        Command="{Binding AddFav}"
+                        Content="Add To Favourite"
+                        Cursor="Hand"
+                        Foreground="White"
+                        IsVisible="{Binding !Faved}" />
                 </StackPanel>
             </DockPanel>
         </ScrollViewer>
